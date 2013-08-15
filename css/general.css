@@ -109,22 +109,19 @@ background: #fff;
 
 	}
 .de_top_search>input{
-	height: 40px;
-	width: 40px;
+	height: 80px;
+	width: 70px;
 	margin:0px;
-	padding:0 5px 0 40px;
-	background:url(../images/icon20_search_white.png) no-repeat #000 14px center;
+	padding:0 0 0 70px;
+	background:url(../images/search.png) no-repeat;
 	font-size: 14px;
 	color:#595757;
 	line-height: 40px;
 	border:none;
-	-webkit-border-bottom-left-radius: 10px;
-	-moz-border-radius-bottomleft: 10px;
-	border-bottom-left-radius: 10px;
-	color:#9FA0A0;	
+	color:#fff;
 	}
 .de_top_search>input:focus{
-	width:250px;
+	width:270px;
 	height:80px;
 	outline: none;
 	}	
@@ -140,7 +137,7 @@ background: #fff;
 	}	
 .de_user_nav ul li a{
 	display:block;
-	width:60px;
+	width:80px;
 	height:20px;
 	padding-top:30px;
 	text-decoration: none;
@@ -301,11 +298,9 @@ background: #fff;
 	padding:10px;
 	background:#fff;
 	box-shadow:0 0 4px rgba(0,0,0,0.1);	
-	width:740px;
-	height:425px;
+	width:970px;
+	height:554px;
 	position:relative;
-	margin:10px;
-
 	overflow:hidden;
 	}
 .de_top_list .thumb{
@@ -324,6 +319,7 @@ background: #fff;
 	font-size:24px;
 	letter-spacing:2px;
 	font-size:36px;
+	text-shadow:0 0 4px rgba(0,0,0,0.4);
 	}
 .de_top_list .project_info>.abstract{
 	font-size:12px;
@@ -375,6 +371,7 @@ background: #fff;
 	text-overflow: ellipsis;
 	overflow:hidden;
 	width:270px;
+	text-shadow:0 0 6px rgba(0,0,0,0.6);
 	}
 
 /*************荣誉榜****************/
@@ -388,7 +385,6 @@ background: #fff;
 	}
 
 .de_designer_ladder h2{
-	vertical-align:top;
 	}
 .de_designer_ladder h2:before{
 	content:"";
@@ -396,6 +392,7 @@ background: #fff;
 	width:30px;
 	height:30px;
 	background:url(../images/icon30_badge.png) no-repeat;
+	vertical-align:middle;
 	/*position:absolute;
 	left:0;
 	top:0;*/
@@ -475,7 +472,6 @@ background: #fff;
 	padding: 20px 0;
 }
 .de_project_section h2{
-	vertical-align:top;	
 	}
 .de_project_section h2:before{
 	content:"";
@@ -483,6 +479,7 @@ background: #fff;
 	width:30px;
 	height:30px;
 	background:url(../images/icon30_badge.png) no-repeat;
+	vertical-align:middle;s
 	/*position:absolute;
 	left:0;
 	top:0;*/
@@ -534,8 +531,8 @@ background: #fff;
 	width:180px;
 	}
 .de_project_list .author_info>.photo{
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	overflow: hidden;
 	border-radius: 60px;
 	border: #fff 3px solid;
@@ -609,7 +606,6 @@ background: #fff;
 	padding: 20px 0;
     }
 .de_resource_section>h2{
-	vertical-align:top;
 	}
 .de_resource_section h2:before{
 	content:"";
@@ -617,6 +613,7 @@ background: #fff;
 	width:30px;
 	height:30px;
 	background:url(../images/icon30_badge.png) no-repeat;
+	vertical-align:middle;
 	/*position:absolute;
 	left:0;
 	top:0;*/
@@ -698,8 +695,8 @@ background: #fff;
 	bottom:4px;
 	}
 .de_resource_list .tags>li{
-	width:30px;
-	height:30px;
+	width:20px;
+	height:20px;
 	display:inline-block;
 	font-size:0;
 	text-indent:-9999px;
@@ -753,9 +750,8 @@ background: #fff;
 	height:7px;
 	background:url(../images/white_arrow_up.png) no-repeat;
 	position:absolute;
-	left:50%;
+	left:40px;
 	bottom:0;
-	margin-left:-6px;
 	}
 .de_resource_grid .post_info{	
 	height:140px;
@@ -801,9 +797,10 @@ background: #fff;
 	width:100%;
 	position:absolute;
 	left:0;
-	bottom:4px;
+	bottom:0;
 	font-size:0;
 	padding:5px;
+	background:#fff;
 	border-top:#ccc 1px dotted;
 	text-align:center;
 	-moz-box-sizing:border-box;
@@ -812,11 +809,11 @@ background: #fff;
 	box-sizing:border-box;
 	}
 .de_resource_grid .tags>li{
-	width:30px;
-	height:30px;
+	width:20px;
+	height:20px;
 	display:inline-block;
 	text-indent:-9999px;
-	margin:0;
+	margin:0 6px;
 	}
 .de_resource_grid li.tag_ppt{
 	background:url(../images/zy_media_ppt.png) no-repeat;
