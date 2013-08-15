@@ -285,7 +285,7 @@ background: #fff;
 
 /*************头条作品****************/
 .de_top_project{
-	
+	overflow:hidden;
 	}
 .de_top_project a{
 	text-decoration:none;
@@ -294,6 +294,7 @@ background: #fff;
 .de_top_project>.de_top_list{
 	padding:20px 0;
 	white-space:nowrap;
+	text-align:center;
 	}
 .de_top_project>.de_top_list>li{
 	display:inline-block;
@@ -303,7 +304,7 @@ background: #fff;
 	width:740px;
 	height:425px;
 	position:relative;
-	margin:auto;
+	margin:10px;
 
 	overflow:hidden;
 	}
@@ -474,9 +475,18 @@ background: #fff;
 	padding: 20px 0;
 }
 .de_project_section h2{
-	
+	vertical-align:top;	
 	}
-
+.de_project_section h2:before{
+	content:"";
+	display:inline-block;
+	width:30px;
+	height:30px;
+	background:url(../images/icon30_badge.png) no-repeat;
+	/*position:absolute;
+	left:0;
+	top:0;*/
+	}
 .de_project_list{
 	text-align:center;
 	white-space:nowrap;
@@ -599,21 +609,27 @@ background: #fff;
 	padding: 20px 0;
     }
 .de_resource_section>h2{
-
+	vertical-align:top;
 	}
-
+.de_resource_section h2:before{
+	content:"";
+	display:inline-block;
+	width:30px;
+	height:30px;
+	background:url(../images/icon30_badge.png) no-repeat;
+	/*position:absolute;
+	left:0;
+	top:0;*/
+	}
 .de_resource_list{
-	white-space:nowrap;
 	width:100%;
 	overflow-y:hidden;
 	padding:20px 0;
 	}
 .de_resource_list>li{
-	width:300px;
 	position:relative;
 	height:110px;
 	box-shadow:0 0 4px rgba(0,0,0,0.1);
-	display:inline-block;
 	vertical-align:top;
 	margin: 5px;
 	}
@@ -635,7 +651,7 @@ background: #fff;
 	content:"";
 	width:7px;
 	height:13px;
-	background:url(../images/white_arrow_right.png) no-repeat;
+	background:url(../images/white_arrow_left.png) no-repeat;
 	position:absolute;
 	top:40px;
 	right:0;
@@ -705,6 +721,118 @@ background: #fff;
 	background:url(../images/zy_media_file.png) no-repeat;
 	}
 
+
+.de_resource_grid{
+	white-space:nowrap;
+	width:100%;
+	overflow-y:hidden;
+	padding:20px 0;
+	}
+.de_resource_grid>li{
+	width:220px;
+	position:relative;
+	box-shadow:0 0 4px rgba(0,0,0,0.1);
+	display:inline-block;
+	vertical-align:top;
+	margin: 5px;
+	}
+.de_resource_grid a{
+	text-decoration:none;
+	color:#666;
+	}
+.de_resource_grid .user_info{
+	display:block;
+	background:#f8f8f8;
+	height:80px;
+	overflow:hidden;
+	position:relative;
+	}
+.de_resource_grid .user_info:before{
+	content:"";
+	width:13px;
+	height:7px;
+	background:url(../images/white_arrow_up.png) no-repeat;
+	position:absolute;
+	left:50%;
+	bottom:0;
+	margin-left:-6px;
+	}
+.de_resource_grid .post_info{	
+	height:140px;
+	display:block;
+	overflow:hidden;
+	padding:20px;
+	background:#fff;
+	position:relative;
+	}
+
+.de_resource_grid .photo{
+	width:50px;
+	height:50px;
+	overflow:hidden;
+	border-radius:60px;
+	border:#fff 3px solid;
+	box-shadow:0 0 4px rgba(0,0,0,0.4);
+	margin:10px auto 10px 20px;
+	display:block;
+	position:absolute;
+	top:0;
+	left:0;
+	}
+.de_resource_grid .name{
+	text-align:center;
+	margin:0 10px 0 90px;
+	font-size:12px;
+	letter-spacing:2px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	height:80px;
+	line-height:80px;
+	}
+.de_resource_grid h4{
+	margin:0;
+	white-space:normal;
+	}
+.de_resource_grid li:hover h4{
+	color:#000;
+	}
+.de_resource_grid .tags{
+	width:100%;
+	position:absolute;
+	left:0;
+	bottom:4px;
+	font-size:0;
+	padding:5px;
+	border-top:#ccc 1px dotted;
+	text-align:center;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+	}
+.de_resource_grid .tags>li{
+	width:30px;
+	height:30px;
+	display:inline-block;
+	text-indent:-9999px;
+	margin:0;
+	}
+.de_resource_grid li.tag_ppt{
+	background:url(../images/zy_media_ppt.png) no-repeat;
+	}
+.de_resource_grid li.tag_web_video{
+	background:url(../images/zy_media_network_video.png) no-repeat;
+	}
+.de_resource_grid li.tag_local_video{
+	background:url(../images/zy_media_local_video.png) no-repeat;
+	}
+.de_resource_grid li.tag_3d{
+	background:url(../images/zy_media_3d.png) no-repeat;
+	}
+.de_resource_grid li.tag_file{
+	background:url(../images/zy_media_file.png) no-repeat;
+	}
 
 /*************页脚****************/
 	

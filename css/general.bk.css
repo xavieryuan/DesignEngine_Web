@@ -616,7 +616,7 @@ background: #fff;
 	content:"";
 	width:7px;
 	height:13px;
-	background:url(../images/white_arrow_right.png) no-repeat;
+	background:url(../images/white_arrow_left.png) no-repeat;
 	position:absolute;
 	top:40px;
 	right:0;
