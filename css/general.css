@@ -128,7 +128,7 @@ background: #fff;
 .de_user_nav{
 	width: 200px;
 	position:absolute;
-	right:60px;
+	right:40px;
 	top:20px;
 	z-index:101;
 	}
@@ -846,6 +846,25 @@ background: #fff;
 /*	position:fixed;
 	bottom:0;*/
 	}					
+
+/*************Media Query****************/
+@media screen and (max-width: 990px) and(min-width: 720px){
+	.de_top_project>.de_top_list>li{
+		width:100%;
+		height:auto;
+		}
+
+	}
+@media screen and (max-width: 720px){
+	.de_top_project>.de_top_list>li{
+		width:100%;
+		height:auto;
+		}
+	.de_top_list .project_info>h4{
+		font-size:24px;
+		}
+	}
+
 					
 /*************JS 相关****************/
 .de_hidden{
