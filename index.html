@@ -51,7 +51,7 @@
      </nav>     
         
 </header>
-<!------------ 头条
+<!------------ 头条 ------------>
 <section class="de_top_project">
     <ul class="de_top_list">
         <li class="de_borderbox">
@@ -67,11 +67,11 @@
         </li>        
     </ul>
 </section>
------------->
 
-<!-----------人气榜----------->
+
+<!-----------荣誉榜----------->
 <section class="de_designer_ladder">
-  <h2 class="de_section_heading">人气榜</h2>
+  <h2 class="de_section_heading">荣誉榜</h2>
   <ul class="de_designer_list">
      <li>
      	<a href="#"><img src="data/ranking1.jpg" class="photo"></img>
@@ -120,14 +120,22 @@
   </ul>
 </section>
 
+<!-----------标签页导航----------->
+<nav class="de_section_tab" id="de_section_tab">
+	<ul class="de_tab_x2">
+    	<li><a href="#de_project_section" class="de_btn_artwork de_tab_active">设计作品</a></li>
+        <li><a href="#de_resource_section" class="de_btn_resource">课程资源</a></li>
+    </ul>
+</nav>
+
 <!-----------设计作品----------->
-<section class="de_project_section">
-<h2 class="de_section_heading">设计作品更新</h2>
-  <ul class="de_project_list de_hscroll">
+<section class="de_project_section" id="de_project_section">
+  <ul class="de_project_list">
   	<li class="de_borderbox">
     	<div class="project_info">
     		<img class="thumb" src="data/pic1.png">        
         	<h4><a href="#" >书院文化相关视频</a></h4>
+            
         	</div>
         <div class="author_info">
         	<img class="photo" src="data/people1.jpg" />
@@ -240,140 +248,109 @@
   </ul>  
 </section>
 
+
 <!-----------课程资源----------->
-<section class="de_resource_section">
-<h2 class="de_section_heading">课程资源更新</h2>
-	<ul class="de_resource_grid de_hscroll">
+<section class="de_resource_section de_hidden" id="de_resource_section">
+	<ul class="de_resource_list">
     	<li>
        		<a href="#" class="user_info">
         	<img class="photo" src="data/teacher1.jpg" />
             <p class="name">何人可</p>
             </a>
-            <a href="#" class="post_info de_borderbox">
-            <h4>工业设计史 - 中国设计地图</h4>
-            <ul class="tags">
+            <div class="post_info de_borderbox">
+            <img class="thumb" src="images/thumb_default_500.png" />
+            <h4><a href="#">工业设计史 - 中国设计地图</a></h4>
+            <ul class="de_category_tags">
+            	<li><a href="#">工业设计史</a></li>
+                <li><a href="#">设计地图</a></li>
+                <li><a href="#">何人可</a></li>
+            </ul>
+            <ul class="de_media_tags">
             	<li class="tag_ppt">PPT</li>
             	<li class="tag_web_video">网络视频</li>
                 <li class="tag_local_video">本地视频</li>
                 <li class="tag_3d">3D</li>
                 <li class="tag_file">文档</li>
             </ul>       	
-            </a>
+            </div>
         </li>
         <li>
        		<a href="#" class="user_info">
         	<img class="photo" src="data/teacher2.jpg" />
             <p class="name">谭征宇</p>
             </a>
-            <a href="#" class="post_info de_borderbox">
-            <h4>感性设计讲义，第3节</h4>
-            <ul class="tags">
+            <div class="post_info de_borderbox">
+            <img class="thumb" src="images/thumb_default_500.png" />
+            <h4><a href="#">感性设计讲义，第3节</a></h4>
+            <ul class="de_media_tags">
             	<li class="tag_ppt">PPT</li>
                 <li class="tag_file">文档</li>
             </ul> 
-            </a>
+            </div>
         </li>
         <li>
        		<a href="#" class="user_info">
         	<img class="photo" src="data/teacher3.jpg" />
             <p class="name">季铁</p>
             </a>
-            <a href="#" class="post_info de_borderbox">
-            <h4>疆Home Style社会创新夏令营工作总结</h4>
-            <ul class="tags">
+            <div class="post_info de_borderbox">
+            <img class="thumb" src="images/thumb_default_500.png" />
+            <h4><a href="#">疆Home Style社会创新夏令营工作总结</a></h4>
+            <ul class="de_media_tags">
             	<li class="tag_ppt">PPT</li>
                 <li class="tag_local_video">本地视频</li>
             </ul>          	
-            </a>
+            </div>
         </li>
-        <li>
+<li>
        		<a href="#" class="user_info">
         	<img class="photo" src="data/teacher1.jpg" />
             <p class="name">何人可</p>
             </a>
-            <a href="#" class="post_info de_borderbox">
-            <h4>工业设计史</h4>
-            <ul class="tags">
+            <div class="post_info de_borderbox">
+            <h4><a href="#">工业设计史 - 中国设计地图</a></h4>
+            <ul class="de_category_tags">
+            	<li><a href="#">工业设计史</a></li>
+                <li><a href="#">设计地图</a></li>
+                <li><a href="#">何人可</a></li>
+            </ul>
+            <ul class="de_media_tags">
             	<li class="tag_ppt">PPT</li>
             	<li class="tag_web_video">网络视频</li>
                 <li class="tag_local_video">本地视频</li>
                 <li class="tag_3d">3D</li>
                 <li class="tag_file">文档</li>
             </ul>       	
-            </a>
+            </div>
         </li>
         <li>
        		<a href="#" class="user_info">
         	<img class="photo" src="data/teacher2.jpg" />
             <p class="name">谭征宇</p>
             </a>
-            <a href="#" class="post_info de_borderbox">
-            <h4>感性设计</h4>
-            <ul class="tags">
+            <div class="post_info de_borderbox">
+            <h4><a href="#">感性设计讲义，第3节</a></h4>
+            <ul class="de_media_tags">
             	<li class="tag_ppt">PPT</li>
                 <li class="tag_file">文档</li>
             </ul> 
-            </a>
+            </div>
         </li>
         <li>
        		<a href="#" class="user_info">
         	<img class="photo" src="data/teacher3.jpg" />
             <p class="name">季铁</p>
             </a>
-            <a href="#" class="post_info de_borderbox">
-            <h4>疆Home Style社会创新夏令营工作总结</h4>
-            <ul class="tags">
+            <div class="post_info de_borderbox">
+            <h4><a href="#">疆Home Style社会创新夏令营工作总结</a></h4>
+            <ul class="de_media_tags">
             	<li class="tag_ppt">PPT</li>
                 <li class="tag_local_video">本地视频</li>
             </ul>          	
-            </a>
+            </div>
         </li>
-        <li>
-       		<a href="#" class="user_info">
-        	<img class="photo" src="data/teacher1.jpg" />
-            <p class="name">何人可</p>
-            </a>
-            <a href="#" class="post_info de_borderbox">
-            <h4>工业设计史</h4>
-            <ul class="tags">
-            	<li class="tag_ppt">PPT</li>
-            	<li class="tag_web_video">网络视频</li>
-                <li class="tag_local_video">本地视频</li>
-                <li class="tag_3d">3D</li>
-                <li class="tag_file">文档</li>
-            </ul>       	
-            </a>
-        </li>
-        <li>
-       		<a href="#" class="user_info">
-        	<img class="photo" src="data/teacher2.jpg" />
-            <p class="name">谭征宇</p>
-            </a>
-            <a href="#" class="post_info de_borderbox">
-            <h4>感性设计</h4>
-            <ul class="tags">
-            	<li class="tag_ppt">PPT</li>
-                <li class="tag_file">文档</li>
-            </ul> 
-            </a>
-        </li>
-        <li>
-       		<a href="#" class="user_info">
-        	<img class="photo" src="data/teacher3.jpg" />
-            <p class="name">季铁</p>
-            </a>
-            <a href="#" class="post_info de_borderbox">
-            <h4>疆Home Style社会创新夏令营工作总结</h4>
-            <ul class="tags">
-            	<li class="tag_ppt">PPT</li>
-                <li class="tag_local_video">本地视频</li>
-            </ul>          	
-            </a>
-        </li>
-    </ul>
-  
+    </ul>  
 </section>
-
 
 
 

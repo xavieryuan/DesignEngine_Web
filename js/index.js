@@ -27,6 +27,21 @@ $(document).ready(function(e) {
 		 				 
 	$(document).on("click",function(){
 		hideAllMenu()
+		})
+	
+	//section tab标签
+	$("#de_section_tab>ul>li>a").on("click",function(evt){
+		
+		$("#de_section_tab>ul>li>a").each(function(index, ele) {
+            $(ele).removeClass("de_tab_active");
+			$($(ele).attr("href")).addClass("de_hidden")
+        });
+		
+		var target=$(this).attr("href");
+		$(this).addClass("de_tab_active")
+		$(target).removeClass("de_hidden")
+		
+		evt.preventDefault();
 		})	 
 			 
 });
