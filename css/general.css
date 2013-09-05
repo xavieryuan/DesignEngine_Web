@@ -1027,19 +1027,7 @@ background: #fff;
 	bottom:30px;
 	width:100%;
 	}
-.de_category_tags:before{
-	content:"标签：";
-	color:#666;
-	}
-.de_category_tags li{
-	display:inline;
-	}
-.de_category_tags li a:after{
-	content:", "
-	}
-.de_category_tags li a:hover{
-	color:#8FC31F;
-	}
+
 .de_project_grid .de_media_tags{
 	position:absolute;
 	left:10px;
@@ -1274,25 +1262,50 @@ background: #fff;
 	width:600px;
 	margin:auto;
 	font-size:0;
+	white-space:nowrap;
 	}
 .de_screen_upload .de_tab_upload li{
 	display:inline-block;
 	width:33.3%;
+	border:#ccc 1px solid;
+	border-bottom:none;
+	margin-left:-1px;
 	}
 .de_screen_upload .de_tab_upload li a{
 	display:inline-block;
 	height:60px;
 	line-height:60px;
-	color:#333;
+	color:#ccc;
 	width:100%;
 	font-size:14px;
+	font-weight:bold;
 	text-align:center;
 	text-decoration:none;
 	position:relative;
+	text-shadow:0 1px 0 rgba(255,255,255,0.5);
 	}
 .de_screen_upload .de_tab_upload li a.active{
-	background:url(../images/top_nav_btn_active_bg.png) no-repeat;
+	color:#666;
+	/*渐变色*/
+	background: #efefef; /* Old browsers */
+	background: -moz-linear-gradient(top,  #efefef 0%, #cccccc 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#efefef), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #efefef 0%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #efefef 0%,#cccccc 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #efefef 0%,#cccccc 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #efefef 0%,#cccccc 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+	
 	}
+.de_screen_upload .de_tab_upload li a.active:hover{
+	color:#390;
+	}
+.de_screen_upload .de_tab_upload li a.current{	
+	background:url(../images/top_nav_btn_active_bg.png) no-repeat;	
+	color:#390;
+	text-shadow:0 1px 0 rgba(255,255,255,0.5);
+	}
+
 .de_screen_upload .de_tab_step1:after,.de_screen_upload .de_tab_step2:after{
 	content:"";
 	display:inline-block;
@@ -1308,8 +1321,7 @@ background: #fff;
 .de_screen_upload .de_form_upload{
 	padding:20px;
 	background:#fff;
-	width:80%;
-	min-width:600px;
+	width:950px;
 	margin:auto;
 	}
 .de_form_upload label{
@@ -1329,21 +1341,65 @@ background: #fff;
 .de_screen_upload .de_field_project_tag{
 
 	}
+
+.de_screen_upload .de_category_tag_box{
+	height:auto;
+	min-height:40px;
+	}
+.de_screen_upload .de_category_tag_box li{
+	display:inline;
+	}
+.de_screen_upload .de_category_tag_box li a{
+	font-size:12px;
+	padding:0 10px 0 30px;
+	line-height:30px;
+	text-decoration:none;
+	color:#fff;	
+	display:inline-block;
+	position:relative;
+	background:#8FC31F;
+	border-radius:4px;
+	margin:0 10px 10px 0;
+	}
+.de_screen_upload .de_category_tag_box li a:before{
+	content:"";
+	width:20px;
+	height:20px;
+	display:inline-block;
+	position:absolute;
+	top:5px;
+	left:5px;
+	background:url(../images/icon20_tag_white.png) no-repeat;
+	}
+.de_screen_upload .de_category_tag_box li a:hover:before{
+	background:url(../images/icon20_delete_white.png) no-repeat #C00;
+	border-radius:10px;
+	}
+
+
 .de_screen_upload .de_field_project_description textarea{
 	padding:10px;
 	resize:vertical;
+	min-height:60px;
 	}
 .de_screen_upload .de_field_project_thumb{
 	position:absolute;
 	top:0;
 	margin:0;
-	right:20px;
+	right:0;
+	padding-left:20px;
+	border-left:#ccc 1px dotted;
 	}
 .de_screen_upload .de_project_thumb{
 	display:block;
 	
 	}
-	 
+.de_screen_upload .de_btn_upload_thumb{
+	width:100px;
+	margin-bottom:10px;
+	}	 
+
+
 
 /*************页脚****************/
 	
