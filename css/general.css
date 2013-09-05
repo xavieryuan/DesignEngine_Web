@@ -6,7 +6,7 @@ body {
 	margin:0px;
 	font-family: "微软雅黑", "黑体", Arial, "Times New Roman", Verdana;	
 }
-ul{
+ul,ol{
 	margin:0;
 	padding:0;
 }
@@ -1243,57 +1243,16 @@ background: #fff;
 
 /*****************首页作品列表******************/		
 .de_screen_project{
-
-
 }
-.de_screen_project h2{
-	}
-.de_screen_project h2:before{
-	content:"";
-	display:inline-block;
-	width:30px;
-	height:30px;
-	background:url(../images/icon30_badge.png) no-repeat;
-	vertical-align:middle;
-	/*position:absolute;
-	left:0;
-	top:0;*/
-	}
-
-
-
 
 /*********首页学习资源******************/
 .de_screen_resource{
 	
     }
-.de_screen_resource>h2{
-	}
-.de_screen_resource h2:before{
-	content:"";
-	display:inline-block;
-	width:30px;
-	height:30px;
-	background:url(../images/icon30_badge.png) no-repeat;
-	vertical-align:middle;
-	/*position:absolute;
-	left:0;
-	top:0;*/
-	}
-
-
-
 /*************首页荣誉榜****************/
 .de_screen_designer{
-	padding: 20px 0 0 0;
-
+	
 	}
-
-.de_screen_designer h2{
-	}
-
-
-
 
 
 /*************搜索结果****************/
@@ -1303,9 +1262,89 @@ background: #fff;
 
 /*************个人主页****************/
 .de_screen_user_profile{
-	padding: 20px 0 0 0;
-	}
 	
+	}
+
+/*************作品上传****************/
+.de_screen_upload{
+	
+	}
+.de_screen_upload .de_tab_upload{
+	padding: 40px 0 0 0;
+	width:600px;
+	margin:auto;
+	font-size:0;
+	}
+.de_screen_upload .de_tab_upload li{
+	display:inline-block;
+	width:33.3%;
+	}
+.de_screen_upload .de_tab_upload li a{
+	display:inline-block;
+	height:60px;
+	line-height:60px;
+	color:#333;
+	width:100%;
+	font-size:14px;
+	text-align:center;
+	text-decoration:none;
+	position:relative;
+	}
+.de_screen_upload .de_tab_upload li a.active{
+	background:url(../images/top_nav_btn_active_bg.png) no-repeat;
+	}
+.de_screen_upload .de_tab_step1:after,.de_screen_upload .de_tab_step2:after{
+	content:"";
+	display:inline-block;
+	width:8px;
+	height:13px;
+	background:url(../images/triangle_right.png) no-repeat;
+	position:absolute;
+	top:50%;
+	right:30px;
+	margin-top:-7px;
+	}
+
+.de_screen_upload .de_form_upload{
+	padding:20px;
+	background:#fff;
+	width:80%;
+	min-width:600px;
+	margin:auto;
+	}
+.de_form_upload label{
+	font-size:12px;
+	font-weight:bold;
+	margin:10px 0;
+	display:block;
+	}
+.de_screen_upload  .de_upload_step1{
+	position:relative;
+	min-height:500px;
+	padding-right:440px;
+	}
+.de_screen_upload .de_field_project_title{
+
+	}
+.de_screen_upload .de_field_project_tag{
+
+	}
+.de_screen_upload .de_field_project_description textarea{
+	padding:10px;
+	resize:vertical;
+	}
+.de_screen_upload .de_field_project_thumb{
+	position:absolute;
+	top:0;
+	margin:0;
+	right:20px;
+	}
+.de_screen_upload .de_project_thumb{
+	display:block;
+	
+	}
+	 
+
 /*************页脚****************/
 	
 .de_footer {

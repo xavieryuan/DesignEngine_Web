@@ -64,7 +64,7 @@ $(document).ready(function(evt) {
 		evt.stopPropagation();
 		}) 		
 
-//数据相关的初始化
+//数据相关的初始化，需修改
 	
 	//Filter Menu 按钮点击事件	
 	$("#de_filter_menu li>a").on("click",function(evt){
@@ -103,7 +103,7 @@ $(document).ready(function(evt) {
 		})
 		
 	$(".user_info a").on("click",function(evt){
-		DE.UIManager.showScreen("#");		
+		DE.UIManager.showScreen("#de_screen_user_profile");		
 		})
 	
 	//显示作品详情

@@ -752,7 +752,40 @@
 
 <!-----------上传作品----------->
 <section class="de_screen_upload de_hidden" id="de_screen_upload">
-上传作品
+	<nav class="de_tab_upload">
+    	<ol>
+        	<li><a href="#" class="de_tab_step1 active">填写基本信息</a></li>
+            <li><a href="#" class="de_tab_step2">上传</a></li>
+            <li><a href="#" class="de_tab_step3">预览并提交</a></li>
+        </ol>
+    </nav>
+    <form class="de_form_upload de_borderbox de_boxshadow">
+    	<div class="de_upload_step1 de_borderbox" id="de_upload_step1">
+        	<p class="de_field_project_title">
+            <label for="de_input_project_title">标题</label>            	
+            <input type="text" autocomplete="default" value="" class="de_borderbox de_inputbox_gray" name="de_input_project_title" id="de_input_project_title" placeholder="标题">
+            </p>
+            <p class="de_field_project_tag">
+            <label for="de_input_project_tag">分类标签</label>
+            <div class="de_project_tag_box de_inputbox_gray de_borderbox">            	
+            <input type="text" autocomplete="default" value="" class="de_borderbox " name="de_input_project_tag" id="de_input_project_tag" placeholder="新标签">
+            </div>
+            </p>
+            <p class="de_field_project_description">
+       		 	<label for="de_input_project_tag">内容说明</label>
+        		<textarea class="de_borderbox de_inputbox_gray" placeholder="内容说明..."></textarea></p>
+        <p class="de_field_project_thumb">
+        <a href="#" class="de_btn_upload_thumb">上传缩略图</a>
+        <img class="de_project_thumb" width="400" height="400" />
+        </p>
+        </div>
+    	<div class="de_upload_step2" id="de_upload_step2">
+        	第二步
+        </div>
+    	<div class="de_upload_step3" id="de_upload_step3">
+        	第三步
+        </div>
+    </form>
 </section>
 
 </div>
