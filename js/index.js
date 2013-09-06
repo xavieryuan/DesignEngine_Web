@@ -3,7 +3,8 @@
 $(document).ready(function(evt) {
 //初始化
 	
-//数据无关的初始化工作
+	//数据无关的初始化工作
+	
 	//登录注册按钮点击事件
 	$(".de_btn_login_reg").on("click",function(evt){
 		DE.UIManager.showLoginPopout();
@@ -30,8 +31,7 @@ $(document).ready(function(evt) {
 		})
 	//忘记密码按钮点击事件	
 	$("#de_btn_forgot_pwd").on("click",function(){
-		DE.UIManager.showRecoverPwdPopout();
-		
+		DE.UIManager.showRecoverPwdPopout();		
 		})
 	//重置密码按钮点击事件
 	$("#de_btn_reset_pwd").on("click",function(){
@@ -41,7 +41,11 @@ $(document).ready(function(evt) {
 	$("#de_btn_edit_profile").on("click",function(){
 		DE.UIManager.showEditProfilePopout();
 		})
-	
+	//上传页面标签页导航
+	$("#de_screen_upload .de_tab_upload li a").on("click",function(evt){
+		DE.UIManager.gotoUploadStep($(this).attr("href"));
+		evt.preventDefault();
+		})
 	
 	//关闭弹窗按钮点击事件
 	$("#de_popout .de_popout_close_btn").on("click",function(){

@@ -231,7 +231,7 @@ background: #fff;
 .de_popout h4{
 	font-weight:normal;
 	font-size:16px;
-	color:#8FC31F;
+	color:#8CC63F;
 	margin:15px 0;
 	}
 .de_popout article{
@@ -286,7 +286,7 @@ background: #fff;
 	margin:0;
 	}
 .de_popout_login .de_forgot_pwd a:hover{
-	color:#8FC31F;
+	color:#8CC63F;
 	}
 
 .de_link_openid_login{	
@@ -864,7 +864,7 @@ background: #fff;
 	white-space:nowrap;
 	}	
 .de_filter_group > .de_menu_list li:hover{
-	background-color:#8FC31F; 
+	background-color:#8CC63F; 
 	color:#fff;
 	}	
 .de_filter_group > .de_menu_list li a:hover{  
@@ -1171,7 +1171,7 @@ background: #fff;
 	height:62px;
 	overflow:hidden;
 	font-size:16px;
-	color:#8FC31F;
+	color:#8CC63F;
 	font-weight:bold;
 	}
 
@@ -1283,9 +1283,11 @@ background: #fff;
 	text-decoration:none;
 	position:relative;
 	text-shadow:0 1px 0 rgba(255,255,255,0.5);
+	cursor:default;
 	}
 .de_screen_upload .de_tab_upload li a.active{
 	color:#666;
+	cursor:pointer;
 	/*渐变色*/
 	background: #efefef; /* Old browsers */
 	background: -moz-linear-gradient(top,  #efefef 0%, #cccccc 100%); /* FF3.6+ */
@@ -1317,7 +1319,6 @@ background: #fff;
 	right:30px;
 	margin-top:-7px;
 	}
-
 .de_screen_upload .de_form_upload{
 	padding:20px;
 	background:#fff;
@@ -1330,18 +1331,12 @@ background: #fff;
 	margin:10px 0;
 	display:block;
 	}
+/*****上传第一步******/
 .de_screen_upload  .de_upload_step1{
 	position:relative;
 	min-height:500px;
 	padding-right:440px;
 	}
-.de_screen_upload .de_field_project_title{
-
-	}
-.de_screen_upload .de_field_project_tag{
-
-	}
-
 .de_screen_upload .de_category_tag_box{
 	height:auto;
 	min-height:40px;
@@ -1357,7 +1352,7 @@ background: #fff;
 	color:#fff;	
 	display:inline-block;
 	position:relative;
-	background:#8FC31F;
+	background:#8CC63F;
 	border-radius:4px;
 	margin:0 10px 10px 0;
 	}
@@ -1375,8 +1370,6 @@ background: #fff;
 	background:url(../images/icon20_delete_white.png) no-repeat #C00;
 	border-radius:10px;
 	}
-
-
 .de_screen_upload .de_field_project_description textarea{
 	padding:10px;
 	resize:vertical;
@@ -1391,16 +1384,44 @@ background: #fff;
 	border-left:#ccc 1px dotted;
 	}
 .de_screen_upload .de_project_thumb{
-	display:block;
-	
+	display:block;	
 	}
 .de_screen_upload .de_btn_upload_thumb{
 	width:100px;
 	margin-bottom:10px;
 	}	 
 
+/*****上传第二步******/
 
 
+/*****上传第三步******/
+.de_screen_upload .de_upload_step3{
+	position:relative;
+	min-height:500px;
+	width:780px;
+	margin:auto;
+	padding-top:100px;
+	}
+.de_upload_step3 .de_project_detail .user_info{
+	top:40px;
+	left:0;
+	}
+.de_screen_upload .de_submit_upload{
+	position:absolute;
+	top:-20px;
+	right:0;
+	width:80px;
+	height:128px;
+	padding-top:40px;
+	border:none;
+	background:url(../images/flag_reg_upload_green.png) no-repeat;
+	color:#fff;
+	font-size:20px;
+	font-weight:bold;
+	vertical-align:top;
+	font-family:"微软雅黑";
+	cursor:pointer;
+	}
 /*************页脚****************/
 	
 .de_footer {
@@ -1462,23 +1483,28 @@ background: #fff;
 	width:80px;
 	height:126px;
 	position:relative;
-	font-size:0;
-	text-indent:-9999px;
+	font-size:20px;
+	font-weight:bold;
+	text-align:center;
+	text-decoration:none;
+	padding-top:70px;
 	}
 .de_flag_reg_zanned{
-	background:url(../images/flag_reg_zan_white.png) no-repeat;
+	background:url(../images/flag_reg_zan_white.png) no-repeat;	
+	color:#8CC63F;
 	}
 .de_flag_reg_zan{
 	background:url(../images/flag_reg_zan_green.png) no-repeat;
+	color:#fff;
 	}
 .de_flag_vip_zanned{
 	background:url(../images/flag_vip_zan_white.png) no-repeat;
+	color:#8CC63F;	
 	}
 .de_flag_vip_zan{
 	background:url(../images/flag_vip_zan_green.png) no-repeat;
+	color:#fff;
 	}
-
-
 .de_screen_project_detail .de_project_detail{
 	margin:40px auto;
 	background:#fff;
@@ -1594,7 +1620,7 @@ background: #fff;
 	}
 .de_comment_box .name{
 	text-decoration:none;
-	color:#8FC31F;
+	color:#8CC63F;
 	font-size:16px;
 	font-weight:bold;
 	}

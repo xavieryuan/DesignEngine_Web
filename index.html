@@ -754,13 +754,13 @@
 <section class="de_screen_upload de_hidden" id="de_screen_upload">
 	<nav class="de_tab_upload">
     	<ol>
-        	<li><a href="#" class="de_tab_step1 active current">1. 填写基本信息</a></li>
-            <li><a href="#" class="de_tab_step2 active">2. 上传</a></li>
-            <li><a href="#" class="de_tab_step3">3. 预览并提交</a></li>
+        	<li><a href="#de_upload_step1" class="de_tab_step1 active current">1. 填写基本信息</a></li>
+            <li><a href="#de_upload_step2" class="de_tab_step2 active">2. 上传</a></li>
+            <li><a href="#de_upload_step3" class="de_tab_step3 active">3. 预览并提交</a></li>
         </ol>
     </nav>
     <form class="de_form_upload de_borderbox de_boxshadow">
-    	<div class="de_upload_step1 de_borderbox" id="de_upload_step1">
+    	<div class="de_upload_step de_upload_step1 de_borderbox" id="de_upload_step1">
         	<p class="de_field_project_title">  
             <label for="de_input_project_title">标题</label>          	
             <input type="text" autocomplete="default" value="" class="de_borderbox de_inputbox_gray" name="de_input_project_title" id="de_input_project_title" placeholder="">
@@ -780,14 +780,40 @@
         <p class="de_field_project_thumb">
         
         <a href="#" class="de_btn_upload_thumb de_button">上传缩略图</a>
-        <img class="de_project_thumb" width="400" height="400" />
+        <img class="de_project_thumb" width="400" height="400" src="images/default_thumb_500.png" />
         </p>
         </div>
-    	<div class="de_upload_step2" id="de_upload_step2">
+    	<div class="de_upload_step de_upload_step2 de_hidden" id="de_upload_step2">
         	第二步
         </div>
-    	<div class="de_upload_step3" id="de_upload_step3">
-        	第三步
+    	<div class="de_upload_step de_upload_step3 de_hidden" id="de_upload_step3">
+        <input type="submit" autocomplete="default" value="提交" class="de_borderbox de_submit_upload" name="de_submit_upload" id="de_submit_upload" />
+        <article class="de_project_detail de_borderbox">        
+        <h2>项目标题可能会非常非常的长，项目标题可能会非常非常的长</h2>
+        <p class="publishtime">2013-07-23</p>        
+        <div class="user_info">
+            <a href="#">
+            <img class="photo" src="data/people1.jpg">
+            <p class="name">淘宝鬼脚七</p>
+            </a>
+        </div>     
+        <p class="abstract">《设计模型》课程的教学思路从2010年开始进行了较大改革，模型技能培养从传统的手工制作为主向虚拟模型构建为主、物质模型制作为辅转变，特别强调虚实模型之间快速精确转换的关键技术传授和操作方法实践指导。通过三年多设计的探索，以“在做中学，在做中教”的思想为指引，使学生在进行“设计构思—实物模型---数字模型”的过程中去意会“心到、眼到、手到”的感觉，以此不断提升实物模型制作和虚拟模型构建两方面的能力。        
+        </p>
+        <div class="main_content">
+        <figure>
+        <img src="data/01.jpg" />
+        <figcaption>关于这张图片的说明与描述</figcaption>
+        </figure>
+        <figure>
+        <img src="data/02.jpg" />
+        <figcaption>关于这张图片的说明与描述</figcaption>
+        </figure>
+        <figure>
+        <img src="data/03.jpg" />
+        <figcaption>关于这张图片的说明与描述</figcaption>
+        </figure>
+        </div>
+        </article>
         </div>
     </form>
 </section>
@@ -804,7 +830,7 @@
 <section class="de_screen_project_detail de_hidden" id="de_screen_project_detail">
 		<a href="#" class="de_btn_close_project_detail" id="de_btn_close_project_detail">关闭</a>  
 		<div class="de_project_header de_borderbox">           
-        	<a href="#" class="de_btn_zan de_flag_reg_zan">给个赞！</a>
+        	<a href="#" class="de_btn_zan de_flag_reg_zan de_borderbox">赞</a>
         	                   
             <ul class="de_project_toolbar de_transition">
                 <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
