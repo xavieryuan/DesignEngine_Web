@@ -13,22 +13,45 @@ DE.store={
     },
     currentUser:{
         userId:0,
-        FullName:"",
+        name:"",
         figureUrl:"",
         role:""
     },
-    currentEntityId:0,
-    userWorksCount:0,
-    workLoadedDate:"",//分页加载，最后一个作品的时间
+    currentShowUser:{
+        userId:0,
+        name:"",
+        figureUrl:"",
+        role:""
+    },
+    hotUserLoadedId:0,
+    projectLoadedDate:"",//分页加载，最后一个作品的时间
     resourceLoadedDate:"",
-    currentShowEntity:"work",//当前显示的实体类型
+    currentShowEntity:"project",//当前显示的实体类型
     entityShowOrNot:false,
-    userWorksShow:0, //查看用户那里的作品，已经显示的个数，本地分页
-    currentUrl:"",//存储下已经加载的数据，点击的时候获取一部分资料
+    hasPraised:false,//是否赞过
+    userProjectsCount:0,
+    userProjectsShow:0, //查看用户那里的作品，已经显示的个数，本地分页
     clearStore:function(){
-        this.userWorksCount=0;
-        this.userWorksShow=0;
-        this.lastLoadedDate="";
-        this.currentShowEntity="work";
+        this.userProjectsCount=0;
+        this.userProjectsShow=0;
+        this.projectLoadedDate="";
+        this.resourceLoadedDate="";
+        this.currentShowEntity="project";
+        this.currentShowUser.userId=0;
+        this.currentShowUser.name="";
+        this.currentShowUser.figureUrl="";
+        this.currentShowUser.role="";
+    },
+    clearCurrentUser:function(){
+        this.currentUser.userId=0;
+        this.currentUser.name="";
+        this.currentUser.figureUrl="";
+        this.currentUser.role="";
+    },
+    initCurrentUser:function(data){
+        this.currentUser.userId=data.userId;
+        this.currentUser.figureUrl=data.figureUrl;
+        this.currentUser.role=data.role;
+        this.currentUser.name=data.name;
     }
 };

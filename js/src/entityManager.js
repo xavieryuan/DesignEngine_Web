@@ -11,18 +11,38 @@ DE.entity=(function(){
     var data=null;
 
     return {
-        getEntityAttachment:function(type){
-            if(type==DE.config.entityTypes.project){
-
-            }
+        getEntityAttachment:function(){
+            var me=this;
             $.ajax({
-                url:DE.config.urls.getWorkDetail,
-                type:"post",
-                data:{
-
-                },
+                url:DE.config.ajaxUrls.getEntityAttachments,
+                type:"get",
                 dataType:"json",
                 success:function(data){
+                    me.showAttachment(data);
+                },
+                error:function(){
+
+                }
+
+            });
+        },
+        getEntityDetail:function(){
+            var me=this;
+            $.ajax({
+                url:DE.config.ajaxUrls.getEntityDetail,
+                type:"get",
+                async:false,
+                dataType:"json",
+                success:function(data){
+
+                    //记录是否赞过
+                    DE.store.hasPraised=data.praised;
+
+                    //展示工具栏
+                    me.showEntityTool(data);
+
+                    //展示头部
+                    me.showEntityDetailTop(data);
 
                 },
                 error:function(){
@@ -46,7 +66,7 @@ DE.entity=(function(){
                 dataType:"json",
                 success:function(data){
                     if(type==DE.config.entityTypes.project){
-                        DE.store.workLoadedDate=data.projects[data.projects.length-1]["date"];
+                        DE.store.projectLoadedDate=data.projects[data.projects.length-1]["date"];
                     }else{
                         DE.store.resourceLoadedDate=data.resource[data.resource.length-1]["date"];
                     }
@@ -194,16 +214,14 @@ DE.entity=(function(){
 
             });
         },
-        getSimilarWorks:function(){
+        getSimilarEntities:function(){
+            var me=this;
             $.ajax({
-                url:DE.config.urls.getWorkById,
-                type:"post",
-                data:{
-
-                },
+                url:DE.config.ajaxUrls.getSimilarEntities,
+                type:"get",
                 dataType:"json",
                 success:function(data){
-
+                     me.showSimilarEntity(data);
                 },
                 error:function(){
 
@@ -212,15 +230,16 @@ DE.entity=(function(){
             });
         },
         getComments:function(){
+            var me=this;
             $.ajax({
-                url:DE.config.urls.getWorkById,
-                type:"post",
+                url:DE.config.ajaxUrls.getComments,
+                type:"get",
                 data:{
 
                 },
                 dataType:"json",
                 success:function(data){
-
+                    me.showComment(data);
                 },
                 error:function(){
 
@@ -320,19 +339,64 @@ DE.entity=(function(){
             });
         },
 
-        entityClickHandler:function(target){
+        entityClickHandler:function(href){
+            DE.history.push(href); //由于有清空store的操作，需要最先执行
+            var array=href.split("/");
+            var id=array[3];
+            $("#de_screen_project_detail").html('<article id="de_project_detail" class="de_project_detail de_borderbox de_boxshadow"></article>');
+
+
+            //请求详细信息
+            this.getEntityDetail();
 
             //请求附件
+            this.getEntityAttachment();
 
-            //展示附件,juicer
+            //请求评论
+            this.getComments();
+
+            //请求相似实体
+            this.getSimilarEntities();
 
             //显示展现层
-        },
-        showAttachment:function(){
+            DE.UIManager.showProjectDetail();
 
         },
-        showComments:function(){
+        showEntityDetailTop:function(data){
+            var tpl=$("#entityDetailTopTpl").html();
+            data.entity.root=DE.config.root;
+            var html=juicer(tpl,data.entity);
+            $("#de_project_detail").html($(html));
+        },
+        showEntityTool:function(data){
+            var tpl=$("#entityToolTpl").html();
+            var showFlag=false;
+            if(data.userId==DE.store.currentUser.userId||DE.store.currentUser.role==DE.config.roles.admin){
+                showFlag=true;
+            }
+            var html=juicer(tpl,{
+                hasPraised:data.entity.praised,
+                canShowToolBar:showFlag
+            });
+            $("#de_screen_project_detail").prepend($(html));
 
+        },
+        showSimilarEntity:function(data){
+            var tpl=$("#similarEntityTpl").html();
+            data.root=DE.config.root;
+            var html=juicer(tpl,data);
+            $("#de_screen_project_detail").append($(html));
+        },
+        showAttachment:function(data){
+            var tpl=$("#entityMainContentTpl").html();
+            var html=juicer(tpl,data);
+            $("#de_project_detail").append($(html));
+        },
+        showComment:function(data){
+            var tpl=$("#entityCommentsTpl").html();
+            data.root=DE.config.root;
+            var html=juicer(tpl,data);
+            $("#de_screen_project_detail").append($(html));
         },
         showEntity:function(data,type){
             var tpl="",html="";
@@ -355,8 +419,17 @@ DE.entity=(function(){
 $(document).ready(function(){
 
     //显示当个实体详情
-    $(document).on("click","a.entityLink",function(){
-        DE.entity.entityClickHandler($(this).attr("target"));
+    $(document).on("click","a.de_entity_link",function(){
+        DE.entity.entityClickHandler($(this).attr("href"));
+
+        return false;
+    });
+
+    //关闭作品详情
+    $(document).on("click","#de_btn_close_project_detail",function(){
+        DE.UIManager.hideProjectDetail();
+
+        return false;
     });
 
 });

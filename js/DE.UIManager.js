@@ -141,17 +141,17 @@ DE.UIManager=function(){
 			$("#de_reset_pwd").focus();		
 		},
 		showEditProfilePopout:function(){
-			showPopout()
+			showPopout();
 			$("#de_popout>.de_inner_wrapper").css("left","-500%");
 			$("#de_popout>.de_popout_title").html("编辑个人信息");
 		},
 		hidePopout:function(){
-			hidePopout()
+			hidePopout();
 		},	
 		hideAllMenuAndPopouts:function(){
-			DE.UIManager.hideFilterMenu()
-			DE.UIManager.hideExtMenu()
-			hidePopout()
+			DE.UIManager.hideFilterMenu();
+			DE.UIManager.hideExtMenu();
+			hidePopout();
 		},
 		gotoUploadStep:function(stepID){
 			$("#de_screen_upload .de_upload_step").addClass("de_hidden")
@@ -166,30 +166,13 @@ DE.UIManager=function(){
 				$("#de_screen_upload .de_tab_step3").addClass("current")			
 			}
 		},
-		guestView:function(){
-			$(".de_guest_view").removeClass("de_hidden");
-			$(".de_reg_view").addClass("de_hidden");
-			$(".de_vip_view").addClass("de_hidden");
-			$(".de_admin_view").addClass("de_hidden");
-		},
-		regView:function(){
-			$(".de_guest_view").addClass("de_hidden");
-			$(".de_reg_view").removeClass("de_hidden");
-			$(".de_vip_view").addClass("de_hidden");
-			$(".de_admin_view").addClass("de_hidden");
-		},
-		vipView:function(){
-			$(".de_guest_view").addClass("de_hidden");
-			$(".de_reg_view").addClass("de_hidden");
-			$(".de_vip_view").removeClass("de_hidden");
-			$(".de_admin_view").addClass("de_hidden");
-		},
-		adminView:function(){
-			$(".de_guest_view").addClass("de_hidden");
-			$(".de_reg_view").addClass("de_hidden");
-			$(".de_vip_view").addClass("de_hidden");
-		$(".de_admin_view").removeClass("de_hidden");
+
+		showLoginMenu:function(data){
+            var tpl=$("#menuTpl").html();
+            var html=juicer(tpl,data);
+            $("#de_menu").html(html);
 		}
+
 	//公共属性及方法 结束
 	}
-}()
+}();

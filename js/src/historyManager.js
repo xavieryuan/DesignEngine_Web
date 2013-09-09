@@ -31,6 +31,7 @@ DE.history=(function(){
             case "resource":
                 break;
             case "entity":
+                //默认请求首页数据
                 break;
             default :
             //同tag/all，请求首页的设计作品数据

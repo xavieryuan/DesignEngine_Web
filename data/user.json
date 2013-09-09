@@ -1,0 +1,11 @@
+{
+    "user":{
+        "name":"ty",
+        "describe":"",
+        "profile":"/DesignEngine_Web/data/people1.jpg",
+        "praiseCount":34,
+        "uploadCount":45,
+        "id":1,
+        "role":"user"
+    }
+}
