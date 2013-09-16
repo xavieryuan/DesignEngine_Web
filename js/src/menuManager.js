@@ -18,28 +18,68 @@ DE.menu=(function(){
 
             //用户页面
         },
+
+        /**
+         * 操作中不需要特地为第一次加载清空容器，因为所有容器的数据在ui的showScreen函数中进行了清除
+         * @param href
+         */
         topMenuClickHandler:function(href){
             DE.history.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var type=array[2];
-            if(type=="project"){
-                $("#de_project_list").html("");
-                DE.entity.getAllEntity(type);
-                DE.UIManager.showScreen("#de_screen_project");
-            }else if(type=="resource"){
-                $("#de_resource_list").html("");
-                DE.entity.getAllEntity(type);
-                DE.UIManager.showScreen("#de_screen_resource");
-            }else if(type=="user"){
-                $("#de_hot_user_list").html("");
-                DE.user.getHotUsers();
-                DE.UIManager.showScreen("#de_screen_designer");
-            }else if(type=="upload"){
+            if(type==DE.config.linkTypes.project){
+                //DE.UIManager.showScreen("#de_screen_project"); //放在此处会导致屏幕闪烁，放到ajax的回调中
+                DE.entity.getAllEntity(type,true);
+            }else if(type==DE.config.linkTypes.resource){
+                DE.entity.getAllEntity(type,true);
+            }else if(type==DE.config.linkTypes.user){
+                DE.user.getHotUsers(true);
+            }else if(type==DE.config.linkTypes.upload){
                 DE.UIManager.showScreen("#de_screen_upload");
             }
 
         },
-        searchTagHandler:function(href){
+        getTags:function(){
+            var me=this;
+            $.ajax({
+                url:DE.config.ajaxUrls.getTags,
+                type:"get",
+                dataType:"json",
+                success:function(data){
+                    me.showTags(data);
+                },
+                error:function(){
+
+                }
+
+            });
+        },
+        showTags:function(data){
+            var html="";
+            var projectTagTpl=$("#projectTagTpl").html();
+            html=juicer(projectTagTpl,{root:DE.config.root,projecttags:data.worktags});
+            $("#de_project_tags").html(html);
+
+            var resourceTagTpl=$("#resourceTagTpl").html();
+            html=juicer(resourceTagTpl,{root:DE.config.root,resourcetags:data.resourcetags});
+            $("#de_resource_tags").html(html);
+        },
+        tagClickHandler:function(href,type){
+            DE.history.push(href); //由于有清空store的操作，需要最先执行
+            var array=href.split("/");
+            var tag=array[3];
+
+            DE.store.currentSearchValue=tag; //记录下当前搜索的内容
+            DE.store.currentSearchType=type;
+            DE.entity.getEntityByTag(tag,true);
+        },
+        searchTabClickHandler:function(type){
+
+            //如果当前显示的类型和点击的按钮不一致，则要置换
+            if(type!=DE.currentSearchType){
+                DE.store.currentSearchType=type;
+                DE.entity.getEntityByTag(DE.store.currentSearchValue,true);
+            }
 
         },
         extMenuClickHandler:function(id){
@@ -48,6 +88,7 @@ DE.menu=(function(){
             }else if(id=="de_btn_reset_pwd"){
                 DE.UIManager.showRestPwdPopout();
             }else if(id=="de_btn_edit_profile"){
+                DE.user.setProfile();
                 DE.UIManager.showEditProfilePopout();
             }
         }
@@ -55,9 +96,12 @@ DE.menu=(function(){
 })();
 
 $(document).ready(function(){
+
+    //获取顶部所有的标签
+    DE.menu.getTags();
+
     $("#de_top_nav a").click(function(){
         DE.menu.topMenuClickHandler($(this).attr("href"));
-        //$(this).addClass("active");
 
         return false;
     });
@@ -73,8 +117,13 @@ $(document).ready(function(){
     //初始化登陆菜单
     DE.UIManager.showLoginMenu({user:DE.store.currentUser,root:DE.config.root});
 
+    //首页进入时获取所有的作品
+    DE.entity.getAllEntity(DE.config.entityTypes.project);
+
+
     //登录注册按钮点击事件
     $(document).on("click","#de_btn_login_reg",function(){
+        DE.login.initLoginForm();
         DE.UIManager.showLoginPopout();
 
         return false;
@@ -111,17 +160,38 @@ $(document).ready(function(){
     });
 
 
+    $(document).on("click","#de_project_tags li>a",function(){
+        DE.menu.tagClickHandler($(this).attr("href"),DE.config.entityTypes.project);
 
-    $("#de_filter_menu li>a").on("click",function(evt){
 
-        DE.UIManager.showSearchScreen($(this).text(),"project");
+        return false;
+    });
 
-        //开始查询代码
+    $(document).on("click","#de_resource_tags li>a",function(){
+        DE.menu.tagClickHandler($(this).attr("href"),DE.config.entityTypes.resource);
+
+        return false;
+    });
+
+    //搜索
+    $("#de_search_input").keydown(function(event){
+        if(event.keyCode==13){
+            var value=$(this).val();
+            DE.menu.tagClickHandler(DE.config.root+"/search/"+value);
+        }
+    });
+
+    //搜索结果tab点击事件
+    $("#de_search_result_tab a").click(function(){
+        var type=$(this).data("entity-type");
+
+        DE.menu.searchTabClickHandler(type);
+
+        return false;
     });
 
 
-    DE.entity.getAllEntity(DE.config.entityTypes.project);
-
+    //控制滚动分页
     $(window).scroll(function(){
 
     });

@@ -16,22 +16,38 @@ DE.history=(function(){
         switch (type){
             case "tag":
                 //请求对应数据
+
+                //显示页面
                 break;
             case "project":
                 //请求对应数据
+
+                //显示页面
                 break;
             case "user":
+                //请求对应数据
+
+                //显示页面
                 break;
             case "search":
+                //请求对应数据
+
+                //显示页面
                 break;
             case "upload":
+                //请求对应数据
+
+                //显示页面
                 break;
             case "edit":
+                //请求对应数据
+
+                //显示页面
                 break;
             case "resource":
-                break;
-            case "entity":
-                //默认请求首页数据
+                //请求对应数据
+
+                //显示页面
                 break;
             default :
             //同tag/all，请求首页的设计作品数据
@@ -60,6 +76,7 @@ DE.history=(function(){
     }
     return {
         stateChange:function(event){
+            console.log(event);
             var obj=null;
             if(supports_history_api()){
                 if(event.state){
@@ -85,14 +102,14 @@ DE.history=(function(){
 
             //首页传的href可能只有一个"/"或者"/engine"这种形式
 
+            //当url变化的时候，清空存储器
+            DE.store.clearStore();
+
             if(supports_history_api()){
                 history.pushState({href:href},"",href);
             }else{
                 location.hash="#!"+href;
             }
-
-            //当url变化的时候，清空存储器
-            DE.store.clearStore();
         }
     }
 })();

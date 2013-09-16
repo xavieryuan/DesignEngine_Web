@@ -13,7 +13,7 @@
 var zy_set_common = (function(){
 
     var parent=window.parent;
-    var uploaded_medias=parent.zy_uploaded_medias; //已经上传了的媒体文件
+    var uploaded_medias=parent.DE.store.uploadedMedias; //已经上传了的媒体文件
 
     return {
         /*
@@ -74,7 +74,7 @@ var zy_set_common = (function(){
             if(uploaded_medias[zy_media_id]["zy_media_thumb_filepath"]){
 
                 //设置缩略图,显示压缩后的图片
-                $("#zy_media_thumb").attr("src",this.zy_get_compress_img(uploaded_medias[zy_media_id]["zy_media_thumb_filepath"]));
+                $("#zy_media_thumb").attr("src",uploaded_medias[zy_media_id]["zy_media_thumb_filepath"]);
             }
 
             // 设置标题和描述
@@ -178,18 +178,18 @@ var zy_set_common = (function(){
             var uploader_thumb=new plupload.Uploader({
                 runtimes:"flash",
                 multi_selection:false,
-                max_file_size:parent.zy_config.zy_img_upload_size,
+                max_file_size:parent.DE.config.maxImageSize,
                 browse_button:"zy_upload_thumb_button",
                 container:"zy_left_bottom",
-                flash_swf_url: '../js/lib/plupload.flash.swf',
+                flash_swf_url: parent.DE.config.root+'/js/lib/plupload.flash.swf',
                 url: parent.ajaxurl,//parent在每个js里面都有定义
                 filters : [
                     {title : "Image files", extensions : "jpg,jpeg,png"}
                 ],
                 multipart_params: { action: "uploadfile",
-                    user_id:parent.zy_config.zy_user_id,
+                    user_id:0,
                     file_type:"zy_content_img",//代表图片需要显示到内容中
-                    post_id:jQuery("#post_ID",parent.document).val()
+                    post_id:0
                 }
             });
 

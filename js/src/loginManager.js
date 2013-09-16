@@ -3,7 +3,7 @@
  * User: ty
  * Date: 13-9-4
  * Time: 下午6:01
- * To change this template use File | Settings | File Templates.
+ * 登陆、注册、忘记密码、绑定旧账号
  */
 var DE=DE||{};
 DE.login=(function(){
@@ -28,30 +28,40 @@ DE.login=(function(){
 
                },
                submitHandler:function(form) {
+
                    me.rememberMeHandler();
+
                    $(form).ajaxSubmit({
                        url:DE.config.ajaxUrls.login,
                        dataType:"json",
                        success:function (data) {
                            DE.store.initCurrentUser({
                                role:"user",
-                               figureUrl:"/DesignEngine_Web/data/people1.jpg",
+                               figure:"/DesignEngine_Web/data/people1.jpg",
                                name:"dddddd",
-                               userId:1
+                               userId:1,
+                               description:"ddddddddd",
+                               email:"csboy@163.com"
                            });
-                           DE.login.doSignIn();
+                           DE.UIManager.showLoginMenu({user:DE.store.currentUser,root:DE.config.root});
                            DE.UIManager.hideAllMenuAndPopouts();
+
+                           $(form).clearForm();
                        },
                        error:function (data) {
                            DE.store.initCurrentUser({
                                role:"user",
-                               figureUrl:"/DesignEngine_Web/data/people1.jpg",
+                               figure:"/DesignEngine_Web/data/people1.jpg",
                                name:"dddddd",
-                               userId:1
+                               userId:1,
+                               description:"ddddddddd",
+                               email:"csboy@163.com"
                            });
 
                            DE.UIManager.showLoginMenu({user:DE.store.currentUser,root:DE.config.root});
                            DE.UIManager.hideAllMenuAndPopouts();
+
+                           $(form).clearForm();
                        }
                    });
                }
@@ -124,7 +134,7 @@ DE.login=(function(){
                },
                submitHandler:function(form) {
                    $(form).ajaxSubmit({
-                       url:DE.config.uploadAction,
+                       url:DE.config.ajaxUrls.register,
                        type:"post",
                        data:{
 
@@ -196,7 +206,7 @@ DE.login=(function(){
                var expiration = new Date((new Date()).getTime() + 7*24*60* 60000);//设置时间
                $.cookie("email", emailValue, { expires: expiration }); // 存储一个带15分钟期限的 cookie
            }
-           if ($("#de_remember_me").attr("checked") == "checked") {
+           if ($("#de_remember_me").is(":checked")) {
                var password = $("#de_login_pwd").val();
                var expiration = new Date((new Date()).getTime() + 7*24*60* 60000);//设置时间
                $.cookie("rememberMe", "true", { expires: expiration }); // 存储一个带15分钟期限的 cookie
@@ -210,7 +220,7 @@ DE.login=(function(){
        initLoginForm:function(){
            $("#de_login_email").val($.cookie("email"));
            if ($.cookie("rememberMe") == "true") {
-               $("#de_remember_me").attr("checked", true);
+               $("#de_remember_me").prop("checked","checked");
                $("#de_login_pwd").val($.cookie("password"));
            }
        }
@@ -228,10 +238,10 @@ $(document).ready(function(){
     //登陆
     DE.login.ajaxLogin();
 
+    DE.login.ajaxRegister();
 
-    DE.login.QQLoginHandler();
 
-    DE.login.initLoginForm();
+    //DE.login.QQLoginHandler();
 
 
 });

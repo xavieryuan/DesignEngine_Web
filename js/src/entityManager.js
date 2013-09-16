@@ -36,7 +36,7 @@ DE.entity=(function(){
                 success:function(data){
 
                     //记录是否赞过
-                    DE.store.hasPraised=data.praised;
+                    DE.store.initCurrentShowEntity(data.entity);
 
                     //展示工具栏
                     me.showEntityTool(data);
@@ -51,7 +51,7 @@ DE.entity=(function(){
 
             });
         },
-        getAllEntity:function(type){
+        getAllEntity:function(type,first){
             var me=this;
             if(type==DE.config.entityTypes.project){
                 url=DE.config.ajaxUrls.getAllProjects;
@@ -71,7 +71,7 @@ DE.entity=(function(){
                         DE.store.resourceLoadedDate=data.resource[data.resource.length-1]["date"];
                     }
 
-                    me.showEntity(data,type);
+                    me.showEntities(data,type,first);
                 },
                 error:function(){
 
@@ -79,16 +79,24 @@ DE.entity=(function(){
 
             });
         },
-        getEntityByTag:function(){
-            $.ajax({
-                url:DE.config.urls.getWorkById,
-                type:"post",
-                data:{
 
-                },
+        /**
+         *
+         * @param tag
+         * @param {Boolean} first       是否第一次加载，第一次需要设置显示的screen
+         */
+        getEntityByTag:function(tag,first){
+            var me=this;
+            $.ajax({
+                url:DE.config.ajaxUrls.getSimilarEntities,
+                type:"get",
                 dataType:"json",
+                data:{
+                    tag:tag
+                },
                 success:function(data){
 
+                    me.showSearchEntities(data,first);
                 },
                 error:function(){
 
@@ -96,6 +104,7 @@ DE.entity=(function(){
 
             });
         },
+
         getEntityBySearch:function(){
             $.ajax({
                 url:DE.config.urls.getWorkById,
@@ -112,19 +121,6 @@ DE.entity=(function(){
                 }
 
             });
-        },
-        searchHandler:function(target){
-            var val="";
-            if(target.is("input")){
-                val=target.val();
-            }else{
-                val=target.text();
-            }
-
-            if(val!=""){
-                $("#searchTitle").val("搜索:"+val);
-            }
-
         },
         getTags:function(){
             $.ajax({
@@ -143,12 +139,12 @@ DE.entity=(function(){
 
             });
         },
-        addPraise:function(){
+        handlerPraiseOrHonor:function(){
             $.ajax({
                 url:DE.config.urls.getWorkById,
                 type:"post",
                 data:{
-
+                    id:DE.currentShowEntity.id
                 },
                 dataType:"json",
                 success:function(data){
@@ -160,60 +156,7 @@ DE.entity=(function(){
 
             });
         },
-        changeTab:function(){
 
-        },
-        deletePraise:function(){
-            $.ajax({
-                url:DE.config.urls.getWorkById,
-                type:"post",
-                data:{
-
-                },
-                dataType:"json",
-                success:function(data){
-
-                },
-                error:function(){
-
-                }
-
-            });
-        },
-        addHonor:function(){
-            $.ajax({
-                url:DE.config.urls.getWorkById,
-                type:"post",
-                data:{
-
-                },
-                dataType:"json",
-                success:function(data){
-
-                },
-                error:function(){
-
-                }
-
-            });
-        },
-        deleteHonor:function(){
-            $.ajax({
-                url:DE.config.ajaxUrls.deleteHonor,
-                type:"post",
-                data:{
-
-                },
-                dataType:"json",
-                success:function(data){
-
-                },
-                error:function(){
-
-                }
-
-            });
-        },
         getSimilarEntities:function(){
             var me=this;
             $.ajax({
@@ -284,7 +227,7 @@ DE.entity=(function(){
         canCommentsDelete:function(data){
 
             $.each(data,function(index,m){
-                 if(m.userId==DE.data.currentUser.userId||DE.config.roles.admin==DE.data.currentUser.role){
+                 if(m.userId==DE.store.currentUser.userId||DE.config.roles.admin==DE.store.currentUser.role){
                      data.deleteAbel=true;
                  }
             });
@@ -292,7 +235,7 @@ DE.entity=(function(){
             return data;
         },
         canShowToolbar:function(project){
-            if(project.userId==DE.data.currentUser.userId||DE.config.roles.admin==DE.data.currentUser.role){
+            if(project.userId==DE.store.currentUser.userId||DE.config.roles.admin==DE.store.currentUser.role){
                 return true;
             }
 
@@ -306,7 +249,7 @@ DE.entity=(function(){
                 url:DE.config.ajaxUrls.deleteWork,
                 type:"post",
                 data:{
-
+                    id:DE.store.currentShowEntity.id
                 },
                 dataType:"json",
                 success:function(data){
@@ -318,15 +261,17 @@ DE.entity=(function(){
 
             });
         },
-        editEntity:function(){
-            //更改url，并且设置数据
+        editEntity:function(href){
+            DE.history.push(href);
+
+            DE.upload.editEntity(DE.store.currentShowEntity.id);
         },
         hideEntity:function(){
             $.ajax({
                 url:DE.config.urls.getWorkById,
                 type:"post",
                 data:{
-
+                    id:DE.store.currentShowEntity.id
                 },
                 dataType:"json",
                 success:function(data){
@@ -340,10 +285,8 @@ DE.entity=(function(){
         },
 
         entityClickHandler:function(href){
-            DE.history.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var id=array[3];
-            $("#de_screen_project_detail").html('<article id="de_project_detail" class="de_project_detail de_borderbox de_boxshadow"></article>');
 
 
             //请求详细信息
@@ -371,12 +314,12 @@ DE.entity=(function(){
         showEntityTool:function(data){
             var tpl=$("#entityToolTpl").html();
             var showFlag=false;
-            if(data.userId==DE.store.currentUser.userId||DE.store.currentUser.role==DE.config.roles.admin){
-                showFlag=true;
-            }
+            showFlag=this.canShowToolbar(data.entity);
             var html=juicer(tpl,{
+                id:DE.store.currentShowEntity.id,
                 hasPraised:data.entity.praised,
-                canShowToolBar:showFlag
+                canShowToolBar:showFlag,
+                root:DE.config.root
             });
             $("#de_screen_project_detail").prepend($(html));
 
@@ -398,21 +341,49 @@ DE.entity=(function(){
             var html=juicer(tpl,data);
             $("#de_screen_project_detail").append($(html));
         },
-        showEntity:function(data,type){
+        /**
+         * 这个函数
+         * @param data
+         * @param type
+         * @param first
+         */
+        showEntities:function(data,type,first){
             var tpl="",html="";
 
             if(type==DE.config.entityTypes.project){
                 tpl=$("#projectTpl").html();
                 html=juicer(tpl,{projects:data.projects,root:DE.config.root});
                 $("#de_project_list").append($(html));
+                if(first){
+                    DE.UIManager.showScreen("#de_screen_project");
+                }
+
             }else{
                 tpl=$("#resourceTpl").html();
                 html=juicer(tpl,{resource:data.resource,root:DE.config.root});
                 $("#de_resource_list").append($(html));
+                if(first){
+                    DE.UIManager.showScreen("#de_screen_resource");
+                }
             }
 
-        }
+        },
+        showSearchEntities:function(data,first){
+            var targetContain= $("#de_search_result");
+            var tpl=$("#searchResultTpl").html();
+            data.root=DE.config.root;
+            var html=juicer(tpl,data);
 
+            if(first){
+
+                //清理工作在此处，tab公用了一个展示界面，点击tab的时候如果先清理那么数据突然消失，界面闪烁
+                targetContain.html(html);
+                DE.UIManager.showSearchScreen(DE.store.currentSearchValue,DE.store.currentSearchType);
+                return false;
+            }
+
+            targetContain.append($(html));
+        }
     }
 })();
 
@@ -428,6 +399,25 @@ $(document).ready(function(){
     //关闭作品详情
     $(document).on("click","#de_btn_close_project_detail",function(){
         DE.UIManager.hideProjectDetail();
+
+        return false;
+    });
+
+    $(document).on("click","#de_entity_praise",function(){
+        DE.entity.handlerPraiseOrHonor();
+
+        return false;
+    });
+
+    $(document).on("click","#de_entity_toolbar a",function(){
+        var className=$(this).attr("class");
+        if(className=="de_toolbar_edit"){
+            DE.entity.editEntity($(this).attr("href"));
+        }else if(className=="de_toolbar_delete"){
+            DE.entity.deleteEntity();
+        }else{
+            DE.entity.hideEntity();
+        }
 
         return false;
     });

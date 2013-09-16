@@ -32,35 +32,46 @@ DE.UIManager=function(){
 	var showPopout=function(){
 			$("#de_popout").removeClass("de_hidden")
 			$("#de_blackout").removeClass("de_hidden")
-		}
+    };
 	var hidePopout=function(){
 			$("#de_popout").addClass("de_hidden")
 			$("#de_blackout").addClass("de_hidden")		
-		}
+    };
 	var gotoScreen=function(screenLink,paraObj){
-			cleanAllScreens()
-			$(screenLink).removeClass("de_hidden")			
+			cleanAllScreens();
+			$(screenLink).removeClass("de_hidden");
 			
 			//加载某些特定屏幕时需要额外地处理视图
 			if(screenLink=="#de_screen_project"){
-				$(".de_top_nav .de_btn_project").addClass("active")
+				$(".de_top_nav .de_btn_project").addClass("active");
+
+                //清理已经加载的数据
+                DE.store.clearScreenData("project");
 			}else if(screenLink=="#de_screen_resource"){
-				$(".de_top_nav .de_btn_resource").addClass("active")
+				$(".de_top_nav .de_btn_resource").addClass("active");
+
+                DE.store.clearScreenData("resource");
 			}else if(screenLink=="#de_screen_designer"){
-				$(".de_top_nav .de_btn_designer").addClass("active")
+				$(".de_top_nav .de_btn_designer").addClass("active");
+
+                DE.store.clearScreenData("hotUser");
 			}else if(screenLink=="#de_screen_search_result"){
 				if(paraObj && paraObj.keyword){
-					$("#de_btn_filter>a").html( "搜索："+paraObj.keyword ).addClass("active")
-					}
+					$("#de_btn_filter>a").html( "搜索："+paraObj.keyword ).addClass("active");
+                }
 				if(paraObj && paraObj.type=="resource"){
-					$("#de_screen_search_result>.de_category_filter>.de_category_filter_option_resource").addClass("active")
-					}else{
-					$("#de_screen_search_result>.de_category_filter>.de_category_filter_option_project").addClass("active")	
-					}
-			}else if(screenLink=="#de_screen_project_detail"){
-				
-				}
-		}
+					$("#de_screen_search_result>.de_category_filter>.de_category_filter_option_resource").addClass("active");
+                }else{
+					$("#de_screen_search_result>.de_category_filter>.de_category_filter_option_project").addClass("active");
+                }
+
+                DE.store.clearScreenData("search");
+			}else if(screenLink=="#de_screen_user_profile"){
+                DE.store.clearScreenData("user");
+            }else if(screenLink=="#de_screen_upload"){
+                DE.store.clearScreenData("upload");
+            }
+    };
 	var cleanAllScreens=function(){
 		
 			//隐藏各种组件
@@ -107,11 +118,15 @@ DE.UIManager=function(){
 			$("body").addClass("de_noscroll");
 		},
 		hideProjectDetail:function(){
-			$("#de_screen_project_detail").addClass("de_hidden");
+
+            //隐藏的同时，重新设置de_screen_project_detail的html
+			$("#de_screen_project_detail").addClass("de_hidden").
+                html('<article id="de_project_detail" class="de_project_detail de_borderbox de_boxshadow"></article>');
 			$("body").removeClass("de_noscroll");
+
 		},
 		showLoginPopout:function(){
-			showPopout()
+			showPopout();
 			$("#de_popout>.de_inner_wrapper").css("left",0);
 			$("#de_popout>.de_popout_title").html("登录");
 			$("#de_login_email").focus();
@@ -168,7 +183,7 @@ DE.UIManager=function(){
 		},
 
 		showLoginMenu:function(data){
-            var tpl=$("#menuTpl").html();
+            var tpl=$("#userMenuTpl").html();
             var html=juicer(tpl,data);
             $("#de_menu").html(html);
 		}

@@ -11,18 +11,19 @@ DE.config={
     maxMediaSize:"200m",
     maxImageSize:"2m",
     ajaxUrls:{
-        uploadFileUrl:"#",
+        uploadFileUrl:"http://192.168.2.148:8089/upload?test=1",
         uploadAction:"#",
         getProjectDetail:"#",
         getProjectsByTag:"#",
         getAllProjects:"/DesignEngine_Web/data/projects.json",
         getAllResource:"/DesignEngine_Web/data/resource.json",
+        getEntityMedias:"/DesignEngine_Web/data/medias.json",
         deleteEntity:"#",
         hideEntity:"#",
         getEntityAttachments:"/DesignEngine_Web/data/attachments.json",
         getEntityDetail:"/DesignEngine_Web/data/entityDetail.json",
         getProjectsBySearch:"#",
-        getTags:"#",
+        getTags:"/DesignEngine_Web/data/tags.json",
         addPraise:"#",
         deletePraise:"#",
         addHonor:"#",
@@ -36,9 +37,11 @@ DE.config={
         getUserEntities:"/DesignEngine_Web/data/userEntities.json",
         login:"/DesignEngine_Web",
         sendOpenId:"#",
-        register:"#",
-        changeEmail:"#",
+        register:"/DesignEngine_Web",
+        changeProfile:"/DesignEngine_Web",
+        changePassword:"/DesignEngine_Web",
         forgetPassword:"#",
+        uploadFigure:"/DesignEngine_Web",
         emailValidate:"",
         usernameValidate:""
     },
@@ -56,6 +59,12 @@ DE.config={
         search:"/search/searchContent",
         uploadWork:"/upload/entity",
         editWork:"/edit/entityId"
+    },
+    linkTypes:{
+        user:"user",
+        project:"project",
+        resource:"resource",
+        upload:"upload"
     },
     roles:{
         admin:"admin",

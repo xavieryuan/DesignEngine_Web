@@ -14,44 +14,122 @@ DE.store={
     currentUser:{
         userId:0,
         name:"",
-        figureUrl:"",
-        role:""
+        figure:"",
+        role:"",
+        description:"",
+        email:""
     },
     currentShowUser:{
         userId:0,
         name:"",
-        figureUrl:"",
+        figure:"",
         role:""
     },
     hotUserLoadedId:0,
     projectLoadedDate:"",//分页加载，最后一个作品的时间
     resourceLoadedDate:"",
-    currentShowEntity:"project",//当前显示的实体类型
-    entityShowOrNot:false,
-    hasPraised:false,//是否赞过
+    currentShowEntitiesType:DE.config.entityTypes.project, //当前聚合显示的实体类型
+    currentShowEntity:{    //当前显示详情的entity的信息
+        id:0,
+        hasPraised:false
+    },
+    currentEditEntityId:0,
     userProjectsCount:0,
     userProjectsShow:0, //查看用户那里的作品，已经显示的个数，本地分页
+    currentSearchType:"project",//目前搜索显示的类型
+    currentSearchValue:"",//目前搜索的内容
+    uploadedMedias:{},
     clearStore:function(){
         this.userProjectsCount=0;
         this.userProjectsShow=0;
         this.projectLoadedDate="";
         this.resourceLoadedDate="";
-        this.currentShowEntity="project";
+        this.currentShowEntitiesType="project";
         this.currentShowUser.userId=0;
         this.currentShowUser.name="";
-        this.currentShowUser.figureUrl="";
+        this.currentShowUser.figure="";
         this.currentShowUser.role="";
+        this.currentSearchType=DE.config.entityTypes.project;
+        this.currentSearchValue="";
+        this.uploadedMedias={};
+        this.currentEditEntityId=0;
+        this.currentShowEntity.id=0;
+        this.currentShowEntity.hasPraised=false;
+    },
+    initCurrentShowUser:function(user){
+        this.currentShowUser.userId=user.id;
+        this.currentShowUser.name=user.name;
+        this.currentShowUser.figure=user.figure;
+        this.currentShowUser.role=user.role;
+    },
+    initCurrentShowEntity:function(entity){
+        this.currentShowEntity.id=entity.id;
+        this.currentShowEntity.hasPraised=entity.hasPraised;
+    },
+    clearEditData:function(){
+        $("#de_input_project_title").val("");
+        $("#de_input_tag").html("");
+        $("#de_project_description").text("");
+        $("#de_project_thumb").attr("src",DE.config.root+"/images/default_thumb_500.png");
+        $("#zy_uploaded_medias_ol").html("");
+    },
+    clearScreenData:function(notClear){
+        var projectList=$("#de_project_list");
+        var searchList=$("#de_search_result");
+        var resourceList=$("#de_resource_list");
+        var hotUserList=$("#de_hot_user_list");
+        var userEntityList=$("#de_user_uploads");
+        if(notClear=="project"){
+            searchList.html("");
+            resourceList.html("");
+            hotUserList.html("");
+            userEntityList.html("");
+        }else if(notClear=="hotUser"){
+            searchList.html("");
+            projectList.html("");
+            resourceList.html("");
+            userEntityList.html("");
+        }else if(notClear=="resource"){
+            searchList.html("");
+            projectList.html("");
+            hotUserList.html("");
+            userEntityList.html("");
+        }else if(notClear=="search"){
+            projectList.html("");
+            resourceList.html("");
+            hotUserList.html("");
+            userEntityList.html("");
+        }else if(notClear=="user"){
+            projectList.html("");
+            resourceList.html("");
+            hotUserList.html("");
+            searchList.html("");
+        }else if(notClear=="upload"){
+            projectList.html("");
+            resourceList.html("");
+            hotUserList.html("");
+            searchList.html("");
+            userEntityList.html("");
+        }
+
+        if(location.href.match("edit")==null){
+            this.clearEditData();
+        }
     },
     clearCurrentUser:function(){
         this.currentUser.userId=0;
         this.currentUser.name="";
-        this.currentUser.figureUrl="";
+        this.currentUser.figure="";
         this.currentUser.role="";
+        this.currentUser.email="";
+        this.currentUser.description="";
     },
     initCurrentUser:function(data){
         this.currentUser.userId=data.userId;
-        this.currentUser.figureUrl=data.figureUrl;
+        this.currentUser.figure=data.figure;
         this.currentUser.role=data.role;
         this.currentUser.name=data.name;
+        this.currentUser.email=data.email;
+        this.currentUser.description=data.description;
     }
 };
