@@ -10,6 +10,12 @@ DE.config={
     root:"/DesignEngine_Web",
     maxMediaSize:"200m",
     maxImageSize:"2m",
+    scrollScreenType:{
+        hotUser:"hotUser",
+        project:"project",
+        resource:"resource",
+        userEntity:"userEntity"
+    },
     ajaxUrls:{
         uploadFileUrl:"http://192.168.2.148:8089/upload?test=1",
         uploadAction:"#",
@@ -36,7 +42,8 @@ DE.config={
         getUserById:"/DesignEngine_Web/data/user.json",
         getUserEntities:"/DesignEngine_Web/data/userEntities.json",
         login:"/DesignEngine_Web",
-        sendOpenId:"#",
+        sendOpenId:"/DesignEngine_Web",
+        bandOldCount:"#",
         register:"/DesignEngine_Web",
         changeProfile:"/DesignEngine_Web",
         changePassword:"/DesignEngine_Web",

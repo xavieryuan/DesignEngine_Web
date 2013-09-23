@@ -10,9 +10,6 @@ DE.menu=(function(){
     return {
         windowScrollHandler:function(){
 
-            //在详情页面,滚动请求评论和相似作品
-
-
             //在列表页面
 
 
@@ -69,15 +66,14 @@ DE.menu=(function(){
             var array=href.split("/");
             var tag=array[3];
 
-            DE.store.currentSearchValue=tag; //记录下当前搜索的内容
-            DE.store.currentSearchType=type;
-            DE.entity.getEntityByTag(tag,true);
+            DE.entity.getEntityByTag(tag,type,true);
         },
         searchTabClickHandler:function(type){
 
             //如果当前显示的类型和点击的按钮不一致，则要置换
             if(type!=DE.currentSearchType){
                 DE.store.currentSearchType=type;
+                DE.store.currentScrollScreenType=DE.config.scrollScreenType[type];
                 DE.entity.getEntityByTag(DE.store.currentSearchValue,true);
             }
 
@@ -111,14 +107,15 @@ $(document).ready(function(){
         return false;
     });
     $("#de_logo").click(function(){
+        DE.history.push("");
+        DE.entity.getAllEntity(DE.config.entityTypes.project,true);
 
+        return false;
     });
 
     //初始化登陆菜单
     DE.UIManager.showLoginMenu({user:DE.store.currentUser,root:DE.config.root});
 
-    //首页进入时获取所有的作品
-    DE.entity.getAllEntity(DE.config.entityTypes.project);
 
 
     //登录注册按钮点击事件
@@ -147,7 +144,7 @@ $(document).ready(function(){
     $(document).click(function(event){
         var target=$(event.target);
         if(target.parents("#de_popout").length==0&&target.parents("#de_filter_menu").length==0&&
-            target.parents("#de_ext_nav").length==0){
+            target.parents("#de_ext_nav").length==0&&target.parents("#de_pop_window").length==0){
             DE.UIManager.hideAllMenuAndPopouts();
         }
     });
@@ -190,11 +187,24 @@ $(document).ready(function(){
         return false;
     });
 
+    //关闭弹出的window
+    $("#de_close_pop_window").click(function(){
+        $(this).parent().addClass("de_hidden");
+        $("#de_blackout").addClass("de_hidden");
+    });
 
     //控制滚动分页
     $(window).scroll(function(){
+        if(DE.store.scrollTimer){
+            clearTimeout(DE.store.scrollTimer);
+        }
 
+        if(DE.store.currentScrollScreenType){
+            DE.store.scrollTimer=setTimeout(function(){
+                if($(document).height()-$(window).height()<=$(window).scrollTop()){
+                    alert(DE.store.currentScrollScreenType);
+                }
+            },200);
+        }
     });
-
-
 });

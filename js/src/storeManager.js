@@ -7,10 +7,19 @@
  */
 var DE=DE||{};
 DE.store={
-    status:{
-        loginPanel:0,
-        registerPanel:0
-    },
+    scrollTimer:null,
+    isFirstLoad: false, //是否第一次进入，由于火狐第一次不响应popstate，谷歌响应需要记录下来
+    hotUserLoadedId:0,
+    projectLoadedDate:"",//分页加载，最后一个作品的时间
+    resourceLoadedDate:"",
+    currentShowEntitiesType:DE.config.entityTypes.project, //当前聚合显示的实体类型
+    currentEditEntityId:0,
+    currentScrollScreenType:"",
+    userProjectsCount:0,
+    userProjectsShow:0, //查看用户那里的作品，已经显示的个数，本地分页
+    currentSearchType:"project",//目前搜索显示的类型
+    currentSearchValue:"",//目前搜索的内容
+    uploadedMedias:{},
     currentUser:{
         userId:0,
         name:"",
@@ -25,21 +34,15 @@ DE.store={
         figure:"",
         role:""
     },
-    hotUserLoadedId:0,
-    projectLoadedDate:"",//分页加载，最后一个作品的时间
-    resourceLoadedDate:"",
-    currentShowEntitiesType:DE.config.entityTypes.project, //当前聚合显示的实体类型
     currentShowEntity:{    //当前显示详情的entity的信息
         id:0,
         hasPraised:false
     },
-    currentEditEntityId:0,
-    userProjectsCount:0,
-    userProjectsShow:0, //查看用户那里的作品，已经显示的个数，本地分页
-    currentSearchType:"project",//目前搜索显示的类型
-    currentSearchValue:"",//目前搜索的内容
-    uploadedMedias:{},
-    clearStore:function(){
+    clearStore:function(clearFirstLoadFlag){
+
+        /* clearFirstLoadFlag是否重置isFirstLoad此标志，当页面进入时，history的initDatas函数调用了handler函数，handler函数里面
+         * 调用了clearStore，那么会重置isFirstLoad，那么会在谷歌第一次进入，响应popstate的函数stateChange中再请求一次数据
+         * */
         this.userProjectsCount=0;
         this.userProjectsShow=0;
         this.projectLoadedDate="";
@@ -55,6 +58,11 @@ DE.store={
         this.currentEditEntityId=0;
         this.currentShowEntity.id=0;
         this.currentShowEntity.hasPraised=false;
+        this.currentScrollScreenType="";
+
+        if(clearFirstLoadFlag){
+            this.isFirstLoad=false;
+        }
     },
     initCurrentShowUser:function(user){
         this.currentShowUser.userId=user.id;

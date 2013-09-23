@@ -67,8 +67,10 @@ DE.entity=(function(){
                 success:function(data){
                     if(type==DE.config.entityTypes.project){
                         DE.store.projectLoadedDate=data.projects[data.projects.length-1]["date"];
+                        DE.store.currentScrollScreenType=DE.config.scrollScreenType.project;
                     }else{
                         DE.store.resourceLoadedDate=data.resource[data.resource.length-1]["date"];
+                        DE.store.currentScrollScreenType=DE.config.scrollScreenType.resource;
                     }
 
                     me.showEntities(data,type,first);
@@ -84,8 +86,9 @@ DE.entity=(function(){
          *
          * @param tag
          * @param {Boolean} first       是否第一次加载，第一次需要设置显示的screen
+         * @param {String} type   搜索的类型
          */
-        getEntityByTag:function(tag,first){
+        getEntityByTag:function(tag,type,first){
             var me=this;
             $.ajax({
                 url:DE.config.ajaxUrls.getSimilarEntities,
@@ -95,7 +98,9 @@ DE.entity=(function(){
                     tag:tag
                 },
                 success:function(data){
-
+                    DE.store.currentSearchValue=tag; //记录下当前搜索的内容
+                    DE.store.currentSearchType=type;
+                    DE.store.currentScrollScreenType=DE.config.scrollScreenType[type];
                     me.showSearchEntities(data,first);
                 },
                 error:function(){

@@ -73,6 +73,7 @@ DE.user=(function(){
                 dataType:"json",
                 success:function(data){
                     DE.store.hotUserLoadedId=data.users[data.users.length-1]["id"];
+                    DE.store.currentScrollScreenType=DE.config.scrollScreenType.hotUser;
                     me.showHotUsers(data,first);
                 },
                 error:function(){
@@ -98,6 +99,7 @@ DE.user=(function(){
                 dataType:"json",
                 success:function(data){
                     DE.store.initCurrentShowUser(data.user);
+                    DE.store.currentScrollScreenType=DE.config.scrollScreenType.userEntity;
                     me.showUserDetail(data);
                 },
                 error:function(){

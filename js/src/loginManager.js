@@ -75,7 +75,56 @@ DE.login=(function(){
                QC.Login.getMe(function(openId, accessToken){
                    console.log(openId+":"+accessToken);
 
+                   $.ajax({
+                       url:DE.config.ajaxUrls.sendOpenId,
+                       data:{
+
+                       },
+                       type:"post",
+                       dataType:"json",
+                       success:function(data){
+                           console.log(data);
+
+                           DE.UIManager.showRegPopout();
+                       },
+                       error:function(){
+
+                       }
+                   })
+
                });
+           });
+       },
+       ajaxBand:function(){
+           $("#de_band_form").validate({
+               rules:{
+                   de_band_email:{
+                       required:true,
+                       email:true
+                   }
+               },
+               messages:{
+                   de_band_email:{
+                       required:"请输入邮箱！",
+                       email:"请输入正确的邮箱格式！"
+                   }
+               },
+               submitHandler:function(form) {
+                   $(form).ajaxSubmit({
+                       url:DE.config.ajaxUrls.bandOldCount,
+                       type:"post",
+                       data:{
+
+                       },
+                       dataType:"json",
+                       success:function (data) {
+                            console.log(data);
+                       },
+                       error:function (data) {
+
+                       }
+                   });
+               }
            });
        },
        ajaxRegister:function(){
@@ -238,10 +287,11 @@ $(document).ready(function(){
     //登陆
     DE.login.ajaxLogin();
 
+    //注册
     DE.login.ajaxRegister();
 
-
-    //DE.login.QQLoginHandler();
+    //QQ登陆
+    DE.login.QQLoginHandler();
 
 
 });

@@ -406,6 +406,21 @@ li {
     padding: 0 5%;
     overflow: hidden;
 }
+.de_popout_reg .de_reg_col {
+    width: 40%;
+    padding: 0 5%;
+    display: inline-block;
+    vertical-align: top;
+    height: 400px;
+    border-right: #ccc 1px dotted;
+}
+.de_popout_reg .de_band_col {
+    width: 30%;
+    padding: 0 5%;
+    display: inline-block;
+    vertical-align: top;
+    height: 400px;
+}
 
 .de_popout_reg .de_username_field, .de_popout_reg .de_email_field, .de_popout_reg .de_pwd_field {
     margin-bottom: 25px;
@@ -1764,19 +1779,15 @@ li {
     left: 42px;
     top: 0;
 }
-
 .zy_uploaded_medias_ol span {
     color: #999999;
 }
-
-.zy_media_list_error {
-    background-color: #FEEDE4;
-}
-
 .zy_media_list_active {
     background-color: #F2F2F2;
 }
-
+.zy_media_list_error {
+    background-color: #FEEDE4;
+}
 .zy_uploaded_medias_ol li:hover, .zy_media_list_active {
     border-bottom: #35a5e5 1px solid;
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
@@ -2141,4 +2152,45 @@ li {
     opacity: 0.7;
     top: 0;
     left: 0;
+}
+
+/*-----------------弹出窗口-------------------------*/
+.de_pop_window{
+    position: fixed;
+    z-index: 9999;
+    background: #fff;
+    border:3px solid #EFEFEF;
+}
+.de_pop_web_video{
+    top:50%;
+    left:50%;
+    height: auto;
+    width: 400px;
+    margin-left: -200px;
+}
+.de_pop_show_media{
+    top:50%;
+    left:50%;
+    height: 80%;
+    width: 80%;
+    margin-left: -40%;
+    margin-top: -40%;
+}
+.de_pop_window span{
+    width: 20px;
+    height: 20px;
+    display: block;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    background: #EFEFEF;
+    text-align: center;
+}
+.de_pop_window div{
+    padding:20px;
+}
+.de_input_web_video{
+    width: 80%;
 }

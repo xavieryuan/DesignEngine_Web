@@ -30,12 +30,12 @@ var DE=DE||{};
 DE.UIManager=function(){
 	//私有属性及方法	
 	var showPopout=function(){
-			$("#de_popout").removeClass("de_hidden")
-			$("#de_blackout").removeClass("de_hidden")
+			$("#de_popout").removeClass("de_hidden");
+			$("#de_blackout").removeClass("de_hidden");
     };
 	var hidePopout=function(){
-			$("#de_popout").addClass("de_hidden")
-			$("#de_blackout").addClass("de_hidden")		
+			$("#de_popout").addClass("de_hidden");
+			$("#de_blackout").addClass("de_hidden");
     };
 	var gotoScreen=function(screenLink,paraObj){
 			cleanAllScreens();
@@ -75,8 +75,8 @@ DE.UIManager=function(){
 	var cleanAllScreens=function(){
 		
 			//隐藏各种组件
-			DE.UIManager.hideAllMenuAndPopouts()
-			DE.UIManager.hideProjectDetail()
+			DE.UIManager.hideAllMenuAndPopouts();
+			DE.UIManager.hideProjectDetail();
 		
 			//恢复视图初始状态		
 			$("#de_screen_container>section").addClass("de_hidden");
@@ -86,7 +86,7 @@ DE.UIManager=function(){
 			
 			//如需释放内存可激活下列代码
 			//$("#de_screen_container>section>ul").empty();
-		}
+    };
 	
 	return{ 
 		//公共属性及方法 开始
@@ -97,16 +97,16 @@ DE.UIManager=function(){
 			gotoScreen("#de_screen_search_result",{keyword:keyword,type:type})
 		},	
 		showFilterMenu:function(){
-			DE.UIManager.hideAllMenuAndPopouts()
-			$("#de_filter_menu").css("height",320)
-			$("#de_btn_filter>a").addClass("focused")
+			DE.UIManager.hideAllMenuAndPopouts();
+			$("#de_filter_menu").css("height",320);
+			$("#de_btn_filter>a").addClass("focused");
 		},
 		hideFilterMenu:function(){
 			$("#de_filter_menu").css("height",0);
 			$("#de_btn_filter>a").removeClass("focused")		
 		},
 		showExtMenu:function(){
-			DE.UIManager.hideAllMenuAndPopouts()
+			DE.UIManager.hideAllMenuAndPopouts();
 			$("#de_ext_nav").css("right",0)
 		},
 		hideExtMenu:function(){
