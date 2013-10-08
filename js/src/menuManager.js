@@ -23,7 +23,7 @@ DE.menu=(function(){
         topMenuClickHandler:function(href){
             DE.history.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
-            var type=array[2];
+            var type=array[0];
             if(type==DE.config.linkTypes.project){
                 //DE.UIManager.showScreen("#de_screen_project"); //放在此处会导致屏幕闪烁，放到ajax的回调中
                 DE.entity.getAllEntity(type,true);
@@ -54,27 +54,25 @@ DE.menu=(function(){
         showTags:function(data){
             var html="";
             var projectTagTpl=$("#projectTagTpl").html();
-            html=juicer(projectTagTpl,{root:DE.config.root,projecttags:data.worktags});
+            html=juicer(projectTagTpl,{projecttags:data.worktags});
             $("#de_project_tags").html(html);
 
             var resourceTagTpl=$("#resourceTagTpl").html();
-            html=juicer(resourceTagTpl,{root:DE.config.root,resourcetags:data.resourcetags});
+            html=juicer(resourceTagTpl,{resourcetags:data.resourcetags});
             $("#de_resource_tags").html(html);
         },
         tagClickHandler:function(href,type){
             DE.history.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
-            var tag=array[3];
+            var tag=array[1];
 
             DE.entity.getEntityByTag(tag,type,true);
         },
         searchTabClickHandler:function(type){
 
             //如果当前显示的类型和点击的按钮不一致，则要置换
-            if(type!=DE.currentSearchType){
-                DE.store.currentSearchType=type;
-                DE.store.currentScrollScreenType=DE.config.scrollScreenType[type];
-                DE.entity.getEntityByTag(DE.store.currentSearchValue,true);
+            if(type!=DE.store.currentSearchType){
+                DE.entity.getEntityByTag(DE.store.currentSearchValue,type,true);
             }
 
         },
@@ -113,8 +111,7 @@ $(document).ready(function(){
         return false;
     });
 
-    //初始化登陆菜单
-    DE.UIManager.showLoginMenu({user:DE.store.currentUser,root:DE.config.root});
+
 
 
 
@@ -174,7 +171,7 @@ $(document).ready(function(){
     $("#de_search_input").keydown(function(event){
         if(event.keyCode==13){
             var value=$(this).val();
-            DE.menu.tagClickHandler(DE.config.root+"/search/"+value);
+            DE.menu.tagClickHandler("search/"+value,DE.config.entityTypes.project);
         }
     });
 
@@ -202,7 +199,14 @@ $(document).ready(function(){
         if(DE.store.currentScrollScreenType){
             DE.store.scrollTimer=setTimeout(function(){
                 if($(document).height()-$(window).height()<=$(window).scrollTop()){
-                    alert(DE.store.currentScrollScreenType);
+
+                    //作品和资源要看是否是在搜索页面
+                    if(DE.store.currentSearchValue){
+                        alert(DE.store.currentScrollScreenType+"search");
+                    }else{
+                        alert(DE.store.currentScrollScreenType);
+                    }
+
                 }
             },200);
         }

@@ -78,14 +78,10 @@ DE.history=(function(){
         var value="";
         var array=href.split("/");
 
-        //如果是history函数push的是/root/tag/tagName这种形式如果是hash则是/tag/tagName
-        if(array.length==4){
-            type=array[2];
-            value=array[3];
-        }else{
-            type=array[1];
-            value=array[2];
-        }
+        //history函数push的hash都是tag/tagName
+
+        type=array[0];
+        value=array[1];
 
         return {
             type:type,
@@ -137,15 +133,23 @@ DE.history=(function(){
                 location.hash="#!"+href;
             }
         },
-        initDatas:function(){
 
-            //设置为第一次进入页面，在store的clear中进行清除
-            DE.store.isFirstLoad=true;
+        /*
+        * 如果是edit或者是upload，在没有登录的情况下需要直接跳到首页，所以这里的前提条件是是否登录
+        * */
+        initDatas:function(){
 
             var href=window.location.href;
             href=href.substring(href.indexOf(DE.config.root));
             var hrefArray=href.split("/");
             var lenght=hrefArray.length;
+
+            if(!DE.store.currentShowUser){
+                if(hrefArray[2]=="edit"||hrefArray[2]=="upload"){
+                    window.location.href=DE.config.root;
+                    return ;
+                }
+            }
 
             if(lenght==3){
 
@@ -162,10 +166,6 @@ DE.history=(function(){
 
 $(document).ready(function(){
 
-
-    //每次进入页面都需要根据地址取数据
-    DE.history.initDatas();
-
     //popstate事件
     window.onpopstate=function(event){
         if(event){
@@ -174,7 +174,5 @@ $(document).ready(function(){
              DE.history.stateChange(event);
         }
     }
-
-
 
 });

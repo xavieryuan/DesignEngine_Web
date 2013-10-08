@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>图钉墙 - HNU Design</title>
     <link href="css/general.css" rel="stylesheet" type="text/css"/>
+    <base href="http://localhost/design/">
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/lib/juicer-min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
@@ -12,8 +13,8 @@
     <script type="text/javascript" src="js/lib/plupload.flash.js"></script>
     <script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
     <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
-          data-redirecturi="http://lotusprize.com/DesignEngine_Web/redirect.html" data-appid="100502817"
-          charset="utf-8" data-callback="true"></script>
+          data-redirecturi="http://lotusprize.com/design/redirect.html" data-appid="100502817"
+          charset="utf-8"></script>
     <script src="js/DE.UIManager.js"></script>
     <script src="js/DE.DataManager.js"></script>
     <script src="js/src/config.js"></script>
@@ -30,12 +31,12 @@
 <!--顶部栏中的标签-->
 <script type="text/template" id="projectTagTpl">
     {@each projecttags as p}
-    <li><a href="${root}/tag/${p}">${p}</a></li>
+    <li><a href="tag/${p}">${p}</a></li>
     {@/each}
 </script>
 <script type="text/template" id="resourceTagTpl">
     {@each resourcetags as r}
-    <li><a href="${root}/tag/${r}">${r}</a></li>
+    <li><a href="tag/${r}">${r}</a></li>
     {@/each}
 </script>
 <!--用户菜单-->
@@ -43,11 +44,11 @@
     {@if user.userId}
     <li class="de_reg_view">
         <a class="de_btn_user_profile de_borderbox de_user_link" id="de_btn_user_profile"
-           href="${root}/user/${user.userId}">
+           href="user/${user.userId}">
             <img class="photo" src="${user.figure}" title="USER_NAME">${user.name}
         </a>
     </li>
-    <li class="de_reg_view"><a class="de_btn_upload de_borderbox" href="${root}/upload/entity" id="de_btn_upload">上传</a>
+    <li class="de_reg_view"><a class="de_btn_upload de_borderbox" href="upload/entity" id="de_btn_upload">上传</a>
     </li>
     <li class="de_reg_view ">
         <a class="de_btn_hotdogmenu de_borderbox" href="#" id="de_btn_ext_nav">更多</a>
@@ -73,14 +74,14 @@
     {@each projects as p,index}
     <li class="de_borderbox">
         <div class="user_info">
-            <a href="${root}/user/${p.userId}" class="de_user_link">
+            <a href="user/${p.userId}" class="de_user_link">
                 <img class="photo" src="${p.userProfile}"/>
 
                 <p class="name">${p.userName}</p>
             </a>
         </div>
         <div class="project_info">
-            <a href="${root}/entity/${p.id}" class="de_entity_link">
+            <a href="entity/${p.id}" class="de_entity_link">
                 <img class="thumb" src="${p.thumb}">
                 <h4>${p.title}</h4>
 
@@ -99,14 +100,14 @@
     {@each resource as r,index}
     <li class="de_borderbox">
         <div class="user_info">
-            <a href="${root}/user/${r.userId}" class="de_user_link">
+            <a href="user/${r.userId}" class="de_user_link">
                 <img class="photo" src="${r.userProfile}"/>
 
                 <p class="name">${r.userName}</p>
             </a>
         </div>
         <div class="project_info">
-            <a href="${root}/entity/${r.id}" class="de_entity_link">
+            <a href="entity/${r.id}" class="de_entity_link">
                 <img class="thumb" src="${r.thumb}"/>
                 <h4>${r.title}</h4>
 
@@ -138,7 +139,7 @@
     {@each hotUsers as user,index}
     <li class="de_user_info_card">
         <div class="user_info">
-            <a href="${root}/user/${user.id}" class="de_borderbox de_user_link">
+            <a href="user/${user.id}" class="de_borderbox de_user_link">
                 <img src="${user.profile}" class="photo"/>
 
                 <p class="name">${user.name}</p>
@@ -152,7 +153,7 @@
         </div>
         <ul class="project_info">
             {@each user.projects as project,index}
-            <li><a href="${root}/entity/${project.id}" class="de_entity_link"><img src="${project.thumb}"></a></li>
+            <li><a href="entity/${project.id}" class="de_entity_link"><img src="${project.thumb}"></a></li>
             {@/each}
 
         </ul>
@@ -168,14 +169,14 @@
     {@each entities as e}
     <li class="de_borderbox">
         <div class="user_info">
-            <a href="${root}/user/${e.userId}" class="de_user_link">
+            <a href="user/${e.userId}" class="de_user_link">
                 <img class="photo" src="${e.userProfile}"/>
 
                 <p class="name">${e.userName}</p>
             </a>
         </div>
         <div class="project_info">
-            <a href="${root}/entity/${e.id}" class="de_entity_link">
+            <a href="entity/${e.id}" class="de_entity_link">
                 <img class="thumb" src="${e.thumb}">
                 <h4>${e.title}</h4>
 
@@ -224,24 +225,23 @@
 
         {@if canShowToolBar}
         <ul class="de_project_toolbar de_transition" id="de_entity_toolbar">
-            <li><a class="de_toolbar_edit" href="${root}/edit/${id}" title="编辑">编辑</a></li>
-            <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-            <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
+            <li><a class="de_toolbar_edit" href="edit/${id}" title="编辑">编辑</a></li>
+            <li><a class="de_toolbar_delete" href="${id}" title="删除">删除</a></li>
+            <li><a class="de_toolbar_visible" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
         </ul>
         {@/if}
 
     </div>
 
 </script>
-<!--显示详细信息de_project_detail html-->
+<!--显示详细信息 article html-->
 <script type="text/template" id="entityDetailTopTpl">
-    <!-- article append-->
     <h2>${title}</h2>
 
     <p class="publishtime">${date}</p>
 
     <div class="user_info">
-        <a href="${root}/user/${userId}" class="de_user_link">
+        <a href="user/${userId}" class="de_user_link">
             <img class="photo" src="${userProfile}">
 
             <p class="name">${userName}</p>
@@ -274,16 +274,16 @@
 <script type="text/template" id="entityCommentsTpl">
 
     <div class="de_comment_box de_boxshadow de_borderbox">
-        <ul class="de_comment_list">
+        <ul id="de_comment_list" class="de_comment_list">
             {@each comments as c}
             <li>
                 <div class="user_info">
-                    <a href="${root}/user/${c.userId}" class="de_borderbox de_user_link">
+                    <a href="user/${c.userId}" class="de_borderbox de_user_link">
                         <img src="${c.userProfile}" class="photo">
                     </a>
                 </div>
                 <div class="comment_wrapper">
-                    <a href="${root}/user/${c.userId}" class="name   de_user_link">${c.userName}</a>
+                    <a href="user/${c.userId}" class="name   de_user_link">${c.userName}</a>
                     <span class="publishtime">${c.time}</span>
 
                     <p class="comment">${c.content}</p>
@@ -292,26 +292,42 @@
             {@/each}
         </ul>
 
-        <div class="de_comment_form de_guest_view de_borderbox">
-            <a href="#" class="de_button de_borderbox de_btn_login_reg">发表评论前请先登录</a>
-        </div>
-
-        <div class="de_comment_form de_reg_view de_borderbox de_hidden">
-            <div class="user_info">
-                <a href="#" class="de_borderbox">
-                    <img src="/DesignEngine_Web/data/ranking2.jpg" class="photo">
-                </a>
+        {@if user.userId}
+            <div class="de_comment_form de_reg_view de_borderbox">
+                <div class="user_info">
+                    <a href="user/${user.userId}" class="de_borderbox">
+                        <img src="${user.figure}" class="photo">
+                    </a>
+                </div>
+                <div class="comment_wrapper">
+                    <a href="user/${user.userId}" class="name">${user.name}</a>
+                    <textarea id="de_comment_content" class="comment de_borderbox de_inputbox_gray" placeholder="你的评论..."></textarea>
+                    <input type="submit" class="de_button de_btn_add_comment" name="de_btn_add_comment"
+                           id="de_btn_add_comment" value="提交">
+                </div>
             </div>
-            <div class="comment_wrapper">
-                <a href="#" class="name">寇瑞</a>
-                <textarea class="comment de_borderbox de_inputbox_gray" placeholder="你的评论..."></textarea>
-                <input type="submit" class="de_button de_btn_add_comment" name="de_btn_add_comment"
-                       id="de_btn_add_comment" value="提交">
+        {@else}
+            <div class="de_comment_form de_guest_view de_borderbox">
+                <a href="#" id="de_btn_comment_login" class="de_button de_borderbox de_btn_login_reg">发表评论前请先登录</a>
             </div>
-        </div>
+        {@/if}
     </div>
 </script>
+<script type="text/template" id="singleComment">
+    <li>
+        <div class="user_info">
+            <a href="user/${user.userId}" class="de_borderbox de_user_link">
+                <img src="${user.figure}" class="photo">
+            </a>
+        </div>
+        <div class="comment_wrapper">
+            <a href="user/${user.userId}" class="name   de_user_link">${user.name}</a>
+            <span class="publishtime">${time}</span>
 
+            <p class="comment">${content}</p>
+        </div>
+    </li>
+</script>
 <!--显示相似作品section append-->
 <script type="text/template" id="similarEntityTpl">
 
@@ -321,14 +337,14 @@
 
         <li class="de_borderbox">
             <div class="user_info">
-                <a href="${root}/user/${e.userId}" class="de_user_link">
+                <a href="user/${e.userId}" class="de_user_link">
                     <img class="photo" src="${e.userProfile}"/>
 
                     <p class="name">${e.userName}</p>
                 </a>
             </div>
             <div class="project_info">
-                <a href="${root}/entity/${e.id}" class="de_entity_link">
+                <a href="entity/${e.id}" class="de_entity_link">
                     <img class="thumb" src="${e.thumb}">
                     <h4>${e.title}</h4>
 
@@ -368,7 +384,7 @@
 <!--个人页面-->
 <script type="text/template" id="userDetailTpl">
     <div class="user_info">
-        <a href="${root}/user/${id}" class="de_borderbox de_user_link">
+        <a href="user/${id}" class="de_borderbox de_user_link">
             <img src="${figure}" class="photo"/>
 
             <p class="name">${name}</p>
@@ -390,7 +406,7 @@
 <!--优秀作品-->
 <script type="text/template" id="userHonorProjectTpl">
     {@each projects as p}
-        <li><a href="${root}/entity/${p.id}" class="de_entity_link"><img src="${p.thumb}"></a></li>
+        <li><a href="entity/${p.id}" class="de_entity_link"><img src="${p.thumb}"></a></li>
     {@/each}
 </script>
 <!--作品、资源-->
@@ -407,14 +423,14 @@
         {@each entities as e}
         <li class="de_borderbox">
             <div class="user_info">
-                <a href="${root}/user/${userId}" class="de_user_link">
+                <a href="user/${userId}" class="de_user_link">
                     <img class="photo" src="${userProfile}"/>
 
                     <p class="name">${userName}</p>
                 </a>
             </div>
             <div class="project_info">
-                <a href="${root}/entity/${e.id}" class="de_entity_link">
+                <a href="entity/${e.id}" class="de_entity_link">
                     <img class="thumb" src="${e.thumb}">
                     <h4>${e.title}</h4>
 
@@ -447,9 +463,9 @@
             {@/if}
             {@if showToolBar}
             <ul class="de_project_toolbar de_transition">
-                <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
+                <li><a class="de_toolbar_edit" href="edit/${e.id}" title="编辑">编辑</a></li>
+                <li><a class="de_toolbar_delete" href="${e.id}" title="删除">删除</a></li>
+                <li><a class="de_toolbar_visible" href="${e.id}" title="显示/隐藏">显示/隐藏</a></li>
             </ul>
             {@/if}
         </li>
@@ -459,11 +475,11 @@
 
 <!--    上传标签   -->
 <script type="text/template" id="uploadInputTag">
-    <li><a href="#">${text}</a></li>
+    <li><input type="hidden" name="tags[]" value="${t}"><a href="#">${text}</a></li>
 </script>
 <script type="text/template" id="uploadInputTagMore">
     {@each tags as t}
-         <li><a href="#">${t}</a></li>
+         <li><input type="hidden" name="tags[]" value="${t}"><a href="#">${t}</a></li>
     {@/each}
 </script>
 <!-- 上传未完成的html模版-->
@@ -490,7 +506,7 @@
     <h2>${title}</h2>
     <p class="publishtime">${date}</p>
     <div class="user_info">
-        <a href="${root}/user/${userId}">
+        <a href="user/${userId}">
             <img class="photo" src="${userFigure}">
             <p class="name">${username}</p>
         </a>
@@ -514,9 +530,8 @@
 <script type="text/template" id="webVideoInput">
     <label for="de_input_web_video">请输入网络视频通用地址:</label>
     <input type="text" id="de_input_web_video" class="de_input_web_video">
-    <input type="button" id="de_input_web_video_ok" value="确定">
+    <input type="button" id="de_input_web_video_ok" class="de_input_web_video_ok" value="确定">
 </script>
-
 
 <body>
 <div class="de_page_wrapper">
@@ -547,9 +562,9 @@
     <!-----顶部菜单----->
     <nav class="de_top_nav" id="de_top_nav">
         <ul>
-            <li><a href="/DesignEngine_Web/project/all" class="de_btn_project de_borderbox active">设计作品</a></li>
-            <li><a href="/DesignEngine_Web/resource/all" class="de_btn_resource de_borderbox">学习资源</a></li>
-            <li><a href="/DesignEngine_Web/user/hot" class="de_btn_designer de_borderbox">人气榜</a></li>
+            <li><a href="project/all" class="de_btn_project de_borderbox active">设计作品</a></li>
+            <li><a href="resource/all" class="de_btn_resource de_borderbox">学习资源</a></li>
+            <li><a href="user/hot" class="de_btn_designer de_borderbox">人气榜</a></li>
         </ul>
     </nav>
 
@@ -1598,6 +1613,7 @@
                     </div>
                     <input type="submit" class="de_button de_submit_btn" name="de_btn_sign_in" id="de_btn_sign_in"
                            value="登录">
+                    <label class="error" id="de_login_error"></label>
                 </form>
             </div>
             <div class="de_borderbox de_reg_col">
@@ -1630,13 +1646,14 @@
 
                     <p class="de_jcaptcha" id="de_jcaptcha">
                         <a href="#refreshjcaptcha">
-                            <img class="de_jcaptcha_img de_borderbox" id="de_jcaptcha_img" src="data/kaptcha.jpg"/>
-                            <span class="de_jcaptcha_refresh">看不清？换一张</span>
+                            <img class="de_jcaptcha_img de_borderbox" id="de_captcha_img" src="http://lotusprize.com/design/captcha.jpg"/>
+                            <span class="de_jcaptcha_refresh" id="de_refresh_captcha">看不清？换一张</span>
                         </a>
                         <input type="text" name="de_reg_code" autocomplete="off" class="de_borderbox de_jcaptcha_input"
                                placeholder="请输入左侧字符">
                     </p>
                     <input type="submit" class="de_button de_submit_btn" name="de_sign_up" id="de_register" value="注册">
+                    <label class="error" id="de_reg_error"></label>
                 </form>
             </div>
             <div class="de_borderbox de_band_col">

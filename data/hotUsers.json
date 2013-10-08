@@ -1,7 +1,7 @@
 {
     "users":[
         {
-            "profile":"/DesignEngine_Web/data/people1.jpg",
+            "profile":"/design/data/people1.jpg",
             "id":0,
             "name":"淘宝鬼脚七",
             "describe":"好好",
@@ -10,28 +10,28 @@
             "projects":[
                 {
                     "id":1,
-                   "thumb":"/DesignEngine_Web/data/pic2.png"
+                   "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 }
             ]
         },
         {
-            "profile":"/DesignEngine_Web/data/people1.jpg",
+            "profile":"/design/data/people1.jpg",
             "id":0,
             "name":"淘宝鬼脚七",
             "describe":"好好",
@@ -40,28 +40,28 @@
             "projects":[
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 }
             ]
         },
         {
-            "profile":"/DesignEngine_Web/data/people1.jpg",
+            "profile":"/design/data/people1.jpg",
             "id":0,
             "name":"淘宝鬼脚七",
             "describe":"好好",
@@ -70,28 +70,28 @@
             "projects":[
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 }
             ]
         },
         {
-            "profile":"/DesignEngine_Web/data/people1.jpg",
+            "profile":"/design/data/people1.jpg",
             "id":0,
             "name":"淘宝鬼脚七",
             "describe":"",
@@ -100,23 +100,23 @@
             "projects":[
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 },
                 {
                     "id":1,
-                    "thumb":"/DesignEngine_Web/data/pic2.png"
+                    "thumb":"/design/data/pic2.png"
                 }
             ]
         }

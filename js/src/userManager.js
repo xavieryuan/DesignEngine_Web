@@ -83,7 +83,7 @@ DE.user=(function(){
         },
         showHotUsers:function(data,first){
             var tpl=$("#hotUserTpl").html();
-            var html=juicer(tpl,{hotUsers:data.users,root:DE.config.root});
+            var html=juicer(tpl,{hotUsers:data.users});
             $("#de_hot_user_list").append($(html));
 
             if(first){
@@ -110,13 +110,11 @@ DE.user=(function(){
         },
         showUserDetail:function(data){
             var tpl=$("#userDetailTpl").html();
-            data.user.root=DE.config.root;
             var html=juicer(tpl,data.user);
             $("#de_user_info_card").html($(html));
         },
         showUserEntity:function(data){
             var tpl=$("#userEntitiesTpl").html();
-            data.root=DE.config.root;
             data.userId=DE.store.currentShowUser.userId;
             data.userName=DE.store.currentShowUser.name;
             data.userProfile=DE.store.currentShowUser.figure;
@@ -163,7 +161,7 @@ DE.user=(function(){
         userClickHandler:function(href){
             DE.history.push(href);  //由于有清空store的操作，需要最先执行
             var array=href.split("/");
-            var id=array[3];
+            var id=array[1];
 
             this.getUserById();
             this.getUserEntities();
@@ -185,7 +183,7 @@ DE.user=(function(){
                 },
                 messages: {
                     de_reset_pwd: {
-                        required:"请输入邮箱！",
+                        required:"请输入密码！",
                         rangelength:"请输入6-20位的密码！"
                     },
                     de_confirm_pwd: "两次输入的密码不一致，请重新输入！"
@@ -255,7 +253,7 @@ DE.user=(function(){
                 }
             });
 
-            return {projects:array,root:DE.config.root};
+            return {projects:array};
         },
         /**
          *排序实体

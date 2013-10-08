@@ -30,47 +30,53 @@ var DE=DE||{};
 DE.UIManager=function(){
 	//私有属性及方法	
 	var showPopout=function(){
-			$("#de_popout").removeClass("de_hidden");
-			$("#de_blackout").removeClass("de_hidden");
+        $("#de_popout").removeClass("de_hidden");
+        $("#de_blackout").removeClass("de_hidden");
     };
 	var hidePopout=function(){
-			$("#de_popout").addClass("de_hidden");
-			$("#de_blackout").addClass("de_hidden");
+        $("#de_popout").addClass("de_hidden");
+        $("#de_blackout").addClass("de_hidden");
+
+        //清空错误提示
+        $("#de_reg_error").text("");
+        $("#de_login_error").text("");
     };
 	var gotoScreen=function(screenLink,paraObj){
-			cleanAllScreens();
-			$(screenLink).removeClass("de_hidden");
-			
-			//加载某些特定屏幕时需要额外地处理视图
-			if(screenLink=="#de_screen_project"){
-				$(".de_top_nav .de_btn_project").addClass("active");
+        cleanAllScreens();
+        $(screenLink).removeClass("de_hidden");
 
-                //清理已经加载的数据
-                DE.store.clearScreenData("project");
-			}else if(screenLink=="#de_screen_resource"){
-				$(".de_top_nav .de_btn_resource").addClass("active");
+        //加载某些特定屏幕时需要额外地处理视图
+        if(screenLink=="#de_screen_project"){
+            $(".de_top_nav .de_btn_project").addClass("active");
 
-                DE.store.clearScreenData("resource");
-			}else if(screenLink=="#de_screen_designer"){
-				$(".de_top_nav .de_btn_designer").addClass("active");
+            //清理已经加载的数据
+            DE.store.clearScreenData("project");
+        }else if(screenLink=="#de_screen_resource"){
+            $(".de_top_nav .de_btn_resource").addClass("active");
 
-                DE.store.clearScreenData("hotUser");
-			}else if(screenLink=="#de_screen_search_result"){
-				if(paraObj && paraObj.keyword){
-					$("#de_btn_filter>a").html( "搜索："+paraObj.keyword ).addClass("active");
-                }
-				if(paraObj && paraObj.type=="resource"){
-					$("#de_screen_search_result>.de_category_filter>.de_category_filter_option_resource").addClass("active");
-                }else{
-					$("#de_screen_search_result>.de_category_filter>.de_category_filter_option_project").addClass("active");
-                }
+            DE.store.clearScreenData("resource");
+        }else if(screenLink=="#de_screen_designer"){
+            $(".de_top_nav .de_btn_designer").addClass("active");
 
-                DE.store.clearScreenData("search");
-			}else if(screenLink=="#de_screen_user_profile"){
-                DE.store.clearScreenData("user");
-            }else if(screenLink=="#de_screen_upload"){
-                DE.store.clearScreenData("upload");
+            DE.store.clearScreenData("hotUser");
+        }else if(screenLink=="#de_screen_search_result"){
+            if(paraObj && paraObj.keyword){
+                $("#de_btn_filter>a").html( "搜索："+paraObj.keyword ).addClass("active");
             }
+            if(paraObj && paraObj.type=="resource"){
+                $("#de_screen_search_result>.de_category_filter>.de_category_filter_option_resource").addClass("active");
+            }else{
+                $("#de_screen_search_result>.de_category_filter>.de_category_filter_option_project").addClass("active");
+            }
+
+            DE.store.clearScreenData("search");
+        }else if(screenLink=="#de_screen_user_profile"){
+            DE.store.clearScreenData("user");
+        }else if(screenLink=="#de_screen_upload"){
+            DE.store.clearScreenData("upload");
+        }
+        $(window).scrollTop(0);
+
     };
 	var cleanAllScreens=function(){
 		
@@ -113,8 +119,9 @@ DE.UIManager=function(){
 			$("#de_ext_nav").css("right","-150px")
 		},
 		showProjectDetail:function(){
-			$("#de_screen_project_detail").removeClass("de_hidden");
-			$("#de_screen_project_detail").scrollTop(0)
+            var detailEle=$("#de_screen_project_detail");
+            detailEle.removeClass("de_hidden");
+            detailEle.scrollTop(0);
 			$("body").addClass("de_noscroll");
 		},
 		hideProjectDetail:function(){
@@ -132,25 +139,25 @@ DE.UIManager=function(){
 			$("#de_login_email").focus();
 		},
 		showRegPopout:function(){
-			showPopout()
+			showPopout();
 			$("#de_popout>.de_inner_wrapper").css("left","-100%");
 			$("#de_popout>.de_popout_title").html("注册");
 			$("#de_reg_username").focus();
 		},
 		showRecoverPwdPopout:function(){
-			showPopout()
+			showPopout();
 			$("#de_popout>.de_inner_wrapper").css("left","-200%");
 			$("#de_popout>.de_popout_title").html("找回密码");
 			$("#de_recover_pwd_email").focus();		
 		},
 		showMsgPopout:function(title,msg){
-			showPopout()
-			$("#de_popout .de_popout_title").html(title)
-			$("#de_popout .de_popout_msg").html(msg)
+			showPopout();
+			$("#de_popout .de_popout_title").html(title);
+			$("#de_popout .de_popout_msg").html(msg);
 			$("#de_popout>.de_inner_wrapper").css("left","-300%")
 		},
 		showRestPwdPopout:function(){
-			showPopout()
+			showPopout();
 			$("#de_popout>.de_inner_wrapper").css("left","-400%");
 			$("#de_popout>.de_popout_title").html("修改密码");
 			$("#de_reset_pwd").focus();		
@@ -169,16 +176,16 @@ DE.UIManager=function(){
 			hidePopout();
 		},
 		gotoUploadStep:function(stepID){
-			$("#de_screen_upload .de_upload_step").addClass("de_hidden")
-			$(stepID).removeClass("de_hidden")
-			$("#de_screen_upload .current").removeClass("current")
+			$("#de_screen_upload .de_upload_step").addClass("de_hidden");
+			$(stepID).removeClass("de_hidden");
+			$("#de_screen_upload .current").removeClass("current");
 			
 			if(stepID=="#de_upload_step1"){
-				$("#de_screen_upload .de_tab_step1").addClass("current")
+				$("#de_screen_upload .de_tab_step1").addClass("current");
 			}else if(stepID=="#de_upload_step2"){
-				$("#de_screen_upload .de_tab_step2").addClass("current")				
+				$("#de_screen_upload .de_tab_step2").addClass("current");
 			}else if(stepID=="#de_upload_step3"){
-				$("#de_screen_upload .de_tab_step3").addClass("current")			
+				$("#de_screen_upload .de_tab_step3").addClass("current");
 			}
 		},
 

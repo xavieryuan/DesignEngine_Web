@@ -7,8 +7,24 @@
  */
 var DE=DE||{};
 DE.entity=(function(){
-    var url="";
-    var data=null;
+
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+        return currentdate;
+    }
 
     return {
         getEntityAttachment:function(){
@@ -109,24 +125,6 @@ DE.entity=(function(){
 
             });
         },
-
-        getEntityBySearch:function(){
-            $.ajax({
-                url:DE.config.urls.getWorkById,
-                type:"post",
-                data:{
-
-                },
-                dataType:"json",
-                success:function(data){
-
-                },
-                error:function(){
-
-                }
-
-            });
-        },
         getTags:function(){
             $.ajax({
                 url:DE.config.urls.getWorkById,
@@ -149,10 +147,12 @@ DE.entity=(function(){
                 url:DE.config.urls.getWorkById,
                 type:"post",
                 data:{
-                    id:DE.currentShowEntity.id
+                    id:DE.store.currentShowEntity.id
                 },
                 dataType:"json",
                 success:function(data){
+
+                    //更新赞的数量
 
                 },
                 error:function(){
@@ -249,12 +249,12 @@ DE.entity=(function(){
         toolbarHandler:function(target){
              var className=target.attr("class");
         },
-        deleteEntity:function(){
+        deleteEntity:function(id){
             $.ajax({
                 url:DE.config.ajaxUrls.deleteWork,
                 type:"post",
                 data:{
-                    id:DE.store.currentShowEntity.id
+                    id:id
                 },
                 dataType:"json",
                 success:function(data){
@@ -271,12 +271,12 @@ DE.entity=(function(){
 
             DE.upload.editEntity(DE.store.currentShowEntity.id);
         },
-        hideEntity:function(){
+        hideEntity:function(id){
             $.ajax({
                 url:DE.config.urls.getWorkById,
                 type:"post",
                 data:{
-                    id:DE.store.currentShowEntity.id
+                    id:id
                 },
                 dataType:"json",
                 success:function(data){
@@ -291,7 +291,7 @@ DE.entity=(function(){
 
         entityClickHandler:function(href){
             var array=href.split("/");
-            var id=array[3];
+            var id=array[1];
 
 
             //请求详细信息
@@ -312,7 +312,6 @@ DE.entity=(function(){
         },
         showEntityDetailTop:function(data){
             var tpl=$("#entityDetailTopTpl").html();
-            data.entity.root=DE.config.root;
             var html=juicer(tpl,data.entity);
             $("#de_project_detail").html($(html));
         },
@@ -323,15 +322,13 @@ DE.entity=(function(){
             var html=juicer(tpl,{
                 id:DE.store.currentShowEntity.id,
                 hasPraised:data.entity.praised,
-                canShowToolBar:showFlag,
-                root:DE.config.root
+                canShowToolBar:showFlag
             });
             $("#de_screen_project_detail").prepend($(html));
 
         },
         showSimilarEntity:function(data){
             var tpl=$("#similarEntityTpl").html();
-            data.root=DE.config.root;
             var html=juicer(tpl,data);
             $("#de_screen_project_detail").append($(html));
         },
@@ -342,8 +339,7 @@ DE.entity=(function(){
         },
         showComment:function(data){
             var tpl=$("#entityCommentsTpl").html();
-            data.root=DE.config.root;
-            var html=juicer(tpl,data);
+            var html=juicer(tpl,{comments:data.comments,user:DE.store.currentUser});
             $("#de_screen_project_detail").append($(html));
         },
         /**
@@ -357,7 +353,7 @@ DE.entity=(function(){
 
             if(type==DE.config.entityTypes.project){
                 tpl=$("#projectTpl").html();
-                html=juicer(tpl,{projects:data.projects,root:DE.config.root});
+                html=juicer(tpl,{projects:data.projects});
                 $("#de_project_list").append($(html));
                 if(first){
                     DE.UIManager.showScreen("#de_screen_project");
@@ -365,7 +361,7 @@ DE.entity=(function(){
 
             }else{
                 tpl=$("#resourceTpl").html();
-                html=juicer(tpl,{resource:data.resource,root:DE.config.root});
+                html=juicer(tpl,{resource:data.resource});
                 $("#de_resource_list").append($(html));
                 if(first){
                     DE.UIManager.showScreen("#de_screen_resource");
@@ -376,7 +372,6 @@ DE.entity=(function(){
         showSearchEntities:function(data,first){
             var targetContain= $("#de_search_result");
             var tpl=$("#searchResultTpl").html();
-            data.root=DE.config.root;
             var html=juicer(tpl,data);
 
             if(first){
@@ -388,6 +383,26 @@ DE.entity=(function(){
             }
 
             targetContain.append($(html));
+        },
+        addCommentHandler:function(){
+            var contentEle=$("#de_comment_content");
+            var content=contentEle.val();
+            contentEle.val("");
+            this.showSingleComment(content);
+            /*$.ajax({
+
+
+            })*/
+
+        },
+        showSingleComment:function(content){
+            var tpl=$("#singleComment").html();
+            var html=juicer(tpl,{
+                user:DE.store.currentUser,
+                content:content,
+                time:getNowFormatDate()
+            });
+            $("#de_comment_list").append($(html));
         }
     }
 })();
@@ -414,14 +429,30 @@ $(document).ready(function(){
         return false;
     });
 
-    $(document).on("click","#de_entity_toolbar a",function(){
+
+    //评论登录
+    $(document).on("click","#de_btn_comment_login",function(){
+        DE.login.initLoginForm();
+        DE.UIManager.showLoginPopout();
+        DE.UIManager.hideProjectDetail();
+
+        return false;
+    });
+
+    //添加评论
+    $(document).on("click","#de_btn_add_comment",function(){
+        DE.entity.addCommentHandler();
+    });
+
+
+    $(document).on("click",".de_project_toolbar a",function(){
         var className=$(this).attr("class");
         if(className=="de_toolbar_edit"){
             DE.entity.editEntity($(this).attr("href"));
         }else if(className=="de_toolbar_delete"){
-            DE.entity.deleteEntity();
+            DE.entity.deleteEntity($(this).attr("href"));
         }else{
-            DE.entity.hideEntity();
+            DE.entity.hideEntity($(this).attr("href"));
         }
 
         return false;

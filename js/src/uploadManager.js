@@ -7,6 +7,9 @@
  */
 var DE=DE||{};
 DE.upload=(function(){
+
+    var addedTags={}; //已经添加的标签
+
     function jsonToStr(o) {
 
         var me = this;
@@ -105,7 +108,7 @@ DE.upload=(function(){
     function setIframeAndShowLi(params){
 
         var classString = "class='zy_media_list_error'";
-        var thumb_src = DE.config.root + "/images/zy_small_thumb.png";
+        var thumb_src = "images/zy_small_thumb.png";
 
 
         if (params.type == "zy_image") {
@@ -229,15 +232,16 @@ DE.upload=(function(){
         uploaderMedia.init();
 
         //根据type生成zy_media_id,和iframe的页面
-        var zy_media_ids = {};//一个文件名和媒体id的关联hash，因为要传多个文件，需要记录下每个media_id
+        var zy_media_ids = {};//一个file.id和媒体media_id的关联hash，因为要传多个文件，需要记录下每个media_id
         var zy_iframe_page_names = {};
 
         //文件添加事件
         uploaderMedia.bind("FilesAdded", function (up, files) {
             var zy_media_id = "";
             var zy_iframe_page_name = "";
+            var fileLength=files.length;
 
-            for (var i = 0; i < files.length; i++) {
+            for (var i = 0; i < fileLength; i++) {
                 var filename = files[i].name;
                 var lastIndex = filename.lastIndexOf(".");
                 var filename_noext = filename.substring(0, lastIndex);
@@ -246,40 +250,40 @@ DE.upload=(function(){
                 var reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/;
 
                 if (!reg.test(filename_noext)) {
+
                     alert("文件" + filename + "命名有误（只能数字字母下划线，且不能以下划线开头）,将从上传列表中删除。");
 
                     up.removeFile(files[i]);
-                    files.splice(i, 1);
-                    i--;
+
                 } else {
 
                     //给zy_media_id和iframe页面名称赋值
                     if (type == "zy_location_video") {
                         zy_media_id = getRandom("zy_location_");
                         zy_iframe_page_name = "zy_set_location_video.html";
-                        zy_media_ids[filename] = zy_media_id;
-                        zy_iframe_page_names[filename] = zy_iframe_page_name;
+                        zy_media_ids[files[i]["id"]] = zy_media_id;
+                        zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
                     } else if (type == "zy_3d") {
                         zy_media_id = getRandom("zy_3d_");
                         zy_iframe_page_name = "zy_set_3d.html";
-                        zy_media_ids[filename] = zy_media_id;
-                        zy_iframe_page_names[filename] = zy_iframe_page_name;
+                        zy_media_ids[files[i]["id"]] = zy_media_id;
+                        zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
                     } else if (type == "zy_ppt") {
                         zy_media_id = getRandom("zy_ppt_");
                         zy_iframe_page_name = "zy_set_ppt.html";
-                        zy_media_ids[filename] = zy_media_id;
-                        zy_iframe_page_names[filename] = zy_iframe_page_name;
+                        zy_media_ids[files[i]["id"]] = zy_media_id;
+                        zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
                     } else if (type == "zy_image") {
                         zy_media_id = getRandom("zy_image_");
                         zy_iframe_page_name = "zy_set_image.html";
-                        zy_media_ids[filename] = zy_media_id;
-                        zy_iframe_page_names[filename] = zy_iframe_page_name;
+                        zy_media_ids[files[i]["id"]] = zy_media_id;
+                        zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
                     }
 
                     //组装显示的数据
                     var data = {
                         media_id:zy_media_id,
-                        thumb_src:DE.config.root+ '/images/zy_small_thumb.png',
+                        thumb_src:'images/zy_small_thumb.png',
                         filename:filename
                     };
 
@@ -300,7 +304,7 @@ DE.upload=(function(){
 
         //文件上传进度条事件
         uploaderMedia.bind("UploadProgress", function (up, file) {
-            jQuery(".zy_uncomplete_li[data-zy-media-id='" + zy_media_ids[file.name] + "']").find(".zy_media_percent").html(file.percent + "%");
+            jQuery(".zy_uncomplete_li[data-zy-media-id='" + zy_media_ids[file.id] + "']").find(".zy_media_percent").html(file.percent + "%");
 
         });
 
@@ -319,20 +323,20 @@ DE.upload=(function(){
             if (response.success) {
 
                 //移除上传时候的li
-                jQuery(".zy_uncomplete_li[data-zy-media-id='" + zy_media_ids[file.name] + "']").remove();
+                jQuery(".zy_uncomplete_li[data-zy-media-id='" + zy_media_ids[file.id] + "']").remove();
 
 
                 //下面一节使用封装了的函数
-                var iframe_src=DE.config.root+"/uploadPlugin/html/"+zy_iframe_page_names[file.name] + '?' + zy_media_ids[file.name];
+                var iframe_src="uploadPlugin/html/"+zy_iframe_page_names[file.id] + '?' + zy_media_ids[file.id];
 
                 setIframeAndShowLi({
                     type:type,
                     url:response.data.url,
                     iframeSrc:iframe_src,
-                    mediaId:zy_media_ids[file.name],
+                    mediaId:zy_media_ids[file.id],
                     filename:file.name});
 
-                setUploadedMediasObj(type,file.name,response.data.url,zy_media_ids[file.name]);
+                setUploadedMediasObj(type,file.name,response.data.url,zy_media_ids[file.id]);
 
 
                 //执行一次拖拽,因为元素是动态添加的，应该在添加后添加拖拽事件
@@ -361,6 +365,7 @@ DE.upload=(function(){
         });
     }
     function showEntityDetail(entity){
+        var i= 0,length;
 
         //设置标题
         $("#de_input_project_title").val(entity.title);
@@ -369,6 +374,12 @@ DE.upload=(function(){
         var tagTpl=$("#uploadInputTagMore").html();
         var html=juicer(tagTpl,entity);
         $("#de_input_tag").html(html);
+        length=entity.tags;
+
+        //记录下已经输入的tag
+        for(i;i<length;i++){
+            addedTags[entity.tags[i]]=true;
+        }
 
         //设置描述
         $("#de_project_description").text(entity.description);
@@ -405,15 +416,15 @@ DE.upload=(function(){
 
             mediaType=data[obj]["zy_media_type"];
             if(mediaType=="zy_location_video") {
-                iframeSrc=DE.config.root+"/uploadPlugin/html/zy_set_location_video.html?"+obj;
+                iframeSrc="uploadPlugin/html/zy_set_location_video.html?"+obj;
             }else if(mediaType=="zy_3d"){
-                iframeSrc=DE.config.root+"/uploadPlugin/html/zy_set_3d.html?"+obj;
+                iframeSrc="uploadPlugin/html/zy_set_3d.html?"+obj;
             }else if(mediaType=="zy_ppt"){
-                iframeSrc=DE.config.root+"/uploadPlugin/html/zy_set_ppt.html?"+obj;
+                iframeSrc="uploadPlugin/html/zy_set_ppt.html?"+obj;
             }else if(mediaType=="zy_network_video"){
-                iframeSrc=DE.config.root+"/uploadPlugin/html/zy_set_network_video.html?"+obj;
+                iframeSrc="uploadPlugin/html/zy_set_network_video.html?"+obj;
             }else if(mediaType=="zy_image"){
-                iframeSrc=DE.config.root+"/uploadPlugin/html/zy_set_image.html?"+obj;
+                iframeSrc="uploadPlugin/html/zy_set_image.html?"+obj;
             }
 
             html+=juicer(tpl,{
@@ -519,7 +530,7 @@ DE.upload=(function(){
                 setIframeAndShowLi({
                     type:"zy_network_video",
                     url:filename,
-                    iframeSrc:DE.config.root+"/uploadPlugin/html/zy_set_network_video.html?"+zy_media_id,
+                    iframeSrc:"uploadPlugin/html/zy_set_network_video.html?"+zy_media_id,
                     mediaId:zy_media_id,
                     filename:filename
                 });
@@ -591,9 +602,14 @@ DE.upload=(function(){
             }
         },
         showInputTag:function(value){
-            var tpl=$("#uploadInputTag").html();
-            var html=juicer(tpl,{text:value});
-            $("#de_input_tag").append($(html));
+
+            //如果没有添加
+            if(!addedTags[value]){
+                addedTags[value]=true;
+                var tpl=$("#uploadInputTag").html();
+                var html=juicer(tpl,{text:value});
+                $("#de_input_tag").append($(html));
+            }
         },
         stepControl:function(href){
             if(href=="#de_upload_step2"){
@@ -616,11 +632,7 @@ DE.upload=(function(){
                 },
                 dataType:"json",
                 success:function (data) {
-                    if (data.info == 1) {
-
-                    } else {
-
-                    }
+                    //清空addedTags对象
                 },
                 error:function (data) {
 

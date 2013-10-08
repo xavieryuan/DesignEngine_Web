@@ -2193,4 +2193,12 @@ li {
 }
 .de_input_web_video{
     width: 80%;
+    height: 25px;
+    font-size: 14px;
+}
+.de_input_web_video_ok{
+    height: 30px;
+    text-align: center;
+    width: 50px;
+    cursor: pointer;
 }
