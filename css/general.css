@@ -894,6 +894,7 @@ li {
     left: 460px;
     border-left: #666 1px dotted;
     width: 200px;
+	font-size:0;
 }
 
 .de_btn_filter a {
