@@ -611,7 +611,79 @@ li {
 .de_btn_save_profile {
     width: 100px;
 }
+/********绑定其他网站账号弹窗********************/
+.de_bind_account{
+    width: 100%;
+    font-size: 14px;
+    padding: 0 5%;
+    overflow: hidden;
+}
+.de_bind_account p em {
+    font-style: normal;
+    font-size: 16px;
+    font-weight: bold;
+}
+.de_bind_account .de_bind_account_btn {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 10px;
+    margin-left: 40px;
+    max-width: 160px;
+    color: #333;
+    text-decoration: none;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    background: #efefef;
+    border-radius: 20px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    /*渐变色*/
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #efefef 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #efefef)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%, #efefef 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%, #efefef 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%, #efefef 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffffff 0%, #efefef 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#efefef', GradientType=0); /* IE6-9 */
+}
 
+.de_bind_account .de_bind_account_btn:hover {
+    background: #ddd;
+}
+
+.de_bind_account .de_bind_account_btn:before {
+    content: "使用QQ账号登录";
+    display: inline-block;
+    width: 140px;
+    height: 40px;
+    vertical-align: middle;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    padding-left: 10px;
+    line-height: 40px;
+    margin: 0 10px 0 0;
+    background: url(../images/icon30_qq.png) no-repeat left center;
+}
+
+.de_bind_account a {
+    width: 140px;
+    display: block;
+    position: absolute;
+    top: 40px;
+}
+.de_bind_account img {
+    width: 0px;
+}
+.de_remove_bind{
+    cursor: pointer;
+    color:blue;
+    display: inline-block;
+    margin-left: 40px;
+}
 /*****************header 部分******************/
 .de_header {
     position: fixed;
@@ -1643,7 +1715,7 @@ li {
 .zy_add_media_menu li>a:hover {
     color: #666;
 }
-.zy_types2, .zy_types3, .zy_types4, .zy_types5 {
+.zy_types2, .zy_types3, .zy_types4, .zy_types5, .zy_types6 {
     border-top: 1px solid #CECFCF;
 }
 .zy_types1 {
@@ -1660,6 +1732,9 @@ li {
 }
 .zy_types5 {
     background: url(../images/zy_media_ppt.png) no-repeat 30px center;
+}
+.zy_types6 {
+    background: url(../images/zy_media_file.png) no-repeat 30px center;
 }
 .zy_section_right_header {
     height: 39px;
@@ -1915,6 +1990,7 @@ li {
     padding-top: 70px;
 }
 
+
 .de_flag_reg_zanned {
     background: url(../images/flag_reg_zan_white.png) no-repeat;
     color: #8CC63F;
@@ -2046,7 +2122,15 @@ li {
     padding: 20px 40px 20px 20px;
     border-bottom: #ccc 1px dotted;
 }
-
+.de_comment_more_btn{
+    border-radius: 5px;
+    height: 30px;
+    width: 100px;
+    font-size: 14px;
+    line-height: 30px;
+    text-align: center;
+    background: #ccc;
+}
 .de_comment_box .user_info {
     float: left;
 }
@@ -2144,7 +2228,7 @@ li {
     overflow: hidden !important;
 }
 
-#de_blackout {
+.de_blackout {
     background: #000;
     width: 100%;
     height: 100%;
@@ -2153,6 +2237,19 @@ li {
     opacity: 0.7;
     top: 0;
     left: 0;
+}
+.de_loading{
+    background: #000;
+    position: fixed;
+    z-index: 10000;
+    opacity: 0.7;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    text-align: center;;
+    line-height: 100%;
+    color:red;
 }
 
 /*-----------------弹出窗口-------------------------*/

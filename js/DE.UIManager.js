@@ -77,6 +77,7 @@ DE.UIManager=function(){
         }
         $(window).scrollTop(0);
 
+        DE.UIManager.hideLoading();
     };
 	var cleanAllScreens=function(){
 		
@@ -118,6 +119,12 @@ DE.UIManager=function(){
 		hideExtMenu:function(){
 			$("#de_ext_nav").css("right","-150px")
 		},
+        showLoading:function(){
+            $("#de_loading").removeClass("de_hidden");
+        },
+        hideLoading:function(){
+            $("#de_loading").addClass("de_hidden");
+        },
 		showProjectDetail:function(){
             var detailEle=$("#de_screen_project_detail");
             detailEle.removeClass("de_hidden");
@@ -128,7 +135,7 @@ DE.UIManager=function(){
 
             //隐藏的同时，重新设置de_screen_project_detail的html
 			$("#de_screen_project_detail").addClass("de_hidden").
-                html('<article id="de_project_detail" class="de_project_detail de_borderbox de_boxshadow"></article>');
+                html('');
 			$("body").removeClass("de_noscroll");
 
 		},
@@ -153,7 +160,7 @@ DE.UIManager=function(){
 		showMsgPopout:function(title,msg){
 			showPopout();
 			$("#de_popout .de_popout_title").html(title);
-			$("#de_popout .de_popout_msg").html(msg);
+			$("#de_popout_msg .de_popout_msg").html(msg);
 			$("#de_popout>.de_inner_wrapper").css("left","-300%")
 		},
 		showRestPwdPopout:function(){
@@ -167,6 +174,11 @@ DE.UIManager=function(){
 			$("#de_popout>.de_inner_wrapper").css("left","-500%");
 			$("#de_popout>.de_popout_title").html("编辑个人信息");
 		},
+        showBindAccountPopout:function(){
+            showPopout();
+            $("#de_popout>.de_inner_wrapper").css("left","-600%");
+            $("#de_popout>.de_popout_title").html("绑定账户");
+        },
 		hidePopout:function(){
 			hidePopout();
 		},	

@@ -1,24 +1,30 @@
 {
+    "success":true,
     "attachments":[
         {
-            "url":"/design/data/01.jpg",
-            "caption":"关于图片的书名"
+            "attachmentPreviewLocation":"/DesignEngine_Web/data/01.jpg",
+            "attachmentType":"zy_image",
+            "attachmentTitle":"关于图片的书名"
         },
         {
-            "url":"/design/data/01.jpg",
-            "caption":"关于图片的书名"
+            "attachmentPreviewLocation":"/DesignEngine_Web/data/01.jpg",
+            "attachmentType":"zy_image",
+            "attachmentTitle":"关于图片的书名"
         },
         {
-            "url":"/design/data/01.jpg",
-            "caption":"关于图片的书名"
+            "attachmentPreviewLocation":"/DesignEngine_Web/data/01.jpg",
+            "attachmentType":"zy_image",
+            "attachmentTitle":"关于图片的书名"
         },
         {
-            "url":"/design/data/01.jpg",
-            "caption":"关于图片的书名"
+            "attachmentPreviewLocation":"/DesignEngine_Web/data/01.jpg",
+            "attachmentType":"zy_image",
+            "attachmentTitle":"关于图片的书名"
         },
         {
-            "url":"/design/data/01.jpg",
-            "caption":"关于图片的书名"
+            "attachmentPreviewLocation":"/DesignEngine_Web/data/01.jpg",
+            "attachmentType":"zy_image",
+            "attachmentTitle":"关于图片的书名"
         }
     ]
 }

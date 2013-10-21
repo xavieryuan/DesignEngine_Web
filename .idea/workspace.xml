@@ -4,36 +4,36 @@
     <list default="true" id="757b1de4-e954-4b0a-b335-394cfef751c2" name="Default" comment="" />
     <ignored path="DesignEngine_Web.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379471364299" ignored="false" />
+    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382351706394" ignored="false" />
     <file path="/historyManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379476799039" ignored="false" />
     <file path="/test.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378454965883" ignored="false" />
     <file path="/uploadManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379467092712" ignored="false" />
     <file path="/config.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379480135822" ignored="false" />
-    <file path="/loginManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379475539986" ignored="false" />
+    <file path="/loginManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382350953022" ignored="false" />
     <file path="/statusManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378350996330" ignored="false" />
     <file path="/worksManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378367791308" ignored="false" />
     <file path="/userManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379382332138" ignored="false" />
     <file path="/dataManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378375658811" ignored="false" />
     <file path="/wkRsManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378376505411" ignored="false" />
     <file path="/storeManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379476817663" ignored="false" />
-    <file path="/entityManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379471875603" ignored="false" />
+    <file path="/entityManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382350703361" ignored="false" />
     <file path="/index.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378438493130" ignored="false" />
     <file path="/menuManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379477905605" ignored="false" />
     <file path="/works.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378449595788" ignored="false" />
-    <file path="/resource.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378452467996" ignored="false" />
-    <file path="/a.dummy" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379473980348" ignored="false" />
-    <file path="/projects.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378454482907" ignored="false" />
-    <file path="/index.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379477970479" ignored="false" />
-    <file path="/hotUsers.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378566660421" ignored="false" />
-    <file path="/entityDetail.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379228467741" ignored="false" />
-    <file path="/attachments.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378463467166" ignored="false" />
-    <file path="/similarEntities.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378464855318" ignored="false" />
-    <file path="/comments.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378466071331" ignored="false" />
-    <file path="/user.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379226518743" ignored="false" />
-    <file path="/userEntities.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378562624766" ignored="false" />
+    <file path="/resource.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382348799318" ignored="false" />
+    <file path="/a.dummy" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382351307442" ignored="false" />
+    <file path="/projects.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382348079031" ignored="false" />
+    <file path="/index.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382351519891" ignored="false" />
+    <file path="/hotUsers.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349148947" ignored="false" />
+    <file path="/entityDetail.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349629784" ignored="false" />
+    <file path="/attachments.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349621465" ignored="false" />
+    <file path="/similarEntities.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382350435707" ignored="false" />
+    <file path="/comments.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349937173" ignored="false" />
+    <file path="/user.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382351747940" ignored="false" />
+    <file path="/userEntities.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382351539950" ignored="false" />
     <file path="/general.css" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379475043104" ignored="false" />
     <file path="/DE.UIManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379230522661" ignored="false" />
-    <file path="/tags.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378972839953" ignored="false" />
+    <file path="/tags.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349179901" ignored="false" />
     <file path="/zy_set_3d.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379214088817" ignored="false" />
     <file path="/zy_slide_iframe.css" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379208703221" ignored="false" />
     <file path="/zy_set_common.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379236365773" ignored="false" />
@@ -68,10 +68,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="config.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="60" selection-start="1080" selection-end="1080" vertical-scroll-proportion="1.0108109">
+            <state line="110" column="26" selection-start="4735" selection-end="4735" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -80,16 +80,25 @@
       <file leaf-file-name="storeManager.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/storeManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="86" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.0">
+            <state line="88" column="4" selection-start="2602" selection-end="2602" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="general.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/general.css">
+      <file leaf-file-name="userManager.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/src/userManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="418" column="14" selection-start="9316" selection-end="9316" vertical-scroll-proportion="-14.36">
+            <state line="184" column="63" selection-start="6010" selection-end="6010" vertical-scroll-proportion="0.6528302">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="491" column="32" selection-start="17674" selection-end="17685" vertical-scroll-proportion="-11.115385">
               <folding />
             </state>
           </provider>
@@ -115,22 +124,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/uploadPlugin/html/zy_set_ppt.html" />
-        <option value="$PROJECT_DIR$/data/medias.json" />
-        <option value="$PROJECT_DIR$/uploadPlugin/js/zy_set_common.js" />
-        <option value="$PROJECT_DIR$/js/src/userManager.js" />
-        <option value="$PROJECT_DIR$/js/DE.UIManager.js" />
-        <option value="$PROJECT_DIR$/uploadPlugin/html/zy_set_network_video.html" />
-        <option value="$PROJECT_DIR$/js/src/uploadManager.js" />
-        <option value="$PROJECT_DIR$/js/src/entityManager.js" />
-        <option value="$PROJECT_DIR$/redirect.html" />
-        <option value="$PROJECT_DIR$/css/general.css" />
-        <option value="$PROJECT_DIR$/js/src/loginManager.js" />
-        <option value="$PROJECT_DIR$/js/src/historyManager.js" />
-        <option value="$PROJECT_DIR$/js/src/storeManager.js" />
         <option value="$PROJECT_DIR$/js/src/menuManager.js" />
+        <option value="$PROJECT_DIR$/data/resource.json" />
+        <option value="$PROJECT_DIR$/data/hotUsers.json" />
+        <option value="$PROJECT_DIR$/data/tags.json" />
+        <option value="$PROJECT_DIR$/data/entityDetail.json" />
+        <option value="$PROJECT_DIR$/data/attachments.json" />
+        <option value="$PROJECT_DIR$/data/comments.json" />
+        <option value="$PROJECT_DIR$/data/similarEntities.json" />
+        <option value="$PROJECT_DIR$/js/src/entityManager.js" />
+        <option value="$PROJECT_DIR$/js/src/loginManager.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/src/config.js" />
+        <option value="$PROJECT_DIR$/data/projects.json" />
+        <option value="$PROJECT_DIR$/data/userEntities.json" />
+        <option value="$PROJECT_DIR$/data/user.json" />
+        <option value="$PROJECT_DIR$/js/src/userManager.js" />
       </list>
     </option>
   </component>
@@ -190,7 +199,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -219,30 +227,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DesignEngine_Web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DesignEngine_Web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -252,8 +243,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../design" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -319,7 +310,6 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19136262" sideWeight="0.3539519" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19136262" sideWeight="0.6701031" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -330,6 +320,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -398,130 +389,112 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/src/userManager.js">
+    <entry file="file://$PROJECT_DIR$/data/comments.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="84" selection-start="3391" selection-end="3391" vertical-scroll-proportion="-1.1639639">
+        <state line="1" column="19" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/index.js">
+    <entry file="file://$PROJECT_DIR$/data/entityDetail.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="38" selection-start="1211" selection-end="1230" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/DE.UIManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="51" selection-start="1366" selection-end="1366" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uploadPlugin/html/zy_set_network_video.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="40" selection-start="575" selection-end="575" vertical-scroll-proportion="0.65891474" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uploadPlugin/html/zy_set_3d.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/zy_small_thumb.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/uploadManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="8" selection-start="5897" selection-end="5897" vertical-scroll-proportion="-6.380074">
+        <state line="1" column="19" selection-start="21" selection-end="21" vertical-scroll-proportion="0.032136105">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/redirect.html">
+    <entry file="file://$PROJECT_DIR$/data/similarEntities.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="19" selection-start="111" selection-end="111" vertical-scroll-proportion="-5.230769">
+        <state line="1" column="19" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/menuManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="137" column="31" selection-start="4914" selection-end="4914" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/loginManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="27" selection-start="2933" selection-end="2933" vertical-scroll-proportion="-5.6774774">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/entityManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="51" selection-start="2684" selection-end="2684" vertical-scroll-proportion="-9.383783">
+        <state line="74" column="40" selection-start="2690" selection-end="2690" vertical-scroll-proportion="0.44864866">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/general.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="418" column="14" selection-start="9316" selection-end="9316" vertical-scroll-proportion="-14.36">
+        <state line="490" column="14" selection-start="10610" selection-end="10610" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/attachments.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="16" selection-start="38" selection-end="38" vertical-scroll-proportion="0.032136105">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/storeManager.js">
+    <entry file="file://$PROJECT_DIR$/js/DE.UIManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="86" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.0">
+        <state line="103" column="76" selection-start="3737" selection-end="3741" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/historyManager.js">
+    <entry file="file://$PROJECT_DIR$/data/projects.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="19" selection-start="2254" selection-end="2265" vertical-scroll-proportion="0.0">
+        <state line="111" column="31" selection-start="3645" selection-end="3645" vertical-scroll-proportion="0.5784499">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/entityManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="369" column="57" selection-start="12186" selection-end="12192" vertical-scroll-proportion="0.030630631">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/userEntities.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="30" selection-start="2902" selection-end="2902" vertical-scroll-proportion="-35.96154">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="524" column="47" selection-start="18214" selection-end="18214" vertical-scroll-proportion="0.75581396">
-          <folding>
-            <element signature="tag#script#0;tag#html#0" expanded="false" />
-            <element signature="tag#script#1;tag#html#0" expanded="false" />
-            <element signature="tag#script#2;tag#html#0" expanded="false" />
-            <element signature="tag#script#3;tag#html#0" expanded="false" />
-            <element signature="tag#script#4;tag#html#0" expanded="false" />
-            <element signature="tag#script#5;tag#html#0" expanded="false" />
-            <element signature="tag#script#6;tag#html#0" expanded="false" />
-            <element signature="tag#script#7;tag#html#0" expanded="false" />
-            <element signature="tag#script#8;tag#html#0" expanded="false" />
-            <element signature="tag#script#9;tag#html#0" expanded="false" />
-            <element signature="tag#script#10;tag#html#0" expanded="false" />
-            <element signature="tag#script#11;tag#html#0" expanded="false" />
-            <element signature="tag#script#12;tag#html#0" expanded="false" />
-            <element signature="tag#script#13;tag#html#0" expanded="false" />
-            <element signature="tag#script#14;tag#html#0" expanded="false" />
-            <element signature="tag#script#15;tag#html#0" expanded="false" />
-            <element signature="tag#script#16;tag#html#0" expanded="false" />
-            <element signature="tag#script#17;tag#html#0" expanded="false" />
-            <element signature="tag#script#18;tag#html#0" expanded="false" />
-            <element signature="tag#script#19;tag#html#0" expanded="false" />
-            <element signature="tag#script#20;tag#html#0" expanded="false" />
-            <element signature="tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#section#0;tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#section#1;tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#section#0;tag#body#0;tag#html#0" expanded="false" />
-          </folding>
+        <state line="491" column="32" selection-start="17674" selection-end="17685" vertical-scroll-proportion="-11.115385">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/menuManager.js">
+    <entry file="file://$PROJECT_DIR$/data/user.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="60" selection-start="3365" selection-end="3365" vertical-scroll-proportion="0.0">
+        <state line="8" column="18" selection-start="228" selection-end="228" vertical-scroll-proportion="0.25708884">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="60" selection-start="1080" selection-end="1080" vertical-scroll-proportion="1.0108109">
+        <state line="110" column="26" selection-start="4735" selection-end="4735" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/storeManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="4" selection-start="2602" selection-end="2602" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/userManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="184" column="63" selection-start="6010" selection-end="6010" vertical-scroll-proportion="0.6528302">
           <folding />
         </state>
       </provider>

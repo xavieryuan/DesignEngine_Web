@@ -3,15 +3,25 @@
  * User: ty
  * Date: 13-9-4
  * Time: 下午6:00
- * To change this template use File | Settings | File Templates.
+ * 管理url地址历史，针对不同的url地址做不同的处理
  */
 var DE=DE||{};
 DE.history=(function(){
 
+    /**
+     * 是否支持history的api
+     * @returns {History|*}
+     */
     function supports_history_api(){
         return window.history && history.pushState;
     }
 
+    /**
+     * 针对不同的url的数据处理,对应config中的urls
+     * @param {String} type 要请求数据的类型
+     * @param {String} value 要请求的数据的参数值
+     * @param {Boolean} clearFirstLoadFlag 是否清楚第一次进入页面的标志，chrome第一次也响应statechange而firefox不响应
+     */
     function handler(type,value,clearFirstLoadFlag){
 
         DE.store.clearStore(clearFirstLoadFlag);
@@ -21,74 +31,86 @@ DE.history=(function(){
         switch (type){
             case "tag":
 
-                //请求对应数据
+                //请求点击标签的数据
                 DE.entity.getEntityByTag(value,type,true);
 
                 break;
             case "project":
 
-                //请求对应数据
+                //请求首页作品聚合
                 DE.entity.getAllEntity(DE.config.entityTypes.project,true);
 
                 break;
             case "user":
 
-                //请求对应数据
+                //请求用户数据
                 if(value=="hot"){
                     DE.user.getHotUsers(true);
                 }else{
-                    DE.user.getUserById();
-                    DE.user.getUserEntities();
+                    DE.user.getUserById(value);
+                    DE.user.getUserEntities(value);
                     DE.UIManager.showScreen("#de_screen_user_profile");
                 }
 
                 break;
             case "search":
 
-                //请求对应数据
+                //请求搜索数据
                 DE.entity.getEntityByTag(value,type,true);
 
                 break;
             case "upload":
 
-                //请求对应数据
+                //请求上传数据
                 DE.UIManager.showScreen("#de_screen_upload");
 
                 break;
             case "edit":
 
-                //请求对应数据
+                //请求修改数据
                 DE.upload.editEntity(value);
 
                 break;
             case "resource":
 
-                //请求对应数据
+                //请求首页资源数据
                 DE.entity.getAllEntity(DE.config.entityTypes.resource,true);
 
                 break;
             default :
+
+                //默认请求首页作品数据
                 DE.entity.getAllEntity(DE.config.entityTypes.project,true);
 
             }
     }
 
+
+    /**
+     * 处理href(url)函数
+     * @param {String} href 传入的地址
+     * @returns {{type: string, value: string}}
+     */
     function handlerHref(href){
-        var type="";
-        var value="";
         var array=href.split("/");
 
         //history函数push的hash都是tag/tagName
 
-        type=array[0];
-        value=array[1];
+        var type=array[0];
+        var value=array[1];
 
         return {
             type:type,
             value:value
         }
     }
+
     return {
+
+        /**
+         * stateChange处理函数
+         * @param {Object} event sate变化时的事件对象
+         */
         stateChange:function(event){
 
             var obj=null;
@@ -103,7 +125,7 @@ DE.history=(function(){
                       来进行数据的加载，所以要通过标志来处理第一次不进行事件操作的行为
                     * */
                     if(!DE.store.isFirstLoad){
-                        handler(null,null);
+                        handler(null,null,true);
                     }
                 }
             }else{
@@ -115,11 +137,19 @@ DE.history=(function(){
                 }
             }
 
-            //第一次进入网站，触发该函数obj是没有值的
+            /*有两种情况会使event.state为空，从而使obj为null
+            *一种是第一次进入网站，这个时候不需要响应数据，由initData响应
+            *一种是退回到首页或者点击logo到首页，这个时候是需要处理的，在上面处理了
+            */
             if(obj!=null){
-                handler(obj.type,obj.value);
+                handler(obj.type,obj.value,true);
             }
         },
+
+        /**
+         * 无刷新改变地址栏
+         * @param {String} href 需要设置的地址
+         */
         push:function(href){
 
             //首页传的href可能只有一个"/"或者"/engine"这种形式
@@ -144,7 +174,7 @@ DE.history=(function(){
             var hrefArray=href.split("/");
             var lenght=hrefArray.length;
 
-            if(!DE.store.currentShowUser){
+            if(!DE.store.currentUser.userId){
                 if(hrefArray[2]=="edit"||hrefArray[2]=="upload"){
                     window.location.href=DE.config.root;
                     return ;
@@ -153,11 +183,11 @@ DE.history=(function(){
 
             if(lenght==3){
 
-                //如果路径只有两个元素，那进入的是首页
+                //如果路径只有两个元素(其中一个为空:/design)，那进入的是首页
                 handler(null,null,false);
             }else if(lenght==4){
 
-                //从其他地址进入，需要获取数据
+                //从其他地址进入/design/tag/tagName，需要获取数据
                 handler(hrefArray[2],hrefArray[3],false)
             }
         }

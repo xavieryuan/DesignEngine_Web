@@ -3,12 +3,16 @@
  * User: ty
  * Date: 13-9-4
  * Time: 下午6:01
- * To change this template use File | Settings | File Templates.
+ * 用户相关模块（热点用户，用户页面，用户管理)
  */
 var DE=DE||{};
 DE.user=(function(){
 
     return {
+
+        /**
+         * 用户头像上传句柄
+         */
         createFigureUpload:function(){
             var uploaderFigure = new plupload.Uploader({
                 runtimes:"flash",
@@ -17,7 +21,11 @@ DE.user=(function(){
                 browse_button:"de_change_figure",
                 container:"de_change_figure_container",
                 flash_swf_url:DE.config.root+'/js/lib/plupload.flash.swf',
-                url:DE.config.ajaxUrls.uploadFigure,
+                url:DE.config.ajaxUrls.uploadFileUrl,
+                unique_names:true,
+                multipart_params:{
+                    isThumb:true
+                },
                 filters:[
                     {title:"Image files", extensions:"jpg,gif,png,jpeg"}
                 ]
@@ -49,7 +57,7 @@ DE.user=(function(){
             //出错事件
             uploaderFigure.bind("Error", function (up, err) {
                 if(err.message.match("Init")==null){
-                    alert(err.message);
+                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,err.message);
                 }
                 up.refresh();
             });
@@ -59,75 +67,138 @@ DE.user=(function(){
                 var response = JSON.parse(res.response);
                 if (response.success) {
 
-                    $("#de_edit_figure").attr("src",response.data.url);
+                    $("#de_edit_figure").attr("src",response.url);
                 } else {
-                    alert(response.data.message);
+                    DE.config.ajaxReturnErrorHandler(response);
                 }
             });
         },
+
+        /**
+         *获取热点用户
+         * @param {Boolean} first 是否第一次获取，第一次获取需要显示screen
+         */
         getHotUsers:function(first){
             var me=this;
             $.ajax({
                 url:DE.config.ajaxUrls.getHotUsers,
                 type:"get",
                 dataType:"json",
+                data:{
+                    baseUserId:DE.store.hotUserLoadedId
+                },
                 success:function(data){
-                    DE.store.hotUserLoadedId=data.users[data.users.length-1]["id"];
-                    DE.store.currentScrollScreenType=DE.config.scrollScreenType.hotUser;
-                    me.showHotUsers(data,first);
+                    if(data.success){
+                        var length=data.users.length;
+                        if(length==DE.config.perLoadCount){
+                            DE.store.hotUserLoadedId=data.users[data.users.length-1]["id"];
+                        }else{
+                            DE.store.hotUserLoadedId=DE.config.hasNoMoreFlag;
+                        }
+
+                        DE.store.currentScrollScreenType=DE.config.scrollScreenType.hotUser;
+                        //不管是否有数据，都需要执行函数，因为函数里有显示界面screen的操作
+                        me.showHotUsers(data,first);
+                    }else{
+                        DE.config.ajaxReturnErrorHandler(data);
+                    }
+
                 },
                 error:function(){
-
+                     DE.config.ajaxErrorHandler();
                 }
             });
         },
+
+        /**
+         *　显示热点用户
+         * @param {Object} data 请求的时候后台返回的json数据
+         * @param {Boolean} first 是否第一次请求
+         */
         showHotUsers:function(data,first){
             var tpl=$("#hotUserTpl").html();
             var html=juicer(tpl,{hotUsers:data.users});
-            $("#de_hot_user_list").append($(html));
 
             if(first){
+                $("#de_hot_user_list").html(html);
                 DE.UIManager.showScreen("#de_screen_designer");
+            }else{
+                $("#de_hot_user_list").append($(html));
             }
         },
-        getUserById:function(){
+
+        /**
+         * 获取用户信息
+         * @param {Number} id 需要获取的用户的id
+         */
+        getUserById:function(id){
             var me=this;
+
             $.ajax({
                 url:DE.config.ajaxUrls.getUserById,
                 type:"get",
-                async:false,  //启用同步，因为这里获取的数据要保存，在显示作品的时候要用
+                async:false, //使用同步，因为在showUserEntity中需要用到此步中涉及的信息
                 dataType:"json",
+                data:{
+                   userId:id
+                },
                 success:function(data){
-                    DE.store.initCurrentShowUser(data.user);
-                    DE.store.currentScrollScreenType=DE.config.scrollScreenType.userEntity;
-                    me.showUserDetail(data);
+                    if(data.success){
+                        DE.store.initCurrentShowUser(data.user);
+                        DE.store.currentScrollScreenType=DE.config.scrollScreenType.userEntity;
+                        me.showUserDetail(data);
+                    }else{
+                        DE.config.ajaxReturnErrorHandler(data);
+                    }
                 },
                 error:function(){
-
+                    DE.config.ajaxErrorHandler();
                 }
 
             });
         },
+
+        /**
+         * 显示用户信息
+         * @param {Object} data 请求时后台返回的json数据
+         */
         showUserDetail:function(data){
             var tpl=$("#userDetailTpl").html();
             var html=juicer(tpl,data.user);
             $("#de_user_info_card").html($(html));
         },
+
+        /**
+         * 显示用户作品（资源）
+         * @param {Object} data 请求数据时后台返回的数组
+         */
         showUserEntity:function(data){
             var tpl=$("#userEntitiesTpl").html();
             data.userId=DE.store.currentShowUser.userId;
             data.userName=DE.store.currentShowUser.name;
-            data.userProfile=DE.store.currentShowUser.figure;
+            data.userProfileImg=DE.store.currentShowUser.figure;
             data.role=DE.store.currentShowUser.role;
             data.showToolBar=this.canShowToolbar();
             var html=juicer(tpl,data);
             $("#de_user_uploads").html(html);
+
+            DE.UIManager.showScreen("#de_screen_user_profile");
         },
+
+        /**
+         * 显示优秀作品
+         * @param {Object} data 包含一个作品对象数组的对象
+         */
         showHonorEntity:function(data){
             var tpl=$("#userHonorProjectTpl").html();
             var html=juicer(tpl,data);
             $("#de_user_honor_projects").html(html);
         },
+
+        /**
+         * 用户页判断是否显示工具栏
+         * @returns {boolean} true|false
+         */
         canShowToolbar:function(){
             if(DE.store.currentShowUser.userId==DE.store.currentUser.userId||DE.store.currentUser.role==DE.config.roles.admin){
                 return true;
@@ -135,43 +206,73 @@ DE.user=(function(){
 
             return false;
         },
-        toolbarHandler:function(target){
-            var className=target.attr("class");
-        },
-        getUserEntities:function(){
+
+        /**
+         * 获取用户的作品（资源)
+         * @param {Number} id 用户id
+         */
+        getUserEntities:function(id){
             var me=this;
+
             $.ajax({
                 url:DE.config.ajaxUrls.getUserEntities,
                 type:"get",
                 dataType:"json",
+                data:{
+                    userId:id
+                },
                 success:function(data){
-                    me.showUserEntity(data);
+                    if(data.success){
+                        me.showUserEntity(data);
+                        DE.store.userEntitiesCount=data.userEntities.length;
+                        if(data.userEntities.length<=DE.config.perLoadCount){
+                            DE.store.userEntitiesShow=data.userEntities.length;
+                        }else{
+                            DE.store.userEntitiesShow+=DE.config.perLoadCount;
+                        }
 
-                    //如果是普通用户，会有优秀作品
-                    if(DE.store.currentShowUser.role!="VIP"){
-                        me.showHonorEntity(me.filterProjects(data));
+
+                        //如果是普通用户，会有优秀作品
+                        if(DE.store.currentShowUser.role==DE.config.roles.user){
+                            me.showHonorEntity(me.filterProjects(data));
+                        }
+                    }else{
+                        DE.config.ajaxReturnErrorHandler(data);
                     }
+
                 },
                 error:function(){
-
+                    DE.config.ajaxErrorHandler();
                 }
 
             });
         },
+
+        /**
+         * 用户头像点击事件
+         * @param {String} href 用户页地址
+         */
         userClickHandler:function(href){
             DE.history.push(href);  //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var id=array[1];
 
-            this.getUserById();
-            this.getUserEntities();
+            this.getUserById(id);
+            this.getUserEntities(id);
 
-            DE.UIManager.showScreen("#de_screen_user_profile");
+            //DE.UIManager.showScreen("#de_screen_user_profile");
 
         },
+
+        /**
+         *修改密码
+         */
         changePassword:function(){
             $("#de_reset_pwd_form").validate({
                 rules: {
+                    oldPassword:{
+                        required:true
+                    },
                     de_reset_pwd:{
                         required:true,
                         rangelength:[6,20]
@@ -182,60 +283,99 @@ DE.user=(function(){
 
                 },
                 messages: {
+                    oldPassword:{
+                        required:"请输入旧密码"
+                    },
                     de_reset_pwd: {
-                        required:"请输入密码！",
+                        required:"请输入新密码！",
                         rangelength:"请输入6-20位的密码！"
                     },
-                    de_confirm_pwd: "两次输入的密码不一致，请重新输入！"
+                    de_confirm_pwd: {
+                        equalTo:"两次输入的密码不一致，请重新输入！"
+                    }
 
                 },
                 submitHandler:function(form) {
-                    $(form).ajaxSubmit({
-                        url:DE.config.ajaxUrls.changeProfile,
-                        dataType:"json",
-                        success:function (data) {
 
+                    DE.UIManager.showLoading();
+
+                    $(form).ajaxSubmit({
+                        url:DE.config.ajaxUrls.changePassword,
+                        dataType:"json",
+                        type:"post",
+                        success:function (data) {
+                            if(data.success&&data.resultCode==DE.config.resultCode.password_change_succ){
+                                DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.changePwdSuccess);
+                                setTimeout(function(){
+                                    window.location.href="";
+                                },2000);
+                            }else{
+                                DE.config.ajaxReturnErrorHandler(data);
+                            }
                         },
                         error:function (data) {
-
+                            DE.config.ajaxErrorHandler();
                         }
                     });
                 }
             });
         },
+
+        /**
+         * 进入修改时设置信息
+         */
         setProfile:function(){
             $("#de_user_name").text(DE.store.currentUser.name);
             $("#de_edit_description").text(DE.store.currentUser.description);
             $("#de_edit_login_email").val(DE.store.currentUser.email);
             $("#de_edit_figure").attr("src",DE.store.currentUser.figure);
         },
+
+        /**
+         * 修改个人信息
+         */
         changeProfile:function(){
             $("#de_form_edit_profile").validate({
                 rules: {
-                    de_edit_login_email:{
+                    email:{
                         required:true,
                         email:true
-                    },
-                    de_edit_description: "required"
-
+                    }
                 },
                 messages: {
-                    de_edit_login_email: {
+                    email: {
                         required:"请输入邮箱！",
                         email:"请输入正确的邮箱格式！"
-                    },
-                    de_edit_description: "请输入个人描述！"
+                    }
 
                 },
                 submitHandler:function(form) {
+
+                    DE.UIManager.showLoading();
+                    var profileImg= $("#de_edit_figure").attr("src");
                     $(form).ajaxSubmit({
                         url:DE.config.ajaxUrls.changeProfile,
                         dataType:"json",
+                        type:"post",
+                        data:{
+                            profileImg:$("#de_edit_figure").attr("src")
+                        },
                         success:function (data) {
+                            if(data.success&&data.resultCode==DE.config.resultCode.account_update_succ){
+                                DE.store.initCurrentUser({
+                                    description:$("#de_edit_description").val(),
+                                    figure:profileImg,
+                                    email:$("#de_edit_login_email").val()
+                                });
+                                $(".de_user_link[href='user/"+DE.store.currentUser.userId+"'] img").attr("src",profileImg);
 
+                                DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
+                            }else{
+                                 DE.config.ajaxReturnErrorHandler(data);
+                            }
                         },
                         error:function (data) {
-
+                            DE.config.ajaxErrorHandler();
                         }
                     });
                 }
@@ -247,21 +387,14 @@ DE.user=(function(){
          */
         filterProjects:function(data){
             var array=[];
-            $.each(data.entities,function(index,d){
-                if(d.hasHonor){
+            $.each(data.userEntities,function(index,d){
+                if(d.postHonorCount!=0){
                     array.push(d);
                 }
             });
 
             return {projects:array};
-        },
-        /**
-         *排序实体
-         */
-        sortEntities:function(){
-
         }
-
     };
 })();
 

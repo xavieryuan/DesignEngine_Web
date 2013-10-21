@@ -1,11 +1,12 @@
 {
+    "success":true,
     "user":{
-        "name":"ty",
-        "describe":"",
-        "figure":"/design/data/people1.jpg",
-        "praiseCount":34,
-        "uploadCount":45,
-        "id":1,
-        "role":"user"
+        "userName":"ty",
+        "userDescribe":"",
+        "userProfileImg":"/DesignEngine_Web/data/people1.jpg",
+        "userPraiseCount":34,
+        "userUploadCount":45,
+        "userId":2,
+        "userRoles":["user"]
     }
 }

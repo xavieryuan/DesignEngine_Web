@@ -3,14 +3,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>图钉墙 - HNU Design</title>
+    <base href="http://localhost/DesignEngine_Web/">
     <link href="css/general.css" rel="stylesheet" type="text/css"/>
-    <base href="http://localhost/design/">
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/lib/juicer-min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.form.js"></script>
     <script type="text/javascript" src="js/lib/plupload.js"></script>
     <script type="text/javascript" src="js/lib/plupload.flash.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
     <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
           data-redirecturi="http://lotusprize.com/design/redirect.html" data-appid="100502817"
@@ -56,12 +57,12 @@
             <li class="de_reg_view "><a href="#" id="de_btn_reset_pwd">修改密码</a></li>
             <li class="de_reg_view "><a href="#" id="de_btn_edit_profile">修改个人信息</a></li>
             {@if user.role=="user"}
-
-            {@else if user.role=="VIP"}
+                 <li class="de_reg_view "><a href="#" id="de_btn_bind_account">绑定账号</a></li>
+            {@else if user.role=="vip"}
             {@else}
-            <li class="de_admin_view "><a href="#">管理员专用子菜单</a></li>
-            <li class="de_admin_view "><a href="#">管理员专用子菜单</a></li>
-            <li class="de_admin_view "><a href="#">管理员专用子菜单</a></li>
+                <li class="de_admin_view "><a href="user/manage">用户管理</a></li>
+                <li class="de_admin_view "><a href="#">管理员专用子菜单</a></li>
+                <li class="de_admin_view "><a href="#">管理员专用子菜单</a></li>
             {@/if}
             <li class="de_reg_view "><a href="#" id="de_btn_sign_out">退出登录</a></li>
         </ul>
@@ -75,22 +76,22 @@
     <li class="de_borderbox">
         <div class="user_info">
             <a href="user/${p.userId}" class="de_user_link">
-                <img class="photo" src="${p.userProfile}"/>
+                <img class="photo" src="${p.userProfileImg}"/>
 
                 <p class="name">${p.userName}</p>
             </a>
         </div>
         <div class="project_info">
-            <a href="entity/${p.id}" class="de_entity_link">
-                <img class="thumb" src="${p.thumb}">
-                <h4>${p.title}</h4>
+            <a href="entity/${p.postId}" class="de_entity_link">
+                <img class="thumb" src="${p.postThumb}">
+                <h4>${p.postTitle}</h4>
 
-                <p class="date">${p.date}</p>
+                <p class="date">${p.postDate}</p>
             </a>
         </div>
         <ul class="de_stats_tags">
-            <li class="likes">${p.praiseCount}</li>
-            <li class="comments">${p.commentCount}</li>
+            <li class="likes">${p.postPraiseCount+p.postHonorCount}</li>
+            <li class="comments">${p.postCommentCount}</li>
         </ul>
     </li>
     {@/each}
@@ -101,33 +102,33 @@
     <li class="de_borderbox">
         <div class="user_info">
             <a href="user/${r.userId}" class="de_user_link">
-                <img class="photo" src="${r.userProfile}"/>
+                <img class="photo" src="${r.userProfileImg}"/>
 
                 <p class="name">${r.userName}</p>
             </a>
         </div>
         <div class="project_info">
-            <a href="entity/${r.id}" class="de_entity_link">
-                <img class="thumb" src="${r.thumb}"/>
-                <h4>${r.title}</h4>
+            <a href="entity/${r.postId}" class="de_entity_link">
+                <img class="thumb" src="${r.postThumb}"/>
+                <h4>${r.postTitle}</h4>
 
-                <p class="date">${r.date}</p>
+                <p class="date">${r.postDate}</p>
             </a>
         </div>
         <ul class="de_media_tags">
-            {@if r.hasPpt}
+            {@if r.postHasPpt}
                 <li class="tag_ppt">PPT</li>
             {@/if}
-            {@if r.hasWebVideo}
+            {@if r.postHasWebVideo}
                 <li class="tag_web_video">网络视频</li>
             {@/if}
-            {@if r.hasLocalVideo}
+            {@if r.postHasLocalVideo}
                 <li class="tag_local_video">本地视频</li>
             {@/if}
-            {@if r.has3d}
+            {@if r.postHas3d}
                 <li class="tag_3d">3D</li>
             {@/if}
-            {@if r.hasFile}
+            {@if r.postHasFile}
                 <li class="tag_file">文档</li>
             {@/if}
         </ul>
@@ -139,13 +140,13 @@
     {@each hotUsers as user,index}
     <li class="de_user_info_card">
         <div class="user_info">
-            <a href="user/${user.id}" class="de_borderbox de_user_link">
-                <img src="${user.profile}" class="photo"/>
+            <a href="user/${user.userId}" class="de_borderbox de_user_link">
+                <img src="${user.userProfileImg}" class="photo"/>
 
-                <p class="name">${user.name}</p>
+                <p class="name">${user.userName}</p>
             </a>
-            {@if user.describe}
-            <p class="user_about">${user.describe}</p>
+            {@if user.userDescribe}
+            <p class="user_about">${user.userDescribe}</p>
             {@else}
             <p class="user_about">这个人很懒，什么也没留下</p>
             {@/if}
@@ -153,13 +154,13 @@
         </div>
         <ul class="project_info">
             {@each user.projects as project,index}
-            <li><a href="entity/${project.id}" class="de_entity_link"><img src="${project.thumb}"></a></li>
+            <li><a href="entity/${project.postId}" class="de_entity_link"><img src="${project.postThumb}"></a></li>
             {@/each}
 
         </ul>
         <ul class="de_stats_tags">
-            <li class="uploads" title="上传">${user.uploadCount}</li>
-            <li class="badges" title="勋章">${user.praiseCount}</li>
+            <li class="uploads" title="上传">${user.userUploadCount}</li>
+            <li class="badges" title="勋章">${user.userPraiseCount}</li>
         </ul>
     </li>
     {@/each}
@@ -217,102 +218,132 @@
     <a href="#" class="de_btn_close_project_detail" id="de_btn_close_project_detail">关闭</a>
 
     <div class="de_project_header de_borderbox">
-        {@if hasPraised}
-            <a href="#" id="de_entity_praise" class="hasPraised de_btn_zan de_flag_reg_zan de_borderbox">赞</a>
-        {@else}
-            <a href="#" id="de_entity_praise" class="de_btn_zan de_flag_reg_zan de_borderbox">赞</a>
+        {@if postType=="work"}
+            {@if hasPraised}
+                <a href="#" id="de_entity_praise" class="de_flag_reg_zanned de_btn_zan de_borderbox">赞</a>
+            {@else}
+                <a href="#" id="de_entity_praise" class="de_btn_zan de_flag_reg_zan de_borderbox">赞</a>
+            {@/if}
         {@/if}
+
 
         {@if canShowToolBar}
         <ul class="de_project_toolbar de_transition" id="de_entity_toolbar">
             <li><a class="de_toolbar_edit" href="edit/${id}" title="编辑">编辑</a></li>
             <li><a class="de_toolbar_delete" href="${id}" title="删除">删除</a></li>
-            <li><a class="de_toolbar_visible" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
+            {@if postVisible}
+                 <li><a class="de_toolbar_invisible" data-target-visible="true" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
+            {@else}
+                 <li><a class="de_toolbar_visible" data-target-visible="false" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
+            {@/if}
+
         </ul>
         {@/if}
 
     </div>
 
 </script>
-<!--显示详细信息 article html-->
+<!--显示详细信息 section append-->
 <script type="text/template" id="entityDetailTopTpl">
-    <h2>${title}</h2>
+    <article id="de_project_detail" class="de_project_detail de_borderbox de_boxshadow">
+        <h2>${postTitle}</h2>
 
-    <p class="publishtime">${date}</p>
+        <p class="publishtime">${postDate}</p>
 
-    <div class="user_info">
-        <a href="user/${userId}" class="de_user_link">
-            <img class="photo" src="${userProfile}">
+        <div class="user_info">
+            <a href="user/${userId}" class="de_user_link">
+                <img class="photo" src="${userProfileImg}">
 
-            <p class="name">${userName}</p>
-        </a>
-    </div>
-    <ul class="de_stats_tags">
-        <li class="badges" title="勋章">${honorCount}</li>
-        <li class="likes" title="赞">${praiseCount}</li>
-        <li class="comments" title="评论">${commentsCount}</li>
-    </ul>
-    <p class="abstract">
-        ${description}
-    </p>
-</script>
+                <p class="name">${userName}</p>
+            </a>
+        </div>
+        {@if postType=="work"}
+            <ul class="de_stats_tags">
+                <li class="badges" id="honorCount" title="勋章">${postHonorCount}</li>
+                <li class="likes" id="praiseCount" title="赞">${postPraiseCount}</li>
+                <li class="comments" id="commentsCount" title="评论">${postCommentCount}</li>
+            </ul>
+        {@/if}
 
-<!-- 显示附件article append-->
-<script type="text/template" id="entityMainContentTpl">
+        <p class="abstract">
+            ${postDescription}
+        </p>
 
-    <div class="main_content">
-        {@each attachments as at}
-        <figure>
-            <img src="${at.url}"/>
-            <figcaption>${at.caption}</figcaption>
-        </figure>
-        {@/each}
-    </div>
-</script>
+        <!--附件-->
+        <div id="main_content" class="main_content" ></div>
+    </article>
 
-<!--显示评论section append-->
-<script type="text/template" id="entityCommentsTpl">
+    <!--评论-->
+    <div id="de_comments" class="de_comment_box de_boxshadow de_borderbox">
+        <ul id="de_comment_list" class="de_comment_list"></ul>
 
-    <div class="de_comment_box de_boxshadow de_borderbox">
-        <ul id="de_comment_list" class="de_comment_list">
-            {@each comments as c}
-            <li>
-                <div class="user_info">
-                    <a href="user/${c.userId}" class="de_borderbox de_user_link">
-                        <img src="${c.userProfile}" class="photo">
-                    </a>
-                </div>
-                <div class="comment_wrapper">
-                    <a href="user/${c.userId}" class="name   de_user_link">${c.userName}</a>
-                    <span class="publishtime">${c.time}</span>
-
-                    <p class="comment">${c.content}</p>
-                </div>
-            </li>
-            {@/each}
-        </ul>
+        <span id="de_comment_more_btn" class="de_comment_more_btn">+加载更多</span>
 
         {@if user.userId}
-            <div class="de_comment_form de_reg_view de_borderbox">
-                <div class="user_info">
-                    <a href="user/${user.userId}" class="de_borderbox">
-                        <img src="${user.figure}" class="photo">
-                    </a>
-                </div>
-                <div class="comment_wrapper">
-                    <a href="user/${user.userId}" class="name">${user.name}</a>
-                    <textarea id="de_comment_content" class="comment de_borderbox de_inputbox_gray" placeholder="你的评论..."></textarea>
-                    <input type="submit" class="de_button de_btn_add_comment" name="de_btn_add_comment"
-                           id="de_btn_add_comment" value="提交">
-                </div>
+        <div class="de_comment_form de_reg_view de_borderbox">
+            <div class="user_info">
+                <a href="user/${user.userId}" class="de_borderbox">
+                    <img src="${user.figure}" class="photo">
+                </a>
             </div>
+            <div class="comment_wrapper">
+                <a href="user/${user.userId}" class="name">${user.name}</a>
+                <textarea id="de_comment_content" class="comment de_borderbox de_inputbox_gray" placeholder="你的评论..."></textarea>
+                <input type="submit" class="de_button de_btn_add_comment" name="de_btn_add_comment"
+                       id="de_btn_add_comment" value="提交">
+            </div>
+        </div>
         {@else}
-            <div class="de_comment_form de_guest_view de_borderbox">
-                <a href="#" id="de_btn_comment_login" class="de_button de_borderbox de_btn_login_reg">发表评论前请先登录</a>
-            </div>
+        <div class="de_comment_form de_guest_view de_borderbox">
+            <a href="#" id="de_btn_comment_login" class="de_button de_borderbox de_btn_login_reg">发表评论前请先登录</a>
+        </div>
         {@/if}
     </div>
+
+    <!--相关作品-->
+    <h4>其他相关作品</h4>
+    <ul id="de_similar_entities" class="de_project_grid"></ul>
+
 </script>
+
+<!-- 显示附件main_content div html-->
+<script type="text/template" id="entityMainContentTpl">
+    {@each attachments as at}
+    <figure>
+        <!--根据类型添加class-->
+        {@if at.attachmentType=='zy_image'}
+             <a href="${at.attachmentPreviewLocation}"><img src="${at.attachmentPreviewLocation}"/></a>
+        {@else}
+            <a href="${at.attachmentPreviewLocation}" class="video"><img src="${at.attachmentPreviewLocation}"/></a>
+        {@/if}
+
+        {@if at.attachmentTitle}
+            <figcaption>${at.attachmentTitle}</figcaption>
+        {@/if}
+
+    </figure>
+    {@/each}
+</script>
+
+<!--显示评论de_comment_list ul append-->
+<script type="text/template" id="entityCommentsTpl">
+    {@each comments as c}
+    <li>
+        <div class="user_info">
+            <a href="user/${c.userId}" class="de_borderbox de_user_link">
+                <img src="${c.userProfileImg}" class="photo">
+            </a>
+        </div>
+        <div class="comment_wrapper">
+            <a href="user/${c.userId}" class="name   de_user_link">${c.userName}</a>
+            <span class="publishtime">${c.commentTime}</span>
+
+            <p class="comment">${c.commentContent}</p>
+        </div>
+    </li>
+    {@/each}
+</script>
+
 <script type="text/template" id="singleComment">
     <li>
         <div class="user_info">
@@ -328,91 +359,87 @@
         </div>
     </li>
 </script>
-<!--显示相似作品section append-->
+<!--显示相似作品de_project_grid ul append-->
 <script type="text/template" id="similarEntityTpl">
+    {@each entities as e}
 
-    <h4>其他相关作品</h4>
-    <ul class="de_project_grid">
-        {@each entities as e}
+    <li class="de_borderbox">
+        <div class="user_info">
+            <a href="user/${e.userId}" class="de_user_link">
+                <img class="photo" src="${e.userProfile}"/>
 
-        <li class="de_borderbox">
-            <div class="user_info">
-                <a href="user/${e.userId}" class="de_user_link">
-                    <img class="photo" src="${e.userProfile}"/>
+                <p class="name">${e.userName}</p>
+            </a>
+        </div>
+        <div class="project_info">
+            <a href="entity/${e.id}" class="de_entity_link">
+                <img class="thumb" src="${e.thumb}">
+                <h4>${e.title}</h4>
 
-                    <p class="name">${e.userName}</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="entity/${e.id}" class="de_entity_link">
-                    <img class="thumb" src="${e.thumb}">
-                    <h4>${e.title}</h4>
-
-                    <p class="date">${e.date}</p>
-                </a>
-            </div>
-            {@if e.type=='project'}
-            <ul class="de_stats_tags">
-                <li class="likes">${e.praiseCount}</li>
-                <li class="comments">${e.commentsCount}</li>
-            </ul>
-            {@else}
-            <ul class="de_media_tags">
-                {@if e.hasPpt}
-                <li class="tag_ppt">PPT</li>
-                {@/if}
-                {@if e.hasWebVideo}
-                <li class="tag_web_video">网络视频</li>
-                {@/if}
-                {@if e.hasLocalVideo}
-                <li class="tag_local_video">本地视频</li>
-                {@/if}
-                {@if e.has3d}
-                <li class="tag_3d">3D</li>
-                {@/if}
-                {@if e.hasFile}
-                <li class="tag_file">文档</li>
-                {@/if}
-            </ul>
+                <p class="date">${e.date}</p>
+            </a>
+        </div>
+        {@if e.type=='project'}
+        <ul class="de_stats_tags">
+            <li class="likes">${e.praiseCount}</li>
+            <li class="comments">${e.commentsCount}</li>
+        </ul>
+        {@else}
+        <ul class="de_media_tags">
+            {@if e.hasPpt}
+            <li class="tag_ppt">PPT</li>
             {@/if}
-        </li>
+            {@if e.hasWebVideo}
+            <li class="tag_web_video">网络视频</li>
+            {@/if}
+            {@if e.hasLocalVideo}
+            <li class="tag_local_video">本地视频</li>
+            {@/if}
+            {@if e.has3d}
+            <li class="tag_3d">3D</li>
+            {@/if}
+            {@if e.hasFile}
+            <li class="tag_file">文档</li>
+            {@/if}
+        </ul>
+        {@/if}
+    </li>
 
-        {@/each}
-    </ul>
+    {@/each}
 </script>
 
 <!--个人页面-->
 <script type="text/template" id="userDetailTpl">
     <div class="user_info">
-        <a href="user/${id}" class="de_borderbox de_user_link">
-            <img src="${figure}" class="photo"/>
+        <a href="user/${userId}" class="de_borderbox de_user_link">
+            <img src="${userProfileImg}" class="photo"/>
 
-            <p class="name">${name}</p>
+            <p class="name">${userName}</p>
         </a>
-        {@if describe}
-        <p class="user_about">${describe}</p>
+        {@if userDescribe}
+            <p class="user_about">${userDescribe}</p>
         {@else}
-        <p class="user_about">这个人很懒，什么也没留下</p>
+            <p class="user_about">这个人很懒，什么也没留下</p>
         {@/if}
     </div>
     <ul class="project_info" id="de_user_honor_projects">
         <!--预留给第二次的作品请求-->
     </ul>
     <ul class="de_stats_tags">
-        <li class="uploads" title="上传">${uploadCount}</li>
-        <li class="badges" title="勋章">${praiseCount}</li>
+        <li class="uploads" title="上传">${userUploadCount}</li>
+        <li class="badges" title="勋章">${userPraiseCount}</li>
     </ul>
 </script>
 <!--优秀作品-->
 <script type="text/template" id="userHonorProjectTpl">
     {@each projects as p}
-        <li><a href="entity/${p.id}" class="de_entity_link"><img src="${p.thumb}"></a></li>
+        <li><a href="entity/${p.postId}" class="de_entity_link"><img src="${p.postThumb}"></a></li>
     {@/each}
 </script>
 <!--作品、资源-->
 <script type="text/template" id="userEntitiesTpl">
     <nav class="de_category_filter de_borderbox">
-        {@if role=="VIP"}
+        {@if role=="vip"}
         <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
         {@else}
         <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
@@ -420,66 +447,128 @@
     </nav>
 
     <ul class="de_project_grid">
-        {@each entities as e}
-        <li class="de_borderbox">
-            <div class="user_info">
-                <a href="user/${userId}" class="de_user_link">
-                    <img class="photo" src="${userProfile}"/>
+        {@each userEntities as e,index}
+        {@if index<10}
+            <li class="de_borderbox">
+                <div class="user_info">
+                    <a href="user/${userId}" class="de_user_link">
+                        <img class="photo" src="${userProfileImg}"/>
 
-                    <p class="name">${userName}</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="entity/${e.id}" class="de_entity_link">
-                    <img class="thumb" src="${e.thumb}">
-                    <h4>${e.title}</h4>
+                        <p class="name">${userName}</p>
+                    </a>
+                </div>
+                <div class="project_info">
+                    <a href="entity/${e.postId}" class="de_entity_link">
+                        <img class="thumb" src="${e.postThumb}">
+                        <h4>${e.postTitle}</h4>
 
-                    <p class="date">${e.date}</p>
-                </a>
-            </div>
-            {@if e.type=='project'}
-            <ul class="de_stats_tags">
-                <li class="likes">${e.praiseCount}</li>
-                <li class="comments">${e.commentCount}</li>
-            </ul>
-            {@else}
-            <ul class="de_media_tags">
-                {@if e.hasPpt}
+                        <p class="date">${e.postDate}</p>
+                    </a>
+                </div>
+                {@if role=="user"}
+                <ul class="de_stats_tags">
+                    <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
+                    <li class="comments">${e.postCommentCount}</li>
+                </ul>
+                {@else}
+                <ul class="de_media_tags">
+                    {@if e.postHasPpt}
                     <li class="tag_ppt">PPT</li>
-                {@/if}
-                {@if e.hasWebVideo}
+                    {@/if}
+                    {@if e.postHasWebVideo}
                     <li class="tag_web_video">网络视频</li>
-                {@/if}
-                {@if e.hasLocalVideo}
+                    {@/if}
+                    {@if e.postHasLocalVideo}
                     <li class="tag_local_video">本地视频</li>
-                {@/if}
-                {@if e.has3d}
+                    {@/if}
+                    {@if e.postHas3d}
                     <li class="tag_3d">3D</li>
-                {@/if}
-                {@if e.hasFile}
+                    {@/if}
+                    {@if e.postHasFile}
                     <li class="tag_file">文档</li>
+                    {@/if}
+                </ul>
                 {@/if}
-            </ul>
-            {@/if}
-            {@if showToolBar}
-            <ul class="de_project_toolbar de_transition">
-                <li><a class="de_toolbar_edit" href="edit/${e.id}" title="编辑">编辑</a></li>
-                <li><a class="de_toolbar_delete" href="${e.id}" title="删除">删除</a></li>
-                <li><a class="de_toolbar_visible" href="${e.id}" title="显示/隐藏">显示/隐藏</a></li>
-            </ul>
-            {@/if}
-        </li>
+                {@if showToolBar}
+                <ul class="de_project_toolbar de_transition">
+                    <li><a class="de_toolbar_edit" href="edit/${e.postId}" title="编辑">编辑</a></li>
+                    <li><a class="de_toolbar_delete" href="${e.postId}" title="删除">删除</a></li>
+                    {@if e.postVisible}
+                    <li><a class="de_toolbar_invisible" data-target-visible="true" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
+                    {@else}
+                    <li><a class="de_toolbar_visible" data-target-visible="false" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
+                    {@/if}
+
+                </ul>
+                {@/if}
+            </li>
+        {@else}
+            <li class="de_borderbox de_hidden">
+                <div class="user_info">
+                    <a href="user/${userId}" class="de_user_link">
+                        <img class="photo" src="${userProfileImg}"/>
+
+                        <p class="name">${userName}</p>
+                    </a>
+                </div>
+                <div class="project_info">
+                    <a href="entity/${e.postId}" class="de_entity_link">
+                        <img class="thumb" src="${e.postThumb}">
+                        <h4>${e.postTitle}</h4>
+
+                        <p class="date">${e.postDate}</p>
+                    </a>
+                </div>
+                {@if role=="user"}
+                <ul class="de_stats_tags">
+                    <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
+                    <li class="comments">${e.postCommentCount}</li>
+                </ul>
+                {@else}
+                <ul class="de_media_tags">
+                    {@if e.hasPpt}
+                    <li class="tag_ppt">PPT</li>
+                    {@/if}
+                    {@if e.hasWebVideo}
+                    <li class="tag_web_video">网络视频</li>
+                    {@/if}
+                    {@if e.hasLocalVideo}
+                    <li class="tag_local_video">本地视频</li>
+                    {@/if}
+                    {@if e.has3d}
+                    <li class="tag_3d">3D</li>
+                    {@/if}
+                    {@if e.hasFile}
+                    <li class="tag_file">文档</li>
+                    {@/if}
+                </ul>
+                {@/if}
+                {@if showToolBar}
+                <ul class="de_project_toolbar de_transition">
+                    <li><a class="de_toolbar_edit" href="edit/${e.postId}" title="编辑">编辑</a></li>
+                    <li><a class="de_toolbar_delete" href="${e.postId}" title="删除">删除</a></li>
+                    {@if e.postVisible}
+                    <li><a class="de_toolbar_invisible" data-target-visible="true" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
+                    {@else}
+                    <li><a class="de_toolbar_visible" data-target-visible="false" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
+                    {@/if}
+
+                </ul>
+                {@/if}
+            </li>
+        {@/if}
+
         {@/each}
     </ul>
 </script>
 
 <!--    上传标签   -->
 <script type="text/template" id="uploadInputTag">
-    <li><input type="hidden" name="tags[]" value="${t}"><a href="#">${text}</a></li>
+    <li><input type="hidden" name="terms[]" value="${text}"><a href="#">${text}</a></li>
 </script>
 <script type="text/template" id="uploadInputTagMore">
     {@each tags as t}
-         <li><input type="hidden" name="tags[]" value="${t}"><a href="#">${t}</a></li>
+         <li><input type="hidden" name="terms[]" value="${t}"><a href="#">${t}</a></li>
     {@/each}
 </script>
 <!-- 上传未完成的html模版-->
@@ -519,8 +608,9 @@
 
         {@each medias as m}
             <figure>
-                <img src="${m.src}"/>
-                <figcaption>${m.description}</figcaption>
+                <!--<img src="${m.thumb}"/>-->
+                $${m.content}
+                <figcaption>${m.title}</figcaption>
             </figure>
         {@/each}
 
@@ -1281,12 +1371,12 @@
             <li><a href="#de_upload_step3" class="de_tab_step3 active">3. 预览并提交</a></li>
         </ol>
     </nav>
-    <form class="de_form_upload de_borderbox de_boxshadow">
+    <form class="de_form_upload de_borderbox de_boxshadow" id="de_upload_form">
         <div class="de_upload_step de_upload_step1 de_borderbox" id="de_upload_step1">
             <p class="de_field_project_title">
                 <label for="de_input_project_title">标题</label>
                 <input type="text" autocomplete="default" value="" class="de_borderbox de_inputbox_gray"
-                       name="de_input_project_title" id="de_input_project_title" placeholder="">
+                       name="title" id="de_input_project_title" placeholder="">
             </p>
 
             <p class="de_field_project_tag">
@@ -1302,13 +1392,15 @@
             </p>
             <p class="de_field_project_description">
                 <label for="de_input_project_tag">内容说明</label>
-                <textarea class="de_borderbox de_inputbox_gray" name="de_project_description" id="de_project_description" placeholder=""></textarea></p>
+                <textarea class="de_borderbox de_inputbox_gray" name="description" id="de_project_description" placeholder=""></textarea></p>
 
             <p class="de_field_project_thumb" id="de_upload_thumb_container">
 
                 <a href="#" class="de_btn_upload_thumb de_button" id="de_upload_thumb_btn">上传缩略图</a>
                 <img class="de_project_thumb" id="de_project_thumb" width="400" height="400" src="images/default_thumb_500.png"/>
-
+                <input type="hidden" name="previewFilename" id="de_thumb_name">
+                <input type="hidden" name="previewLocation" id="de_thumb_url">
+                <input type="hidden" name="id" id="de_entity_id">
             </p>
         </div>
 
@@ -1325,6 +1417,7 @@
                         <li><a id="zy_add_location_video" class="zy_types3">本地视频</a></li>
                         <li><a id="zy_add_3d" class="zy_types4">3D文件</a></li>
                         <li><a id="zy_add_ppt" class="zy_types5">ppt文件</a></li>
+                        <li><a id="zy_add_file" class="zy_types6">文件</a></li>
                     </ul>
                 </div>
                 <ol id="zy_uploaded_medias_ol" class="zy_uploaded_medias_ol"></ol>
@@ -1340,7 +1433,7 @@
         <div class="de_upload_step de_upload_step3 de_hidden" id="de_upload_step3">
             <input type="submit" autocomplete="default" value="提交" class="de_borderbox de_submit_upload"
                    name="de_submit_upload" id="de_submit_upload"/>
-            <article class="de_project_detail de_borderbox">
+            <article id="de_upload_preview" class="de_project_detail de_borderbox">
                <!-- <h2>项目标题可能会非常非常的长，项目标题可能会非常非常的长</h2>
 
                 <p class="publishtime">2013-07-23</p>
@@ -1384,7 +1477,7 @@
 
 <!-----------作品详情----------->
 <section class="de_screen_project_detail de_hidden" id="de_screen_project_detail">
-    <article id="de_project_detail" class="de_project_detail de_borderbox de_boxshadow"></article>
+
 
     <!--<a href="#" class="de_btn_close_project_detail" id="de_btn_close_project_detail">关闭</a>
 		<div class="de_project_header de_borderbox">           
@@ -1613,7 +1706,7 @@
                     </div>
                     <input type="submit" class="de_button de_submit_btn" name="de_btn_sign_in" id="de_btn_sign_in"
                            value="登录">
-                    <label class="error" id="de_login_error"></label>
+                    <label class="de_error" id="de_login_error"></label>
                 </form>
             </div>
             <div class="de_borderbox de_reg_col">
@@ -1646,21 +1739,14 @@
 
                     <p class="de_jcaptcha" id="de_jcaptcha">
                         <a href="#refreshjcaptcha">
-                            <img class="de_jcaptcha_img de_borderbox" id="de_captcha_img" src="http://lotusprize.com/design/captcha.jpg"/>
+                            <img class="de_jcaptcha_img de_borderbox" id="de_captcha_img" src="http://localhost/DesignEngine_Web/data/kaptcha.jpg"/>
                             <span class="de_jcaptcha_refresh" id="de_refresh_captcha">看不清？换一张</span>
                         </a>
                         <input type="text" name="de_reg_code" autocomplete="off" class="de_borderbox de_jcaptcha_input"
                                placeholder="请输入左侧字符">
                     </p>
                     <input type="submit" class="de_button de_submit_btn" name="de_sign_up" id="de_register" value="注册">
-                    <label class="error" id="de_reg_error"></label>
-                </form>
-            </div>
-            <div class="de_borderbox de_band_col">
-                <form id="de_band_form" method="post">
-                    <h4>原来系统用户？请绑定:</h4>
-                    <input type="email" placeholder="邮箱" name="de_band_email" id="de_band_email" class="de_borderbox de_inputbox_gray">
-                    <input type="submit" value="绑定" class="de_button de_submit_btn" id="de_band_btn">
+                    <label class="de_error" id="de_reg_error"></label>
                 </form>
             </div>
         </article>
@@ -1670,10 +1756,10 @@
         <article class="de_borderbox de_popout_recover_pwd" id="de_popout_recover_pwd">
             <h4>不记得密码了？请输入您的注册邮箱，随后我们将发送一封邮件协助您找回密码。</h4>
 
-            <form class="de_form_recover_pwd">
+            <form id="de_form_recover_pwd" class="de_form_recover_pwd">
                 <p class="de_email_field">
                     <input type="email" autocomplete="default" value="" class="de_borderbox de_inputbox_gray"
-                           name="de_recover_pwd_email" id="de_recover_pwd_email" placeholder="邮箱">
+                           name="email" id="de_recover_pwd_email" placeholder="邮箱">
                 </p>
                 <input type="submit" class="de_button de_submit_btn" name="de_submit_recover_pwd" id="de_sign_up"
                        value="提交">
@@ -1697,7 +1783,11 @@
             <form method="post" id="de_reset_pwd_form">
                 <p class="de_pwd_field">
                     <input type="password" autocomplete="default" value="" class="de_borderbox de_inputbox_gray"
-                           name="de_reset_pwd" id="de_reset_pwd" placeholder="新密码">
+                           name="oldPassword" id="de_reset_old_pwd" placeholder="旧密码">
+                </p>
+                <p class="de_pwd_field">
+                    <input type="password" autocomplete="default" value="" class="de_borderbox de_inputbox_gray"
+                           name="newPassword" id="de_reset_pwd" placeholder="新密码">
                 </p>
 
                 <p class="de_pwd_field">
@@ -1724,11 +1814,11 @@
 
                 <p class="de_email_field">
                     <input type="email" autocomplete="default" class="de_borderbox de_inputbox_gray"
-                           name="de_edit_login_email" id="de_edit_login_email" placeholder="邮箱"/>
+                           name="email" id="de_edit_login_email" placeholder="邮箱"/>
                 </p>
 
                 <p class="de_about_field">
-                    <textarea class="de_borderbox de_inputbox_gray" placeholder="关于你..." name="de_edit_description"
+                    <textarea class="de_borderbox de_inputbox_gray" placeholder="关于你..." name="description"
                               id="de_edit_description"></textarea></p>
                 <input type="submit" class="de_button de_btn_save_profile" name="de_btn_save_profile"
                        id="de_btn_save_profile" value="保存">
@@ -1737,6 +1827,15 @@
 
         </article>
         <!-- 更新个人信息弹窗开结束 -->
+
+        <!-- 6.绑定账号弹窗开始 -->
+        <article class="de_borderbox de_bind_account" id="de_bind_account">
+            <h4>绑定其他网站账号，下次快速登录。</h4>
+            <p><em>腾讯QQ:</em><span id="de_bind_account_btn" class="de_bind_account_btn">已绑定</span>
+                <span id="de_remove_bind" class="de_remove_bind de_hidden">移除绑定</span>
+            </p>
+        </article>
+        <!-- 绑定账号弹窗结束 -->
 
     </div>
 </section>
@@ -1747,7 +1846,8 @@
 
 </section>
 
-<div id="de_blackout" class="de_hidden"></div>
+<div id="de_blackout" class="de_hidden de_blackout"></div>
+<div id="de_loading" class="de_loading de_hidden">loading...</div>
 
 </body>
 </html>
