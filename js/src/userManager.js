@@ -253,6 +253,7 @@ DE.user=(function(){
          * @param {String} href 用户页地址
          */
         userClickHandler:function(href){
+            DE.UIManager.showLoading();
             DE.history.push(href);  //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var id=array[1];

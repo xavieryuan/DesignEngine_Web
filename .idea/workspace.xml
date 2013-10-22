@@ -4,7 +4,7 @@
     <list default="true" id="757b1de4-e954-4b0a-b335-394cfef751c2" name="Default" comment="" />
     <ignored path="DesignEngine_Web.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382351706394" ignored="false" />
+    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382405177698" ignored="false" />
     <file path="/historyManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379476799039" ignored="false" />
     <file path="/test.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378454965883" ignored="false" />
     <file path="/uploadManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379467092712" ignored="false" />
@@ -12,7 +12,7 @@
     <file path="/loginManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382350953022" ignored="false" />
     <file path="/statusManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378350996330" ignored="false" />
     <file path="/worksManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378367791308" ignored="false" />
-    <file path="/userManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379382332138" ignored="false" />
+    <file path="/userManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382405200609" ignored="false" />
     <file path="/dataManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378375658811" ignored="false" />
     <file path="/wkRsManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378376505411" ignored="false" />
     <file path="/storeManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379476817663" ignored="false" />
@@ -89,7 +89,7 @@
       <file leaf-file-name="userManager.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/src/userManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="184" column="63" selection-start="6010" selection-end="6010" vertical-scroll-proportion="0.6528302">
+            <state line="255" column="39" selection-start="8146" selection-end="8146" vertical-scroll-proportion="0.36756757">
               <folding />
             </state>
           </provider>
@@ -98,7 +98,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="491" column="32" selection-start="17674" selection-end="17685" vertical-scroll-proportion="-11.115385">
+            <state line="491" column="32" selection-start="17674" selection-end="17685" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -243,8 +243,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../design" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -405,9 +405,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/similarEntities.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="19" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="1" column="19" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/menuManager.js">
@@ -445,9 +443,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/projects.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="31" selection-start="3645" selection-end="3645" vertical-scroll-proportion="0.5784499">
-          <folding />
-        </state>
+        <state line="111" column="31" selection-start="3645" selection-end="3645" vertical-scroll-proportion="0.5784499" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/entityManager.js">
@@ -459,23 +455,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/userEntities.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="30" selection-start="2902" selection-end="2902" vertical-scroll-proportion="-35.96154">
-          <folding />
-        </state>
+        <state line="91" column="30" selection-start="2902" selection-end="2902" vertical-scroll-proportion="-35.96154" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="491" column="32" selection-start="17674" selection-end="17685" vertical-scroll-proportion="-11.115385">
+        <state line="491" column="32" selection-start="17674" selection-end="17685" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/user.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="18" selection-start="228" selection-end="228" vertical-scroll-proportion="0.25708884">
-          <folding />
-        </state>
+        <state line="8" column="18" selection-start="228" selection-end="228" vertical-scroll-proportion="0.25708884" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/config.js">
@@ -494,7 +486,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/userManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="184" column="63" selection-start="6010" selection-end="6010" vertical-scroll-proportion="0.6528302">
+        <state line="255" column="39" selection-start="8146" selection-end="8146" vertical-scroll-proportion="0.36756757">
           <folding />
         </state>
       </provider>
