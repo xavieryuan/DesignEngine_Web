@@ -4,7 +4,7 @@
     <list default="true" id="757b1de4-e954-4b0a-b335-394cfef751c2" name="Default" comment="" />
     <ignored path="DesignEngine_Web.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382405177698" ignored="false" />
+    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382589198152" ignored="false" />
     <file path="/historyManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379476799039" ignored="false" />
     <file path="/test.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378454965883" ignored="false" />
     <file path="/uploadManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379467092712" ignored="false" />
@@ -86,10 +86,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userManager.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="userManager.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/userManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="255" column="39" selection-start="8146" selection-end="8146" vertical-scroll-proportion="0.36756757">
+            <state line="255" column="39" selection-start="8146" selection-end="8146" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="general.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/general.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="512" column="7" selection-start="10992" selection-end="10992" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -98,7 +107,18 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="491" column="32" selection-start="17674" selection-end="17685" vertical-scroll-proportion="0.0">
+            <state line="339" column="68" selection-start="12681" selection-end="12681" vertical-scroll-proportion="-46.307693">
+              <folding>
+                <element signature="tag#script#15;tag#html#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="entityManager.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/src/entityManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="301" column="34" selection-start="10289" selection-end="10289" vertical-scroll-proportion="0.42882884">
               <folding />
             </state>
           </provider>
@@ -124,7 +144,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/js/src/menuManager.js" />
         <option value="$PROJECT_DIR$/data/resource.json" />
         <option value="$PROJECT_DIR$/data/hotUsers.json" />
         <option value="$PROJECT_DIR$/data/tags.json" />
@@ -132,14 +151,15 @@
         <option value="$PROJECT_DIR$/data/attachments.json" />
         <option value="$PROJECT_DIR$/data/comments.json" />
         <option value="$PROJECT_DIR$/data/similarEntities.json" />
-        <option value="$PROJECT_DIR$/js/src/entityManager.js" />
         <option value="$PROJECT_DIR$/js/src/loginManager.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/src/config.js" />
         <option value="$PROJECT_DIR$/data/projects.json" />
         <option value="$PROJECT_DIR$/data/userEntities.json" />
         <option value="$PROJECT_DIR$/data/user.json" />
         <option value="$PROJECT_DIR$/js/src/userManager.js" />
+        <option value="$PROJECT_DIR$/css/general.css" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/src/entityManager.js" />
       </list>
     </option>
   </component>
@@ -199,6 +219,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -227,20 +248,65 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DesignEngine_Web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DesignEngine_Web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DesignEngine_Web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DesignEngine_Web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DesignEngine_Web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DesignEngine_Web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="JavaScript.Libraries" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../design" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../YouYang_Web" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -410,21 +476,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/menuManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="31" selection-start="4914" selection-end="4914" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="137" column="31" selection-start="4914" selection-end="4914" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/loginManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="40" selection-start="2690" selection-end="2690" vertical-scroll-proportion="0.44864866">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/general.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="490" column="14" selection-start="10610" selection-end="10610" vertical-scroll-proportion="0.0" />
+        <state line="74" column="40" selection-start="2690" selection-end="2690" vertical-scroll-proportion="0.44864866" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/attachments.json">
@@ -436,9 +493,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/DE.UIManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="76" selection-start="3737" selection-end="3741" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="103" column="76" selection-start="3737" selection-end="3741" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/projects.json">
@@ -446,23 +501,9 @@
         <state line="111" column="31" selection-start="3645" selection-end="3645" vertical-scroll-proportion="0.5784499" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/entityManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="369" column="57" selection-start="12186" selection-end="12192" vertical-scroll-proportion="0.030630631">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/userEntities.json">
       <provider selected="true" editor-type-id="text-editor">
         <state line="91" column="30" selection-start="2902" selection-end="2902" vertical-scroll-proportion="-35.96154" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="491" column="32" selection-start="17674" selection-end="17685" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/user.json">
@@ -486,7 +527,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/userManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="255" column="39" selection-start="8146" selection-end="8146" vertical-scroll-proportion="0.36756757">
+        <state line="255" column="39" selection-start="8146" selection-end="8146" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/general.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="512" column="7" selection-start="10992" selection-end="10992" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="339" column="68" selection-start="12681" selection-end="12681" vertical-scroll-proportion="-46.307693">
+          <folding>
+            <element signature="tag#script#15;tag#html#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/entityManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="301" column="34" selection-start="10289" selection-end="10289" vertical-scroll-proportion="0.42882884">
           <folding />
         </state>
       </provider>

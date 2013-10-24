@@ -337,7 +337,7 @@
         <div class="comment_wrapper">
             <a href="user/${c.userId}" class="name   de_user_link">${c.userName}</a>
             <span class="publishtime">${c.commentTime}</span>
-
+            <a href="${c.commentId}" class="de_delete_comment">X</a>
             <p class="comment">${c.commentContent}</p>
         </div>
     </li>
@@ -354,7 +354,7 @@
         <div class="comment_wrapper">
             <a href="user/${user.userId}" class="name   de_user_link">${user.name}</a>
             <span class="publishtime">${time}</span>
-
+            <a href="${c.commentId}" class="de_delete_comment">X</a>
             <p class="comment">${content}</p>
         </div>
     </li>

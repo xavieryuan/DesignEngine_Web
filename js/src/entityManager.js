@@ -299,7 +299,7 @@ DE.entity=(function(){
 
                                 //不足每次加载的数据，没有更多
                                 DE.store.commentLoadedId=DE.config.hasNoMoreFlag;
-                                $("#de_comment_more_btn").remove();
+                                //$("#de_comment_more_btn").remove();
                             }else{
                                 DE.store.commentLoadedId=data.comments[length-1]["commentId"];
                             }
