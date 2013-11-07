@@ -22,6 +22,7 @@ li {
     -webkit-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
+    vertical-align: top;
 }
 
 .de_transition {
@@ -1085,6 +1086,7 @@ li {
     padding: 10px;
     float: left;
     width: 100%;
+    position: relative;
 }
 
 .de_top_search>input {
@@ -1658,6 +1660,31 @@ li {
 .de_screen_upload .de_btn_upload_thumb {
     width: 100px;
     margin-bottom: 10px;
+}
+
+/*----------------自動匹配插件------*/
+.de_upload_step ol.mp_list {
+    background-color: #FFFFFF;
+    border-left: 1px solid #C0C0C0;
+    border-right: 1px solid #C0C0C0;
+    overflow: hidden;
+    position: absolute;
+    width: 470px;
+    z-index: 99999;
+}
+.de_top_search ol.mp_list {
+    background-color: #FFFFFF;
+    border-left: 1px solid #C0C0C0;
+    border-right: 1px solid #C0C0C0;
+    overflow: hidden;
+    width: 80%;
+}
+ol.mp_list li {
+    border-bottom: 1px solid #C0C0C0;
+    padding: 4px 4px 5px;
+}
+ol.mp_list li.mp_selectable {
+    cursor: pointer;
 }
 
 /*****上传第二步******/

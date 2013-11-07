@@ -30,6 +30,46 @@ DE.entity=(function(){
         return currentdate;
     }
 
+    /**
+     *
+     * @param {String} date 需要格式化的时间字符串
+     * @returns {string}
+     */
+    function formatDate(date){
+
+        var date=new Date(date);
+
+        var year=date.getFullYear();
+
+        var month=date.getMonth()+1;
+        if(month<10){
+            month="0"+month;
+        }
+
+        var day=date.getDate();
+        if(day<10){
+            day="0"+day;
+        }
+
+        return year+"-"+month+"-"+day;
+
+    }
+
+    /**
+     * 格式化搜索的数据
+     * @param {Object} data 后台返回的json数据
+     * @returns {*}
+     */
+    function formatSearchData(data){
+        var length=data.response.docs.length;
+        var i=0;
+        for(;i<length;i++){
+            data.response.docs[i]["postDate"]=formatDate(data.response.docs[i]["postDate"]);
+        }
+
+        return data.response;
+    }
+
     return {
 
         /**
@@ -65,11 +105,10 @@ DE.entity=(function(){
          */
         getEntityDetail:function(id){
             var me=this;
-            DE.UIManager.showLoading();
             $.ajax({
                 url:DE.config.ajaxUrls.getEntityDetail,
                 type:"get",
-                async:false,  //用同步，后面的请求需要用到返回的结果值
+                async:false,  //用同步，需要显示元素，以便后面的请求的数据进行渲染
                 dataType:"json",
                 data:{
                     postId:id
@@ -88,8 +127,6 @@ DE.entity=(function(){
 
                         //展示头部
                         me.showEntityDetailTop(data);
-
-                        DE.UIManager.hideLoading();
 
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
@@ -179,25 +216,24 @@ DE.entity=(function(){
                 data:{
                     keyword:content,
                     field:isTag?"term":"info",
-                    entityId:type==DE.config.entityTypes.project?DE.store.projectLoadedId:DE.store.resourceLoadedId
+                    type:type==DE.config.entityTypes.resource?"resource":"work",
+                    start:DE.store.searchLoadedCount
                 },
                 success:function(data){
-                    if(data.success){
-                        DE.store.currentSearch.currentSearchValue=content; //记录下当前搜索的内容
 
-                        DE.store.currentSearch.currentSearchType=type;
-                        DE.store.currentSearch.isTag=isTag;
-                        DE.store.currentScrollScreenType=DE.config.scrollScreenType[type];
-                        if(type==DE.config.entityTypes.resource){
-                            DE.store.resourceLoadedId=0;
-                        }else{
-                            DE.store.projectLoadedId=0;
-                        }
+                    DE.store.currentSearch.currentSearchValue=content; //记录下当前搜索的内容
 
-                        me.showSearchEntities(data,first);
+                    DE.store.currentSearch.currentSearchType=type;
+                    DE.store.currentSearch.isTag=isTag;
+                    DE.store.currentScrollScreenType=DE.config.scrollScreenType[type];
+                    if(data.response.docs.length<DE.config.perLoadCount){
+                        DE.store.searchLoadedCount=DE.config.hasNoMoreFlag;
                     }else{
-                        DE.config.ajaxReturnErrorHandler(data);
+                        DE.store.searchLoadedCount+=data.response.docs.length;
                     }
+
+                    me.showSearchEntities(data,first);
+
                 },
                 error:function(){
                     DE.config.ajaxErrorHandler();
@@ -230,6 +266,8 @@ DE.entity=(function(){
                     if(data.success&&(data.resultCode==DE.config.resultCode.praise_add_succ||data.resultCode==DE.config.resultCode.praise_remove_succ)){
                         var praiseCountEl=$("#praiseCount");
                         var honorCountEl=$("#honorCount");
+                        var countEl=$(".de_entity_link[href='entity/"+DE.store.currentShowEntity.id+"']").parents("li").find(".likes");
+                        var oldCount=parseInt(countEl.text());
                         if(DE.store.currentShowEntity.hasPraised){
                             DE.store.currentShowEntity.hasPraised=false;
                             DE.UIManager.hideLoading();
@@ -239,6 +277,9 @@ DE.entity=(function(){
                             }else{
                                 honorCountEl.text(parseInt(honorCountEl.text())-1);
                             }
+
+                            //更新聚合的li的显示数量
+                            countEl.text(oldCount-1);
                         }else{
                             DE.store.currentShowEntity.hasPraised=true;
                             $("#de_entity_praise").removeClass("de_flag_reg_zan").addClass("de_flag_reg_zanned");
@@ -247,6 +288,8 @@ DE.entity=(function(){
                             }else{
                                 honorCountEl.text(parseInt(honorCountEl.text())+1);
                             }
+
+                            countEl.text(oldCount+1);
                         }
 
                         DE.UIManager.hideLoading();
@@ -270,8 +313,13 @@ DE.entity=(function(){
                 url:DE.config.ajaxUrls.getSimilarEntities,
                 type:"get",
                 dataType:"json",
+                data:{
+                    postId:id
+                },
                 success:function(data){
-                     me.showSimilarEntity(data);
+
+                    me.showSimilarEntity(data);
+
                 },
                 error:function(){
                      DE.config.ajaxErrorHandler();
@@ -298,14 +346,16 @@ DE.entity=(function(){
                 success:function(data){
                     if(data.success){
                         var length=data.comments.length;
+                        var moreBtn=$("#de_comment_more_btn");
                         if(length>0){
                             if(length<DE.config.perLoadCount){
 
                                 //不足每次加载的数据，没有更多
                                 DE.store.commentLoadedId=DE.config.hasNoMoreFlag;
-                                $("#de_comment_more_btn").remove();
+                                moreBtn.remove();
                             }else{
                                 DE.store.commentLoadedId=data.comments[length-1]["commentId"];
+                                moreBtn.removeClass("de_hidden");
                             }
 
                             //不管是否有数据，都需要执行函数，因为函数里有显示界面screen的操作
@@ -314,7 +364,7 @@ DE.entity=(function(){
 
                             //返回为0，没有更多
                             DE.store.commentLoadedId=DE.config.hasNoMoreFlag;
-                            $("#de_comment_more_btn").remove();
+                            moreBtn.remove();
                         }
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
@@ -344,6 +394,13 @@ DE.entity=(function(){
                     if(data.success&&data.resultCode==DE.config.resultCode.comment_remove_succ){
                         target.parents("li").remove();
                         DE.UIManager.hideLoading();
+
+                        //更新显示的数据
+                        var commentCountEl=$("#commentsCount");
+                        var count=parseInt(commentCountEl.text())-1;
+                        commentCountEl.text(count);
+                        $(".de_entity_link[href='entity/"+DE.store.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
+
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
                     }
@@ -450,14 +507,34 @@ DE.entity=(function(){
                 success:function(data){
                      if(data.success&&data.resultCode==DE.config.resultCode.visible_set_succ){
                          DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
+                         var li=$(".de_entity_link[href='entity/"+id+"']").parents("li");
+                         var toolbarA=li.find(".de_project_toolbar li:eq(2) a");
+
+                         if(el[0]!=toolbarA[0]){
+                             $.merge(el,toolbarA);
+                         }
 
                          if(visible){
                              el.removeClass("de_toolbar_visible").addClass("de_toolbar_invisible");
                              el.data("target-visible",true);
+
+                             //控制聚合页的
+                             //toolbarLi.addClass("de_toolbar_invisible").removeClass("de_toolbar_visible");
+                             //toolbarLi.data("target-visible",true);
                          }else{
                              el.removeClass("de_toolbar_invisible").addClass("de_toolbar_visible");
                              el.data("target-visible",false);
+
+                             //如果不在用户页面需要删除聚合li
+                             /*if(location.href.match("user")==null){
+                                 li.remove();
+                             }*/
+
+                             //toolbarLi.removeClass("de_toolbar_invisible").addClass("de_toolbar_visible");
+                             //toolbarLi.data("target-visible",false);
                          }
+
+                         DE.UIManager.hideLoading();
                      }else{
                          DE.config.ajaxReturnErrorHandler(data);
                      }
@@ -477,22 +554,21 @@ DE.entity=(function(){
             var array=href.split("/");
             var id=array[1];
 
-            //请求详细信息
+            //显示展现层
+            DE.UIManager.showProjectDetail();
+
+            //请求详细信息,同步的ajax,如果需要改用异步，需要修改html模板
             this.getEntityDetail(id);
+
 
             //请求附件
             this.getEntityAttachment(id);
 
             //请求评论
-            if(DE.store.currentShowEntity.type==DE.config.entityTypes.project){
-                this.getComments(id);
-            }
+            this.getComments(id);
 
             //请求相似实体
             this.getSimilarEntities(id);
-
-            //显示展现层
-            DE.UIManager.showProjectDetail();
 
         },
 
@@ -522,7 +598,6 @@ DE.entity=(function(){
                 postVisible:data.entity.postVisible
             });
             $("#de_screen_project_detail").prepend($(html));
-
         },
 
         /**
@@ -531,7 +606,7 @@ DE.entity=(function(){
          */
         showSimilarEntity:function(data){
             var tpl=$("#similarEntityTpl").html();
-            var html=juicer(tpl,data);
+            var html=juicer(tpl,formatSearchData(data));
             $("#de_similar_entities").append($(html));
         },
 
@@ -589,6 +664,7 @@ DE.entity=(function(){
 
         },
 
+
         /**
          * 显示搜索出来的作品（资源）聚合
          * @param data
@@ -597,7 +673,7 @@ DE.entity=(function(){
         showSearchEntities:function(data,first){
             var targetContain= $("#de_search_result");
             var tpl=$("#searchResultTpl").html();
-            var html=juicer(tpl,data);
+            var html=juicer(tpl,formatSearchData(data));
 
             if(first){
 
@@ -620,6 +696,7 @@ DE.entity=(function(){
             var content=contentEle.val();
 
             if(content.trim()){
+                DE.UIManager.showLoading();
                 var me=this;
                 $.ajax({
                     url:DE.config.ajaxUrls.postComment,
@@ -635,6 +712,11 @@ DE.entity=(function(){
                             me.showSingleComment(content,data);
 
                             DE.UIManager.hideLoading();
+                            var commentCountEl=$("#commentsCount");
+                            var count=parseInt(commentCountEl.text())+1;
+
+                            commentCountEl.text(count);
+                            $(".de_entity_link[href='entity/"+DE.store.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
                         }else{
                             DE.config.ajaxReturnErrorHandler(data);
                         }
@@ -676,21 +758,21 @@ DE.entity=(function(){
             var mediaType=img.data("media-type");
 
             //如果上传uploadedMedias中有，那是在预览，用uploadedMedias中的
-            if(mediaType=="image"){
+            if(mediaType==DE.config.uploadMediaTypes.image){
                 if(!$.isEmptyObject(DE.store.uploadedMedias)){
-                    content=DE.store.uploadedMedias[mediaId]["zy_media_filepath"];
+                    content=DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath];
                 }else{
                     content=target.attr("href");
                 }
-            }else if(mediaType=="video"){
+            }else if(mediaType==DE.config.uploadMediaTypes.webVideo||mediaType==DE.config.uploadMediaTypes.localVideo){
                 if(!$.isEmptyObject(DE.store.uploadedMedias)){
-                    content=DE.store.uploadedMedias[mediaId]["zy_media_filepath"];
+                    content=DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath];
                 }else{
                     content=target.attr("href");
                 }
-            }else if(mediaType=="3d"){
+            }else if(mediaType==DE.config.uploadMediaTypes._3d){
 
-            }else if(mediaType=="ppt"){
+            }else if(mediaType==DE.config.uploadMediaTypes.ppt){
                 if(!$.isEmptyObject(DE.store.uploadedMedias)){
                     content=DE.config.messageCode.pptHasNotUploaded;
                 }else{
@@ -700,12 +782,6 @@ DE.entity=(function(){
                     }else if(content==DE.config.resultCode.pptx_upload_wait){
                         content=DE.config.messageCode.pptHasNotUploaded;
                     }
-                }
-            }else{
-                if(!$.isEmptyObject(DE.store.uploadedMedias)){
-                    content=DE.store.uploadedMedias[mediaId]["zy_media_filepath"];
-                }else{
-                    content=target.attr("href");
                 }
             }
 
@@ -751,7 +827,6 @@ $(document).ready(function(){
     //关闭作品详情
     $(document).on("click","#de_btn_close_project_detail",function(){
         DE.UIManager.hideProjectDetail();
-        DE.store.commentLoadedId=0;
 
         return false;
     });
@@ -782,7 +857,6 @@ $(document).ready(function(){
 
     //添加评论
     $(document).on("click","#de_btn_add_comment",function(){
-        DE.UIManager.showLoading();
         DE.entity.addCommentHandler();
     });
 

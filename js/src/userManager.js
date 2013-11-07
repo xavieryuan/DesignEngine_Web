@@ -17,7 +17,7 @@ DE.user=(function(){
             var uploaderFigure = new plupload.Uploader({
                 runtimes:"html5",
                 multi_selection:false,
-                max_file_size:DE.config.maxImageSize,
+                max_file_size:DE.config.uploadSize.maxImageSize,
                 browse_button:"de_change_figure",
                 container:"de_change_figure_container",
                 url:DE.config.ajaxUrls.uploadFileUrl,
@@ -26,7 +26,7 @@ DE.user=(function(){
                     isThumb:true
                 },
                 filters:[
-                    {title:"Image files", extensions:"jpg,gif,png,jpeg"}
+                    {title:"Image files", extensions:DE.config.uploadFilters.imageFilter}
                 ]
             });
 
@@ -35,28 +35,19 @@ DE.user=(function(){
 
             //文件添加事件
             uploaderFigure.bind("FilesAdded", function (up, files) {
-                var filename = files[0].name;
-                var lastIndex = filename.lastIndexOf(".");
-                filename = filename.substring(0, lastIndex);
-
-                //只含有汉字、数字、字母、下划线不能以下划线开头和结尾
-                var reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/;
-
-                if (!reg.test(filename)) {
-                    alert("文件名必须是数字下划线汉字字母,且不能以下划线开头。");
-
-                    //删除文件
-                    up.removeFile(files[0]);
-                    return false;
-                } else {
-                    up.start();//开始上传
-                }
+                up.start();
             });
 
             //出错事件
             uploaderFigure.bind("Error", function (up, err) {
                 if(err.message.match("Init")==null){
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,err.message);
+                    if(err.message.match("size")){
+                        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadSizeError+DE.config.uploadSize.maxMediaSize);
+                    }else if(err.message.match("extension")){
+                        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadExtensionError+DE.config.uploadFilters.imageFilter);
+                    }else{
+                        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadIOErrror);
+                    }
                 }
                 up.refresh();
             });

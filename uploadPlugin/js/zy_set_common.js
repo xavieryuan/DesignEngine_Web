@@ -10,10 +10,69 @@
  * zy_create_media_uploader  媒体文件上传句柄
  * zy_create_thumb_uploader  上传缩略图句柄
  */
+
+//添加配置文件，这样在父级别没有配置文件时也可以使用
+var config={
+    uploadFileUrl:"/design/upload",
+    uploadSize:{
+        maxMediaSize:"200m", //最大的媒体文件上传大小
+        maxImageSize:"2m"//最大的图片文件上传大小
+    },
+    uploadFilters:{  //媒体类型格式刷选器
+        imageFilter:"jpg,gif,png,jpeg",
+        pptFilter:"pptx",
+        _3dFilter:"3d",
+        videoFilter:"mp4",
+        fileFilter:"zip,pdf"
+    },
+    uploadMediaTypes:{  //媒体类型
+        image:"zy_image",
+        ppt:"zy_ppt",
+        _3d:"zy_3d",
+        localVideo:"zy_location_video",
+        file:"zy_file",
+        webVideo:"zy_network_video"
+    },
+    mediaObj:{  //媒体对象
+        mediaTitle:"zy_media_title",
+        mediaMemo:"zy_media_memo",
+        mediaType:"zy_media_type",
+        mediaThumbFilename:"zy_media_thumb_filename",
+        mediaThumbFilepath:"zy_media_thumb_filepath",
+        mediaFilename:"zy_media_filename",
+        mediaFilepath:"zy_media_filepath"
+    },
+    messageCode:{  //错误提示
+        errorTitle:"错误提示",
+        successTitle:"成功提示",
+        operationSuccess:"操作成功，请关闭后选择其他操作！",
+        timeout:"登陆超时，请关闭后刷新页面并登录！",
+        networkError:"网络连接失败，请稍后重试！",
+        validCodeError:"验证码错误！",
+        operationError:"操作失败，请稍后重试！",
+        imgSizeError:"图片不是1:1比例！",
+        loadDataError:"请求数据失败！",
+        filenameError:"文件名必须是数字下划线汉字字母,且不能以下划线开头！",
+        nameOrPwdError:"用户名或者密码错误！",
+        notFound:"页面资源未发现，2秒后跳转到首页！",
+        changePwdSuccess:"密码修改成功，2秒后跳转到首页并退出！",
+        emailNotExist:"输入的邮箱不存在！",
+        emailSendSuccess:"操作成功，请进入邮箱查看邮件！",
+        mediaHasNoThumb:"有媒体文件没有上传缩略图，请上传后再预览！",
+        hasNoMedia:"没有上传媒体文件或者有上传错误的媒体文件，请上传或者删除后再预览！",
+        stepOneUnComplete:"标题、标签、描述、缩略图等没有填写完整！",
+        pptHasNotUploaded:"此资源还没有被上传到资源服务器，暂时不能查看！",
+        pptUploadError:"此资源上传到资源服务器出错，无法查看！",
+        uploadSizeError:"最大文件大小",
+        uploadExtensionError:"只允许上传",
+        uploadIOErrror:"服务器端异常，请稍后重试！"
+    }
+};
 var zy_set_common = (function(){
 
     var parent=window.parent;
     var uploaded_medias=parent.DE.store.uploadedMedias; //已经上传了的媒体文件
+    var UI=parent.DE.UIManager;
 
     return {
         /*
@@ -55,34 +114,34 @@ var zy_set_common = (function(){
          * */
         "zy_set_old_content":function(zy_media_id,zy_media_type){
 
-            if(zy_media_type!="zy_image"){
-                if(zy_media_type=="zy_network_video"){
+            if(zy_media_type!=config.uploadMediaTypes.image){
+                if(zy_media_type==config.uploadMediaTypes.webVideo){
 
                     //网络视频设置不一样
-                    if(uploaded_medias[zy_media_id]["zy_media_filename"]){
-                        $("#zy_network_input").val(uploaded_medias[zy_media_id]["zy_media_filename"]);
+                    if(uploaded_medias[zy_media_id][config.mediaObj.mediaFilename]){
+                        $("#zy_network_input").val(uploaded_medias[zy_media_id][config.mediaObj.mediaFilename]);
                         $("#zy_file_info").text($("#zy_network_input").val());
                         $("#zy_file_info_div").removeClass("zy_hidden");
                         $("#zy_change_div").addClass("zy_hidden");
                     }
                 }else{
-                    $("#zy_file_info").html(uploaded_medias[zy_media_id]["zy_media_filename"]);
+                    $("#zy_file_info").html(uploaded_medias[zy_media_id][config.mediaObj.mediaFilename]);
                 }
             }
 
             // 设置缩略图
-            if(uploaded_medias[zy_media_id]["zy_media_thumb_filepath"]){
+            if(uploaded_medias[zy_media_id][config.mediaObj.mediaThumbFilepath]){
 
                 //设置缩略图,显示压缩后的图片
-                $("#zy_media_thumb").attr("src",uploaded_medias[zy_media_id]["zy_media_thumb_filepath"]);
+                $("#zy_media_thumb").attr("src",uploaded_medias[zy_media_id][config.mediaObj.mediaThumbFilepath]);
             }
 
             // 设置标题和描述
-            if(uploaded_medias[zy_media_id]["zy_media_title"]){
-                $("#zy_media_title").val(uploaded_medias[zy_media_id]["zy_media_title"]);
+            if(uploaded_medias[zy_media_id][config.mediaObj.mediaTitle]){
+                $("#zy_media_title").val(uploaded_medias[zy_media_id][config.mediaObj.mediaTitle]);
             }
-            if(uploaded_medias[zy_media_id]["zy_media_memo"]){
-                $("#zy_media_memo").text(uploaded_medias[zy_media_id]["zy_media_memo"]);
+            if(uploaded_medias[zy_media_id][config.mediaObj.mediaMemo]){
+                $("#zy_media_memo").text(uploaded_medias[zy_media_id][config.mediaObj.mediaMemo]);
 
             }
         },
@@ -95,12 +154,12 @@ var zy_set_common = (function(){
             var uploader_media=new plupload.Uploader({
                 runtimes:"html5",
                 multi_selection:false,
-                max_file_size:parent.DE.config.maxMediaSize,
+                max_file_size:config.uploadSize.maxMediaSize,
                 browse_button:"zy_upload_media_button",
                 container:"zy_left_top",
                 unique_names:true,
                 //chunk_size:"10mb",
-                url: parent.DE.config.ajaxUrls.uploadFileUrl,
+                url: config.uploadFileUrl,
                 filters : [
                     {title : "Media files", extensions : filters}
                 ]
@@ -111,23 +170,11 @@ var zy_set_common = (function(){
 
             //文件添加事件
             uploader_media.bind("FilesAdded",function(up,files){
-                var filename=files[0].name;
-                var lastIndex=filename.lastIndexOf(".");
-                filename=filename.substring(0,lastIndex);
 
-                //只含有汉字、数字、字母、下划线不能以下划线开头和结尾
-                var reg=/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/;
-                if(!reg.test(filename)){
-                    alert("文件名必须是数字下划线汉字字母,且不能以下划线开头。");
+                up.start(); //开始上传
 
-                    //删除文件
-                    up.removeFile(files[0]);
-                }else{
-                    up.start(); //开始上传
-
-                    //显示按钮
-                    $("#zy_upload_media_button").addClass("zy_hidden");
-                }
+                //显示按钮
+                $("#zy_upload_media_button").addClass("zy_hidden");
             });
 
             //文件上传进度条事件
@@ -137,10 +184,22 @@ var zy_set_common = (function(){
 
             //出错事件
             uploader_media.bind("Error",function(up,err){
+
+                //一般采用父级别的错误提示
+                if(err.message.match("Init")==null){
+                    if(err.message.match("size")){
+                       UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadSizeError+config.uploadSize.maxMediaSize);
+                    }else if(err.message.match("extension")){
+                        UI.showMsgPopout(config.messageCode.errorTitle,filters);
+                    }else{
+                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadIOErrror);
+                    }
+                }
+
                 up.refresh();
 
                 //设置页面展示
-                $("#zy_file_info").html("上传出错");
+                //$("#zy_file_info").html("上传出错");
                 $("#zy_upload_media_button").removeClass("zy_hidden");
             });
 
@@ -149,8 +208,8 @@ var zy_set_common = (function(){
                 var response=JSON.parse(res.response);
                 if(response.success){
                     //设置uploaded_medias的值
-                    uploaded_medias[zy_media_id]["zy_media_filename"]=response.clientFilename;
-                    uploaded_medias[zy_media_id]["zy_media_filepath"]=response.url;
+                    uploaded_medias[zy_media_id][config.mediaObj.mediaFilename]=response.clientFilename;
+                    uploaded_medias[zy_media_id][config.mediaObj.mediaFilepath]=response.url;
 
                     //设置列表中的值
                     $("#zy_uploaded_medias_ol a[data-zy-media-id='"+zy_media_id+"']",parent.document).find(".zy_media_filename").text(file.name);
@@ -173,13 +232,13 @@ var zy_set_common = (function(){
             var uploader_thumb=new plupload.Uploader({
                 runtimes:"html5",
                 multi_selection:false,
-                max_file_size:parent.DE.config.maxImageSize,
+                max_file_size:config.uploadSize.maxImageSize,
                 browse_button:"zy_upload_thumb_button",
                 container:"zy_left_bottom",
                 unique_names:true,
-                url: parent.DE.config.ajaxUrls.uploadFileUrl, //parent在每个js里面都有定义
+                url: config.uploadFileUrl, //parent在每个js里面都有定义
                 filters : [
-                    {title : "Image files", extensions : "jpg,jpeg,png"}
+                    {title : "Image files", extensions : config.uploadFilters.imageFilter}
                 ]
             });
 
@@ -188,21 +247,8 @@ var zy_set_common = (function(){
 
             //文件添加事件
             uploader_thumb.bind("FilesAdded",function(up,files){
-                var filename=files[0].name;
-                var lastIndex=filename.lastIndexOf(".");
-                filename=filename.substring(0,lastIndex);
 
-                //只含有汉字、数字、字母、下划线不能以下划线开头和结尾
-                var reg=/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/;
-
-                if(!reg.test(filename)){
-                    alert("文件名必须是数字下划线汉字字母,且不能以下划线开头。");
-
-                    //删除文件
-                    up.removeFile(files[0]);
-                }else{
-                    up.start();//开始上传
-                }
+                up.start();//开始上传
             });
 
             //文件上传进度条事件
@@ -212,25 +258,38 @@ var zy_set_common = (function(){
 
             //出错事件
             uploader_thumb.bind("Error",function(up,err){
-                alert(err.message);
+
+                //一般采用父级别的错误提示
+                if(err.message.match("Init")==null){
+                    if(err.message.match("size")){
+                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadSizeError+config.uploadSize.maxImageSize);
+                    }else if(err.message.match("extension")){
+                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadExtensionError+config.uploadFilters.imageFilter);
+                    }else{
+                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadIOErrror);
+                    }
+                }
                 up.refresh();
             });
 
             //上传完毕事件
             uploader_thumb.bind("FileUploaded",function(up,file,res){
-                //console.log(response.success+"路径："+response.url);
+
+                //和父级别交互操作
                 var response=JSON.parse(res.response);
                 if(response.success){
+
                     //设置uploaded_medias的值
-                    if(uploaded_medias[zy_media_id]["zy_media_type"]=="zy_image"){
+                    if(uploaded_medias[zy_media_id][config.mediaObj.mediaType]==config.uploadMediaTypes.image){
+
                         //如果是图片媒体，需要同时设置四个信息
-                        uploaded_medias[zy_media_id]["zy_media_thumb_filename"]=response.clientFilename;
-                        uploaded_medias[zy_media_id]["zy_media_thumb_filepath"]=response.url;
-                        uploaded_medias[zy_media_id]["zy_media_filename"]=response.clientFilename;
-                        uploaded_medias[zy_media_id]["zy_media_filepath"]=response.url;
+                        uploaded_medias[zy_media_id][config.mediaObj.mediaThumbFilename]=response.clientFilename;
+                        uploaded_medias[zy_media_id][config.mediaObj.mediaThumbFilepath]=response.url;
+                        uploaded_medias[zy_media_id][config.mediaObj.mediaFilename]=response.clientFilename;
+                        uploaded_medias[zy_media_id][config.mediaObj.mediaFilepath]=response.url;
                     }else{
-                        uploaded_medias[zy_media_id]["zy_media_thumb_filename"]=response.clientFilename;
-                        uploaded_medias[zy_media_id]["zy_media_thumb_filepath"]=response.url;
+                        uploaded_medias[zy_media_id][config.mediaObj.mediaThumbFilename]=response.clientFilename;
+                        uploaded_medias[zy_media_id][config.mediaObj.mediaThumbFilepath]=response.url;
                     }
 
                     //设置缩略图，显示压缩后的图片

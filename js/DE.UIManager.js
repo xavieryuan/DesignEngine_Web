@@ -138,6 +138,8 @@ DE.UIManager=function(){
                 html('');
 			$("body").removeClass("de_noscroll");
 
+            DE.store.commentLoadedId=0;
+
 		},
 		showLoginPopout:function(){
 			showPopout();

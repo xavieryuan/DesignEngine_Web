@@ -3,13 +3,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>图钉墙 - HNU Design</title>
-    <base href="http://192.168.2.167/design/">
+    <base href="http://192.168.1.18/design/">
     <link href="css/general.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/lib/juicer-min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.form.js"></script>
     <script type="text/javascript" src="js/lib/plupload.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.marcopolo.min.js"></script>
     <script type="text/javascript" src="js/lib/plupload.html5.js"></script>
     <script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
     <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
@@ -167,43 +168,43 @@
 </script>
 <!-- 显示搜索结果-->
 <script type="text/template" id="searchResultTpl">
-    {@each entities as e}
+    {@each docs as e}
     <li class="de_borderbox">
         <div class="user_info">
             <a href="user/${e.userId}" class="de_user_link">
-                <img class="photo" src="${e.userProfile}"/>
+                <img class="photo" src="${e.userProfileImg}"/>
 
                 <p class="name">${e.userName}</p>
             </a>
         </div>
         <div class="project_info">
-            <a href="entity/${e.id}" class="de_entity_link">
-                <img class="thumb" src="${e.thumb}">
-                <h4>${e.title}</h4>
+            <a href="entity/${e.postId}" class="de_entity_link">
+                <img class="thumb" src="${e.postThumb}">
+                <h4>${e.postTitle}</h4>
 
-                <p class="date">${e.date}</p>
+                <p class="date">${e.postDate}</p>
             </a>
         </div>
-        {@if e.type=='project'}
+        {@if e.postType=='work'}
             <ul class="de_stats_tags">
-                <li class="likes">${e.praiseCount}</li>
-                <li class="comments">${e.commentCount}</li>
+                <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
+                <li class="comments">${e.postCommentCount}</li>
             </ul>
         {@else}
         <ul class="de_media_tags">
-            {@if e.hasPpt}
+            {@if e.postHasPpt}
                 <li class="tag_ppt">PPT</li>
             {@/if}
-            {@if e.hasWebVideo}
+            {@if e.postHasWebVideo}
                 <li class="tag_web_video">网络视频</li>
             {@/if}
-            {@if e.hasLocalVideo}
+            {@if e.postHasLocalVideo}
                 <li class="tag_local_video">本地视频</li>
             {@/if}
-            {@if e.has3d}
+            {@if e.postHas3d}
                 <li class="tag_3d">3D</li>
             {@/if}
-            {@if e.hasFile}
+            {@if e.postHasFile}
                 <li class="tag_file">文档</li>
             {@/if}
         </ul>
@@ -277,7 +278,7 @@
     <div id="de_comments" class="de_comment_box de_boxshadow de_borderbox">
         <ul id="de_comment_list" class="de_comment_list"></ul>
 
-        <span id="de_comment_more_btn" class="de_comment_more_btn">+加载更多</span>
+        <span id="de_comment_more_btn" class="de_comment_more_btn de_hidden">+加载更多</span>
 
         {@if user.userId}
         <div class="de_comment_form de_reg_view de_borderbox">
@@ -312,17 +313,17 @@
     <figure>
         <!--根据类型添加class-->
         {@if at.attachmentType=='zy_image'}
-             <a href="${at.attachmentMediaLocation}" class="de_only_image"><img data-media-type="image" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+             <a href="${at.attachmentMediaLocation}" class="de_only_image"><img data-media-type="zy_image" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@else if at.attachmentType=='zy_location_video'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_video"><img data-media-type="video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+            <a href="${at.attachmentMediaLocation}" class="de_has_video"><img data-media-type="zy_location_video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@else if at.attachmentType=='zy_network_video'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_web_video"><img data-media-type="webVideo" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+            <a href="${at.attachmentMediaLocation}" class="de_has_web_video"><img data-media-type="zy_network_video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@else if at.attachmentType=='zy_3d'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_3d"><img data-media-type="3d" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+            <a href="${at.attachmentMediaLocation}" class="de_has_3d"><img data-media-type="zy_3d" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@else if at.attachmentType=='zy_ppt'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_ppt"><img data-media-type="ppt" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+            <a href="${at.attachmentMediaLocation}" class="de_has_ppt"><img data-media-type="zy_ppt" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@else if at.attachmentType=='zy_file'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_file"><img data-media-type="file" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+            <a href="${at.attachmentMediaLocation}" class="de_has_file"><img data-media-type="zy_file" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@/if}
 
         {@if at.attachmentTitle}
@@ -373,44 +374,44 @@
 </script>
 <!--显示相似作品de_project_grid ul append-->
 <script type="text/template" id="similarEntityTpl">
-    {@each entities as e}
+    {@each docs as e}
 
     <li class="de_borderbox">
         <div class="user_info">
             <a href="user/${e.userId}" class="de_user_link">
-                <img class="photo" src="${e.userProfile}"/>
+                <img class="photo" src="${e.userProfileImg}"/>
 
                 <p class="name">${e.userName}</p>
             </a>
         </div>
         <div class="project_info">
-            <a href="entity/${e.id}" class="de_entity_link">
-                <img class="thumb" src="${e.thumb}">
-                <h4>${e.title}</h4>
+            <a href="entity/${e.postId}" class="de_entity_link">
+                <img class="thumb" src="${e.postThumb}">
+                <h4>${e.postTitle}</h4>
 
-                <p class="date">${e.date}</p>
+                <p class="date">${e.postDate}</p>
             </a>
         </div>
-        {@if e.type=='project'}
+        {@if e.postType=='work'}
         <ul class="de_stats_tags">
-            <li class="likes">${e.praiseCount}</li>
-            <li class="comments">${e.commentsCount}</li>
+            <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
+            <li class="comments">${e.postCommentCount}</li>
         </ul>
         {@else}
         <ul class="de_media_tags">
-            {@if e.hasPpt}
+            {@if e.postHasPpt}
             <li class="tag_ppt">PPT</li>
             {@/if}
-            {@if e.hasWebVideo}
+            {@if e.postHasWebVideo}
             <li class="tag_web_video">网络视频</li>
             {@/if}
-            {@if e.hasLocalVideo}
+            {@if e.postHasLocalVideo}
             <li class="tag_local_video">本地视频</li>
             {@/if}
-            {@if e.has3d}
+            {@if e.postHas3d}
             <li class="tag_3d">3D</li>
             {@/if}
-            {@if e.hasFile}
+            {@if e.postHasFile}
             <li class="tag_file">文档</li>
             {@/if}
         </ul>
@@ -636,14 +637,14 @@
 </script>
 <!--播放媒体文件-->
 <script type="text/template" id="showMediaContent">
-    {@if type=='video'}
+    {@if type=='zy_location_video'}
         <video src="${content}" autoplay controls></video>
-    {@else if type=='webVideo'}
+    {@else if type=='zy_network_video'}
         $${content}
-    {@else if type=='ppt'}
+    {@else if type=='zy_ppt'}
         $${content}
-    {@else if type=='3d'}
-    {@else if type=='image'}
+    {@else if type=='zy_3d'}
+    {@else if type=='zy_image'}
         <img src="${content}">
     {@/if}
 </script>

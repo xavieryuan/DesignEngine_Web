@@ -24,9 +24,13 @@ DE.menu=(function(){
 
                         //作品和资源要看是否是在搜索页面
                         if(DE.store.currentSearchValue){
-                            alert(DE.store.currentScrollScreenType+"search");
-                            DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,
-                                DE.store.currentSearch.currentSearchType,DE.store.currentSearch.isTag,false);
+
+                            //alert(DE.store.currentScrollScreenType+"search");
+                            if(DE.store.searchLoadedCount!=DE.config.hasNoMoreFlag){
+                                DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,
+                                    DE.store.currentSearch.currentSearchType,DE.store.currentSearch.isTag,false);
+                            }
+
                         }else{
                             if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.project){
 
@@ -136,6 +140,8 @@ DE.menu=(function(){
             var value=array[1];
 
             DE.entity.getEntityBySearch(value,searchType,isTag,true);
+
+            $("#de_search_input").val("");
         },
 
         /**
@@ -146,6 +152,7 @@ DE.menu=(function(){
 
             //如果当前显示的类型和点击的按钮不一致，则要置换
             if(type!=DE.store.currentSearch.currentSearchType){
+                DE.store.searchLoadedCount=0;
                 DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,type,DE.store.currentSearch.isTag,true);
             }
 
@@ -166,6 +173,45 @@ DE.menu=(function(){
             }else if(id=="de_btn_bind_account"){
                 DE.user.accountHasBind();
             }
+        },
+
+        /**
+         * 搜素输入框事件
+         */
+        searchInputEventHandler:function(){
+            var me=this;
+            var searchInput= $("#de_search_input");
+            searchInput.keydown(function(event){
+                if(event.keyCode==13){
+                    var value=$(this).val();
+                    if(value.trim()){
+                        me.serachHandler("search/"+value,DE.config.entityTypes.project,false);
+                    }
+                }
+            });
+
+            searchInput.marcoPolo({
+                url: DE.config.ajaxUrls.autoComplete,
+                minChars:2,
+                formatData : function (data) {
+                    return data.spellcheck.suggestions[1]["suggestion"];
+                },
+                formatItem: function (data) {
+                    return data;
+                },
+                onSelect: function (data) {
+                    me.serachHandler("search/"+data,DE.config.entityTypes.project,false);
+                },
+                formatNoResults:function(q, $item){
+                    return "";
+                },
+                formatMinChars :function(minChars, $item){
+                    return "";
+                },
+                formatError :function($item, jqXHR, textStatus, errorThrown){
+                    return "";
+                }
+            });
         }
     }
 })();
@@ -250,14 +296,7 @@ $(document).ready(function(){
     });
 
     //搜索
-    $("#de_search_input").keydown(function(event){
-        if(event.keyCode==13){
-            var value=$(this).val();
-            if(value.trim()){
-                DE.menu.serachHandler("search/"+value,DE.config.entityTypes.project,false);
-            }
-        }
-    });
+    DE.menu.searchInputEventHandler();
 
     //搜索结果tab点击事件
     $("#de_search_result_tab a").click(function(){

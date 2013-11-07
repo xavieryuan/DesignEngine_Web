@@ -1,0 +1,12 @@
+{
+    "spellcheck":{
+        "suggestions":[
+            "何",{
+                "numFound":2,
+                "startOffset":0,
+                "endOffset":1,
+                "suggestion":["何人可"]
+            }
+        ]
+    }
+}

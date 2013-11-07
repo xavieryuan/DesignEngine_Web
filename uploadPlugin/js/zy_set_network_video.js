@@ -11,7 +11,7 @@ $(document).ready(function(){
 
 
     //设置原来的内容
-    zy_set_common.zy_set_old_content(zy_media_id,"zy_network_video");
+    zy_set_common.zy_set_old_content(zy_media_id,config.uploadMediaTypes.webVideo);
 
     //输入视频文件控制部分
     $("#zy_network_input_ok").click(function(){
@@ -25,8 +25,8 @@ $(document).ready(function(){
             $("#zy_uploaded_medias_ol a[data-zy-media-id='"+zy_media_id+"']",parent.document).find(".zy_media_filename").text(filename);
 
             //设置uploaded_medias的值
-            zy_set_common.zy_get_private_uploaded()[zy_media_id]["zy_media_filename"]=filename;
-            zy_set_common.zy_get_private_uploaded()[zy_media_id]["zy_media_filepath"]=filename;
+            zy_set_common.zy_get_private_uploaded()[zy_media_id][config.mediaObj.mediaFilename]=filename;
+            zy_set_common.zy_get_private_uploaded()[zy_media_id][config.mediaObj.mediaFilepath]=filename;
 
             //设置file_info的值
             $("#zy_file_info").text(filename);
@@ -50,11 +50,11 @@ $(document).ready(function(){
     $("#zy_media_title").blur(function(){
 
         //防止后台json_decode出错，将双引号改成单引号
-        zy_set_common.zy_get_private_uploaded()[zy_media_id]["zy_media_title"]=$(this).val().replace(/["]/g,"'");
+        zy_set_common.zy_get_private_uploaded()[zy_media_id][config.mediaObj.mediaTitle]=$(this).val().replace(/["]/g,"'");
     });
     $("#zy_media_memo").blur(function(){
 
         //防止后台json_decode出错，将双引号改成单引号
-        zy_set_common.zy_get_private_uploaded()[zy_media_id]["zy_media_memo"]=$(this).val().replace(/["]/g,"'");
+        zy_set_common.zy_get_private_uploaded()[zy_media_id][config.mediaObj.mediaMemo]=$(this).val().replace(/["]/g,"'");
     });
 });

@@ -11,21 +11,21 @@ $(document).ready(function(){
 
 
     //设置原来的内容
-    zy_set_common.zy_set_old_content(zy_media_id,"zy_3d");
+    zy_set_common.zy_set_old_content(zy_media_id,config.uploadMediaTypes._3d);
 
     //上传罗略图部分代码
     zy_set_common.zy_create_thumb_uploader(zy_media_id);
 
     //上传视频文件部分代码
-    zy_set_common.zy_create_media_uploader("zip",zy_media_id);
+    zy_set_common.zy_create_media_uploader(config.uploadFilters._3dFilter,zy_media_id);
 
     //控制标题和描述的输入
     $("#zy_media_title").blur(function(){
         //防止后台json_decode出错，将双引号改成单引号
-        zy_set_common.zy_get_private_uploaded()[zy_media_id]["zy_media_title"]=$(this).val().replace(/["]/g,"'");
+        zy_set_common.zy_get_private_uploaded()[zy_media_id][config.mediaObj.mediaTitle]=$(this).val().replace(/["]/g,"'");
     });
     $("#zy_media_memo").blur(function(){
         //防止后台json_decode出错，将双引号改成单引号
-        zy_set_common.zy_get_private_uploaded()[zy_media_id]["zy_media_memo"]=$(this).val().replace(/["]/g,"'");
+        zy_set_common.zy_get_private_uploaded()[zy_media_id][config.mediaObj.mediaMemo]=$(this).val().replace(/["]/g,"'");
     });
 });

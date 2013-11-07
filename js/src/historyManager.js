@@ -31,7 +31,7 @@ DE.history=(function(){
             case "tag":
 
                 //请求点击标签的数据
-                DE.entity.getEntityByTag(value,type,true);
+                DE.entity.getEntityBySearch(decodeURI(value),type,true,true);
 
                 break;
             case "project":
@@ -55,7 +55,7 @@ DE.history=(function(){
             case "search":
 
                 //请求搜索数据
-                DE.entity.getEntityByTag(value,type,true);
+                DE.entity.getEntityBySearch(decodeURI(value),type,false,true);
 
                 break;
             case "upload":

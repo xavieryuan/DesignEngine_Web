@@ -76,27 +76,27 @@ DE.upload=(function(){
         $(".zy_media_list").each(function(index,m){
             var obj={};//幻灯片每一页的对象
             var media_id=$(this).data("zy-media-id");
-            var title=DE.store.uploadedMedias[media_id]["zy_media_title"];
-            var type=DE.store.uploadedMedias[media_id]["zy_media_type"];
-            var memo=DE.store.uploadedMedias[media_id]["zy_media_memo"];
-            var img_src=DE.store.uploadedMedias[media_id]["zy_media_thumb_filepath"];
+            var title=DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaTitle];
+            var type=DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaType];
+            var memo=DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaMemo];
+            var img_src=DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaThumbFilepath];
             //var img_src_compress=$(this).find("img").attr("src");
 
             obj.title=title;
             obj.memo=memo;
 
-            if(type=="zy_image"){
-                obj.content='<a class="de_only_image"  href="'+img_src+'"><img data-media-type="image" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
-            }else if(type=="zy_ppt"){
-                obj.content='<a class="de_has_ppt"  href="'+img_src+'"><img data-media-type="ppt" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
-            }else if(type=="zy_3d"){
-                obj.content='<a class="de_has_3d"  href="'+img_src+'"><img data-media-type="3d" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
-            }else if(type=="zy_location_video"){
-                obj.content='<a class="de_has_video" href="'+img_src+'"><img data-media-type="video" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
-            }else if(type=="zy_network_video"){
-                obj.content='<a class="de_has_web_video"  href="'+img_src+'"><img data-media-type="webVideo" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+            if(type==DE.config.uploadMediaTypes.image){
+                obj.content='<a class="de_only_image"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.image+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+            }else if(type==DE.config.uploadMediaTypes.ppt){
+                obj.content='<a class="de_has_ppt"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.ppt+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+            }else if(type==DE.config.uploadMediaTypes._3d){
+                obj.content='<a class="de_has_3d"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes._3d+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+            }else if(type==DE.config.uploadMediaTypes.localVideo){
+                obj.content='<a class="de_has_video" href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.localVideo+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+            }else if(type==DE.config.uploadMediaTypes.webVideo){
+                obj.content='<a class="de_has_web_video"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.webVideo+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
             }else{
-                obj.content='<a class="de_has_file"  href="'+DE.store.uploadedMedias[media_id]["zy_media_filepath"]+'"><img data-media-type="file" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+                obj.content='<a class="de_has_file"  href="'+DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaFilepath]+'"><img data-media-type="'+DE.config.uploadMediaTypes.file+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
             }
 
             array_slides.push(obj);
@@ -117,7 +117,7 @@ DE.upload=(function(){
         var thumb_src ="images/default_small_thumb.png"; //由于设置了basehref不需要再加前缀
 
 
-        if (params.type == "zy_image") {
+        if (params.type == DE.config.uploadMediaTypes.image) {
 
             //如果是图片，设置缩略图地址为本身（需要获取缩略图地址）
             //var img_src=params.url;
@@ -164,18 +164,18 @@ DE.upload=(function(){
             //声明一个空的对象，后续将内容全部加入
         };
 
-        if (type == "zy_image") {
+        if (type == DE.config.uploadMediaTypes.image) {
 
             //如果是图片媒体，需要同时设置四个信息
-            DE.store.uploadedMedias[mediaId]["zy_media_thumb_filename"] = filename;
-            DE.store.uploadedMedias[mediaId]["zy_media_thumb_filepath"] = url;
-            DE.store.uploadedMedias[mediaId]["zy_media_filename"] = filename;
-            DE.store.uploadedMedias[mediaId]["zy_media_filepath"] = url;
+            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaThumbFilename] = filename;
+            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaThumbFilepath] = url;
+            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilename] = filename;
+            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath] = url;
         } else {
-            DE.store.uploadedMedias[mediaId]["zy_media_filename"] =filename;
-            DE.store.uploadedMedias[mediaId]["zy_media_filepath"] = url;
+            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilename] =filename;
+            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath] = url;
         }
-        DE.store.uploadedMedias[mediaId]["zy_media_type"] = type;
+        DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaType] = type;
     }
 
 
@@ -186,7 +186,7 @@ DE.upload=(function(){
         var uploaderThumb = new plupload.Uploader({
             runtimes:"html5",
             multi_selection:false,
-            max_file_size:DE.config.maxImageSize,
+            max_file_size:DE.config.uploadSize.maxImageSize,
             browse_button:"de_upload_thumb_btn",
             container:"de_upload_thumb_container",
             url:DE.config.ajaxUrls.uploadFileUrl,
@@ -195,7 +195,7 @@ DE.upload=(function(){
                 isThumb:true
             },
             filters:[
-                {title:"Image files", extensions:"jpg,gif,png,jpeg"}
+                {title:"Image files", extensions:DE.config.uploadFilters.imageFilter}
             ]
         });
 
@@ -204,28 +204,19 @@ DE.upload=(function(){
 
         //文件添加事件
         uploaderThumb.bind("FilesAdded", function (up, files) {
-            var filename = files[0].name;
-            var lastIndex = filename.lastIndexOf(".");
-            filename = filename.substring(0, lastIndex);
-
-            //只含有汉字、数字、字母、下划线不能以下划线开头和结尾
-            var reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/;
-
-            if (!reg.test(filename)) {
-                //alert("文件名必须是数字下划线汉字字母,且不能以下划线开头。");
-                DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.filenameError);
-
-                //删除文件
-                up.removeFile(files[0]);
-            } else {
-                up.start();//开始上传
-            }
+            up.start();
         });
 
         //出错事件
         uploaderThumb.bind("Error", function (up, err) {
             if(err.message.match("Init")==null){
-                DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,err.message);
+                if(err.message.match("size")){
+                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadSizeError+DE.config.uploadSize.maxImageSize);
+                }else if(err.message.match("extension")){
+                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadExtensionError+DE.config.uploadFilters.imageFilter);
+                }else{
+                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadIOErrror);
+                }
             }
             up.refresh();
         });
@@ -258,7 +249,7 @@ DE.upload=(function(){
         var uploaderMedia=new plupload.Uploader({
             runtimes:"html5",
             multi_selection:true,
-            max_file_size:DE.config.maxMediaSize,
+            max_file_size:DE.config.uploadSize.maxMediaSize,
             browse_button:browseButton,
             container:"zy_add_media_menu",
             url:DE.config.ajaxUrls.uploadFileUrl,
@@ -283,64 +274,51 @@ DE.upload=(function(){
             var fileLength=files.length;
 
             for (var i = 0; i < fileLength; i++) {
-                var filename = files[i].name;
-                var lastIndex = filename.lastIndexOf(".");
-                var filename_noext = filename.substring(0, lastIndex);
-
-                //只含有汉字、数字、字母、下划线不能以下划线开头和结尾
-                var reg = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/;
-
-                if (!reg.test(filename_noext)) {
-                    //alert("文件" + filename + "命名有误（只能数字字母下划线汉字，且不能以下划线开头）,将从上传列表中删除。");
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.filenameError);
-
-                    up.removeFile(files[i]);
-                } else {
-
-                    //给zy_media_id和iframe页面名称赋值
-                    if (type == "zy_location_video") {
-                        zy_media_id = getRandom("zy_location_");
-                        zy_iframe_page_name = "zy_set_location_video.html";
-                        zy_media_ids[files[i]["id"]] = zy_media_id;
-                        zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
-                    } else if (type == "zy_3d") {
-                        zy_media_id = getRandom("zy_3d_");
-                        zy_iframe_page_name = "zy_set_3d.html";
-                        zy_media_ids[files[i]["id"]] = zy_media_id;
-                        zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
-                    } else if (type == "zy_ppt") {
-                        zy_media_id = getRandom("zy_ppt_");
-                        zy_iframe_page_name = "zy_set_ppt.html";
-                        zy_media_ids[files[i]["id"]] = zy_media_id;
-                        zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
-                    } else if (type == "zy_image") {
-                        zy_media_id = getRandom("zy_image_");
-                        zy_iframe_page_name = "zy_set_image.html";
-                        zy_media_ids[files[i]["id"]] = zy_media_id;
-                        zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
-                    } else if (type == "zy_file") {
-                        zy_media_id = getRandom("zy_file_");
-                        zy_iframe_page_name = "zy_set_file.html";
-                        zy_media_ids[files[i]["id"]] = zy_media_id;
-                        zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
-                    }
 
 
-                    //组装显示的数据
-                    var data = {
-                        media_id:zy_media_id,
-                        thumb_src:'images/zy_small_thumb.png',
-                        filename:filename
-                    };
-
-                    //显示列表项
-                    var tpl = jQuery("#zy_uncomplete_tpl").html();
-                    var html = juicer(tpl, data);
-                    jQuery("#zy_uploaded_medias_ol").append(html);
-
-                    //隐藏菜单栏
-                    jQuery("#zy_add_media_menu").css("height", 0);
+                //给zy_media_id和iframe页面名称赋值
+                if (type == DE.config.uploadMediaTypes.localVideo) {
+                    zy_media_id = getRandom("zy_location_");
+                    zy_iframe_page_name = "zy_set_location_video.html";
+                    zy_media_ids[files[i]["id"]] = zy_media_id;
+                    zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
+                } else if (type == DE.config.uploadMediaTypes._3d) {
+                    zy_media_id = getRandom("zy_3d_");
+                    zy_iframe_page_name = "zy_set_3d.html";
+                    zy_media_ids[files[i]["id"]] = zy_media_id;
+                    zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
+                } else if (type == DE.config.uploadMediaTypes.ppt) {
+                    zy_media_id = getRandom("zy_ppt_");
+                    zy_iframe_page_name = "zy_set_ppt.html";
+                    zy_media_ids[files[i]["id"]] = zy_media_id;
+                    zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
+                } else if (type == DE.config.uploadMediaTypes.image) {
+                    zy_media_id = getRandom("zy_image_");
+                    zy_iframe_page_name = "zy_set_image.html";
+                    zy_media_ids[files[i]["id"]] = zy_media_id;
+                    zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
+                } else if (type == DE.config.uploadMediaTypes.file) {
+                    zy_media_id = getRandom("zy_file_");
+                    zy_iframe_page_name = "zy_set_file.html";
+                    zy_media_ids[files[i]["id"]] = zy_media_id;
+                    zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
                 }
+
+
+                //组装显示的数据
+                var data = {
+                    media_id:zy_media_id,
+                    thumb_src:'images/zy_small_thumb.png',
+                    filename:files[i]["name"]
+                };
+
+                //显示列表项
+                var tpl = jQuery("#zy_uncomplete_tpl").html();
+                var html = juicer(tpl, data);
+                jQuery("#zy_uploaded_medias_ol").append(html);
+
+                //隐藏菜单栏
+                jQuery("#zy_add_media_menu").css("height", 0);
             }
 
             //开始上传
@@ -356,9 +334,16 @@ DE.upload=(function(){
 
         //出错事件
         uploaderMedia.bind("Error", function (up, err) {
+
             //由于这里4个上传按钮放到一个面板中，会出现init错误，但是不影响使用，
-            if (err.message.match("Init") == null) {
-                DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,err.message);
+            if(err.message.match("Init")==null){
+                if(err.message.match("size")){
+                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadSizeError+DE.config.uploadSize.maxMediaSize);
+                }else if(err.message.match("extension")){
+                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadExtensionError+filters);
+                }else{
+                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadIOErrror);
+                }
             }
             up.refresh();
         });
@@ -517,15 +502,15 @@ DE.upload=(function(){
         for(;i<length;i++){
 
             mediaType=attachments[i]["attachmentType"];
-            if(mediaType=="zy_location_video") {
+            if(mediaType==DE.config.uploadMediaTypes.localVideo) {
                 iframeSrc="uploadPlugin/html/zy_set_location_video.html?"+attachments[i]["attachmentId"];
-            }else if(mediaType=="zy_3d"){
+            }else if(mediaType==DE.config.uploadMediaTypes._3d){
                 iframeSrc="uploadPlugin/html/zy_set_3d.html?"+attachments[i]["attachmentId"];
-            }else if(mediaType=="zy_ppt"){
+            }else if(mediaType==DE.config.uploadMediaTypes.ppt){
                 iframeSrc="uploadPlugin/html/zy_set_ppt.html?"+attachments[i]["attachmentId"];
-            }else if(mediaType=="zy_network_video"){
+            }else if(mediaType==DE.config.uploadMediaTypes.webVideo){
                 iframeSrc="uploadPlugin/html/zy_set_network_video.html?"+attachments[i]["attachmentId"];
-            }else if(mediaType=="zy_image"){
+            }else if(mediaType==DE.config.uploadMediaTypes.image){
                 iframeSrc="uploadPlugin/html/zy_set_image.html?"+attachments[i]["attachmentId"];
             }else{
                 iframeSrc="uploadPlugin/html/zy_set_file.html?"+attachments[i]["attachmentId"];
@@ -674,7 +659,7 @@ DE.upload=(function(){
 
                 //设置列表中的值
                 setIframeAndShowLi({
-                    type:"zy_network_video",
+                    type:DE.config.uploadMediaTypes.webVideo,
                     url:filename,
                     iframeSrc:"uploadPlugin/html/zy_set_network_video.html?"+zy_media_id,
                     mediaId:zy_media_id,
@@ -728,16 +713,18 @@ DE.upload=(function(){
 
             //设置媒体类型
             var type=target.data("zy-media-type");
-            if(type=="zy_location_video"){
+            if(type==DE.config.uploadMediaTypes.localVideo){
                 $("#zy_media_type").text("本地视频");
-            }else if(type=="de_3d"){
+            }else if(type==DE.config.uploadMediaTypes._3d){
                 $("#zy_media_type").text("3d文件");
-            }else if(type=="de_ppt"){
+            }else if(type==DE.config.uploadMediaTypes.ppt){
                 $("#zy_media_type").text("ppt文件");
-            }else if(type=="de_image"){
+            }else if(type==DE.config.uploadMediaTypes.image){
                 $("#zy_media_type").text("图片");
-            }else if(type=="de_network_video"){
+            }else if(type==DE.config.uploadMediaTypes.webVideo){
                 $("#zy_media_type").text("网络视频");
+            }else if(type==DE.config.uploadMediaTypes.file){
+                $("#zy_media_type").text("文件");
             }
 
             //控制类
@@ -769,6 +756,8 @@ DE.upload=(function(){
                 var tpl=$("#uploadInputTag").html();
                 var html=juicer(tpl,{text:value});
                 $("#de_input_tag").append($(html));
+
+                $("#de_input_project_tag").val("");
             }
         },
 
@@ -860,6 +849,51 @@ DE.upload=(function(){
 
             addedTags[value]=undefined;
             delete addedTags[value];
+        },
+
+        /**
+         * 标签输入栏的事件
+         */
+        tagInputEventHandler:function(){
+            var me=this;
+            var tagInput=$("#de_input_project_tag");
+
+            tagInput.keydown(function(event){
+                if(event.keyCode==13){
+                    me.showInputTag($(this).val());
+                }
+            });
+
+            tagInput.marcoPolo({
+                url: DE.config.ajaxUrls.autoComplete,
+                minChars:2,
+                formatData : function (data) {
+                    return data.spellcheck.suggestions[1]["suggestion"];
+                },
+                formatItem: function (data) {
+                    return data;
+                },
+                onSelect: function (data) {
+                    me.showInputTag(data);
+                },
+                formatNoResults:function(q, $item){
+                    return "";
+                },
+                formatMinChars :function(minChars, $item){
+                    return "";
+                },
+                formatError :function($item, jqXHR, textStatus, errorThrown){
+                    return "";
+                }
+            });
+
+            //模拟市区焦点，直接用blur的话点击自动完成的结果会冲突
+            $("#de_screen_upload").click(function(event){
+                var target=$(event.target);
+                if(!target.is("#de_input_project_tag")&&target.parents("#mp_de_input_project_tag_list").length==0){
+                    me.showInputTag(tagInput.val());
+                }
+            });
         }
     }
 })();
@@ -868,11 +902,11 @@ $(document).ready(function(){
 
     //创建上传句柄
     DE.upload.createUpload({type:"thumb"});
-    DE.upload.createUpload({type:"zy_location_video",browseButton:"zy_add_location_video",filters:"mp4"});
-    DE.upload.createUpload({type:"zy_3d",browseButton:"zy_add_3d",filters:"zip"});
-    DE.upload.createUpload({type:"zy_ppt",browseButton:"zy_add_ppt",filters:"pptx"});
-    DE.upload.createUpload({type:"zy_image",browseButton:"zy_add_image",filters:"jpg,gif,png,jpeg"});
-    DE.upload.createUpload({type:"zy_file",browseButton:"zy_add_file",filters:"zip"});
+    DE.upload.createUpload({type:DE.config.uploadMediaTypes.localVideo,browseButton:"zy_add_location_video",filters:DE.config.uploadFilters.videoFilter});
+    DE.upload.createUpload({type:DE.config.uploadMediaTypes._3d,browseButton:"zy_add_3d",filters:DE.config.uploadFilters._3dFilter});
+    DE.upload.createUpload({type:DE.config.uploadMediaTypes.ppt,browseButton:"zy_add_ppt",filters:DE.config.uploadFilters.pptFilter});
+    DE.upload.createUpload({type:DE.config.uploadMediaTypes.image,browseButton:"zy_add_image",filters:DE.config.uploadFilters.imageFilter});
+    DE.upload.createUpload({type:DE.config.uploadMediaTypes.file,browseButton:"zy_add_file",filters:DE.config.uploadFilters.fileFilter});
 
     //步骤控制
     $("#de_upload_step_nav a").click(function(){
@@ -889,12 +923,7 @@ $(document).ready(function(){
     });
 
     //标签输入事件
-    $("#de_input_project_tag").keydown(function(event){
-        if(event.keyCode==13){
-            DE.upload.showInputTag($(this).val());
-            $(this).val("");
-        }
-    });
+    DE.upload.tagInputEventHandler();
 
     //显示上传文件的菜单
     $("#zy_add_medias_button").hover(function(e){

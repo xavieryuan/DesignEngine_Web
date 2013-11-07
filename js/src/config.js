@@ -8,11 +8,37 @@
 var DE=DE||{};
 DE.config={
     root:"/design", //项目名
-    maxMediaSize:"200m", //最大的媒体文件上传大小
-    maxImageSize:"2m", //最大的图片文件上传大小
     defualtEntityThumb:"images/default_thumb_500.png",
     perLoadCount:10, //作品、评论、资源等每次加载的个数
     hasNoMoreFlag:-1, //作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
+    uploadSize:{
+        maxMediaSize:"200m", //最大的媒体文件上传大小
+        maxImageSize:"2m"//最大的图片文件上传大小
+    },
+    uploadFilters:{  //媒体类型格式刷选器
+        imageFilter:"jpg,gif,png,jpeg",
+        pptFilter:"pptx",
+        _3dFilter:"3d",
+        videoFilter:"mp4",
+        fileFilter:"zip,pdf"
+    },
+    uploadMediaTypes:{  //媒体类型
+        image:"zy_image",
+        ppt:"zy_ppt",
+        _3d:"zy_3d",
+        localVideo:"zy_location_video",
+        file:"zy_file",
+        webVideo:"zy_network_video"
+    },
+    mediaObj:{  //媒体对象
+        mediaTitle:"zy_media_title",
+        mediaMemo:"zy_media_memo",
+        mediaType:"zy_media_type",
+        mediaThumbFilename:"zy_media_thumb_filename",
+        mediaThumbFilepath:"zy_media_thumb_filepath",
+        mediaFilename:"zy_media_filename",
+        mediaFilepath:"zy_media_filepath"
+    },
     imgSize:{
         small:"-200x200",
         middle:"-400x400"
@@ -47,7 +73,10 @@ DE.config={
         hasNoMedia:"没有上传媒体文件或者有上传错误的媒体文件，请上传或者删除后再预览！",
         stepOneUnComplete:"标题、标签、描述、缩略图等没有填写完整！",
         pptHasNotUploaded:"此资源还没有被上传到资源服务器，暂时不能查看！",
-        pptUploadError:"此资源上传到资源服务器出错，无法查看！"
+        pptUploadError:"此资源上传到资源服务器出错，无法查看！",
+        uploadSizeError:"最大文件大小",
+        uploadExtensionError:"只允许上传",
+        uploadIOErrror:"服务器端异常，请稍后重试！"
     },
     resultCode:{
         account_register_succ:"account_register_succ",
@@ -105,11 +134,12 @@ DE.config={
         showOrHideEntity:"post/visible", //隐藏作品（资源）
         getEntityAttachments:"post/attachments", //获取作品（资源）附件（媒体文件)
         getEntityDetail:"post/info", //获取作品（资源）详情
-        getEntitiesBySearch:"data/similarEntities.json", //根据搜索内容获取作品（资源)
+        getEntitiesBySearch:"query/search", //根据搜索内容获取作品（资源)
         getTags:"term/frequence", //获取系统标签
         addPraise:"post/add-score", //添加赞（勋章）
         deletePraise:"post/remove-score", //删除赞（勋章）
-        getSimilarEntities:"data/similarEntities.json", //获取相似作品
+        getSimilarEntities:"query/moreLikeThis", //获取相似作品
+        //getSimilarEntities:"data/similarEntities.json", //获取相似作品
         getComments:"post/comments", //获取评论
         postComment:"post/add-comment", //发表评论
         deleteComment:"post/remove-comment", //删除评论
@@ -129,7 +159,9 @@ DE.config={
         forgetPassword:"resetpwd/send-email", //忘记密码
         changeProfile:"account/change-info", //修改资料
         emailValidate:"account-email-unique",
-        usernameValidate:"account-fullname-unique"
+        usernameValidate:"account-fullname-unique",
+        autoComplete:"query/termSuggest"
+        //autoComplete:"http://192.168.2.167:8393/solr/termSuggest"
     },
     entityTypes:{  //实体类型
         project:"project",
@@ -181,3 +213,12 @@ DE.config={
 
 };
 Object.freeze(DE.config);
+plupload.addI18n({
+    'File extension error.': 'Ongeldig bestandstype.',
+    'File size error.': 'Bestandsgrootte Error.',
+    'Init error.': 'Initialisatie error.',
+    'HTTP Error.': 'HTTP Error.',
+    'Security error.': 'Beveiliging error.',
+    'Generic error.': 'Onbekende error.',
+    'IO error.': 'IO error.'
+});

@@ -13,6 +13,7 @@ DE.store={
     projectLoadedId:0, //分页加载，最后一个作品的时间，-1代表没有更多
     commentLoadedId:0, //详情页面评论加载了的id，-1代表没有更多
     resourceLoadedId:0,
+    searchLoadedCount:0,
     currentShowEntitiesType:DE.config.entityTypes.project, //当前聚合显示的实体类型
     currentEditEntityId:0, //当前编辑的作品、资源的id
     currentScrollScreenType:"", //当前需要滚动加载的类型
@@ -61,6 +62,8 @@ DE.store={
         this.userEntitiesShow=0;
         this.hotUserLoadedId=0;
         this.projectLoadedId=0;
+        this.commentLoadedId=0;
+        this.searchLoadedCount=0;
         this.resourceLoadedId=0;
         this.currentShowEntitiesType=DE.config.entityTypes.project;
         this.currentShowUser.userId=0;

@@ -18,12 +18,12 @@ $(document).ready(function(){
     $("#zy_media_title").blur(function(){
 
         //防止后台json_decode出错，将双引号改成单引号
-        zy_set_common.zy_get_private_uploaded()[zy_media_id]["zy_media_title"]=$(this).val().replace(/["]/g,"'");
+        zy_set_common.zy_get_private_uploaded()[zy_media_id][config.mediaObj.mediaTitle]=$(this).val().replace(/["]/g,"'");
     });
 
     $("#zy_media_memo").blur(function(){
 
         //防止后台json_decode出错，将双引号改成单引号
-        zy_set_common.zy_get_private_uploaded()[zy_media_id]["zy_media_memo"]=$(this).val().replace(/["]/g,"'");
+        zy_set_common.zy_get_private_uploaded()[zy_media_id][config.mediaObj.mediaMemo]=$(this).val().replace(/["]/g,"'");
     });
 });
