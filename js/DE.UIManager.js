@@ -134,7 +134,7 @@ DE.UIManager=function(){
 		hideProjectDetail:function(){
 
             //隐藏的同时，重新设置de_screen_project_detail的html
-			$("#de_screen_project_detail").addClass("de_hidden").
+			$("#de_screen_project_detail").scrollTop(0).addClass("de_hidden").
                 html('');
 			$("body").removeClass("de_noscroll");
 

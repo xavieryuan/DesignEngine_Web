@@ -353,25 +353,31 @@ DE.upload=(function(){
             var response = JSON.parse(res.response);
             if (response.success) {
 
-                //移除上传时候的li
-                jQuery(".zy_uncomplete_li[data-zy-media-id='" + zy_media_ids[file.id] + "']").remove();
+                //存在对应的未完成li，说明在上传的过程中没有被删除，应该做处理
+                var uncomplete_li=jQuery(".zy_uncomplete_li[data-zy-media-id='" + zy_media_ids[file.id] + "']");
+
+                if(uncomplete_li.length){
+
+                    //移除上传时候的li
+                    uncomplete_li.remove();
 
 
-                //下面一节使用封装了的函数
-                var iframe_src="uploadPlugin/html/"+zy_iframe_page_names[file.id] + '?' + zy_media_ids[file.id];
+                    //下面一节使用封装了的函数
+                    var iframe_src="uploadPlugin/html/"+zy_iframe_page_names[file.id] + '?' + zy_media_ids[file.id];
 
-                setUploadedMediasObj(type,file.name,response.url,zy_media_ids[file.id]);
+                    setUploadedMediasObj(type,file.name,response.url,zy_media_ids[file.id]);
 
-                setIframeAndShowLi({
-                    type:type,
-                    url:response.url,
-                    iframeSrc:iframe_src,
-                    mediaId:zy_media_ids[file.id],
-                    filename:response.clientFilename
-                });
+                    setIframeAndShowLi({
+                        type:type,
+                        url:response.url,
+                        iframeSrc:iframe_src,
+                        mediaId:zy_media_ids[file.id],
+                        filename:response.clientFilename
+                    });
 
-                //执行一次拖拽,因为元素是动态添加的，应该在添加后添加拖拽事件
-                DE.upload.drag();
+                    //执行一次拖拽,因为元素是动态添加的，应该在添加后添加拖拽事件
+                    DE.upload.drag();
+                }
             } else {
 
             }
@@ -955,7 +961,7 @@ $(document).ready(function(){
 
     //删除未上传的文件
     $(document).on("click","span.zy_uncomplete_delete",function(){
-        if(confirm("如果文件在上传过程中或者在等待上传，则无法删除！尝试删除吗？")){
+        if(confirm("确定删除吗？")){
             $(this).parents("li").remove();
         }
     });

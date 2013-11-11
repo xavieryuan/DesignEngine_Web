@@ -81,7 +81,7 @@ DE.user=(function(){
                     if(data.success){
                         var length=data.users.length;
                         if(length==DE.config.perLoadCount){
-                            DE.store.hotUserLoadedId=data.users[data.users.length-1]["id"];
+                            DE.store.hotUserLoadedId=data.users[data.users.length-1]["userId"];
                         }else{
                             DE.store.hotUserLoadedId=DE.config.hasNoMoreFlag;
                         }

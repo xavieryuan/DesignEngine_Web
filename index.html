@@ -638,7 +638,11 @@
 <!--播放媒体文件-->
 <script type="text/template" id="showMediaContent">
     {@if type=='zy_location_video'}
-        <video src="${content}" autoplay controls></video>
+        {@if ext=='mp4'}
+             <video autoplay controls src="${content}"></video>
+        {@else}
+             <embed src="${content}" autostart="true" type= "application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" />
+        {@/if}
     {@else if type=='zy_network_video'}
         $${content}
     {@else if type=='zy_ppt'}
@@ -1832,7 +1836,7 @@
 
             <form class="de_form_edit_profile" id="de_form_edit_profile">
                 <p class="de_photo_field" id="de_change_figure_container">
-                    <img id="de_edit_figure" class="photo" src="data/people1.jpg">
+                    <img id="de_edit_figure" class="photo" src="images/default_user_photo.png">
                     <a href="#" id="de_change_figure"> 更换头像</a>
                 </p>
 

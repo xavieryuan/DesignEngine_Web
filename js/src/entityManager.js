@@ -554,8 +554,8 @@ DE.entity=(function(){
             var array=href.split("/");
             var id=array[1];
 
-            //显示展现层
-            DE.UIManager.showProjectDetail();
+            //先隐藏清空数据，然后再显示，因为点击相似作品在同一个页面，如果不清空数据会导致数据重复
+            DE.UIManager.hideProjectDetail();
 
             //请求详细信息,同步的ajax,如果需要改用异步，需要修改html模板
             this.getEntityDetail(id);
@@ -569,6 +569,9 @@ DE.entity=(function(){
 
             //请求相似实体
             this.getSimilarEntities(id);
+
+            //显示展现层
+            DE.UIManager.showProjectDetail();
 
         },
 
@@ -756,23 +759,10 @@ DE.entity=(function(){
             var img=target.find("img");
             var mediaId=img.data("media-id");
             var mediaType=img.data("media-type");
+            var ext="";//文件的后缀,视频文件有mp4和swf
 
             //如果上传uploadedMedias中有，那是在预览，用uploadedMedias中的
-            if(mediaType==DE.config.uploadMediaTypes.image){
-                if(!$.isEmptyObject(DE.store.uploadedMedias)){
-                    content=DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath];
-                }else{
-                    content=target.attr("href");
-                }
-            }else if(mediaType==DE.config.uploadMediaTypes.webVideo||mediaType==DE.config.uploadMediaTypes.localVideo){
-                if(!$.isEmptyObject(DE.store.uploadedMedias)){
-                    content=DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath];
-                }else{
-                    content=target.attr("href");
-                }
-            }else if(mediaType==DE.config.uploadMediaTypes._3d){
-
-            }else if(mediaType==DE.config.uploadMediaTypes.ppt){
+            if(mediaType==DE.config.uploadMediaTypes.ppt){
                 if(!$.isEmptyObject(DE.store.uploadedMedias)){
                     content=DE.config.messageCode.pptHasNotUploaded;
                 }else{
@@ -783,12 +773,24 @@ DE.entity=(function(){
                         content=DE.config.messageCode.pptHasNotUploaded;
                     }
                 }
+            }else{
+                if(!$.isEmptyObject(DE.store.uploadedMedias)){
+                    content=DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath];
+                }else{
+                    content=target.attr("href");
+                }
+
+                if(mediaType==DE.config.uploadMediaTypes.localVideo){
+                    ext=content.substr(content.lastIndexOf(".")+1);
+                }
             }
+
+
 
 
             //显示元素界面
             var tpl=$("#showMediaContent").html();
-            var html=juicer(tpl,{type:mediaType,content:content});
+            var html=juicer(tpl,{type:mediaType,content:content,ext:ext});
             $("#de_pop_window").removeClass("de_hidden de_pop_web_video_input").addClass("de_pop_show_media");
             $("#de_pop_window_content").html(html);
             $("#de_blackout").removeClass("de_hidden");

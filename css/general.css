@@ -2375,7 +2375,7 @@ ol.mp_list li.mp_selectable {
     width: 50px;
     cursor: pointer;
 }
-.de_pop_window_content video,.de_pop_window_content iframe,.de_pop_window_content img{
+.de_pop_window_content video,.de_pop_window_content iframe,.de_pop_window_content img,.de_pop_window_content embed{
     width: 100% !important;
     height: 100% !important;
     margin: auto;
