@@ -13,7 +13,7 @@
 
 //添加配置文件，这样在父级别没有配置文件时也可以使用
 var config={
-    uploadFileUrl:"/design/upload",
+    uploadFileUrl:"http://192.168.1.18/phpUpload/upload",
     uploadSize:{
         maxMediaSize:"200m", //最大的媒体文件上传大小
         maxImageSize:"2m"//最大的图片文件上传大小
@@ -73,6 +73,7 @@ var zy_set_common = (function(){
     var parent=window.parent;
     var uploaded_medias=parent.DE.store.uploadedMedias; //已经上传了的媒体文件
     var UI=parent.DE.UIManager;
+    var currentUserId=parent.DE.store.currentUser.userId;
 
     return {
         /*
@@ -152,7 +153,7 @@ var zy_set_common = (function(){
          * */
         "zy_create_media_uploader":function(filters,zy_media_id){
             var uploader_media=new plupload.Uploader({
-                runtimes:"html5",
+                runtimes:"flash",
                 multi_selection:false,
                 max_file_size:config.uploadSize.maxMediaSize,
                 browse_button:"zy_upload_media_button",
@@ -160,6 +161,10 @@ var zy_set_common = (function(){
                 unique_names:true,
                 //chunk_size:"10mb",
                 url: config.uploadFileUrl,
+                flash_swf_url : '../js/lib/plupload.flash.swf',
+                multipart_params:{
+                    userId:currentUserId
+                },
                 filters : [
                     {title : "Media files", extensions : filters}
                 ]
@@ -218,7 +223,7 @@ var zy_set_common = (function(){
                     $("#zy_file_info").html(file.name);
                     $("#zy_upload_media_button").removeClass("zy_hidden");
                 }else{
-                    alert("上传出错，请稍后重试！");
+                    UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadIOErrror);
                 }
 
             });
@@ -230,13 +235,17 @@ var zy_set_common = (function(){
          * */
         "zy_create_thumb_uploader":function(zy_media_id){
             var uploader_thumb=new plupload.Uploader({
-                runtimes:"html5",
+                runtimes:"flash",
                 multi_selection:false,
                 max_file_size:config.uploadSize.maxImageSize,
                 browse_button:"zy_upload_thumb_button",
                 container:"zy_left_bottom",
                 unique_names:true,
                 url: config.uploadFileUrl, //parent在每个js里面都有定义
+                flash_swf_url:'../js/lib/plupload.flash.swf',
+                multipart_params:{
+                    userId:currentUserId
+                },
                 filters : [
                     {title : "Image files", extensions : config.uploadFilters.imageFilter}
                 ]
@@ -312,7 +321,7 @@ var zy_set_common = (function(){
                     }
 
                 }else{
-                    alert("上传出错，请稍后重试！");
+                    UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadIOErrror);
                 }
             });
         }

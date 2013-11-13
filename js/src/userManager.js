@@ -15,15 +15,17 @@ DE.user=(function(){
          */
         createFigureUpload:function(){
             var uploaderFigure = new plupload.Uploader({
-                runtimes:"html5",
+                runtimes:"flash",
                 multi_selection:false,
                 max_file_size:DE.config.uploadSize.maxImageSize,
                 browse_button:"de_change_figure",
                 container:"de_change_figure_container",
                 url:DE.config.ajaxUrls.uploadFileUrl,
                 unique_names:true,
+                flash_swf_url : DE.config.root+'/js/lib/plupload.flash.swf',
                 multipart_params:{
-                    isThumb:true
+                    isThumb:true,
+                    userId:DE.store.currentUser.userId
                 },
                 filters:[
                     {title:"Image files", extensions:DE.config.uploadFilters.imageFilter}

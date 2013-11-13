@@ -184,15 +184,17 @@ DE.upload=(function(){
      */
     function createThumbUpload(){
         var uploaderThumb = new plupload.Uploader({
-            runtimes:"html5",
+            runtimes:"flash",
             multi_selection:false,
             max_file_size:DE.config.uploadSize.maxImageSize,
             browse_button:"de_upload_thumb_btn",
             container:"de_upload_thumb_container",
             url:DE.config.ajaxUrls.uploadFileUrl,
             unique_names:true,
+            flash_swf_url : DE.config.root+'/js/lib/plupload.flash.swf',
             multipart_params:{
-                isThumb:true
+                isThumb:true,
+                userId:DE.store.currentUser.userId
             },
             filters:[
                 {title:"Image files", extensions:DE.config.uploadFilters.imageFilter}
@@ -247,14 +249,18 @@ DE.upload=(function(){
      */
     function createMediaUpload(browseButton,type,filters){
         var uploaderMedia=new plupload.Uploader({
-            runtimes:"html5",
+            runtimes:"flash",
             multi_selection:true,
             max_file_size:DE.config.uploadSize.maxMediaSize,
             browse_button:browseButton,
             container:"zy_add_media_menu",
             url:DE.config.ajaxUrls.uploadFileUrl,
             unique_names:true,
+            flash_swf_url : DE.config.root+'/js/lib/plupload.flash.swf',
             //chunk_size:"10mb",
+            multipart_params:{
+                userId:DE.store.currentUser.userId
+            },
             filters : [
                 {title : "Media files", extensions : filters}
             ]

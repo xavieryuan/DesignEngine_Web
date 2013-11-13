@@ -11,7 +11,7 @@
     <script type="text/javascript" src="js/lib/jquery.form.js"></script>
     <script type="text/javascript" src="js/lib/plupload.js"></script>
     <script type="text/javascript" src="js/lib/jquery.marcopolo.min.js"></script>
-    <script type="text/javascript" src="js/lib/plupload.html5.js"></script>
+    <script type="text/javascript" src="js/lib/plupload.flash.js"></script>
     <script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
     <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
           data-redirecturi="http://lotusprize.com/design/redirect.html" data-appid="100502817"
@@ -641,7 +641,7 @@
         {@if ext=='mp4'}
              <video autoplay controls src="${content}"></video>
         {@else}
-             <embed src="${content}" autostart="true" type= "application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" />
+             <embed src="${content}" autostart="true" type="application/x-shockwave-flash" allowscriptaccess="always" />
         {@/if}
     {@else if type=='zy_network_video'}
         $${content}
