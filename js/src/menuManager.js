@@ -3,7 +3,7 @@
  * User: ty
  * Date: 13-9-6
  * Time: 上午11:41
- * 顶部菜单、侧栏菜单，window滚动
+ * 顶部菜单、侧栏菜单，window滚动,搜索，搜索tab，弹层关闭等
  */
 var DE=DE||{};
 DE.menu=(function(){
@@ -192,10 +192,12 @@ DE.menu=(function(){
             });
 
             searchInput.marcoPolo({
-                url: DE.config.ajaxUrls.autoComplete,
+                url: DE.config.ajaxUrls.searchSuggest,
                 minChars:2,
                 formatData : function (data) {
-                    return data.spellcheck.suggestions[1]["suggestion"];
+                    if(data.spellcheck.suggestions.length){
+                        return data.spellcheck.suggestions[1]["suggestion"];
+                    }
                 },
                 formatItem: function (data) {
                     return data;
@@ -311,6 +313,7 @@ $(document).ready(function(){
     //关闭弹出的window
     $("#de_close_pop_window").click(function(){
         $(this).parent().addClass("de_hidden");
+        $("#de_pop_window_content").html("");
         $("#de_blackout").addClass("de_hidden");
     });
 

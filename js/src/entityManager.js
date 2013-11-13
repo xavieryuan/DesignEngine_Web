@@ -3,7 +3,7 @@
  * User: ty
  * Date: 13-9-4
  * Time: 下午6:01
- *和作品资源相关的处理：首页获取，搜索文章，根据标签获取文章，查看文章详情,用户页面显示的作品或者资源都作为这个模块
+ *和作品资源相关的处理：首页获取，搜索文章，根据标签获取文章，查看文章详情
  */
 var DE=DE||{};
 DE.entity=(function(){
@@ -647,7 +647,12 @@ DE.entity=(function(){
                 html=juicer(tpl,{projects:data.projects});
 
                 if(first){
-                    $("#de_project_list").html(html);
+                    if(html){
+                        $("#de_project_list").html(html);
+                    }else{
+                        $("#de_project_list").html("<iframe scrolling='no' frameborder='0' src='http://yibo.iyiyun.com/js/yibo404/key/1' width='640' height='462' style='display:block;'></iframe>");
+                    }
+
                     DE.UIManager.showScreen("#de_screen_project");
                 }else{
                     $("#de_project_list").append($(html));

@@ -877,10 +877,12 @@ DE.upload=(function(){
             });
 
             tagInput.marcoPolo({
-                url: DE.config.ajaxUrls.autoComplete,
+                url: DE.config.ajaxUrls.termSuggest,
                 minChars:2,
                 formatData : function (data) {
-                    return data.spellcheck.suggestions[1]["suggestion"];
+                    if(data.spellcheck.suggestions.length){
+                        return data.spellcheck.suggestions[1]["suggestion"];
+                    }
                 },
                 formatItem: function (data) {
                     return data;

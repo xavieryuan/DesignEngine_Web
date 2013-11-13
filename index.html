@@ -258,13 +258,15 @@
                 <p class="name">${userName}</p>
             </a>
         </div>
-        {@if postType=="work"}
-            <ul class="de_stats_tags">
+
+        <ul class="de_stats_tags">
+            {@if postType=="work"}
                 <li class="badges" id="honorCount" title="勋章">${postHonorCount}</li>
                 <li class="likes" id="praiseCount" title="赞">${postPraiseCount}</li>
-                <li class="comments" id="commentsCount" title="评论">${postCommentCount}</li>
-            </ul>
-        {@/if}
+            {@/if}
+            <li class="comments" id="commentsCount" title="评论">${postCommentCount}</li>
+        </ul>
+
 
         <p class="abstract">
             ${postDescription}

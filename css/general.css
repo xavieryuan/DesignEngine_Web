@@ -2375,10 +2375,16 @@ ol.mp_list li.mp_selectable {
     width: 50px;
     cursor: pointer;
 }
-.de_pop_window_content video,.de_pop_window_content iframe,.de_pop_window_content img,.de_pop_window_content embed{
+.de_pop_window_content video,.de_pop_window_content iframe,.de_pop_window_content embed{
     width: 100% !important;
     height: 100% !important;
     margin: auto;
+}
+.de_pop_window_content img{
+    max-width: 100% !important;
+    max-height: 100% !important;
+    margin: auto;
+    display: block;
 }
 
 

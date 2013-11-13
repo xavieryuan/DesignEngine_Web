@@ -3,7 +3,7 @@
  * User: ty
  * Date: 13-9-5
  * Time: 上午9:22
- * 配置文件
+ * 配置文件,包括一些变量和出错处理函数以及失踪儿童数据
  */
 var DE=DE||{};
 DE.config={
@@ -124,7 +124,7 @@ DE.config={
         notFound:"not_found"
     },
     ajaxUrls:{
-        uploadFileUrl:"upload", //文件上传
+        uploadFileUrl:"/design/upload", //文件上传,如果不加design，有时候会出错和flash有关
         uploadAction:"post/create-by-form", //作品（资源）提交
         editUploadAction:"post/edit-by-form", //作品（资源）提交
         getAllProjects:"post/work/firstpage", //获取首页作品
@@ -160,7 +160,8 @@ DE.config={
         changeProfile:"account/change-info", //修改资料
         emailValidate:"account-email-unique",
         usernameValidate:"account-fullname-unique",
-        autoComplete:"query/termSuggest"
+        termSuggest:"query/termSuggest",
+        searchSuggest:"query/searchSuggest"
         //autoComplete:"http://192.168.2.167:8393/solr/termSuggest"
     },
     entityTypes:{  //实体类型
@@ -213,12 +214,6 @@ DE.config={
 
 };
 Object.freeze(DE.config);
-plupload.addI18n({
-    'File extension error.': 'Ongeldig bestandstype.',
-    'File size error.': 'Bestandsgrootte Error.',
-    'Init error.': 'Initialisatie error.',
-    'HTTP Error.': 'HTTP Error.',
-    'Security error.': 'Beveiliging error.',
-    'Generic error.': 'Onbekende error.',
-    'IO error.': 'IO error.'
-});
+
+//获取腾讯的失踪儿童数据
+$.getScript("http://qzone.qq.com/gy/404/data.js");
