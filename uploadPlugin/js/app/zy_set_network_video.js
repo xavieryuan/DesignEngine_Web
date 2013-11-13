@@ -15,11 +15,12 @@ $(document).ready(function(){
 
     //输入视频文件控制部分
     $("#zy_network_input_ok").click(function(){
-        if($("#zy_network_input").val().trim().match(/^<iframe/)!=null){
-            $("#zy_network_input").removeClass("zy_input_invalid");
+        var input= $("#zy_network_input");
+        if(input.val().trim().match(/^<iframe/)!=null){
+            input.removeClass("zy_input_invalid");
 
             //防止后台json_decode出错，将双引号改成单引号
-            var filename=$("#zy_network_input").val().replace(/["]/g,"'");
+            var filename=input.val().replace(/["]/g,"'");
 
             //设置列表中的值
             $("#zy_uploaded_medias_ol a[data-zy-media-id='"+zy_media_id+"']",parent.document).find(".zy_media_filename").text(filename);
@@ -33,7 +34,7 @@ $(document).ready(function(){
             $("#zy_file_info_div").removeClass("zy_hidden");
             $("#zy_change_div").addClass("zy_hidden");
         }else{
-            $("#zy_network_input").removeClass("zy_input_invalid");
+            input.removeClass("zy_input_invalid");
         }
     });
 
