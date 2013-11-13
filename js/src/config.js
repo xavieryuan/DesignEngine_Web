@@ -124,7 +124,7 @@ DE.config={
         notFound:"not_found"
     },
     ajaxUrls:{
-        uploadFileUrl:"http://192.168.1.18/phpUpload/upload", //文件上传
+        uploadFileUrl:"upload", //文件上传
         uploadAction:"post/create-by-form", //作品（资源）提交
         editUploadAction:"post/edit-by-form", //作品（资源）提交
         getAllProjects:"post/work/firstpage", //获取首页作品
