@@ -8,7 +8,6 @@
 var DE=DE||{};
 DE.store={
     scrollTimer:null, //滚动的时候的timeout
-    isFirstLoad: true, //是否第一次进入，由于火狐第一次不响应popstate，谷歌响应需要记录下来
     hotUserLoadedId:0, //记录下热门用户已经加载了的最后一个的id，-1代表没有更多
     projectLoadedId:0, //分页加载，最后一个作品的时间，-1代表没有更多
     commentLoadedId:0, //详情页面评论加载了的id，-1代表没有更多

@@ -26,6 +26,7 @@ DE.history=(function(){
         DE.store.clearStore();
         DE.upload.clearEditData();
         //DE.store.clearCurrentUser();
+        DE.UIManager.showLoading();
 
         switch (type){
             case "tag":
@@ -119,11 +120,12 @@ DE.history=(function(){
                     obj=handlerHref(href);
                 }else{
 
-                    /*如果不是第一次进入页面，而且地址又到了首页，需要进行处理
-                      此处进行判断是因为谷歌第一次进入也会相应事件，而此时不应该让此事件操作，因为默认会加载数据，不需要通过此事件
-                      来进行数据的加载，所以要通过标志来处理第一次不进行事件操作的行为
-                    * */
-                    if(!DE.store.isFirstLoad){
+                    //第一次进入和从首页进入都是没有state的
+                    var url=window.location.href;
+                    url=url.substring(url.indexOf(DE.config.root));
+                    var hrefArray=url.split("/");
+                    var length=hrefArray.length;
+                    if(!DE.store.projectLoadedId&&length==3){
                         handler(null,null);
                     }
                 }
@@ -171,7 +173,7 @@ DE.history=(function(){
             var href=window.location.href;
             href=href.substring(href.indexOf(DE.config.root));
             var hrefArray=href.split("/");
-            var lenght=hrefArray.length;
+            var length=hrefArray.length;
 
             if(!DE.store.currentUser.userId){
                 if(hrefArray[2]=="edit"||hrefArray[2]=="upload"){
@@ -180,11 +182,11 @@ DE.history=(function(){
                 }
             }
 
-            if(lenght==3){
+            if(length==3){
 
-                //如果路径只有两个元素(其中一个为空:/design)，那进入的是首页
+                //如果路径只有三个个元素(其中两个个为空/design/)，那进入的是首页
                 handler(null,null);
-            }else if(lenght==4){
+            }else if(length==4){
 
                 //从其他地址进入/design/tag/tagName，需要获取数据
                 handler(hrefArray[2],hrefArray[3])
@@ -197,14 +199,8 @@ $(document).ready(function(){
 
     //popstate事件
     window.onpopstate=function(event){
-        if(event){
 
-            //火狐第一次进入不响应此事件，event为空会报错，需要判断一下
-            DE.history.stateChange(event);
-
-            //这个函数最后响应，需要响应完后在将标志设置为false
-            DE.store.isFirstLoad=false;
-        }
+        //火狐第一次进入不响应此事件
+        DE.history.stateChange(event);
     }
-
 });

@@ -112,6 +112,11 @@ DE.user=(function(){
             var html=juicer(tpl,{hotUsers:data.users});
 
             if(first){
+                if(!html.trim()){
+                    var index=Math.floor(Math.random()*jsondata.data.length);
+                    tpl=$("#noDataTpl").html();
+                    html=juicer(tpl,jsondata.data[index]);
+                }
                 $("#de_hot_user_list").html(html);
                 DE.UIManager.showScreen("#de_screen_designer");
             }else{
@@ -173,6 +178,13 @@ DE.user=(function(){
             data.showToolBar=this.canShowToolbar();
             var html=juicer(tpl,data);
             $("#de_user_uploads").html(html);
+
+            if(data.userEntities.length==0){
+                var index=Math.floor(Math.random()*jsondata.data.length);
+                tpl=$("#noDataTpl").html();
+                html=juicer(tpl,jsondata.data[index]);
+                $("#de_user_uploads .de_project_grid").html(html);
+            }
 
 
             DE.UIManager.showScreen("#de_screen_user_profile");

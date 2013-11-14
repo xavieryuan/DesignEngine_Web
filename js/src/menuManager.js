@@ -139,7 +139,7 @@ DE.menu=(function(){
             DE.history.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var value=array[1];
-
+            DE.UIManager.showLoading();
             DE.entity.getEntityBySearch(value,searchType,isTag,true);
 
             $("#de_search_input").val("");
@@ -197,7 +197,10 @@ DE.menu=(function(){
                 formatData : function (data) {
                     if(data.spellcheck.suggestions.length){
                         return data.spellcheck.suggestions[1]["suggestion"];
+                    }else{
+                        return [];
                     }
+
                 },
                 formatItem: function (data) {
                     return data;

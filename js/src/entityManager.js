@@ -208,7 +208,6 @@ DE.entity=(function(){
          */
         getEntityBySearch:function(content,type,isTag,first){
             var me=this;
-
             $.ajax({
                 url:DE.config.ajaxUrls.getEntitiesBySearch,
                 type:"get",
@@ -640,19 +639,20 @@ DE.entity=(function(){
          * @param {Boolean} first 是否第一次请求,第一次需要设置screen
          */
         showEntities:function(data,type,first){
-            var tpl="",html="";
+            var tpl="",html="",index=0;
 
             if(type==DE.config.entityTypes.project){
                 tpl=$("#projectTpl").html();
                 html=juicer(tpl,{projects:data.projects});
 
                 if(first){
-                    if(html){
-                        $("#de_project_list").html(html);
-                    }else{
-                        $("#de_project_list").html("<iframe scrolling='no' frameborder='0' src='http://yibo.iyiyun.com/js/yibo404/key/1' width='640' height='462' style='display:block;'></iframe>");
-                    }
+                    if(!html.trim()){
+                        index=Math.floor(Math.random()*jsondata.data.length);
+                        tpl=$("#noDataTpl").html();
+                        html=juicer(tpl,jsondata.data[index]);
 
+                    }
+                    $("#de_project_list").html(html);
                     DE.UIManager.showScreen("#de_screen_project");
                 }else{
                     $("#de_project_list").append($(html));
@@ -663,6 +663,12 @@ DE.entity=(function(){
                 html=juicer(tpl,{resource:data.resources});
 
                 if(first){
+                    if(!html.trim()){
+                        index=Math.floor(Math.random()*jsondata.data.length);
+                        tpl=$("#noDataTpl").html();
+                        html=juicer(tpl,jsondata.data[index]);
+
+                    }
                     $("#de_resource_list").html(html);
                     DE.UIManager.showScreen("#de_screen_resource");
                 }else{
@@ -686,6 +692,12 @@ DE.entity=(function(){
             if(first){
 
                 //清理工作在此处，tab公用了一个展示界面，点击tab的时候如果先清理那么数据突然消失，界面闪烁
+                if(!html.trim()){
+                    var index=Math.floor(Math.random()*jsondata.data.length);
+                    tpl=$("#noDataTpl").html();
+                    html=juicer(tpl,jsondata.data[index]);
+
+                }
                 targetContain.html(html);
                 DE.UIManager.showSearchScreen(DE.store.currentSearch.currentSearchValue,DE.store.currentSearch.currentSearchType);
 

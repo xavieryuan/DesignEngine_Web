@@ -882,6 +882,8 @@ DE.upload=(function(){
                 formatData : function (data) {
                     if(data.spellcheck.suggestions.length){
                         return data.spellcheck.suggestions[1]["suggestion"];
+                    }else{
+                        return [];
                     }
                 },
                 formatItem: function (data) {
