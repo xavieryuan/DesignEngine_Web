@@ -32,7 +32,14 @@ DE.history=(function(){
             case "tag":
 
                 //请求点击标签的数据
-                DE.entity.getEntityBySearch(decodeURI(value),type,true,true);
+                value=decodeURI(value);
+                $("#de_resource_tags a").each(function(index,b){
+                     if(value==$(this).text()){
+                         type=DE.config.entityTypes.resource;
+                         return false;
+                     }
+                });
+                DE.entity.getEntityBySearch(value,type,true,true);
 
                 break;
             case "project":
@@ -115,19 +122,21 @@ DE.history=(function(){
 
             var obj=null;
             if(supports_history_api()){
-                if(event.state){
+                if(!$.isEmptyObject(event.state)){
                     var href=event.state.href;
-                    obj=handlerHref(href);
+                    if(href==document.baseURI){
+                        obj={type:null,value:null};
+                    }else{
+                        obj=handlerHref(href);
+                    }
+
                 }else{
 
-                    //第一次进入和从首页进入都是没有state的
-                    var url=window.location.href;
-                    url=url.substring(url.indexOf(DE.config.root));
-                    var hrefArray=url.split("/");
-                    var length=hrefArray.length;
-                    if(!DE.store.projectLoadedId&&length==3){
+                    //退回到第一次进入时的首页state为{}或者为null,还要提出chrome的第一次响应(判断作品是否加载过)
+                    if(!DE.store.projectLoadedId){
                         handler(null,null);
                     }
+
                 }
             }else{
                 if(location.hash){
@@ -171,25 +180,12 @@ DE.history=(function(){
         initDatas:function(){
 
             var href=window.location.href;
-            href=href.substring(href.indexOf(DE.config.root));
-            var hrefArray=href.split("/");
-            var length=hrefArray.length;
-
-            if(!DE.store.currentUser.userId){
-                if(hrefArray[2]=="edit"||hrefArray[2]=="upload"){
-                    window.location.href=DE.config.root;
-                    return ;
-                }
-            }
-
-            if(length==3){
-
-                //如果路径只有三个个元素(其中两个个为空/design/)，那进入的是首页
+            href=href.substring(document.baseURI.length);
+            if(href){
                 handler(null,null);
-            }else if(length==4){
-
-                //从其他地址进入/design/tag/tagName，需要获取数据
-                handler(hrefArray[2],hrefArray[3])
+            }else{
+                var hrefArray=href.split("/");
+                handler(hrefArray[0],hrefArray[1])
             }
         }
     }

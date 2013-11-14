@@ -7,7 +7,6 @@
  */
 var DE=DE||{};
 DE.config={
-    root:"/design", //项目名
     defualtEntityThumb:"images/default_thumb_500.png",
     perLoadCount:10, //作品、评论、资源等每次加载的个数
     hasNoMoreFlag:-1, //作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
@@ -193,7 +192,7 @@ DE.config={
         if(data.errorCode==this.errorCode.notFound){
             DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.notFound);
             setTimeout(function(){
-                window.location.href=DE.config.root;
+                window.location.href=document.baseURI;
             },2000);
         }else if(data.errorCode==this.errorCode.timeout){
             DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.timeout);

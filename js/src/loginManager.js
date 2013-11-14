@@ -365,7 +365,7 @@ DE.login=(function(){
                        QC.Login.signOut();
 
                        //跳转页面
-                       window.location.href="";
+                       window.location.href=document.baseURI;
                    }else{
                        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.operationError);
                    }
@@ -460,9 +460,7 @@ DE.login=(function(){
 })();
 
 $(document).ready(function(){
-
-    //进入页面，请求后台是否登录
-    DE.login.checkLogin();
+    //DE.login.checkLogin();//放到getTags里面
 
     //注册按钮点击
     $("#de_reg_btn").click(function(){

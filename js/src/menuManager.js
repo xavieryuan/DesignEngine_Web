@@ -106,9 +106,15 @@ DE.menu=(function(){
                         DE.config.ajaxReturnErrorHandler(data);
                     }
 
+                    //进入页面，请求后台是否登录,先获取到tag然后再初始化数据，这样当时tag进入的时候就知道是作品还是资源
+                    DE.login.checkLogin();
+
                 },
                 error:function(){
                     DE.config.ajaxErrorHandler();
+
+                    //进入页面，请求后台是否登录
+                    DE.login.checkLogin();
                 }
 
             });
@@ -243,7 +249,7 @@ $(document).ready(function(){
 
     //logo点击事件
     $("#de_logo").click(function(){
-        DE.history.push("");
+        DE.history.push(document.baseURI);
         DE.entity.getAllEntity(DE.config.entityTypes.project,true);
 
         return false;

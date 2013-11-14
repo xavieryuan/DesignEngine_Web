@@ -50,13 +50,8 @@ DE.store={
 
     /**
      * 清空存储的数据
-     * @param clearFirstLoadFlag
      */
     clearStore:function(){
-
-        /* clearFirstLoadFlag是否重置isFirstLoad此标志，当页面进入时，history的initDatas函数调用了handler函数，handler函数里面
-         * 调用了clearStore，那么会重置isFirstLoad，那么会在谷歌第一次进入，响应popstate的函数stateChange中再请求一次数据
-         * */
         this.userEntitiesCount=0;
         this.userEntitiesShow=0;
         this.hotUserLoadedId=0;

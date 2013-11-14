@@ -22,7 +22,7 @@ DE.user=(function(){
                 container:"de_change_figure_container",
                 url:DE.config.ajaxUrls.uploadFileUrl,
                 unique_names:true,
-                flash_swf_url : DE.config.root+'/js/lib/plupload.flash.swf',
+                flash_swf_url : document.baseURI+'js/lib/plupload.flash.swf',
                 multipart_params:{
                     isThumb:true,
                     userId:DE.store.currentUser.userId
@@ -313,7 +313,7 @@ DE.user=(function(){
                             if(data.success&&data.resultCode==DE.config.resultCode.password_change_succ){
                                 DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.changePwdSuccess);
                                 setTimeout(function(){
-                                    window.location.href="";
+                                    window.location.href=document.baseURI;
                                 },2000);
                             }else{
                                 DE.config.ajaxReturnErrorHandler(data);
