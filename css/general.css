@@ -2363,6 +2363,7 @@ ol.mp_list li.mp_selectable {
 .de_pop_window_content{
     height: 100%;
     width: 100%;
+    overflow:scroll;
 }
 .de_input_web_video{
     width: 80%;
@@ -2381,8 +2382,6 @@ ol.mp_list li.mp_selectable {
     margin: auto;
 }
 .de_pop_window_content img{
-    max-width: 100% !important;
-    max-height: 100% !important;
     margin: auto;
     display: block;
 }
