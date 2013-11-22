@@ -658,8 +658,8 @@
 <script type="text/template" id="noDataTpl">
     <div class="de_404_main">
         <header class="de_404_header">
-            <p class="de_404_wrong">Oops</p>
-            <p class="de_404_info"> 您访问的数据没有了！ <span>但我们可以一起寻找失踪宝贝</span> </p>
+            <p class="de_404_wrong">Oops! </p>
+            <p class="de_404_info"> 您访问的数据没有了，但我们可以一起寻找失踪宝贝！</p>
         </header>
         <article class="de_404_body">
             <a class="de_child_img" href="${url}" target="_blank">
@@ -1895,13 +1895,15 @@
 </section>
 
 <section class="de_pop_window de_pop_web_video de_hidden" id="de_pop_window">
-    <span id="de_close_pop_window">X</span>
+    <span id="de_close_pop_window" class="de_close_pop_window">关闭</span>
     <div id="de_pop_window_content" class="de_pop_window_content"></div>
 
 </section>
 
 <div id="de_blackout" class="de_hidden de_blackout"></div>
-<div id="de_loading" class="de_loading de_hidden">处理中...</div>
+<div id="de_loading" class="de_loading de_hidden">
+	<div class="de_loading_spinner"></div>
+    </div>
 
 </body>
 </html>
