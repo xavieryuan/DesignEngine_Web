@@ -364,16 +364,21 @@ DE.user=(function(){
                         dataType:"json",
                         type:"post",
                         data:{
-                            profileImg:$("#de_edit_figure").attr("src")
+                            profileImg:profileImg
                         },
                         success:function (data) {
                             if(data.success&&data.resultCode==DE.config.resultCode.account_update_succ){
+                                var description=$("#de_edit_description").val();
+                                var userAboutEl=$(".user_about");
                                 DE.store.initCurrentUser({
-                                    description:$("#de_edit_description").val(),
+                                    description:description,
                                     figure:profileImg,
                                     email:$("#de_edit_login_email").val()
                                 });
                                 $(".de_user_link[href='user/"+DE.store.currentUser.userId+"'] img").attr("src",profileImg);
+                                if(userAboutEl.length){
+                                    userAboutEl.text(description);
+                                }
 
                                 DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
                                 DE.UIManager.hideLoading();
