@@ -2392,7 +2392,7 @@ background: url(../images/icon60_close_white.png) no-repeat;
     width: 50px;
     cursor: pointer;
 }
-.de_pop_window_content video,.de_pop_window_content iframe,.de_pop_window_content embed{
+.de_pop_window_content video,.de_pop_window_content iframe,.de_pop_window_content embed,.de_pop_window_content object{
     width: 100% !important;
     height: 100% !important;
     margin: auto;

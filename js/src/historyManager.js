@@ -132,8 +132,8 @@ DE.history=(function(){
 
                 }else{
 
-                    //退回到第一次进入时的首页state为{}或者为null,还要提出chrome的第一次响应(判断作品是否加载过)
-                    if(!DE.store.projectLoadedId){
+                    //退回到第一次进入时的首页state为{}或者为null,还有chrome的第一次响应(判断作品是否加载过)
+                    if(!DE.store.projectLoadedId&&location.href==document.baseURI){
                         handler(null,null);
                     }
 
@@ -181,7 +181,7 @@ DE.history=(function(){
 
             var href=window.location.href;
             href=href.substring(document.baseURI.length);
-            if(href){
+            if(!href){
                 handler(null,null);
             }else{
                 var hrefArray=href.split("/");

@@ -643,7 +643,11 @@
         {@if ext=='mp4'}
              <video autoplay controls src="${content}"></video>
         {@else}
-             <embed src="${content}" autostart="true" type="application/x-shockwave-flash" allowscriptaccess="always" />
+            <object type="application/x-shockwave-flash" data="js/lib/dplayer.swf"height="100%" width="100%" id="9144" style="visibility: visible;">
+                <param name="menu" value="false"><param name="allowFullScreen" value="true">
+                <param name="allowscriptaccess" value="sameDomain">
+                <param name="flashvars" value="media_link=${content}">
+            </object>
         {@/if}
     {@else if type=='zy_network_video'}
         $${content}
