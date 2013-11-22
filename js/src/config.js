@@ -123,7 +123,7 @@ DE.config={
         notFound:"not_found"
     },
     ajaxUrls:{
-        uploadFileUrl:"/design/upload", //文件上传,如果不加design，有时候会出错和flash有关
+        uploadFileUrl:"/engine/upload", //文件上传,如果不加design，有时候会出错和flash有关
         uploadAction:"post/create-by-form", //作品（资源）提交
         editUploadAction:"post/edit-by-form", //作品（资源）提交
         getAllProjects:"post/work/firstpage", //获取首页作品
