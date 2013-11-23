@@ -188,8 +188,9 @@ DE.user=(function(){
          */
         showUserDetail:function(data){
             var tpl=$("#userDetailTpl").html();
+            data.user.role=data.user.userRoles[0];
             var html=juicer(tpl,data.user);
-            $("#de_user_info_card").html($(html));
+            $("#de_screen_user_profile").html($(html));
         },
 
         /**
@@ -204,7 +205,6 @@ DE.user=(function(){
             dataObj.userName=DE.store.currentShowUser.name;
             dataObj.userProfileImg=DE.store.currentShowUser.figure;
             dataObj.role=DE.store.currentShowUser.role;
-            dataObj.isFirst=isFirst;
             dataObj.showToolBar=this.canShowToolbar();
 
             if(DE.store.userEntitiesShow+DE.config.perLoadCount<userEntities.length){

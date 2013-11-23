@@ -425,25 +425,40 @@
 
 <!--个人页面-->
 <script type="text/template" id="userDetailTpl">
-    <div class="user_info">
-        <a href="user/${userId}" class="de_borderbox de_user_link">
-            <img src="${userProfileImg}" class="photo"/>
+    <div class="de_designer_list">
+        <article class="de_user_info_card" id="de_user_info_card">
+            <div class="user_info">
+                <a href="user/${userId}" class="de_borderbox de_user_link">
+                    <img src="${userProfileImg}" class="photo"/>
 
-            <p class="name">${userName}</p>
-        </a>
-        {@if userDescribe}
-            <p class="user_about">${userDescribe}</p>
-        {@else}
-            <p class="user_about">这个人很懒，什么也没留下</p>
-        {@/if}
+                    <p class="name">${userName}</p>
+                </a>
+                {@if userDescribe}
+                    <p class="user_about">${userDescribe}</p>
+                {@else}
+                    <p class="user_about">这个人很懒，什么也没留下</p>
+                {@/if}
+            </div>
+            <ul class="project_info" id="de_user_honor_projects">
+                <!--预留给第二次的作品请求-->
+            </ul>
+            <ul class="de_stats_tags">
+                <li class="uploads" title="上传">${userUploadCount}</li>
+                <li class="badges" title="勋章">${userPraiseCount}</li>
+            </ul>
+        </article>
     </div>
-    <ul class="project_info" id="de_user_honor_projects">
-        <!--预留给第二次的作品请求-->
-    </ul>
-    <ul class="de_stats_tags">
-        <li class="uploads" title="上传">${userUploadCount}</li>
-        <li class="badges" title="勋章">${userPraiseCount}</li>
-    </ul>
+    <article class="de_user_uploads">
+        <nav class="de_category_filter de_borderbox">
+            {@if role=="vip"}
+            <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
+            {@else}
+            <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
+            {@/if}
+        </nav>
+
+        <ul class="de_project_grid" id="de_user_uploads"></ul>
+    </article>
 </script>
 <!--优秀作品-->
 <script type="text/template" id="userHonorProjectTpl">
@@ -453,16 +468,6 @@
 </script>
 <!--作品、资源-->
 <script type="text/template" id="userEntitiesTpl">
-    {@if isFirst}
-    <nav class="de_category_filter de_borderbox">
-        {@if role=="vip"}
-        <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
-        {@else}
-        <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
-        {@/if}
-    </nav>
-    {@/if}
-    <ul class="de_project_grid">
         {@each userEntities as e,index}
             <li class="de_borderbox">
                 <div class="user_info">
@@ -518,7 +523,6 @@
                 {@/if}
             </li>
         {@/each}
-    </ul>
 </script>
 
 <!--    上传标签   -->
@@ -720,140 +724,7 @@
               <li class="likes">34</li>
               <li class="comments">34</li>
           </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people2.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic2.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people3.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic3.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people4.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic4.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people5.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic5.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-         <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people6.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic6.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people5.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic7.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people3.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic8.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>    -->
+      </li>-->
     </ul>
 </section>
 
@@ -881,167 +752,7 @@
                 <li class="tag_3d">3D</li>
                 <li class="tag_file">文档</li>
             </ul>
-         </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher2.jpg" />
-            <p class="name">谭征宇</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>感性设计讲义，第3节</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_file">文档</li>
-            </ul>
-
-        </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher3.jpg" />
-            <p class="name">季铁</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>疆Home Style社会创新夏令营工作总结</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_local_video">本地视频</li>
-            </ul>
-        </li>
-<li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher1.jpg" />
-            <p class="name">何人可</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>工业设计史 - 中国设计地图</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_web_video">网络视频</li>
-                <li class="tag_local_video">本地视频</li>
-                <li class="tag_3d">3D</li>
-                <li class="tag_file">文档</li>
-            </ul>
-         </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher2.jpg" />
-            <p class="name">谭征宇</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>感性设计讲义，第3节</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_file">文档</li>
-            </ul>
-
-        </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher3.jpg" />
-            <p class="name">季铁</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>疆Home Style社会创新夏令营工作总结</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_local_video">本地视频</li>
-            </ul>
-        </li><li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher1.jpg" />
-            <p class="name">何人可</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>工业设计史 - 中国设计地图</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_web_video">网络视频</li>
-                <li class="tag_local_video">本地视频</li>
-                <li class="tag_3d">3D</li>
-                <li class="tag_file">文档</li>
-            </ul>
-         </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher2.jpg" />
-            <p class="name">谭征宇</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>感性设计讲义，第3节</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_file">文档</li>
-            </ul>
-
-        </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher3.jpg" />
-            <p class="name">季铁</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>疆Home Style社会创新夏令营工作总结</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_local_video">本地视频</li>
-            </ul>   
-        </li>-->
+         </li>-->
     </ul>
 </section>
 
@@ -1063,42 +774,7 @@
                <li class="uploads" title="上传">34</li>
                <li class="badges" title="勋章">46</li>
            </ul>
-        </li>
-        <li class="de_user_info_card">
-           <div class="user_info">
-           <a href="#" class="de_borderbox">
-           <img src="data/ranking2.jpg" class="photo"/>
-           <p class="name">寇睿</p>
-           </a>
-           <p class="user_about">不卑不亢。</p>
-           </div>
-           <ul class="project_info">
-               <li><a href="#"><img src="images/default_thumb_500.png"></a></li>
-               <li><a href="#"><img src="images/default_thumb_500.png"></a></li>
-               <li><a href="#"><img src="images/default_thumb_500.png"></a></li>
-           </ul>
-
-           <ul class="de_stats_tags">
-               <li class="uploads" title="上传">34</li>
-               <li class="badges" title="勋章">46</li>
-           </ul>
-        </li>
-        <li class="de_user_info_card">
-            <div class="user_info">
-                <a href="#" class="de_borderbox"><img src="data/ranking3.jpg" class="photo" />
-                <p class="name">姚亚敏</p>
-                </a>
-                <p class="user_about">迷失时，我们才开始了解自己。</p>
-            </div>
-           <ul class="project_info">
-               <li><a href="#"><img src="images/default_thumb_500.png"></a></li>
-           </ul>
-           <ul class="de_stats_tags">
-               <li class="uploads" title="上传">34</li>
-               <li class="badges" title="勋章">46</li>
-           </ul>
-        </li>
-        -->
+        </li>-->
     </ul>
 </section>
 
@@ -1128,91 +804,15 @@
                 <li class="likes">34</li>
                 <li class="comments">34</li>
             </ul>
-        </li>
-    <li class="de_borderbox">
-            <div class="user_info">
-                <a href="#">
-                <img class="photo" src="data/people1.jpg" />
-                <p class="name">淘宝鬼脚七</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="#" >
-                <img class="thumb" src="data/pic1.png">
-                <h4>书院文化相关视频</h4>
-                <p class="date">2013-09-28</p>
-                </a>
-                </div>
-            <ul class="de_stats_tags">
-                <li class="likes">34</li>
-                <li class="comments">34</li>
-            </ul>
-        </li>
-    <li class="de_borderbox">
-            <div class="user_info">
-                <a href="#">
-                <img class="photo" src="data/people1.jpg" />
-                <p class="name">淘宝鬼脚七</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="#" >
-                <img class="thumb" src="data/pic1.png">
-                <h4>书院文化相关视频</h4>
-                <p class="date">2013-09-28</p>
-                </a>
-                </div>
-            <ul class="de_stats_tags">
-                <li class="likes">34</li>
-                <li class="comments">34</li>
-            </ul>
-        </li>
-    <li class="de_borderbox">
-            <div class="user_info">
-                <a href="#">
-                <img class="photo" src="data/people1.jpg" />
-                <p class="name">淘宝鬼脚七</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="#" >
-                <img class="thumb" src="data/pic1.png">
-                <h4>书院文化相关视频</h4>
-                <p class="date">2013-09-28</p>
-                </a>
-                </div>
-            <ul class="de_stats_tags">
-                <li class="likes">34</li>
-                <li class="comments">34</li>
-            </ul>
-        </li>
-    <li class="de_borderbox">
-            <div class="user_info">
-                <a href="#">
-                <img class="photo" src="data/people1.jpg" />
-                <p class="name">淘宝鬼脚七</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="#" >
-                <img class="thumb" src="data/pic1.png">
-                <h4>书院文化相关视频</h4>
-                <p class="date">2013-09-28</p>
-                </a>
-                </div>
-            <ul class="de_stats_tags">
-                <li class="likes">34</li>
-                <li class="comments">34</li>
-            </ul>
         </li>-->
     </ul>
 </section>
 
 <!-----------用户首页----------->
 <section class="de_screen_user_profile de_hidden" id="de_screen_user_profile">
-    <div class="de_designer_list">
+    <!--<div class="de_designer_list">
         <article class="de_user_info_card" id="de_user_info_card">
-            <!-- <div class="user_info">
+             <div class="user_info">
                 <a href="#" class="de_borderbox">
                 <img src="data/ranking1.jpg" class="photo" />
                 <p class="name">张新磊</p>
@@ -1229,138 +829,43 @@
             <ul class="de_stats_tags">
                 <li class="uploads" title="上传">34</li>
                 <li class="badges" title="勋章">46</li>
-            </ul>-->
+            </ul>
         </article>
     </div>
     <article class="de_user_uploads" id="de_user_uploads">
-        <!-- <nav class="de_category_filter de_borderbox">
-                <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
-                <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
-            </nav>
+        <nav class="de_category_filter de_borderbox">
+            <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
+            <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
+        </nav>
 
-            <ul class="de_project_grid">
-               <li class="de_borderbox">
-                    <div class="user_info">
-                        <a href="#">
+        <ul class="de_project_grid">
+            <li class="de_borderbox">
+                <div class="user_info">
+                    <a href="#">
                         <img class="photo" src="data/people1.jpg" />
                         <p class="name">淘宝鬼脚七</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="#" >
+                    </a>
+                </div>
+                <div class="project_info">
+                    <a href="#" >
                         <img class="thumb" src="data/pic1.png">
                         <h4>书院文化相关视频</h4>
                         <p class="date">2013-09-28</p>
-                        </a>
-                        </div>
-                    <ul class="de_stats_tags">
-                        <li class="likes">34</li>
-                        <li class="comments">34</li>
-                    </ul>
-                    <ul class="de_project_toolbar de_transition">
-                        <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                        <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                        <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                    </ul>
-                </li>
-                <li class="de_borderbox">
-                    <div class="user_info">
-                        <a href="#">
-                        <img class="photo" src="data/people1.jpg" />
-                        <p class="name">淘宝鬼脚七</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="#" >
-                        <img class="thumb" src="data/pic1.png">
-                        <h4>书院文化相关视频</h4>
-                        <p class="date">2013-09-28</p>
-                        </a>
-                        </div>
-                    <ul class="de_stats_tags">
-                        <li class="likes">34</li>
-                        <li class="comments">34</li>
-                    </ul>
-                    <ul class="de_project_toolbar de_transition">
-                        <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                        <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                        <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                    </ul>
-                </li>
-                <li class="de_borderbox">
-                    <div class="user_info">
-                        <a href="#">
-                        <img class="photo" src="data/people1.jpg" />
-                        <p class="name">淘宝鬼脚七</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="#" >
-                        <img class="thumb" src="data/pic1.png">
-                        <h4>书院文化相关视频</h4>
-                        <p class="date">2013-09-28</p>
-                        </a>
-                        </div>
-                    <ul class="de_stats_tags">
-                        <li class="likes">34</li>
-                        <li class="comments">34</li>
-                    </ul>
-                    <ul class="de_project_toolbar de_transition">
-                        <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                        <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                        <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                    </ul>
-                </li>
-                <li class="de_borderbox">
-                    <div class="user_info">
-                        <a href="#">
-                        <img class="photo" src="data/people1.jpg" />
-                        <p class="name">淘宝鬼脚七</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="#" >
-                        <img class="thumb" src="data/pic1.png">
-                        <h4>书院文化相关视频</h4>
-                        <p class="date">2013-09-28</p>
-                        </a>
-                        </div>
-                    <ul class="de_stats_tags">
-                        <li class="likes">34</li>
-                        <li class="comments">34</li>
-                    </ul>
-                    <ul class="de_project_toolbar de_transition">
-                        <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                        <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                        <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                    </ul>
-                </li>
-                <li class="de_borderbox">
-                    <div class="user_info">
-                        <a href="#">
-                        <img class="photo" src="data/people1.jpg" />
-                        <p class="name">淘宝鬼脚七</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="#" >
-                        <img class="thumb" src="data/pic1.png">
-                        <h4>书院文化相关视频</h4>
-                        <p class="date">2013-09-28</p>
-                        </a>
-                        </div>
-                    <ul class="de_stats_tags">
-                        <li class="likes">34</li>
-                        <li class="comments">34</li>
-                    </ul>
-                    <ul class="de_project_toolbar de_transition">
-                        <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                        <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                        <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                    </ul>
-                </li>
-            </ul>-->
-    </article>
+                    </a>
+                </div>
+                <ul class="de_stats_tags">
+                    <li class="likes">34</li>
+                    <li class="comments">34</li>
+                </ul>
+                <ul class="de_project_toolbar de_transition">
+                    <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
+                    <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
+                    <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </article>  -->
 </section>
 
 <!-----------上传作品----------->
