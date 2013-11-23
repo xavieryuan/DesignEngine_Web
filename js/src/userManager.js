@@ -7,7 +7,8 @@
  */
 var DE=DE||{};
 DE.user=(function(){
-
+    var userEntities=null;//存储到本地的用户作品资源数据
+    var hotUsersOrder=null;
     return {
 
         /**
@@ -62,6 +63,32 @@ DE.user=(function(){
                     $("#de_edit_figure").attr("src",response.url);
                 } else {
                     DE.config.ajaxReturnErrorHandler(response);
+                }
+            });
+        },
+
+        /**
+         * 获取热点用户的排序列表
+         */
+        getHotUsersOrder:function(){
+            var me=this;
+            $.ajax({
+                url:DE.config.ajaxUrls.getHotUsersOrder,
+                type:"get",
+                dataType:"json",
+                data:{
+                    baseUserId:DE.store.hotUserLoadedId
+                },
+                success:function(data){
+                    if(data.success){
+
+                    }else{
+                        DE.config.ajaxReturnErrorHandler(data);
+                    }
+
+                },
+                error:function(){
+                    DE.config.ajaxErrorHandler();
                 }
             });
         },
@@ -167,27 +194,40 @@ DE.user=(function(){
 
         /**
          * 显示用户作品（资源）
-         * @param {Object} data 请求数据时后台返回的数组
+         * @param {Boolean} isFirst 是否第一次请求，如果是要显示界面
          */
-        showUserEntity:function(data){
+        showUserEntity:function(isFirst){
             var tpl=$("#userEntitiesTpl").html();
-            data.userId=DE.store.currentShowUser.userId;
-            data.userName=DE.store.currentShowUser.name;
-            data.userProfileImg=DE.store.currentShowUser.figure;
-            data.role=DE.store.currentShowUser.role;
-            data.showToolBar=this.canShowToolbar();
-            var html=juicer(tpl,data);
-            $("#de_user_uploads").html(html);
+            var dataObj={};
+            var array=null;
+            dataObj.userId=DE.store.currentShowUser.userId;
+            dataObj.userName=DE.store.currentShowUser.name;
+            dataObj.userProfileImg=DE.store.currentShowUser.figure;
+            dataObj.role=DE.store.currentShowUser.role;
+            dataObj.isFirst=isFirst;
+            dataObj.showToolBar=this.canShowToolbar();
 
-            if(data.userEntities.length==0){
+            if(DE.store.userEntitiesShow+DE.config.perLoadCount<userEntities.length){
+                dataObj.userEntities=userEntities.slice(DE.store.userEntitiesShow,DE.store.userEntitiesShow+DE.config.perLoadCount);
+                DE.store.userEntitiesShow+=DE.config.perLoadCount;
+            }else{
+                dataObj.userEntities=userEntities.slice(DE.store.userEntitiesShow);
+                DE.store.userEntitiesShow=DE.config.hasNoMoreFlag;
+            }
+
+            var html=juicer(tpl,dataObj);
+            $("#de_user_uploads").append(html);
+
+            if(userEntities.length==0){
                 var index=Math.floor(Math.random()*jsondata.data.length);
                 tpl=$("#noDataTpl").html();
                 html=juicer(tpl,jsondata.data[index]);
                 $("#de_user_uploads .de_project_grid").html(html);
             }
 
-
-            DE.UIManager.showScreen("#de_screen_user_profile");
+            if(isFirst){
+                DE.UIManager.showScreen("#de_screen_user_profile");
+            }
         },
 
         /**
@@ -228,14 +268,10 @@ DE.user=(function(){
                 },
                 success:function(data){
                     if(data.success){
-                        me.showUserEntity(data);
-                        DE.store.userEntitiesCount=data.userEntities.length;
-                        if(data.userEntities.length<=DE.config.perLoadCount){
-                            DE.store.userEntitiesShow=data.userEntities.length;
-                        }else{
-                            DE.store.userEntitiesShow+=DE.config.perLoadCount;
-                        }
 
+                        DE.store.userEntitiesCount=data.userEntities.length;
+                        userEntities=data.userEntities;
+                        me.showUserEntity(true);
 
                         //如果是普通用户，会有优秀作品
                         if(DE.store.currentShowUser.role==DE.config.roles.user){
@@ -369,16 +405,14 @@ DE.user=(function(){
                         success:function (data) {
                             if(data.success&&data.resultCode==DE.config.resultCode.account_update_succ){
                                 var description=$("#de_edit_description").val();
-                                var userAboutEl=$(".user_about");
                                 DE.store.initCurrentUser({
                                     description:description,
                                     figure:profileImg,
                                     email:$("#de_edit_login_email").val()
                                 });
                                 $(".de_user_link[href='user/"+DE.store.currentUser.userId+"'] img").attr("src",profileImg);
-                                if(userAboutEl.length){
-                                    userAboutEl.text(description);
-                                }
+
+                                $(".user_about").text(description);
 
                                 DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
                                 DE.UIManager.hideLoading();

@@ -123,7 +123,7 @@ DE.config={
         notFound:"not_found"
     },
     ajaxUrls:{
-        uploadFileUrl:"/design/upload", //文件上传,如果不加design，有时候会出错和flash有关
+        uploadFileUrl:"/engine/upload", //文件上传,如果不加design，有时候会出错和flash有关
         uploadAction:"post/create-by-form", //作品（资源）提交
         editUploadAction:"post/edit-by-form", //作品（资源）提交
         getAllProjects:"post/work/firstpage", //获取首页作品
@@ -142,6 +142,7 @@ DE.config={
         getComments:"post/comments", //获取评论
         postComment:"post/add-comment", //发表评论
         deleteComment:"post/remove-comment", //删除评论
+        getHotUsersOrder:"account/hot",
         getHotUsers:"account/hot", //获取人点用户
         getUserById:"account/info", //根据id获取用户
         getUserEntities:"account/posts", //获取用户的作品（资源）

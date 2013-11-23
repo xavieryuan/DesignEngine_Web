@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>图钉墙 - HNU Design</title>
-    <base href="http://192.168.1.18/design/"/>
+    <base href="http://design.hnu.cn:6080/engine/"/>
     <link href="css/general.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/lib/juicer-min.js"></script>
@@ -453,6 +453,7 @@
 </script>
 <!--作品、资源-->
 <script type="text/template" id="userEntitiesTpl">
+    {@if isFirst}
     <nav class="de_category_filter de_borderbox">
         {@if role=="vip"}
         <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
@@ -460,10 +461,9 @@
         <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
         {@/if}
     </nav>
-
+    {@/if}
     <ul class="de_project_grid">
         {@each userEntities as e,index}
-        {@if index<10}
             <li class="de_borderbox">
                 <div class="user_info">
                     <a href="user/${userId}" class="de_user_link">
@@ -517,62 +517,6 @@
                 </ul>
                 {@/if}
             </li>
-        {@else}
-            <li class="de_borderbox de_hidden">
-                <div class="user_info">
-                    <a href="user/${userId}" class="de_user_link">
-                        <img class="photo" src="${userProfileImg}"/>
-
-                        <p class="name">${userName}</p>
-                    </a>
-                </div>
-                <div class="project_info">
-                    <a href="entity/${e.postId}" class="de_entity_link">
-                        <img class="thumb" src="${e.postThumb}">
-                        <h4>${e.postTitle}</h4>
-
-                        <p class="date">${e.postDate}</p>
-                    </a>
-                </div>
-                {@if role=="user"}
-                <ul class="de_stats_tags">
-                    <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
-                    <li class="comments">${e.postCommentCount}</li>
-                </ul>
-                {@else}
-                <ul class="de_media_tags">
-                    {@if e.hasPpt}
-                    <li class="tag_ppt">PPT</li>
-                    {@/if}
-                    {@if e.hasWebVideo}
-                    <li class="tag_web_video">网络视频</li>
-                    {@/if}
-                    {@if e.hasLocalVideo}
-                    <li class="tag_local_video">本地视频</li>
-                    {@/if}
-                    {@if e.has3d}
-                    <li class="tag_3d">3D</li>
-                    {@/if}
-                    {@if e.hasFile}
-                    <li class="tag_file">文档</li>
-                    {@/if}
-                </ul>
-                {@/if}
-                {@if showToolBar}
-                <ul class="de_project_toolbar de_transition">
-                    <li><a class="de_toolbar_edit" href="edit/${e.postId}" title="编辑">编辑</a></li>
-                    <li><a class="de_toolbar_delete" href="${e.postId}" title="删除">删除</a></li>
-                    {@if e.postVisible}
-                    <li><a class="de_toolbar_invisible" data-target-visible="true" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
-                    {@else}
-                    <li><a class="de_toolbar_visible" data-target-visible="false" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
-                    {@/if}
-
-                </ul>
-                {@/if}
-            </li>
-        {@/if}
-
         {@/each}
     </ul>
 </script>

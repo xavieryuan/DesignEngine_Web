@@ -13,7 +13,7 @@
 
 //添加配置文件，这样在父级别没有配置文件时也可以使用
 var config={
-    uploadFileUrl:"/design/upload",
+    uploadFileUrl:"/engine/upload",
     uploadSize:{
         maxMediaSize:"200m", //最大的媒体文件上传大小
         maxImageSize:"2m"//最大的图片文件上传大小

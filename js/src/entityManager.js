@@ -266,6 +266,7 @@ DE.entity=(function(){
                         var praiseCountEl=$("#praiseCount");
                         var honorCountEl=$("#honorCount");
                         var countEl=$(".de_entity_link[href='entity/"+DE.store.currentShowEntity.id+"']").parents("li").find(".likes");
+                        $.merge(countEl,$(".badges"));  //同时要设置介绍那里的数量
                         var oldCount=parseInt(countEl.text());
                         if(DE.store.currentShowEntity.hasPraised){
                             DE.store.currentShowEntity.hasPraised=false;
@@ -277,7 +278,7 @@ DE.entity=(function(){
                                 honorCountEl.text(parseInt(honorCountEl.text())-1);
                             }
 
-                            //更新聚合的li的显示数量
+                            //更新聚合li中赞的显示数量
                             countEl.text(oldCount-1);
                         }else{
                             DE.store.currentShowEntity.hasPraised=true;
@@ -461,6 +462,7 @@ DE.entity=(function(){
                         DE.UIManager.hideProjectDetail();
                         DE.store.commentLoadedId=0;
                         $(".de_entity_link[href='entity/"+id+"']").parents("li").remove();
+                        $(".uploads").text(parseInt($(this).text())-1);
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
                     }
@@ -704,8 +706,6 @@ DE.entity=(function(){
             }else{
                 targetContain.append($(html));
             }
-
-
         },
 
         /**

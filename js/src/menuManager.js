@@ -56,9 +56,8 @@ DE.menu=(function(){
                             }else{
 
                                 //用户页
-                                if(DE.store.userEntitiesShow<DE.store.userEntitiesCount){
-                                    $("#de_user_uploads li.de_borderbox").slice(DE.store.userEntitiesShow,DE.store.userEntitiesShow+DE.config.perLoadCount).removeClass("de_hidden");
-                                    DE.store.userEntitiesShow+=DE.config.perLoadCount;
+                                if(DE.store.userEntitiesShow!=DE.config.hasNoMoreFlag){
+                                    DE.user.showUserEntity(false);
                                 }
                             }
                         }
