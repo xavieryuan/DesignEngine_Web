@@ -2163,19 +2163,17 @@ ol.mp_list li.mp_selectable {
     border-bottom: #ccc 1px dotted;
 }
 .de_comment_more_btn{
-    border-radius: 5px;
-    height: 30px;
-    width: 100px;
+    height: 60px;
     font-size: 14px;
-    line-height: 30px;
+    line-height: 60px;
     text-align: center;
     background: #ccc;
     display: block;
-    margin: 10px auto;
 }
 .de_comment_more_btn:hover{
     cursor: pointer;
-    background: #999;
+    background: #390;
+	color:#fff;
 }
 .de_comment_box .user_info {
     float: left;
