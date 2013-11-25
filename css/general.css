@@ -313,6 +313,7 @@ li {
     width: 100px;
     display: block;
     margin-top: 10px;
+	cursor:pointer;
 }
 
 .de_popout_login .de_forgot_pwd {
@@ -328,7 +329,7 @@ li {
 
 .de_link_openid_login {
     margin: 20px 0;
-    padding: 20px 0 40px;
+    padding: 20px 0;
     border-bottom: #ccc 1px dotted;
 }
 
@@ -404,6 +405,13 @@ li {
     font-size: 12px;
     color:#C00;
 	font-weight:normal;
+}
+.de_error{
+    font-size: 12px;
+    color:#C00;
+	font-weight:normal;
+	display:block;
+	padding-top:10px;
 }
 /******注册弹窗样式*******/
 .de_popout_reg {
