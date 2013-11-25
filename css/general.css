@@ -2312,26 +2312,26 @@ ol.mp_list li.mp_selectable {
 /*--------------------显示资源图标---------------------*/
 .de_has_video:before,.de_has_ppt:before,.de_has_3d:before,.de_has_file:before,.de_has_web_video:before{
     content:"";
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 60px;
     position: absolute;
     left: 0px;
-    top:0px;
+    top:-2px;
 }
 .de_has_video:before{
-    background: url(../images/zy_media_local_video.png) no-repeat;
+    background: url(../images/zy_mediaflag_localvideo.png) no-repeat;
 }
 .de_has_ppt:before{
-    background: url(../images/zy_media_ppt.png) no-repeat;
+    background: url(../images/zy_mediaflag_ppt.png) no-repeat;
 }
 .de_has_3d:before{
-    background: url(../images/zy_media_3d.png) no-repeat;
+    background: url(../images/zy_mediaflag_3d.png) no-repeat;
 }
 .de_has_file:before{
-    background: url(../images/zy_media_file.png) no-repeat;
+    background: url(../images/zy_mediaflag_file.png) no-repeat;
 }
 .de_has_web_video:before{
-    background: url(../images/zy_media_network_video.png) no-repeat;
+    background: url(../images/zy_mediaflag_webvideo.png) no-repeat;
 }
 
 
