@@ -76,11 +76,17 @@ DE.user=(function(){
                 url:DE.config.ajaxUrls.getHotUsersOrder,
                 type:"get",
                 dataType:"json",
-                data:{
-                    baseUserId:DE.store.hotUserLoadedId
-                },
                 success:function(data){
                     if(data.success){
+
+                        //判断是否有数据,避免getHotUsers中每次都判断
+                        if(data.rank.length){
+                            hotUsersOrder=data.rank;
+                            me.getHotUsers(true);
+                        }else{
+                            me.showHotUsers({users:[]},true);
+                            DE.store.hotUserLoadedCount=DE.config.hasNoMoreFlag;
+                        }
 
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
@@ -94,29 +100,36 @@ DE.user=(function(){
         },
 
         /**
-         *获取热点用户
+         * 获取热点用户,只处理存在的情况
          * @param {Boolean} first 是否第一次获取，第一次获取需要显示screen
          */
         getHotUsers:function(first){
             var me=this;
+            var userId="";
+            if(DE.store.hotUserLoadedCount+DE.config.perLoadCount<hotUsersOrder.length){
+                userId=hotUsersOrder.slice(DE.store.hotUserLoadedCount,DE.store.hotUserLoadedCount+DE.config.perLoadCount).join(",")
+            }else{
+                userId=hotUsersOrder.slice(DE.store.hotUserLoadedCount).join(",");
+            }
             $.ajax({
                 url:DE.config.ajaxUrls.getHotUsers,
                 type:"get",
                 dataType:"json",
                 data:{
-                    baseUserId:DE.store.hotUserLoadedId
+                    userId:userId
                 },
                 success:function(data){
                     if(data.success){
                         var length=data.users.length;
                         if(length==DE.config.perLoadCount){
-                            DE.store.hotUserLoadedId=data.users[data.users.length-1]["userId"];
+                            DE.store.hotUserLoadedCount+=DE.config.perLoadCount;
                         }else{
-                            DE.store.hotUserLoadedId=DE.config.hasNoMoreFlag;
+                            DE.store.hotUserLoadedCount=DE.config.hasNoMoreFlag;
                         }
 
                         DE.store.currentScrollScreenType=DE.config.scrollScreenType.hotUser;
-                        //不管是否有数据，都需要执行函数，因为函数里有显示界面screen的操作
+
+
                         me.showHotUsers(data,first);
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
@@ -124,9 +137,10 @@ DE.user=(function(){
 
                 },
                 error:function(){
-                     DE.config.ajaxErrorHandler();
+                    DE.config.ajaxErrorHandler();
                 }
             });
+
         },
 
         /**
@@ -207,12 +221,12 @@ DE.user=(function(){
             dataObj.role=DE.store.currentShowUser.role;
             dataObj.showToolBar=this.canShowToolbar();
 
-            if(DE.store.userEntitiesShow+DE.config.perLoadCount<userEntities.length){
-                dataObj.userEntities=userEntities.slice(DE.store.userEntitiesShow,DE.store.userEntitiesShow+DE.config.perLoadCount);
-                DE.store.userEntitiesShow+=DE.config.perLoadCount;
+            if(DE.store.userEntitiesShowCount+DE.config.perLoadCount<userEntities.length){
+                dataObj.userEntities=userEntities.slice(DE.store.userEntitiesShowCount,DE.store.userEntitiesShowCount+DE.config.perLoadCount);
+                DE.store.userEntitiesShowCount+=DE.config.perLoadCount;
             }else{
-                dataObj.userEntities=userEntities.slice(DE.store.userEntitiesShow);
-                DE.store.userEntitiesShow=DE.config.hasNoMoreFlag;
+                dataObj.userEntities=userEntities.slice(DE.store.userEntitiesShowCount);
+                DE.store.userEntitiesShowCount=DE.config.hasNoMoreFlag;
             }
 
             var html=juicer(tpl,dataObj);
@@ -268,8 +282,6 @@ DE.user=(function(){
                 },
                 success:function(data){
                     if(data.success){
-
-                        DE.store.userEntitiesCount=data.userEntities.length;
                         userEntities=data.userEntities;
                         me.showUserEntity(true);
 

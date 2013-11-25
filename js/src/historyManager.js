@@ -52,7 +52,7 @@ DE.history=(function(){
 
                 //请求用户数据
                 if(value=="hot"){
-                    DE.user.getHotUsers(true);
+                    DE.user.getHotUsersOrder();
                 }else{
                     DE.user.getUserById(value);
                     DE.user.getUserEntities(value);

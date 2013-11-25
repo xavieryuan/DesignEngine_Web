@@ -49,14 +49,14 @@ DE.menu=(function(){
                             }else if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.hotUser){
 
                                 //热点用户
-                                if(DE.store.hotUserLoadedId!=DE.config.hasNoMoreFlag){
+                                if(DE.store.hotUserLoadedCount!=DE.config.hasNoMoreFlag){
                                     DE.user.getHotUsers(false);
                                 }
 
                             }else{
 
                                 //用户页
-                                if(DE.store.userEntitiesShow!=DE.config.hasNoMoreFlag){
+                                if(DE.store.userEntitiesShowCount!=DE.config.hasNoMoreFlag){
                                     DE.user.showUserEntity(false);
                                 }
                             }
@@ -82,7 +82,7 @@ DE.menu=(function(){
             }else if(type==DE.config.topMenus.resource){
                 DE.entity.getAllEntity(type,true);
             }else if(type==DE.config.topMenus.user){
-                DE.user.getHotUsers(true);
+                DE.user.getHotUsersOrder();
             }else if(type==DE.config.topMenus.upload){
                 DE.UIManager.showScreen("#de_screen_upload");
             }

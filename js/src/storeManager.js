@@ -8,7 +8,7 @@
 var DE=DE||{};
 DE.store={
     scrollTimer:null, //滚动的时候的timeout
-    hotUserLoadedId:0, //记录下热门用户已经加载了的最后一个的id，-1代表没有更多
+    hotUserLoadedCount:0, //记录下热门用户已经加载了的最后一个的id，-1代表没有更多
     projectLoadedId:0, //分页加载，最后一个作品的时间，-1代表没有更多
     commentLoadedId:0, //详情页面评论加载了的id，-1代表没有更多
     resourceLoadedId:0,
@@ -16,8 +16,7 @@ DE.store={
     currentShowEntitiesType:DE.config.entityTypes.project, //当前聚合显示的实体类型
     currentEditEntityId:0, //当前编辑的作品、资源的id
     currentScrollScreenType:"", //当前需要滚动加载的类型
-    userEntitiesCount:0, //用户的作品数量
-    userEntitiesShow:0, //查看用户那里的作品，已经显示的个数，本地分页
+    userEntitiesShowCount:0, //查看用户那里的作品，已经显示的个数，本地分页
     uploadedMedias:{}, //上传作品、资源时已经上传的媒体文件
     currentSearch:{
         currentSearchType:DE.config.entityTypes.project,//目前搜索显示的类型
@@ -52,9 +51,8 @@ DE.store={
      * 清空存储的数据
      */
     clearStore:function(){
-        this.userEntitiesCount=0;
-        this.userEntitiesShow=0;
-        this.hotUserLoadedId=0;
+        this.userEntitiesShowCount=0;
+        this.hotUserLoadedCount=0;
         this.projectLoadedId=0;
         this.commentLoadedId=0;
         this.searchLoadedCount=0;

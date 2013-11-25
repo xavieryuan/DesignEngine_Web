@@ -142,7 +142,7 @@ DE.config={
         getComments:"post/comments", //获取评论
         postComment:"post/add-comment", //发表评论
         deleteComment:"post/remove-comment", //删除评论
-        getHotUsersOrder:"account/hot",
+        getHotUsersOrder:"account/rank",
         getHotUsers:"account/hot", //获取人点用户
         getUserById:"account/info", //根据id获取用户
         getUserEntities:"account/posts", //获取用户的作品（资源）
