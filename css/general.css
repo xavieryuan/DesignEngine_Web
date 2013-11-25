@@ -2132,7 +2132,7 @@ ol.mp_list li.mp_selectable {
 }
 
 .de_project_detail figure {
-    margin: 0;
+    margin: 10px 0;
 }
 
 .de_project_detail figure img {
@@ -2315,8 +2315,8 @@ ol.mp_list li.mp_selectable {
     width: 50px;
     height: 60px;
     position: absolute;
-    left: 0px;
-    top:-2px;
+    left: 10px;
+    top:-6px;
 }
 .de_has_video:before{
     background: url(../images/zy_mediaflag_localvideo.png) no-repeat;
