@@ -399,9 +399,11 @@ li {
 .de_popout_login .de_reg_btn {
     display: block;
 }
-.de_error{
+
+.error{
     font-size: 12px;
-    color: red;
+    color:#C00;
+	font-weight:normal;
 }
 /******注册弹窗样式*******/
 .de_popout_reg {
