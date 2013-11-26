@@ -1057,7 +1057,11 @@ li {
     padding: 40px 20px 20px 20px;
     height: 300px;
     white-space: normal;
+	overflow:hidden;
 }
+.de_filter_menu>.de_filter_group_search{
+	overflow:visible;
+	}
 .de_filter_group> h3 {
     font-size: 18px;
     font-style: italic;
@@ -1715,6 +1719,9 @@ ol.mp_list li {
     border-bottom: 1px solid #C0C0C0;
     padding: 15px;
 }
+ol.mp_list li:hover{
+	background:#eee;
+	}
 ol.mp_list li.mp_selectable {
     cursor: pointer;
 }
