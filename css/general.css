@@ -1039,7 +1039,6 @@ li {
 /*************筛选菜单****************/
 .de_filter_menu {
     width: 100%;
-    overflow: hidden;
     height: 0;
     transition: all 0.3s ease-out;
     position: absolute;
@@ -1047,6 +1046,7 @@ li {
     z-index: 9;
     background: #333;
     white-space: nowrap;
+	overflow:hidden;
 }
 
 .de_filter_menu>.de_filter_group {
@@ -1056,6 +1056,7 @@ li {
     padding: 40px 20px 20px 20px;
     height: 300px;
     white-space: normal;
+	overflow:hidden;
 }
 
 .de_filter_group> h3 {
@@ -1692,6 +1693,11 @@ li {
     position: absolute;
     width: 470px;
     z-index: 99999;
+	font-size:13px;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
 }
 .de_top_search ol.mp_list {
     background-color: #FFFFFF;
@@ -1699,10 +1705,15 @@ li {
     border-right: 1px solid #C0C0C0;
     overflow: hidden;
     width: 80%;
+	font-size:13px;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
 }
 ol.mp_list li {
     border-bottom: 1px solid #C0C0C0;
-    padding: 4px 4px 5px;
+    padding: 15px 4px;
 }
 ol.mp_list li.mp_selectable {
     cursor: pointer;
