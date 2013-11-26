@@ -255,9 +255,10 @@ li {
 	position:absolute;
 	top:0;
 	right:0;
+	opacity:0.5;
 	}
 .de_popout>.de_popout_x_btn:hover{
-	background-color:#ccc;
+	opacity:1;
 	}
 .de_popout>.de_inner_wrapper {
     height: 400px;
@@ -448,7 +449,7 @@ li {
 }
 
 .de_popout_reg .de_username_field, .de_popout_reg .de_email_field, .de_popout_reg .de_pwd_field {
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     position: relative;
     max-width: 400px;
 }

@@ -275,7 +275,13 @@ $(document).ready(function(){
 
         return false;
     });
-
+	
+	//点击弹窗右上角x关闭弹窗
+	$(document).on("click","#de_popout_x_btn",function(){
+		DE.UIManager.hidePopout();
+		return false;	
+	});
+	
     //点击body隐藏所有弹窗和菜单
     $(document).click(function(event){
         var target=$(event.target);
