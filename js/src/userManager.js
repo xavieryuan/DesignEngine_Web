@@ -380,7 +380,7 @@ DE.user=(function(){
          */
         setProfile:function(){
             $("#de_user_name").text(DE.store.currentUser.name);
-            $("#de_edit_description").text(DE.store.currentUser.description);
+            $("#de_edit_description").val(DE.store.currentUser.description);
             $("#de_edit_login_email").val(DE.store.currentUser.email);
             $("#de_edit_figure").attr("src",DE.store.currentUser.figure);
         },

@@ -838,8 +838,13 @@ DE.upload=(function(){
                         DE.UIManager.hideLoading();
                         DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
 
+                        var id=DE.store.currentEditEntityId;
                         //跳到用户首页
                         DE.user.userClickHandler("user/"+DE.store.currentUser.userId);
+
+                        //打开作品详情页
+                        DE.entity.entityClickHandler("entity/"+id);
+
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
                     }

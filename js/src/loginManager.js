@@ -247,7 +247,7 @@ DE.login=(function(){
                    de_reg_email:{
                        required:"请输入邮箱！",
                        email:"请输入正确的邮箱格式！",
-                       remote:"此邮箱已注册，请直接登录绑定账号，或更换邮箱！"
+                       remote:"此邮箱已注册，请<a id='de_direct_login' class='de_direct_login' href='#'>直接登录</a>绑定账号，或更换邮箱！"
                    },
                    de_reg_pwd:{
                        required:"请输入密码！",
@@ -473,6 +473,13 @@ $(document).ready(function(){
     //取消绑定
     $("#de_remove_bind").click(function(){
         DE.login.unBindHandler();
+    });
+
+    //邮箱已经被注册，直接登录
+    $(document).on("click","#de_direct_login",function(){
+        DE.login.initLoginForm();
+        DE.UIManager.showLoginPopout();
+        return false;
     });
 
     //忘记密码按钮点击事件
