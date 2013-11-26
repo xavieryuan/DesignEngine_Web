@@ -193,7 +193,7 @@ DE.config={
         if(data.errorCode==this.errorCode.notFound){
             DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.notFound);
             setTimeout(function(){
-                window.location.href=document.baseURI;
+                window.location.href=document.baseURI||$("#de_base_url").attr("href");
             },2000);
         }else if(data.errorCode==this.errorCode.timeout){
             DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.timeout);

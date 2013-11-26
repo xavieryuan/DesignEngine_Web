@@ -122,9 +122,10 @@ DE.history=(function(){
 
             var obj=null;
             if(supports_history_api()){
+                var baseURI=document.baseURI||$("#de_base_url").attr("href");
                 if(!$.isEmptyObject(event.state)){
                     var href=event.state.href;
-                    if(href==document.baseURI){
+                    if(href==baseURI){
                         obj={type:null,value:null};
                     }else{
                         obj=handlerHref(href);
@@ -133,7 +134,7 @@ DE.history=(function(){
                 }else{
 
                     //退回到第一次进入时的首页state为{}或者为null,还有chrome的第一次响应(判断作品是否加载过)
-                    if(!DE.store.projectLoadedId&&location.href==document.baseURI){
+                    if(!DE.store.projectLoadedId&&location.href==baseURI){
                         handler(null,null);
                     }
 
@@ -180,7 +181,8 @@ DE.history=(function(){
         initDatas:function(){
 
             var href=window.location.href;
-            href=href.substring(document.baseURI.length);
+            var baseURI=document.baseURI||$("#de_base_url").attr("href");
+            href=href.substring(baseURI.length);
             if(!href){
                 handler(null,null);
             }else{

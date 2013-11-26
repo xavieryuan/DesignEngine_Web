@@ -248,7 +248,7 @@ $(document).ready(function(){
 
     //logo点击事件
     $("#de_logo").click(function(){
-        DE.history.push(document.baseURI);
+        DE.history.push(document.baseURI||$("#de_base_url").attr("href"));
         DE.entity.getAllEntity(DE.config.entityTypes.project,true);
 
         return false;

@@ -191,7 +191,7 @@ DE.upload=(function(){
             container:"de_upload_thumb_container",
             url:DE.config.ajaxUrls.uploadFileUrl,
             unique_names:true,
-            flash_swf_url : document.baseURI+'js/lib/plupload.flash.swf',
+            flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
             multipart_params:{
                 isThumb:true,
                 userId:DE.store.currentUser.userId
@@ -256,7 +256,7 @@ DE.upload=(function(){
             container:"zy_add_media_menu",
             url:DE.config.ajaxUrls.uploadFileUrl,
             unique_names:true,
-            flash_swf_url : document.baseURI+'js/lib/plupload.flash.swf',
+            flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
             //chunk_size:"10mb",
             multipart_params:{
                 userId:DE.store.currentUser.userId

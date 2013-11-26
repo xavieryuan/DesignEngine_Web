@@ -365,7 +365,7 @@ DE.login=(function(){
                        QC.Login.signOut();
 
                        //跳转页面
-                       window.location.href=document.baseURI;
+                       window.location.href=document.baseURI||$("#de_base_url").attr("href");
                    }else{
                        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.operationError);
                    }
