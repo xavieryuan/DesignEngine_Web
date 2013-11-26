@@ -393,13 +393,22 @@ DE.user=(function(){
                 rules: {
                     email:{
                         required:true,
-                        email:true
+                        email:true,
+                        remote:{
+                            url:DE.config.ajaxUrls.emailValidate,
+                            data:{
+                                de_reg_email:function() {
+                                    return $("#de_edit_login_email").val();
+                                }
+                            }
+                        }
                     }
                 },
                 messages: {
                     email: {
                         required:"请输入邮箱！",
-                        email:"请输入正确的邮箱格式！"
+                        email:"请输入正确的邮箱格式！",
+                        remote:"邮箱已经存在！"
                     }
 
                 },
