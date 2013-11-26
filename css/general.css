@@ -1041,6 +1041,7 @@ li {
     width: 100%;
     height: 0;
     transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
     position: absolute;
     top: 80px;
     z-index: 9;
@@ -2247,7 +2248,7 @@ ol.mp_list li.mp_selectable {
 
 .de_comment_box .comment {
     font-size: 14px;
-    font-height: 1.5em;
+    line-height: 1.5em;
     color: #666;
     display: block;
 }
