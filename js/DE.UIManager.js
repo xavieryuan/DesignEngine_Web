@@ -63,7 +63,7 @@ DE.UIManager=function(){
             if(paraObj && paraObj.keyword){
                 $("#de_btn_filter>a").html( "搜索："+paraObj.keyword ).addClass("active");
             }
-            if(paraObj && paraObj.type=="resource"){
+            if(paraObj && paraObj.type==DE.config.entityTypes.resource){
                 $("#de_screen_search_result>.de_category_filter>.de_category_filter_option_resource").addClass("active");
             }else{
                 $("#de_screen_search_result>.de_category_filter>.de_category_filter_option_project").addClass("active");
