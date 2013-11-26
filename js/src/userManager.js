@@ -476,13 +476,13 @@ DE.user=(function(){
                         if(!data.bind){
 
                             //QQ绑定
-                            DE.login.QQBindHandler();
+                            //DE.login.QQBindHandler();
                             $("#de_has_bind").addClass("de_hidden");
                             $("#de_remove_bind").addClass("de_hidden");
                         }else{
                             $("#de_bind_account_btn").addClass("de_hidden");
                         }
-
+                        DE.login.QQBindHandler();
                         DE.UIManager.showBindAccountPopout();
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
