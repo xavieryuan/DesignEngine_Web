@@ -247,7 +247,7 @@ DE.login=(function(){
                    de_reg_email:{
                        required:"请输入邮箱！",
                        email:"请输入正确的邮箱格式！",
-                       remote:"此邮箱已注册，请<a id='de_direct_login' class='de_direct_login' href='#'>直接登录</a>绑定账号，或更换邮箱！"
+                       remote:"此邮箱已注册，请<a id='de_direct_login' class='de_direct_login' href='#'>直接登录</a>或更换邮箱！"
                    },
                    de_reg_pwd:{
                        required:"请输入密码！",
