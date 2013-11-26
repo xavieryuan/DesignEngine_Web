@@ -105,7 +105,7 @@ DE.UIManager=function(){
 		},	
 		showFilterMenu:function(){
 			DE.UIManager.hideAllMenuAndPopouts();
-			$("#de_filter_menu").css("height",320);
+			$("#de_filter_menu").css("height",300);
 			$("#de_btn_filter>a").addClass("focused");
 		},
 		hideFilterMenu:function(){

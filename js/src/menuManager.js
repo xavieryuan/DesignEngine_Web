@@ -261,7 +261,15 @@ $(document).ready(function(){
 
         return false;
     });
-
+	
+	//搜索框焦点事件，为了能完整显示自动提示窗体
+	$(document).on("blur","#de_search_input",function(){
+		$("#de_filter_menu").css("overflow","auto");
+		})
+	$(document).on("focus","#de_search_input",function(){
+		$("#de_filter_menu").css("overflow","visible");
+		})
+	
     //ext菜单按钮点击事件（显示隐藏）
     $(document).on("click","#de_btn_ext_nav",function(evt){
         DE.UIManager.showExtMenu();
