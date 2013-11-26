@@ -163,7 +163,7 @@ DE.UIManager=function(){
 		showMsgPopout:function(title,msg){
 			showPopout();
 			$("#de_popout .de_popout_title").html(title);
-			$("#de_popout_msg .de_popout_msg").html(msg);
+			$("#de_popout_msg p").html(msg);
 			$("#de_popout>.de_inner_wrapper").css("left","-300%")
 		},
 		showRestPwdPopout:function(){

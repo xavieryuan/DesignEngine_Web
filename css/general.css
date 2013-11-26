@@ -217,6 +217,7 @@ li {
 }
 
 .de_popout_title {
+	color:#390;
     padding-left: 5%;
     width: 100%;
     height: 60px;
@@ -247,7 +248,17 @@ li {
     bottom: 0;
     background: url(../images/palette_header_shadow.png) no-repeat center;
 }
-
+.de_popout>.de_popout_x_btn{
+	width:60px;
+	height:60px;
+	background:url(../images/icon60_close_transparent_bg.png) no-repeat;
+	position:absolute;
+	top:0;
+	right:0;
+	}
+.de_popout>.de_popout_x_btn:hover{
+	background-color:#ccc;
+	}
 .de_popout>.de_inner_wrapper {
     height: 400px;
     position: absolute;
