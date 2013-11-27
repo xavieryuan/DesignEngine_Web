@@ -225,11 +225,19 @@ DE.entity=(function(){
                     DE.store.currentSearch.currentSearchType=type;
                     DE.store.currentSearch.isTag=isTag;
                     DE.store.currentScrollScreenType=DE.config.scrollScreenType[type];
-                    if(data.response.docs.length<DE.config.perLoadCount){
-                        DE.store.searchLoadedCount=DE.config.hasNoMoreFlag;
+
+                    //后台有可能返回response为null
+                    if(data.response){
+                        if(data.response.docs.length<DE.config.perLoadCount){
+                            DE.store.searchLoadedCount=DE.config.hasNoMoreFlag;
+                        }else{
+                            DE.store.searchLoadedCount+=data.response.docs.length;
+                        }
                     }else{
-                        DE.store.searchLoadedCount+=data.response.docs.length;
+                        data={response:{docs:[]}};
+                        DE.store.searchLoadedCount=DE.config.hasNoMoreFlag;
                     }
+
 
                     me.showSearchEntities(data,first);
 
@@ -318,6 +326,10 @@ DE.entity=(function(){
                 },
                 success:function(data){
 
+                    //如果后台返回的是null
+                    if(!data.response){
+                        data={response:{docs:[]}};
+                    }
                     me.showSimilarEntity(data);
 
                 },

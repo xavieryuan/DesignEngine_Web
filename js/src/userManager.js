@@ -483,7 +483,7 @@ DE.user=(function(){
                             $("#de_bind_account_btn").addClass("de_hidden");
                         }
                         DE.login.QQBindHandler();
-                        DE.UIManager.showBindAccountPopout();
+                        //DE.UIManager.showBindAccountPopout();
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
                     }

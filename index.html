@@ -60,7 +60,7 @@
                 <li class="de_reg_view "><a href="#" id="de_btn_reset_pwd">修改密码</a></li>
                 <li class="de_reg_view "><a href="#" id="de_btn_edit_profile">修改个人信息</a></li>
                 {@if user.role=='user'}
-                     <li class="de_reg_view "><a href="#" id="de_btn_bind_account">绑定账号</a></li>
+                     <!--<li class="de_reg_view "><a href="#" id="de_btn_bind_account">绑定账号</a></li>-->
                 {@else if user.role=='vip'}
                 {@else}
                     <li class="de_admin_view "><a href="user/manage">用户管理</a></li>
@@ -176,7 +176,6 @@
         <div class="user_info">
             <a href="user/${e.userId}" class="de_user_link">
                 <img class="photo" src="${e.userProfileImg}"/>
-
                 <p class="name">${e.userName}</p>
             </a>
         </div>
@@ -184,7 +183,6 @@
             <a href="entity/${e.postId}" class="de_entity_link">
                 <img class="thumb" src="${e.postThumb}">
                 <h4>${e.postTitle}</h4>
-
                 <p class="date">${e.postDate}</p>
             </a>
         </div>
@@ -1312,41 +1310,37 @@
 
         <!-- 5.更新个人信息弹窗开始 -->
         <article class="de_borderbox de_popout_edit_profile" id="de_popout_edit_profile">
+            <div class="de_edit_col de_borderbox">
+                <form class="de_form_edit_profile" id="de_form_edit_profile">
+                    <p class="de_photo_field" id="de_change_figure_container">
+                        <img id="de_edit_figure" class="photo" src="images/default_user_photo.png">
+                        <a href="#" id="de_change_figure"> 更换头像</a>
+                    </p>
 
-            <form class="de_form_edit_profile" id="de_form_edit_profile">
-                <p class="de_photo_field" id="de_change_figure_container">
-                    <img id="de_edit_figure" class="photo" src="images/default_user_photo.png">
-                    <a href="#" id="de_change_figure"> 更换头像</a>
+                    <p><em id="de_user_name">USER_NAME</em><span class="de_form_tip">（不可修改）</span></p>
+
+                    <p class="de_email_field">
+                        <input type="email" autocomplete="default" class="de_borderbox de_inputbox_gray"
+                               name="email" id="de_edit_login_email" placeholder="邮箱"/>
+                    </p>
+
+                    <p class="de_about_field">
+                        <textarea class="de_borderbox de_inputbox_gray" placeholder="关于你..." name="description"
+                                  id="de_edit_description"></textarea></p>
+                    <input type="submit" class="de_button de_btn_save_profile" name="de_btn_save_profile"
+                           id="de_btn_save_profile" value="保存">
+
+                </form>
+            </div>
+            <div class="de_borderbox de_bind_account">
+                <h4>绑定其他网站账号，下次快速登录。</h4>
+                <p><em>腾讯QQ:</em><span id="de_bind_account_btn" class="de_bind_account_btn"></span>
+                    <span id="de_has_bind" class="de_has_bind">已绑定</span>
+                    <span id="de_remove_bind" class="de_remove_bind">移除绑定</span>
                 </p>
-
-                <p><em id="de_user_name">USER_NAME</em><span class="de_form_tip">（不可修改）</span></p>
-
-                <p class="de_email_field">
-                    <input type="email" autocomplete="default" class="de_borderbox de_inputbox_gray"
-                           name="email" id="de_edit_login_email" placeholder="邮箱"/>
-                </p>
-
-                <p class="de_about_field">
-                    <textarea class="de_borderbox de_inputbox_gray" placeholder="关于你..." name="description"
-                              id="de_edit_description"></textarea></p>
-                <input type="submit" class="de_button de_btn_save_profile" name="de_btn_save_profile"
-                       id="de_btn_save_profile" value="保存">
-
-            </form>
-
+            </div>
         </article>
         <!-- 更新个人信息弹窗开结束 -->
-
-        <!-- 6.绑定账号弹窗开始 -->
-        <article class="de_borderbox de_bind_account" id="de_bind_account">
-            <h4>绑定其他网站账号，下次快速登录。</h4>
-            <p><em>腾讯QQ:</em><span id="de_bind_account_btn" class="de_bind_account_btn"></span>
-                <span id="de_has_bind" class="de_has_bind">已绑定</span>
-                <span id="de_remove_bind" class="de_remove_bind">移除绑定</span>
-            </p>
-        </article>
-        <!-- 绑定账号弹窗结束 -->
-
     </div>
 </section>
 
