@@ -288,15 +288,17 @@ li {
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
+	padding:0 5%;
 }
 
 .de_popout_login .de_login_col,.de_popout_edit_profile .de_edit_col{
-    width: 40%;
-    padding: 0 5%;
+    width: 50%;
+    padding: 20px 30px 20px 0;
     display: inline-block;
     vertical-align: top;
     height: 400px;
     border-right: #ccc 1px dotted;
+	overflow:hidden;
 }
 
 .de_popout_login .de_email_field, .de_popout_login .de_pwd_field {
@@ -306,7 +308,6 @@ li {
 
 .de_popout_login .de_email_field label, .de_popout_login .de_pwd_field label {
     font-size: 14px;
-    font-weight: bold;
     margin: 5px 0;
     display: block;
 }
@@ -340,8 +341,8 @@ li {
 }
 
 .de_link_openid_login {
-    margin: 20px 0;
-    padding: 20px 0;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
     border-bottom: #ccc 1px dotted;
 }
 
@@ -402,8 +403,8 @@ li {
 }
 
 .de_popout_login .de_reg_col,.de_popout_edit_profile .de_bind_account {
-    width: 30%;
-    padding: 20px 5%;
+    width: 50%;
+    padding: 20px 0 20px 30px;
     display: inline-block;
     vertical-align: top;
     height: 400px;
@@ -429,11 +430,10 @@ li {
 .de_popout_reg {
     width: 100%;
     font-size: 14px;
-    padding: 0 5%;
     overflow: hidden;
 }
 .de_popout_reg .de_reg_col {
-    width: 40%;
+    width: 50%;
     padding: 0 5%;
     display: inline-block;
     vertical-align: top;
@@ -451,12 +451,10 @@ li {
 .de_popout_reg .de_username_field, .de_popout_reg .de_email_field, .de_popout_reg .de_pwd_field {
     margin-bottom: 10px;
     position: relative;
-    max-width: 400px;
 }
 
 .de_popout_reg .de_email_field label, .de_popout_reg .de_pwd_field label {
     font-size: 14px;
-    font-weight: bold;
     margin: 5px 0;
     display: block;
 }
@@ -468,6 +466,7 @@ li {
 
 .de_popout_reg .de_jcaptcha a {
     display: inline-block;
+	margin-right: 10px;
 }
 
 .de_popout_reg .de_jcaptcha_refresh {
@@ -582,9 +581,8 @@ li {
 
 .de_form_edit_profile {
     margin: 20px 0;
-    padding-left: 140px;
+    padding: 0 0 0 120px;
     position: relative;
-    max-width: 400px;
 }
 
 .de_form_edit_profile p em {
@@ -638,12 +636,25 @@ li {
     width: 100px;
 }
 /********绑定其他网站账号弹窗********************/
+.de_bind_email{
+	padding:0 120px 20px 0;
+	margin-bottom:20px;
+	position:relative;
+	border-bottom:#ccc 1px dotted;
+	}
+.de_btn_save_email{
+	width:100px;
+	position:absolute;
+	top:0;
+	right:0;
+	}
 .de_bind_account p em {
     font-style: normal;
     font-size: 16px;
     font-weight: bold;
 }
 .de_bind_account .de_bind_account_btn {
+	position:relative;
     display: inline-block;
     font-size: 12px;
     font-weight: bold;
@@ -698,7 +709,7 @@ li {
     width: 160px;
     display: block;
     position: absolute;
-    top: 70px;
+    top: 0;
 }
 .de_bind_account img {
     width: 0px;

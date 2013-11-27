@@ -154,7 +154,7 @@ DE.UIManager=function(){
 		showRegPopout:function(){
 			showPopout();
 			$("#de_popout>.de_inner_wrapper").css("left","-100%");
-			$("#de_popout>.de_popout_title").html("注册");
+			$("#de_popout>.de_popout_title").html("即将完成注册，请填写下列信息");
 			$("#de_reg_username").focus();
             $("#de_captcha_img").removeAttr("src").attr("src",DE.config.ajaxUrls.getValidCode);
 		},
