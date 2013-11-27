@@ -169,7 +169,7 @@ DE.store={
         this.currentUser.role=data.role?data.role:this.currentUser.role;
         this.currentUser.name=data.name?data.name:this.currentUser.name;
         this.currentUser.email=data.email?data.email:this.currentUser.email;
-        this.currentUser.description=typeof data.description==="undefined"?data.description:this.currentUser.description;
+        this.currentUser.description=typeof data.description!=="undefined"?data.description:this.currentUser.description;
         this.currentUser.status=data.status?data.status:this.currentUser.status;
     }
 };

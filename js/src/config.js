@@ -176,7 +176,8 @@ DE.config={
         userDetail:"user/userId", //用户页
         search:"search/searchContent", //搜索页
         uploadEntity:"upload/entity",  //上传页
-        editEntity:"edit/entityId"  //修改页
+        editEntity:"edit/entityId",  //修改页
+        entityDetail:"entity/entityId"
     },
     topMenus:{ //顶部菜单类型
         user:"user", //热门用户,不写为hotUser是为了配合url地址
