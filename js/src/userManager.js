@@ -210,11 +210,11 @@ DE.user=(function(){
         /**
          * 显示用户作品（资源）
          * @param {Boolean} isFirst 是否第一次请求，如果是要显示界面
+         * @param {Function} callback 用户也显示完，需要执行的操作,主要是显示作品详情
          */
-        showUserEntity:function(isFirst){
+        showUserEntity:function(isFirst,callback){
             var tpl=$("#userEntitiesTpl").html();
             var dataObj={};
-            var array=null;
             dataObj.userId=DE.store.currentShowUser.userId;
             dataObj.userName=DE.store.currentShowUser.name;
             dataObj.userProfileImg=DE.store.currentShowUser.figure;
@@ -241,6 +241,11 @@ DE.user=(function(){
 
             if(isFirst){
                 DE.UIManager.showScreen("#de_screen_user_profile");
+
+
+                if(callback){
+                    callback();
+                }
             }
         },
 
@@ -269,8 +274,9 @@ DE.user=(function(){
         /**
          * 获取用户的作品（资源)
          * @param {Number} id 用户id
+         * @param {Function} callback 用户也显示完，需要执行的操作,主要是显示作品详情
          */
-        getUserEntities:function(id){
+        getUserEntities:function(id,callback){
             var me=this;
 
             $.ajax({
@@ -283,7 +289,7 @@ DE.user=(function(){
                 success:function(data){
                     if(data.success){
                         userEntities=data.userEntities;
-                        me.showUserEntity(true);
+                        me.showUserEntity(true,callback);
 
                         //如果是普通用户，会有优秀作品
                         if(DE.store.currentShowUser.role==DE.config.roles.user){
@@ -304,15 +310,16 @@ DE.user=(function(){
         /**
          * 用户头像点击事件
          * @param {String} href 用户页地址
+         * @param {Function} callback 用户也显示完，需要执行的操作,主要是显示作品详情
          */
-        userClickHandler:function(href){
+        userClickHandler:function(href,callback){
             DE.UIManager.showLoading();
             DE.history.push(href);  //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var id=array[1];
 
             this.getUserById(id);
-            this.getUserEntities(id);
+            this.getUserEntities(id,callback);
 
             //DE.UIManager.showScreen("#de_screen_user_profile");
 

@@ -695,10 +695,10 @@ li {
 }
 
 .de_bind_account a {
-    width: 140px;
+    width: 160px;
     display: block;
     position: absolute;
-    top: 40px;
+    top: 70px;
 }
 .de_bind_account img {
     width: 0px;

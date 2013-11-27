@@ -838,11 +838,14 @@ DE.upload=(function(){
                         DE.UIManager.hideLoading();
                         DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
 
-                        //跳到用户首页
-                        DE.user.userClickHandler("user/"+DE.store.currentUser.userId);
+                        //将postId保存起来，在跳转页面的时候DE.store.currentEditEntityId会被清除
+                        var postId=DE.store.currentEditEntityId||data.postId;
 
-                        //打开作品详情页
-                        DE.entity.entityClickHandler("entity/"+(DE.store.currentEditEntityId||data.postId));
+                        //跳到用户首页
+                        DE.user.userClickHandler("user/"+DE.store.currentUser.userId,function(){
+                            DE.entity.entityClickHandler("entity/"+postId);
+                        });
+
 
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);

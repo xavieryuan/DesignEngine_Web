@@ -837,6 +837,8 @@ DE.entity=(function(){
             }else if(handler=="delete"){
                 if(confirm("确定删除吗？")){
                     this.deleteEntity(target.attr("href"));
+                }else{
+                    DE.UIManager.hideLoading();
                 }
             }else{
                 this.showOrHideEntity(target);
