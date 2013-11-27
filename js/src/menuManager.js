@@ -200,7 +200,7 @@ DE.menu=(function(){
                 url: DE.config.ajaxUrls.searchSuggest,
                 minChars:2,
                 formatData : function (data) {
-                    if(data.spellcheck.suggestions.length){
+                    if(!$.isEmptyObject(data)&&data.spellcheck.suggestions.length){
                         return data.spellcheck.suggestions[1]["suggestion"];
                     }else{
                         return [];
@@ -263,11 +263,12 @@ $(document).ready(function(){
     });
 	
 	//搜索框焦点事件，为了能完整显示自动提示窗体
-	$(document).on("blur","#de_search_input",function(){
+    //blur的行为在cleanAllScreens已经有设置
+	/*$(document).on("blur","#de_search_input",function(){
 		$("#de_filter_menu").css("overflow","auto");
-    });
-	$(document).on("focus","#de_search_input",function(){
-		$("#de_filter_menu").css("overflow","visible");
+    });*/
+	$("#de_search_input").focus(function(){
+        $("#de_filter_menu").css("overflow","visible");
     });
 	
     //ext菜单按钮点击事件（显示隐藏）

@@ -887,7 +887,7 @@ DE.upload=(function(){
                 url: DE.config.ajaxUrls.termSuggest,
                 minChars:2,
                 formatData : function (data) {
-                    if(data.spellcheck.suggestions.length){
+                    if(!$.isEmptyObject(data)&&data.spellcheck.suggestions.length){
                         return data.spellcheck.suggestions[1]["suggestion"];
                     }else{
                         return [];

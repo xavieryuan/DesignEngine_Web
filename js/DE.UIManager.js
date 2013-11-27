@@ -77,9 +77,8 @@ DE.UIManager=function(){
         }
         $(window).scrollTop(0);
 
-        setTimeout(function(){
-            DE.UIManager.hideLoading();
-        },200);
+
+        DE.UIManager.hideLoading();
 
     };
 	var cleanAllScreens=function(){
@@ -91,7 +90,6 @@ DE.UIManager=function(){
 			//恢复视图初始状态		
 			$("#de_screen_container>section").addClass("de_hidden");
 			$("#de_btn_filter>a").html("更多分类...").removeClass("active");
-            $("#de_filter_menu").css("overflow","auto");
 			$("#de_top_nav .active").removeClass("active");
 			$("#de_screen_search_result>.de_category_filter .active").removeClass("active");
 			
@@ -109,11 +107,13 @@ DE.UIManager=function(){
 		},	
 		showFilterMenu:function(){
 			DE.UIManager.hideAllMenuAndPopouts();
-			$("#de_filter_menu").css("height",300);
+			$("#de_filter_menu").animate({"height":300},200);
 			$("#de_btn_filter>a").addClass("focused");
 		},
 		hideFilterMenu:function(){
-			$("#de_filter_menu").css("height",0);
+			$("#de_filter_menu").animate({"height":0},200,function(){
+                $("#de_filter_menu").css("overflow","hidden");
+            });
 			$("#de_btn_filter>a").removeClass("focused")		
 		},
 		showExtMenu:function(){
