@@ -144,7 +144,6 @@ DE.UIManager=function(){
                 html('');
 			$("body").removeClass("de_noscroll");
             DE.store.clearCurrentShowEntity();
-            DE.store.commentLoadedId=0;
 
 		},
 		showLoginPopout:function(){

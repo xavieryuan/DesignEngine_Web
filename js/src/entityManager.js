@@ -357,7 +357,7 @@ DE.entity=(function(){
                 //async:false,
                 data:{
                     postId:id,
-                    commentId:DE.store.commentLoadedId
+                    commentId:DE.store.currentShowEntity.commentLoadedId
                 },
                 dataType:"json",
                 success:function(data){
@@ -368,10 +368,10 @@ DE.entity=(function(){
                             if(length<DE.config.perLoadCount){
 
                                 //不足每次加载的数据，没有更多
-                                DE.store.commentLoadedId=DE.config.hasNoMoreFlag;
+                                DE.store.currentShowEntity.commentLoadedId=DE.config.hasNoMoreFlag;
                                 moreBtn.remove();
                             }else{
-                                DE.store.commentLoadedId=data.comments[length-1]["commentId"];
+                                DE.store.currentShowEntity.commentLoadedId=data.comments[length-1]["commentId"];
                                 moreBtn.removeClass("de_hidden");
                             }
 
@@ -380,7 +380,7 @@ DE.entity=(function(){
                         }else{
 
                             //返回为0，没有更多
-                            DE.store.commentLoadedId=DE.config.hasNoMoreFlag;
+                            DE.store.currentShowEntity.commentLoadedId=DE.config.hasNoMoreFlag;
                             moreBtn.remove();
                         }
                     }else{
@@ -477,7 +477,6 @@ DE.entity=(function(){
 
                         //界面更新,有可能在详情页，也有可能在用户页
                         DE.UIManager.hideProjectDetail();
-                        DE.store.commentLoadedId=0;
                         $(".de_entity_link[href='entity/"+id+"']").parents("li").remove();
                         $(".uploads").text(parseInt($(this).text())-1);
                     }else{

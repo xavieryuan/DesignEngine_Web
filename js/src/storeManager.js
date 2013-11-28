@@ -10,7 +10,6 @@ DE.store={
     scrollTimer:null, //滚动的时候的timeout
     hotUserLoadedCount:0, //记录下热门用户已经加载了的最后一个的id，-1代表没有更多
     projectLoadedId:0, //分页加载，最后一个作品的时间，-1代表没有更多
-    commentLoadedId:0, //详情页面评论加载了的id，-1代表没有更多
     resourceLoadedId:0,
     searchLoadedCount:0,
     currentShowEntitiesType:DE.config.entityTypes.project, //当前聚合显示的实体类型
@@ -45,7 +44,8 @@ DE.store={
     currentShowEntity:{    //当前显示详情的entity的信息
         id:0,
         hasPraised:false,
-        type:DE.config.entityTypes.project
+        type:DE.config.entityTypes.project,
+        commentLoadedId:0 //详情页面评论加载了的id，-1代表没有更多
     },
 
     /**
@@ -55,7 +55,6 @@ DE.store={
         this.userEntitiesShowCount=0;
         this.hotUserLoadedCount=0;
         this.projectLoadedId=0;
-        this.commentLoadedId=0;
         this.searchLoadedCount=0;
         this.resourceLoadedId=0;
         this.currentShowEntitiesType=DE.config.entityTypes.project;
@@ -75,6 +74,7 @@ DE.store={
         this.currentShowEntity.id=0;
         this.currentShowEntity.hasPraised=false;
         this.currentShowEntity.type=DE.config.entityTypes.project;
+        this.currentShowEntity.commentLoadedId=0;
     },
 
     /**
