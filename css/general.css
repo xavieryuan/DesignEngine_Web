@@ -2069,7 +2069,20 @@ ol.mp_list li.mp_selectable {
 .de_btn_close_project_detail:hover {
     background: url(../images/icon60_close_white.png) no-repeat;
 }
-
+.de_btn_back_to_home{
+    position: fixed;
+    top: 0;
+    right: 10%;
+    display: inline-block;
+    font-size: 0;
+    width: 70px;
+    height: 70px;
+    background: url(../images/icon60_backtohome_gray.png) no-repeat;
+	z-index: 9999;	
+	}
+.de_btn_back_to_home:hover{
+	background: url(../images/icon60_backtohome_white.png) no-repeat;
+	}
 .de_screen_project_detail .de_project_header {
     position: absolute;
     top: 0;
