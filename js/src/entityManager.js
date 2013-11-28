@@ -102,8 +102,10 @@ DE.entity=(function(){
 
         /**
          * 查看作品（资源）详情页获取作品（资源）的相信信息
+         * @param {Number} id
+         * @param {Boolean} showHome 是否显示首页按钮，用户直接用详情地址进入的时候需要显示
          */
-        getEntityDetail:function(id){
+        getEntityDetail:function(id,showHome){
             var me=this;
             $.ajax({
                 url:DE.config.ajaxUrls.getEntityDetail,
@@ -122,6 +124,7 @@ DE.entity=(function(){
                             type:data.entity.postType=="work"?DE.config.entityTypes.project:DE.config.entityTypes.resource
                         });
 
+                        data.showHome=showHome?true:false;
                         //展示工具栏
                         me.showEntityTool(data);
 
@@ -562,16 +565,19 @@ DE.entity=(function(){
         /**
          * 作品（资源）聚合点击事件，显示详情
          * @param {String} href 聚合中a的href（entity/id形式）
+         * @param {Boolean} showHome 是否显示首页按钮，用户直接用详情地址进入的时候需要显示
          */
-        entityClickHandler:function(href){
+        entityClickHandler:function(href,showHome){
             var array=href.split("/");
             var id=array[1];
+
+            DE.history.push(href,true);
 
             //先隐藏清空数据，然后再显示，因为点击相似作品在同一个页面，如果不清空数据会导致数据重复
             DE.UIManager.hideProjectDetail();
 
             //请求详细信息,同步的ajax,如果需要改用异步，需要修改html模板
-            this.getEntityDetail(id);
+            this.getEntityDetail(id,showHome);
 
 
             //请求附件
@@ -859,7 +865,16 @@ $(document).ready(function(){
 
     //关闭作品详情
     $(document).on("click","#de_btn_close_project_detail",function(){
-        DE.UIManager.hideProjectDetail();
+        if($(this).data("behaiver")=="close"){
+            DE.UIManager.hideProjectDetail();
+
+            //不能放到 hideProjectDetail函数中，因为进入的时候会显示其他页面，会调用这个函数
+            history.go(-1);
+        }else{
+
+            DE.menu.logoClickHandler();
+        }
+
 
         return false;
     });

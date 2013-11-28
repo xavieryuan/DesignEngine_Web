@@ -217,7 +217,12 @@
 <!--作品、资源详情模板-->
 <!--显示工具栏section prepend-->
 <script type="text/template" id="entityToolTpl">
-    <a href="#" class="de_btn_close_project_detail" id="de_btn_close_project_detail">关闭</a>
+    {@if showHome}
+        <a href="#" data-behaiver="showHome" class="de_btn_back_to_home" id="de_btn_close_project_detail">关闭</a>
+    {@else}
+        <a href="#" data-behaiver="close" class="de_btn_close_project_detail" id="de_btn_close_project_detail">关闭</a>
+    {@/if}
+
 
     <div class="de_project_header de_borderbox">
         {@if postType=="work"}

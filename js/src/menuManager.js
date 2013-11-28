@@ -182,6 +182,14 @@ DE.menu=(function(){
         },
 
         /**
+        *  logo点击事件处理
+        * */
+        logoClickHandler:function(){
+            DE.history.push(document.baseURI||$("#de_base_url").attr("href"));
+            DE.entity.getAllEntity(DE.config.entityTypes.project,true);
+        },
+
+        /**
          * 搜素输入框事件
          */
         searchInputEventHandler:function(){
@@ -248,8 +256,7 @@ $(document).ready(function(){
 
     //logo点击事件
     $("#de_logo").click(function(){
-        DE.history.push(document.baseURI||$("#de_base_url").attr("href"));
-        DE.entity.getAllEntity(DE.config.entityTypes.project,true);
+        DE.menu.logoClickHandler();
 
         return false;
     });

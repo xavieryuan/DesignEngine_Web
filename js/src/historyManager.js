@@ -20,8 +20,9 @@ DE.history=(function(){
      * 针对不同的url的数据处理,对应config中的urls
      * @param {String} type 要请求数据的类型
      * @param {String} value 要请求的数据的参数值
+     * @param {String} oldHref 旧的url，主要是详情页使用
      */
-    function handler(type,value){
+    function handler(type,value,oldHref){
 
         DE.store.clearStore();
         DE.upload.clearEditData();
@@ -84,6 +85,19 @@ DE.history=(function(){
                 DE.entity.getAllEntity(DE.config.entityTypes.resource,true);
 
                 break;
+            case "entity":
+                if(oldHref){
+                    var obj=handlerHref(oldHref);
+                    handler(obj.type,obj.value);
+
+                    DE.entity.entityClickHandler(type+"/"+value);
+                }else{
+                    DE.entity.entityClickHandler(type+"/"+value,true);
+                }
+
+
+
+                break;
             default :
 
                 //默认请求首页作品数据
@@ -123,18 +137,24 @@ DE.history=(function(){
             var obj=null;
             if(supports_history_api()){
                 var baseURI=document.baseURI||$("#de_base_url").attr("href");
+
+                //回退到首页的时候其他浏览器是{},第一次进入非首页的时候，浏览器默认会根据代码生成state
                 if(!$.isEmptyObject(event.state)){
                     var href=event.state.href;
                     if(href==baseURI){
                         obj={type:null,value:null};
                     }else{
-                        obj=handlerHref(href);
+                        //由于存在详情页回退是不需要刷新数据的，这里应该要判断是否加载了数据
+                        if(DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
+                            DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&DE.store.searchLoadedCount===0){
+                            obj=handlerHref(href);
+                        }
                     }
 
                 }else{
 
                     //退回到第一次进入时的首页state为{}或者为null,还有chrome的第一次响应(判断作品是否加载过)
-                    if(!DE.store.projectLoadedId&&location.href==baseURI){
+                    if(DE.store.projectLoadedId===0&&location.href==baseURI){
                         handler(null,null);
                     }
 
@@ -153,23 +173,34 @@ DE.history=(function(){
             *一种是退回到首页或者点击logo到首页，这个时候是需要处理的，在上面处理了
             */
             if(obj!=null){
-                handler(obj.type,obj.value);
+
+                handler(obj.type,obj.value,event.state.oldHref);
             }
         },
 
         /**
          * 无刷新改变地址栏
          * @param {String} href 需要设置的地址
+         * @param {Boolean} isEntityDetail 是否是详情页，如果是则不需要clearStore,可选
          */
-        push:function(href){
+        push:function(href,isEntityDetail){
 
             //首页传的href可能只有一个"/"或者"/engine"这种形式
 
             //当url变化的时候，清空存储器
-            DE.store.clearStore();
+            if(!isEntityDetail){
+                DE.store.clearStore();
+            }
+
 
             if(supports_history_api()){
-                history.pushState({href:href},"",href);
+                if(isEntityDetail){
+                    var baseURI=document.baseURI||$("#de_base_url").attr("href");
+                    var oldHref=location.href.substring(baseURI.length);
+                    history.pushState({href:href,oldHref:oldHref},"",href);
+                }else{
+                    history.pushState({href:href},"",href);
+                }
             }else{
                 location.hash="#!"+href;
             }
