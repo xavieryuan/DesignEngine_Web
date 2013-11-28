@@ -86,7 +86,7 @@ DE.history=(function(){
                 DE.entity.getAllEntity(DE.config.entityTypes.resource,true,callback);
 
                 break;
-            case "entity":
+            case "item":
                 if(oldHref!==undefined){
                     if(oldHref===""){
                         handler(null,null,undefined,function(){
@@ -157,8 +157,9 @@ DE.history=(function(){
                     }else{
 
                         //由于存在详情页回退是不需要刷新数据的，这里应该要判断是否加载了数据
-                        if(DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
-                            DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&DE.store.searchLoadedCount===0){
+                        if(!DE.store.currentShowEntity.id||(DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
+                            DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&DE.store.searchLoadedCount===0)){
+
                             if(href==baseURI){
                                 obj={type:null,value:null};
                             }else{
@@ -188,10 +189,13 @@ DE.history=(function(){
             *一种是第一次进入网站，这个时候不需要响应数据，由initData响应
             *一种是退回到首页或者点击logo到首页，这个时候是需要处理的，在上面处理了
             */
+
+            DE.UIManager.hideProjectDetail();
             if(obj!=null){
 
                 handler(obj.type,obj.value,event.state.oldHref);
             }
+
         },
 
         /**

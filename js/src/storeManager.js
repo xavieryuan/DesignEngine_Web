@@ -68,10 +68,13 @@ DE.store={
         this.currentSearch.isTag=true;
         this.uploadedMedias={};
         this.currentEditEntityId=0;
+        this.currentScrollScreenType="";
+    },
+
+    clearCurrentShowEntity:function(){
         this.currentShowEntity.id=0;
         this.currentShowEntity.hasPraised=false;
         this.currentShowEntity.type=DE.config.entityTypes.project;
-        this.currentScrollScreenType="";
     },
 
     /**

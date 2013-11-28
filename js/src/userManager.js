@@ -406,9 +406,8 @@ DE.user=(function(){
                                     email:data.email,
                                     regLocked:true
                                 });
+                                $("#de_edit_login_email").val(data.email);
                             }
-
-                            $("#de_edit_login_email").val(data.email);
                         }else{
                             DE.config.ajaxReturnErrorHandler(data);
                         }
@@ -457,7 +456,7 @@ DE.user=(function(){
                         success:function (data) {
                             if(data.success&&data.resultCode==DE.config.resultCode.account_update_succ){
                                 DE.store.initCurrentUser({
-                                    email:$("#de_edit_login_email").val()
+                                    regLocked:false
                                 });
 
                                 DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.emailChangeSuccess);

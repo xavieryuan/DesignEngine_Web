@@ -143,7 +143,7 @@ DE.UIManager=function(){
 			$("#de_screen_project_detail").scrollTop(0).addClass("de_hidden").
                 html('');
 			$("body").removeClass("de_noscroll");
-
+            DE.store.clearCurrentShowEntity();
             DE.store.commentLoadedId=0;
 
 		},

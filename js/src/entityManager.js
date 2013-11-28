@@ -881,7 +881,9 @@ $(document).ready(function(){
 
             //不能放到 hideProjectDetail函数中，因为进入的时候会显示其他页面，会调用这个函数
             history.go(-1);
-            DE.UIManager.hideProjectDetail();
+
+            //stateChange函数中响应
+            //DE.UIManager.hideProjectDetail();
         }else{
 
             DE.menu.logoClickHandler();
