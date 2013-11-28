@@ -20,9 +20,10 @@ DE.history=(function(){
      * 针对不同的url的数据处理,对应config中的urls
      * @param {String} type 要请求数据的类型
      * @param {String} value 要请求的数据的参数值
-     * @param {String} oldHref 旧的url，主要是详情页使用
+     * @param {*} oldHref 旧的url，主要是详情页使用
+     * @param {Function} callback 回调函数,主要是显示作品详情
      */
-    function handler(type,value,oldHref){
+    function handler(type,value,oldHref,callback){
 
         DE.store.clearStore();
         DE.upload.clearEditData();
@@ -40,13 +41,13 @@ DE.history=(function(){
                          return false;
                      }
                 });
-                DE.entity.getEntityBySearch(value,type,true,true);
+                DE.entity.getEntityBySearch(value,type,true,true,callback);
 
                 break;
             case "project":
 
                 //请求首页作品聚合
-                DE.entity.getAllEntity(DE.config.entityTypes.project,true);
+                DE.entity.getAllEntity(DE.config.entityTypes.project,true,callback);
 
                 break;
             case "user":
@@ -56,15 +57,15 @@ DE.history=(function(){
                     DE.user.getHotUsersOrder();
                 }else{
                     DE.user.getUserById(value);
-                    DE.user.getUserEntities(value);
-                    DE.UIManager.showScreen("#de_screen_user_profile");
+                    DE.user.getUserEntities(value,callback);
+                    //DE.UIManager.showScreen("#de_screen_user_profile");
                 }
 
                 break;
             case "search":
 
                 //请求搜索数据
-                DE.entity.getEntityBySearch(decodeURI(value),type,false,true);
+                DE.entity.getEntityBySearch(decodeURI(value),type,false,true,callback);
 
                 break;
             case "upload":
@@ -82,15 +83,23 @@ DE.history=(function(){
             case "resource":
 
                 //请求首页资源数据
-                DE.entity.getAllEntity(DE.config.entityTypes.resource,true);
+                DE.entity.getAllEntity(DE.config.entityTypes.resource,true,callback);
 
                 break;
             case "entity":
-                if(oldHref){
-                    var obj=handlerHref(oldHref);
-                    handler(obj.type,obj.value);
+                if(oldHref!==undefined){
+                    if(oldHref===""){
+                        handler(null,null,undefined,function(){
+                            DE.entity.entityClickHandler(type+"/"+value);
+                        });
+                    }else{
+                        var obj=handlerHref(oldHref);
+                        handler(obj.type,obj.value,undefined,function(){
+                            DE.entity.entityClickHandler(type+"/"+value);
+                        });
+                    }
 
-                    DE.entity.entityClickHandler(type+"/"+value);
+
                 }else{
                     DE.entity.entityClickHandler(type+"/"+value,true);
                 }
@@ -101,7 +110,7 @@ DE.history=(function(){
             default :
 
                 //默认请求首页作品数据
-                DE.entity.getAllEntity(DE.config.entityTypes.project,true);
+                DE.entity.getAllEntity(DE.config.entityTypes.project,true,callback);
 
             }
     }
@@ -141,13 +150,20 @@ DE.history=(function(){
                 //回退到首页的时候其他浏览器是{},第一次进入非首页的时候，浏览器默认会根据代码生成state
                 if(!$.isEmptyObject(event.state)){
                     var href=event.state.href;
-                    if(href==baseURI){
-                        obj={type:null,value:null};
+                    if(typeof event.state.oldHref!=="undefined"){
+
+                        //前进或者后退到详情页,不管如何都需要重新处理数据
+                        obj=handlerHref(href);
                     }else{
+
                         //由于存在详情页回退是不需要刷新数据的，这里应该要判断是否加载了数据
                         if(DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
                             DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&DE.store.searchLoadedCount===0){
-                            obj=handlerHref(href);
+                            if(href==baseURI){
+                                obj={type:null,value:null};
+                            }else{
+                                obj=handlerHref(href);
+                            }
                         }
                     }
 

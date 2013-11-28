@@ -56,6 +56,7 @@ DE.config={
         errorTitle:"错误提示",
         successTitle:"成功提示",
         operationSuccess:"操作成功，请关闭后选择其他操作！",
+        registerSuccess:"注册成功，如果您是非QQ登录用户，请进入邮箱激活账户，否则无法登录！",
         timeout:"登陆超时，请关闭后刷新页面并登录！",
         networkError:"网络连接失败，请稍后重试！",
         validCodeError:"验证码错误！",
@@ -68,6 +69,7 @@ DE.config={
         changePwdSuccess:"密码修改成功，2秒后跳转到首页并退出！",
         emailNotExist:"输入的邮箱不存在！",
         emailSendSuccess:"操作成功，请进入邮箱查看邮件！",
+        emailChangeSuccess:"绑定成功，请进入邮箱确认！",
         mediaHasNoThumb:"有媒体文件没有上传缩略图，请上传后再预览！",
         hasNoMedia:"没有上传媒体文件或者有上传错误的媒体文件，请上传或者删除后再预览！",
         stepOneUnComplete:"标题、标签、描述、缩略图等没有填写完整！",
@@ -75,7 +77,9 @@ DE.config={
         pptUploadError:"此资源上传到资源服务器出错，无法查看！",
         uploadSizeError:"最大文件大小",
         uploadExtensionError:"只允许上传",
-        uploadIOErrror:"服务器端异常，请稍后重试！"
+        uploadIOErrror:"服务器端异常，请稍后重试！",
+        emailPending:"你的新邮箱${email}没有激活，请进入邮箱激活！",
+        emailInvalid:"你提交的新邮箱${email},已被其他人激活，如需修改邮箱，请提交另外一个邮箱！"
     },
     resultCode:{
         account_register_succ:"account_register_succ",
@@ -102,7 +106,12 @@ DE.config={
         account_update_succ:"account_update_succ",
         unauthorized_operation:"unauthorized_operation",
         pptx_upload_error:"pptx_upload_error",
-        pptx_upload_wait:"pptx_upload_wait"
+        pptx_upload_wait:"pptx_upload_wait",
+        email_status:{
+            pending:"pending",
+            invalid:"invalid",
+            actived:"actived"
+        }
     },
     errorCode:{
         captcha_unmatches:"captcha_unmatches",
@@ -157,7 +166,9 @@ DE.config={
         register:"register", //注册
         changePassword:"account/change-password", //修改密码
         forgetPassword:"resetpwd/send-email", //忘记密码
-        changeProfile:"account/change-info", //修改资料
+        changeProfile:"account/change-profile", //修改资料
+        changeEmail:"account/change-email",
+        getNewEmail:"account/pending-email",
         emailValidate:"account-email-unique",
         usernameValidate:"account-fullname-unique",
         termSuggest:"query/termSuggest",

@@ -40,6 +40,7 @@ DE.UIManager=function(){
         //清空错误提示
         $("#de_reg_error").text("");
         $("#de_login_error").text("");
+        $("#de_email_error").text("");
     };
 	var gotoScreen=function(screenLink,paraObj){
         cleanAllScreens();
@@ -134,6 +135,7 @@ DE.UIManager=function(){
             detailEle.removeClass("de_hidden");
             detailEle.scrollTop(0);
 			$("body").addClass("de_noscroll");
+            this.hideLoading();
 		},
 		hideProjectDetail:function(){
 

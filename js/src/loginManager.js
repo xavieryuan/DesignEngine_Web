@@ -49,7 +49,8 @@ DE.login=(function(){
                                    userId:data.userinfo.userId,
                                    description:data.userinfo.userDescribe,
                                    email:data.userinfo.userEmail,
-                                   status:data.userinfo.userStatus
+                                   status:data.userinfo.userStatus,
+                                   regLocked:data.userinfo.regLocked
                                });
 
                                DE.UIManager.showLoginMenu({user:DE.store.currentUser});
@@ -106,7 +107,8 @@ DE.login=(function(){
                                        userId:data.userinfo.userId,
                                        description:data.userinfo.userDescribe,
                                        email:data.userinfo.userEmail,
-                                       status:data.userinfo.userStatus
+                                       status:data.userinfo.userStatus,
+                                       regLocked:data.userinfo.regLocked
                                    });
 
 
@@ -284,7 +286,7 @@ DE.login=(function(){
                                    //DE.UIManager.hideAllMenuAndPopouts();
                                }
 
-                               DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
+                               DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.registerSuccess);
                                $(form).clearForm();
 
                            }else{
@@ -427,11 +429,12 @@ DE.login=(function(){
                             userId:data.user.userId,
                             description:data.user.userDescribe,
                             email:data.user.userEmail,
-                            status:data.user.userStatus
+                            status:data.user.userStatus,
+                            regLocked:data.user.regLocked
                         });
                     }
 
-                    //只有不存在openid是才初始化数据，如果存在是从QQ登录来的，此时已经有数据了
+                    //只有不存在openid时才初始化数据，如果存在是从QQ登录来的，此时已经有数据了
                     if(!DE.store.currentUser.openId){
 
                        //每次进入页面都需要根据地址取数据,需要在login那里的checkLogin里面调用
@@ -460,7 +463,7 @@ DE.login=(function(){
 })();
 
 $(document).ready(function(){
-    //DE.login.checkLogin();//放到getTags里面
+    DE.login.checkLogin();//放到getTags里面
 
     //注册按钮点击
     $("#de_reg_btn").click(function(){

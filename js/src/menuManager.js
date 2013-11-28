@@ -238,7 +238,7 @@ DE.menu=(function(){
 $(document).ready(function(){
 
     //获取顶部所有的标签
-    DE.menu.getTags();
+    //DE.menu.getTags();
 
     //顶部菜单点击事件（除上传按钮）
     $("#de_top_nav a").click(function(){

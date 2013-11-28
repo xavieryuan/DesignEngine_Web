@@ -676,23 +676,23 @@
         <div class="de_filter_group de_borderbox">
             <h3>设计作品</h3>
             <ul class="de_menu_list" id="de_project_tags">
-                <!--<li><a href="#de_screen_search_result">产品设计</a></li>
-                <li><a href="#de_screen_search_result">交互设计</a></li>
-                <li><a href="#de_screen_search_result">界面设计</a></li>
-                <li><a href="#de_screen_search_result">交通工具设计</a></li>
-                <li><a href="#de_screen_search_result">服务设计</a></li>
-                <li><a href="#de_screen_search_result">平面设计</a></li>
-                <li><a href="#de_screen_search_result">影像设计</a></li>
-                <li><a href="#de_screen_search_result">绘画艺术</a></li>
-                <li><a href="#de_screen_search_result">摄影艺术</a></li>-->
+                <li><a href="tag/产品设计">产品设计</a></li>
+                <li><a href="tag/交互设计">交互设计</a></li>
+                <li><a href="tag/界面设计">界面设计</a></li>
+                <li><a href="tag/交通工具设计">交通工具设计</a></li>
+                <li><a href="tag/服务设计">服务设计</a></li>
+                <li><a href="tag/平面设计">平面设计</a></li>
+                <li><a href="tag/影像设计">影像设计</a></li>
+                <li><a href="tag/绘画艺术">绘画艺术</a></li>
+                <li><a href="tag/摄影艺术">摄影艺术</a></li>
             </ul>
         </div>
 
         <div class="de_filter_group de_borderbox">
             <h3>学习资源</h3>
             <ul class="de_menu_list" id="de_resource_tags">
-                <!-- <li><a href="#de_screen_search_result">工业设计史</a></li>
-                 <li><a href="#de_screen_search_result">汽车造型设计理论与研究</a></li>-->
+                 <li><a href="tag/工业设计史">工业设计史</a></li>
+                 <li><a href="tag/汽车造型设计理论与研究">汽车造型设计理论与研究</a></li>
             </ul>
         </div>
 
@@ -1335,10 +1335,13 @@
             <div class="de_borderbox de_bind_account">
             
             	<h4>绑定登录邮箱</h4>
-                <p class="de_email_field de_bind_email">
-                        <input type="email" autocomplete="default" class="de_borderbox de_inputbox_gray" name="email" id="de_edit_login_email" placeholder="邮箱"/>
-                <input type="submit" class="de_button de_btn_save_email" name="de_btn_save_email"
-                           id="de_btn_save_email" value="绑定">
+                <form id="de_form_edit_email">
+                    <p class="de_email_field de_bind_email">
+                            <input type="email" autocomplete="default" class="de_borderbox de_inputbox_gray" name="email" id="de_edit_login_email" placeholder="邮箱"/>
+                    <input type="submit" class="de_button de_btn_save_email" name="de_btn_save_email"
+                               id="de_btn_save_email" value="绑定">
+                    <label class="de_error" id="de_email_error"></label>
+                </form>
                 </p>
                 <h4>绑定其他网站账号（可快速登录）</h4>
                 <p><em>腾讯QQ:</em><span id="de_bind_account_btn" class="de_bind_account_btn"></span>

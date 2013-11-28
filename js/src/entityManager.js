@@ -124,7 +124,7 @@ DE.entity=(function(){
                             type:data.entity.postType=="work"?DE.config.entityTypes.project:DE.config.entityTypes.resource
                         });
 
-                        data.showHome=showHome?true:false;
+                        data.showHome=!!showHome?true:false;
                         //展示工具栏
                         me.showEntityTool(data);
 
@@ -146,8 +146,9 @@ DE.entity=(function(){
          * 获取首页的作品或者资源
          * @param {String} type 要获取的类型
          * @param {Boolean} first 是否第一次获取
+         * @param {Function} callback 显示完，需要执行的操作,主要是显示作品详情
          */
-        getAllEntity:function(type,first){
+        getAllEntity:function(type,first,callback){
             var me=this;
             var url="";
             var postId=0;
@@ -189,7 +190,7 @@ DE.entity=(function(){
                         }
 
                         //不管是否有数据，都需要执行函数，因为函数里有显示界面screen的操作
-                        me.showEntities(data,type,first);
+                        me.showEntities(data,type,first,callback);
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
                     }
@@ -208,8 +209,9 @@ DE.entity=(function(){
          * @param {Boolean} first 是否第一次加载，第一次需要设置显示的screen
          * @param {Boolean} isTag 是否是标签
          * @param {String} type 搜索的类型
+         * @param {Function} callback 显示完，需要执行的操作,主要是显示作品详情
          */
-        getEntityBySearch:function(content,type,isTag,first){
+        getEntityBySearch:function(content,type,isTag,first,callback){
             var me=this;
             $.ajax({
                 url:DE.config.ajaxUrls.getEntitiesBySearch,
@@ -242,7 +244,7 @@ DE.entity=(function(){
                     }
 
 
-                    me.showSearchEntities(data,first);
+                    me.showSearchEntities(data,first,callback);
 
                 },
                 error:function(){
@@ -571,8 +573,6 @@ DE.entity=(function(){
             var array=href.split("/");
             var id=array[1];
 
-            DE.history.push(href,true);
-
             //先隐藏清空数据，然后再显示，因为点击相似作品在同一个页面，如果不清空数据会导致数据重复
             DE.UIManager.hideProjectDetail();
 
@@ -617,7 +617,8 @@ DE.entity=(function(){
                 hasPraised:data.entity.userPraised,
                 canShowToolBar:showFlag,
                 postType:data.entity.postType,
-                postVisible:data.entity.postVisible
+                postVisible:data.entity.postVisible,
+                showHome:data.showHome
             });
             $("#de_screen_project_detail").prepend($(html));
         },
@@ -657,8 +658,9 @@ DE.entity=(function(){
          * @param {Object} data 请求作品（资源）时返回的json对象
          * @param {String} type 请求的类型
          * @param {Boolean} first 是否第一次请求,第一次需要设置screen
+         * @param {Function} callback 显示完，需要执行的操作,主要是显示作品详情
          */
-        showEntities:function(data,type,first){
+        showEntities:function(data,type,first,callback){
             var tpl="",html="",index=0;
 
             if(type==DE.config.entityTypes.project){
@@ -696,6 +698,10 @@ DE.entity=(function(){
                 }
             }
 
+            if(callback){
+                callback();
+            }
+
         },
 
 
@@ -703,8 +709,9 @@ DE.entity=(function(){
          * 显示搜索出来的作品（资源）聚合
          * @param data
          * @param {Boolean} first 是否第一次请求,第一次需要设置screen
+         * @param {Function} callback 显示完，需要执行的操作,主要是显示作品详情
          */
-        showSearchEntities:function(data,first){
+        showSearchEntities:function(data,first,callback){
             var targetContain= $("#de_search_result");
             var tpl=$("#searchResultTpl").html();
             var html=juicer(tpl,formatSearchData(data));
@@ -720,7 +727,9 @@ DE.entity=(function(){
                 }
                 targetContain.html(html);
                 DE.UIManager.showSearchScreen(DE.store.currentSearch.currentSearchValue,DE.store.currentSearch.currentSearchType);
-
+                if(callback){
+                    callback();
+                }
             }else{
                 targetContain.append($(html));
             }
@@ -857,8 +866,11 @@ $(document).ready(function(){
 
     //显示当个实体详情
     $(document).on("click","a.de_entity_link",function(){
+        var href=$(this).attr("href");
+        DE.entity.entityClickHandler(href);
 
-        DE.entity.entityClickHandler($(this).attr("href"));
+        //不能放到 entityClickHandler函数中，从浏览器向前进入详情页取数据也调用此函数，此时是不需要push的
+        DE.history.push(href,true);
 
         return false;
     });
@@ -866,10 +878,10 @@ $(document).ready(function(){
     //关闭作品详情
     $(document).on("click","#de_btn_close_project_detail",function(){
         if($(this).data("behaiver")=="close"){
-            DE.UIManager.hideProjectDetail();
 
             //不能放到 hideProjectDetail函数中，因为进入的时候会显示其他页面，会调用这个函数
             history.go(-1);
+            DE.UIManager.hideProjectDetail();
         }else{
 
             DE.menu.logoClickHandler();

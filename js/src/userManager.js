@@ -23,6 +23,7 @@ DE.user=(function(){
                 container:"de_change_figure_container",
                 url:DE.config.ajaxUrls.uploadFileUrl,
                 unique_names:true,
+                urlstream_upload:true,
                 flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
                 multipart_params:{
                     isThumb:true,
@@ -241,8 +242,6 @@ DE.user=(function(){
 
             if(isFirst){
                 DE.UIManager.showScreen("#de_screen_user_profile");
-
-
                 if(callback){
                     callback();
                 }
@@ -390,13 +389,42 @@ DE.user=(function(){
             $("#de_edit_description").val(DE.store.currentUser.description);
             $("#de_edit_login_email").val(DE.store.currentUser.email);
             $("#de_edit_figure").attr("src",DE.store.currentUser.figure);
+
+            if(!DE.store.currentUser.regLocked){
+                $.ajax({
+                    url:DE.config.ajaxUrls.getNewEmail,
+                    type:"get",
+                    dataType:"json",
+                    success:function (data) {
+                        if(data.success){
+                            if(data.status==DE.config.resultCode.email_status.pending){
+                                $("#de_email_error").text(DE.config.messageCode.emailPending.replace("${email}",data.email));
+                            }else if(data.status==DE.config.resultCode.email_status.invalid){
+                                $("#de_email_error").text(DE.config.messageCode.emailInvalid.replace("${email}",data.email));
+                            }else{
+                                DE.store.initCurrentUser({
+                                    email:data.email,
+                                    regLocked:true
+                                });
+                            }
+
+                            $("#de_edit_login_email").val(data.email);
+                        }else{
+                            DE.config.ajaxReturnErrorHandler(data);
+                        }
+                    },
+                    error:function (data) {
+                        DE.config.ajaxErrorHandler();
+                    }
+                })
+            }
         },
 
         /**
-         * 修改个人信息
+         * 修改邮箱
          */
-        changeProfile:function(){
-            $("#de_form_edit_profile").validate({
+        changeEmail:function(){
+            $("#de_form_edit_email").validate({
                 rules: {
                     email:{
                         required:true,
@@ -422,6 +450,48 @@ DE.user=(function(){
                 submitHandler:function(form) {
 
                     DE.UIManager.showLoading();
+                    $(form).ajaxSubmit({
+                        url:DE.config.ajaxUrls.changeEmail,
+                        dataType:"json",
+                        type:"post",
+                        success:function (data) {
+                            if(data.success&&data.resultCode==DE.config.resultCode.account_update_succ){
+                                DE.store.initCurrentUser({
+                                    email:$("#de_edit_login_email").val()
+                                });
+
+                                DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.emailChangeSuccess);
+                                DE.UIManager.hideLoading();
+                            }else{
+                                DE.config.ajaxReturnErrorHandler(data);
+                            }
+                        },
+                        error:function (data) {
+                            DE.config.ajaxErrorHandler();
+                        }
+                    });
+                }
+            });
+        },
+
+        /**
+         * 修改个人信息
+         */
+        changeProfile:function(){
+            $("#de_form_edit_profile").validate({
+                rules: {
+                    description:{
+                        maxlength:140
+                    }
+                },
+                messages: {
+                    description:{
+                        maxlength:"最多输入140个字！"
+                    }
+                },
+                submitHandler:function(form) {
+
+                    DE.UIManager.showLoading();
                     var profileImg= $("#de_edit_figure").attr("src");
                     $(form).ajaxSubmit({
                         url:DE.config.ajaxUrls.changeProfile,
@@ -435,8 +505,7 @@ DE.user=(function(){
                                 var description=$("#de_edit_description").val();
                                 DE.store.initCurrentUser({
                                     description:description,
-                                    figure:profileImg,
-                                    email:$("#de_edit_login_email").val()
+                                    figure:profileImg
                                 });
                                 $(".de_user_link[href='user/"+DE.store.currentUser.userId+"'] img").attr("src",profileImg);
 
@@ -513,6 +582,8 @@ $(document).ready(function(){
     DE.user.createFigureUpload();
 
     DE.user.changeProfile();
+
+    DE.user.changeEmail();
 
     DE.user.changePassword();
 });

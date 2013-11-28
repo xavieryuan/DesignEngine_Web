@@ -159,6 +159,7 @@ var zy_set_common = (function(){
                 browse_button:"zy_upload_media_button",
                 container:"zy_left_top",
                 unique_names:true,
+                urlstream_upload:true,
                 //chunk_size:"10mb",
                 url: config.uploadFileUrl,
                 flash_swf_url : '../js/lib/plupload.flash.swf',
@@ -241,6 +242,7 @@ var zy_set_common = (function(){
                 browse_button:"zy_upload_thumb_button",
                 container:"zy_left_bottom",
                 unique_names:true,
+                urlstream_upload:true,
                 url: config.uploadFileUrl, //parent在每个js里面都有定义
                 flash_swf_url:'../js/lib/plupload.flash.swf',
                 multipart_params:{

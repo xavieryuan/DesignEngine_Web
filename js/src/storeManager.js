@@ -33,7 +33,8 @@ DE.store={
         openId:"",
         openIdSource:"qq",
         accessToken:"",
-        status:DE.config.userStatus.enabled
+        status:DE.config.userStatus.enabled,
+        regLocked:true
     },
     currentShowUser:{ //当前显示的用户详情
         userId:0,
@@ -156,7 +157,8 @@ DE.store={
         this.currentUser.description="";
         this.currentUser.openId="";
         this.currentUser.accessToken="";
-        this.currentUser.status=DE.config.userStatus.enabled
+        this.currentUser.status=DE.config.userStatus.enabled;
+        this.currentUser.regLocked=true;
     },
 
     /**
@@ -171,5 +173,6 @@ DE.store={
         this.currentUser.email=data.email?data.email:this.currentUser.email;
         this.currentUser.description=typeof data.description!=="undefined"?data.description:this.currentUser.description;
         this.currentUser.status=data.status?data.status:this.currentUser.status;
+        this.currentUser.regLocked=typeof data.regLocked!=="undefined"?data.regLocked:this.currentUser.regLocked;
     }
 };
