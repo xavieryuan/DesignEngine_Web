@@ -99,7 +99,6 @@ DE.history=(function(){
                         });
                     }
 
-
                 }else{
                     DE.entity.entityClickHandler(type+"/"+value,true);
                 }
