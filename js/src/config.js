@@ -52,6 +52,21 @@ DE.config={
         resource:"resource",
         userEntity:"userEntity" //用户页的用户作品
     },
+    validError:{
+        emailRequired:"请输入邮箱！",
+        emailFormatError:"请输入正确的邮箱格式！",
+        emailExistWithLogin:"此邮箱已注册，请<a id='de_direct_login' class='de_direct_login' href='#'>直接登录</a>或更换邮箱！",
+        emailExist:"邮箱已经存在！",
+        pwdRequired:"请输入密码！",
+        pwdLengthError:"请输入6-20位的密码！",
+        oldPwdRequired:"请输入旧密码！",
+        newPwdRequired:"请输入新密码！",
+        pwdEqualError:"两次输入的密码不一致，请重新输入！",
+        usernameRequired:"请输入用户名！",
+        usernameExist:"用户名已经被注册，请填写其他用户名！",
+        validCodeRequired:"请输入验证码！",
+        descriptionLengthError:"最多输入140个字！"
+    },
     messageCode:{  //错误提示
         errorTitle:"错误提示",
         successTitle:"成功提示",

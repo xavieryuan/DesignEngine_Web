@@ -344,14 +344,14 @@ DE.user=(function(){
                 },
                 messages: {
                     oldPassword:{
-                        required:"请输入旧密码"
+                        required:DE.config.validError.oldPwdRequired
                     },
                     de_reset_pwd: {
-                        required:"请输入新密码！",
-                        rangelength:"请输入6-20位的密码！"
+                        required:DE.config.validError.newPwdRequired,
+                        rangelength:DE.config.validError.pwdLengthError
                     },
                     de_confirm_pwd: {
-                        equalTo:"两次输入的密码不一致，请重新输入！"
+                        equalTo:DE.config.validError.pwdEqualError
                     }
 
                 },
@@ -440,9 +440,9 @@ DE.user=(function(){
                 },
                 messages: {
                     email: {
-                        required:"请输入邮箱！",
-                        email:"请输入正确的邮箱格式！",
-                        remote:"邮箱已经存在！"
+                        required:DE.config.validError.emailRequired,
+                        email:DE.config.validError.emailFormatError,
+                        remote:DE.config.validError.emailExist
                     }
 
                 },
@@ -485,7 +485,7 @@ DE.user=(function(){
                 },
                 messages: {
                     description:{
-                        maxlength:"最多输入140个字！"
+                        maxlength:DE.config.validError.descriptionLengthError
                     }
                 },
                 submitHandler:function(form) {

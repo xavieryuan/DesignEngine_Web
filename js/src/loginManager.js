@@ -25,10 +25,10 @@ DE.login=(function(){
                },
                messages: {
                    de_login_email: {
-                       required:"请输入邮箱！",
-                       email:"请输入正确的邮箱格式！"
+                       required:DE.config.validError.emailRequired,
+                       email:DE.config.validError.emailFormatError
                    },
-                   de_login_pwd: "请输入密码！"
+                   de_login_pwd: DE.config.validError.pwdRequired
 
                },
                submitHandler:function(form) {
@@ -243,20 +243,20 @@ DE.login=(function(){
                },
                messages:{
                    de_reg_username:{
-                       required:"请输入用户名！",
-                       remote:"用户名已经被注册，请填写其他用户名！"
+                       required:DE.config.validError.usernameRequired,
+                       remote:DE.config.validError.usernameExist
                    },
                    de_reg_email:{
-                       required:"请输入邮箱！",
-                       email:"请输入正确的邮箱格式！",
-                       remote:"此邮箱已注册，请<a id='de_direct_login' class='de_direct_login' href='#'>直接登录</a>或更换邮箱！"
+                       required:DE.config.validError.emailRequired,
+                       email:DE.config.validError.emailFormatError,
+                       remote:DE.config.validError.emailExistWithLogin
                    },
                    de_reg_pwd:{
-                       required:"请输入密码！",
-                       rangelength:"请输入6-20位的密码！"
+                       required:DE.config.validError.pwdRequired,
+                       rangelength:DE.config.validError.pwdLengthError
                    },
                    de_reg_code:{
-                       required:"请输入验证码！"
+                       required:DE.config.validError.validCodeRequired
                    }
                },
                submitHandler:function(form) {
@@ -323,8 +323,8 @@ DE.login=(function(){
                },
                messages:{
                    email:{
-                       required:"请输入邮箱！",
-                       email:"请输入正确的邮箱格式！"
+                       required:DE.config.validError.emailRequired,
+                       email:DE.config.validError.emailFormatError
                    }
                },
                submitHandler:function(form) {
