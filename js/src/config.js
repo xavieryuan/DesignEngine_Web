@@ -19,7 +19,8 @@ DE.config={
         pptFilter:"pptx",
         _3dFilter:"3d",
         videoFilter:"mp4",
-        fileFilter:"zip,pdf"
+        fileFilter:"zip,pdf",
+        flashFilter:"swf"
     },
     uploadMediaTypes:{  //媒体类型
         image:"zy_image",
@@ -27,7 +28,8 @@ DE.config={
         _3d:"zy_3d",
         localVideo:"zy_location_video",
         file:"zy_file",
-        webVideo:"zy_network_video"
+        webVideo:"zy_network_video",
+        flash:"zy_flash"
     },
     mediaObj:{  //媒体对象
         mediaTitle:"zy_media_title",
@@ -50,7 +52,7 @@ DE.config={
         hotUser:"hotUser",
         project:"project",
         resource:"resource",
-        userEntity:"userEntity" //用户页的用户作品
+        userEntity:"userEntity" //用户页的用户作品,
     },
     validError:{
         emailRequired:"请输入邮箱！",

@@ -23,7 +23,7 @@ DE.menu=(function(){
                     if($(document).height()-$(window).height()<=$(window).scrollTop()){
 
                         //作品和资源要看是否是在搜索页面
-                        if(DE.store.currentSearchValue){
+                        if(DE.store.currentSearch.currentSearchValue){
 
                             //alert(DE.store.currentScrollScreenType+"search");
                             if(DE.store.searchLoadedCount!=DE.config.hasNoMoreFlag){
@@ -147,6 +147,7 @@ DE.menu=(function(){
             DE.UIManager.showLoading();
             DE.entity.getEntityBySearch(value,searchType,isTag,true);
 
+
             $("#de_search_input").val("");
         },
 
@@ -199,7 +200,7 @@ DE.menu=(function(){
                 if(event.keyCode==13){
                     var value=$(this).val();
                     if(value.trim()){
-                        me.serachHandler("search/"+value,DE.config.entityTypes.project,false);
+                        me.serachHandler("search/"+value,"",false);
                     }
                 }
             });
@@ -332,13 +333,13 @@ $(document).ready(function(){
     DE.menu.searchInputEventHandler();
 
     //搜索结果tab点击事件
-    $("#de_search_result_tab a").click(function(){
+    /*$("#de_search_result_tab a").click(function(){
         var type=$(this).data("entity-type");
 
         DE.menu.searchTabClickHandler(type);
 
         return false;
-    });
+    });*/
 
     //关闭弹出的window
     $("#de_close_pop_window").click(function(){

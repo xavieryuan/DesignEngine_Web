@@ -65,7 +65,7 @@ DE.history=(function(){
             case "search":
 
                 //请求搜索数据
-                DE.entity.getEntityBySearch(decodeURI(value),type,false,true,callback);
+                DE.entity.getEntityBySearch(decodeURI(value),"",false,true,callback);
 
                 break;
             case "upload":
@@ -146,8 +146,9 @@ DE.history=(function(){
             if(supports_history_api()){
                 var baseURI=document.baseURI||$("#de_base_url").attr("href");
 
-                //回退到首页的时候其他浏览器是{},第一次进入非首页的时候，浏览器默认会根据代码生成state
-                if(!$.isEmptyObject(event.state)){
+                //回退到首页的时候是null,第一次进入非首页回退的时候浏览器默认会根据代码生成state
+                if(event.state){
+
                     var href=event.state.href;
                     if(typeof event.state.oldHref!=="undefined"){
 
@@ -167,11 +168,17 @@ DE.history=(function(){
                         }
                     }
 
+                    /*
+                    * 这里调用和下面调用都是为了防止在详情页面，用户直接前进后退，
+                    * 此时页面详情没有事件关闭，应该调用一次关闭
+                    * */
+                    DE.UIManager.hideProjectDetail();
                 }else{
 
                     //退回到第一次进入时的首页state为{}或者为null,还有chrome的第一次响应(判断作品是否加载过)
                     if(DE.store.projectLoadedId===0&&location.href==baseURI){
                         handler(null,null);
+                        DE.UIManager.hideProjectDetail();
                     }
 
                 }
@@ -189,7 +196,7 @@ DE.history=(function(){
             *一种是退回到首页或者点击logo到首页，这个时候是需要处理的，在上面处理了
             */
 
-            DE.UIManager.hideProjectDetail();
+
             if(obj!=null){
 
                 handler(obj.type,obj.value,event.state.oldHref);

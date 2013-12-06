@@ -1294,8 +1294,8 @@ li {
 }
 
 .de_project_grid .de_media_tags>li {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     display: inline-block;
     font-size: 0;
     text-indent: -9999px;
@@ -1303,24 +1303,28 @@ li {
 }
 
 .de_media_tags>li.tag_ppt {
-    background: url(../images/de_media_ppt.png) no-repeat;
+    background: url(../images/zy_media_ppt.png) no-repeat;
 }
 
 .de_media_tags>li.tag_web_video {
-    background: url(../images/de_media_network_video.png) no-repeat;
+    background: url(../images/zy_media_network_video.png) no-repeat;
 }
 
 .de_media_tags>li.tag_local_video {
-    background: url(../images/de_media_local_video.png) no-repeat;
+    background: url(../images/zy_media_local_video.png) no-repeat;
 }
 
 .de_media_tags>li.tag_3d {
-    background: url(../images/de_media_3d.png) no-repeat;
+    background: url(../images/zy_media_3d.png) no-repeat;
 }
 
 .de_media_tags>li.tag_file {
-    background: url(../images/de_media_file.png) no-repeat;
+    background: url(../images/zy_media_file.png) no-repeat;
 }
+.de_media_tags>li.tag_flash {
+    background: url(../images/zy_media_flash.png) no-repeat;
+}
+
 
 /**作品卡片工具栏**/
 .de_project_grid .de_project_toolbar {
@@ -1802,10 +1806,10 @@ ol.mp_list li.mp_selectable {
     display: inline-block;
     width: 100%;
     cursor: pointer;
-    height: 60px;
+    height: 40px;
     padding: 0 0 0 70px;
     font-size: 16px;
-    line-height: 60px;
+    line-height: 40px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -1815,7 +1819,7 @@ ol.mp_list li.mp_selectable {
 .zy_add_media_menu li>a:hover {
     color: #666;
 }
-.zy_types2, .zy_types3, .zy_types4, .zy_types5, .zy_types6 {
+.zy_types2, .zy_types3, .zy_types4, .zy_types5, .zy_types6, .zy_types7 {
     border-top: 1px solid #CECFCF;
 }
 .zy_types1 {
@@ -1835,6 +1839,9 @@ ol.mp_list li.mp_selectable {
 }
 .zy_types6 {
     background: url(../images/zy_media_file.png) no-repeat 30px center;
+}
+.zy_types7 {
+    background: url(../images/zy_media_flash.png) no-repeat 30px center;
 }
 .zy_section_right_header {
     height: 39px;
@@ -2393,7 +2400,7 @@ ol.mp_list li.mp_selectable {
 	}
 
 /*--------------------显示资源图标---------------------*/
-.de_has_video:before,.de_has_ppt:before,.de_has_3d:before,.de_has_file:before,.de_has_web_video:before{
+.de_has_media:before{
     content:"";
     width: 50px;
     height: 60px;
@@ -2415,6 +2422,9 @@ ol.mp_list li.mp_selectable {
 }
 .de_has_web_video:before{
     background: url(../images/zy_mediaflag_webvideo.png) no-repeat;
+}
+.de_has_flash:before{
+    background: url(../images/zy_mediaflag_flash.png) no-repeat;
 }
 
 

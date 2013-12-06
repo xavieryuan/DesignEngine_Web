@@ -23,7 +23,8 @@ var config={
         pptFilter:"pptx",
         _3dFilter:"3d",
         videoFilter:"mp4",
-        fileFilter:"zip,pdf"
+        fileFilter:"zip,pdf",
+        flashFilter:"swf"
     },
     uploadMediaTypes:{  //媒体类型
         image:"zy_image",
@@ -31,7 +32,8 @@ var config={
         _3d:"zy_3d",
         localVideo:"zy_location_video",
         file:"zy_file",
-        webVideo:"zy_network_video"
+        webVideo:"zy_network_video",
+        flash:"zy_flash"
     },
     mediaObj:{  //媒体对象
         mediaTitle:"zy_media_title",

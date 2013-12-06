@@ -6,7 +6,7 @@
     <meta name="description" content="图钉墙”是由湖南大学设计艺术学院自主开发的设计作品与教学资源库，其中收录了湖南大学设计艺术学院及其他兄弟院校的各类课程作业、设计研究报告、教学课件和讲课视频。" />
     <meta name="keywords" content="图钉墙, 工业设计, 艺术设计, 设计教育, 设计作品, 设计资源, 湖南大学设计艺术学院" />
     <title>图钉墙 - HNU Design</title>
-    <base id="de_base_url" href="http://design.hnu.cn/pinwall/"/>
+    <base id="de_base_url" href="http://192.168.2.167/pinwall/"/>
     <link href="css/general.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/lib/juicer-min.js"></script>
@@ -136,6 +136,9 @@
             {@if r.postHasFile}
                 <li class="tag_file">文档</li>
             {@/if}
+            {@if r.postHasFlash}
+                <li class="tag_flash">flash</li>
+            {@/if}
         </ul>
     </li>
     {@/each}
@@ -208,6 +211,9 @@
             {@/if}
             {@if e.postHasFile}
                 <li class="tag_file">文档</li>
+            {@/if}
+            {@if e.postHasFile}
+                <li class="tag_flash">flash</li>
             {@/if}
         </ul>
         {@/if}
@@ -322,17 +328,19 @@
     <figure>
         <!--根据类型添加class-->
         {@if at.attachmentType=='zy_image'}
-             <a href="${at.attachmentMediaLocation}" class="de_only_image"><img data-media-type="zy_image" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+             <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_only_image"><img data-media-type="zy_image" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@else if at.attachmentType=='zy_location_video'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_video"><img data-media-type="zy_location_video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_video"><img data-media-type="zy_location_video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@else if at.attachmentType=='zy_network_video'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_web_video"><img data-media-type="zy_network_video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_web_video"><img data-media-type="zy_network_video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@else if at.attachmentType=='zy_3d'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_3d"><img data-media-type="zy_3d" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_3d"><img data-media-type="zy_3d" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@else if at.attachmentType=='zy_ppt'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_ppt"><img data-media-type="zy_ppt" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_ppt"><img data-media-type="zy_ppt" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@else if at.attachmentType=='zy_file'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_file"><img data-media-type="zy_file" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+            <a href="${at.attachmentMediaLocation}" class="de_has_file de_has_media"><img data-media-type="zy_file" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+        {@else if at.attachmentType=='zy_flash'}
+            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_flash de_has_media"><img data-media-type="zy_flash" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@/if}
 
         {@if at.attachmentTitle}
@@ -423,6 +431,9 @@
             {@if e.postHasFile}
             <li class="tag_file">文档</li>
             {@/if}
+            {@if e.postHasFlash}
+            <li class="tag_flash">flash</li>
+            {@/if}
         </ul>
         {@/if}
     </li>
@@ -456,13 +467,13 @@
         </article>
     </div>
     <article class="de_user_uploads">
-        <nav class="de_category_filter de_borderbox">
+       <!-- <nav class="de_category_filter de_borderbox">
             {@if role=="vip"}
             <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
             {@else}
             <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
             {@/if}
-        </nav>
+        </nav>-->
 
         <ul class="de_project_grid" id="de_user_uploads"></ul>
     </article>
@@ -513,6 +524,9 @@
                     {@/if}
                     {@if e.postHasFile}
                     <li class="tag_file">文档</li>
+                    {@/if}
+                    {@if e.postHasFlash}
+                    <li class="tag_flash">flash</li>
                     {@/if}
                 </ul>
                 {@/if}
@@ -611,6 +625,12 @@
     {@else if type=='zy_3d'}
     {@else if type=='zy_image'}
         <img src="${content}">
+    {@else if type=='zy_flash'}
+        <object type="application/x-shockwave-flash" data="js/lib/dplayer.swf"height="100%" width="100%" id="9144" style="visibility: visible;">
+            <param name="menu" value="false"><param name="allowFullScreen" value="true">
+            <param name="allowscriptaccess" value="sameDomain">
+            <param name="flashvars" value="media_link=${content}">
+        </object>
     {@/if}
 </script>
 <!--没有数据模板-->
@@ -787,10 +807,10 @@
 
 <!-----------搜索结果----------->
 <section class="de_screen_search_result de_hidden" id="de_screen_search_result">
-    <nav class="de_category_filter de_borderbox" id="de_search_result_tab">
+    <!--<nav class="de_category_filter de_borderbox" id="de_search_result_tab">
         <a href="#" data-entity-type="project" class="de_category_filter_option_project de_borderbox active">设计作品</a>
         <a href="#" data-entity-type="resource" class="de_category_filter_option_resource de_borderbox">学习资源</a>
-    </nav>
+    </nav>-->
 
     <ul class="de_project_grid" id="de_search_result">
         <!--<li class="de_borderbox">
@@ -931,6 +951,7 @@
                         <li><a id="zy_add_3d" class="zy_types4">3D文件</a></li>
                         <li><a id="zy_add_ppt" class="zy_types5">ppt文件</a></li>
                         <li><a id="zy_add_file" class="zy_types6">文件</a></li>
+                        <li><a id="zy_add_flash" class="zy_types7">flash</a></li>
                     </ul>
                 </div>
                 <ol id="zy_uploaded_medias_ol" class="zy_uploaded_medias_ol"></ol>

@@ -86,17 +86,19 @@ DE.upload=(function(){
             obj.memo=memo;
 
             if(type==DE.config.uploadMediaTypes.image){
-                obj.content='<a class="de_only_image"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.image+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+                obj.content='<a data-has-media="true" class="de_only_image"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.image+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
             }else if(type==DE.config.uploadMediaTypes.ppt){
-                obj.content='<a class="de_has_ppt"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.ppt+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+                obj.content='<a data-has-media="true" class="de_has_ppt de_has_media"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.ppt+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
             }else if(type==DE.config.uploadMediaTypes._3d){
-                obj.content='<a class="de_has_3d"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes._3d+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+                obj.content='<a data-has-media="true" class="de_has_3d de_has_media"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes._3d+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
             }else if(type==DE.config.uploadMediaTypes.localVideo){
-                obj.content='<a class="de_has_video" href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.localVideo+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+                obj.content='<a data-has-media="true" class="de_has_video de_has_media" href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.localVideo+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
             }else if(type==DE.config.uploadMediaTypes.webVideo){
-                obj.content='<a class="de_has_web_video"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.webVideo+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
-            }else{
-                obj.content='<a class="de_has_file"  href="'+DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaFilepath]+'"><img data-media-type="'+DE.config.uploadMediaTypes.file+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+                obj.content='<a data-has-media="true" class="de_has_web_video de_has_media"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.webVideo+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+            }else if(type==DE.config.uploadMediaTypes.file){
+                obj.content='<a class="de_has_file de_has_media"  href="'+DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaFilepath]+'"><img data-media-type="'+DE.config.uploadMediaTypes.file+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+            }else if(type==DE.config.uploadMediaTypes.flash){
+                obj.content='<a data-has-media="true" class="de_has_flash de_has_media"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.flash+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
             }
 
             array_slides.push(obj);
@@ -308,6 +310,11 @@ DE.upload=(function(){
                 } else if (type == DE.config.uploadMediaTypes.file) {
                     zy_media_id = getRandom("zy_file_");
                     zy_iframe_page_name = "zy_set_file.html";
+                    zy_media_ids[files[i]["id"]] = zy_media_id;
+                    zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
+                } else if (type == DE.config.uploadMediaTypes.flash) {
+                    zy_media_id = getRandom("zy_flash_");
+                    zy_iframe_page_name = "zy_set_flash.html";
                     zy_media_ids[files[i]["id"]] = zy_media_id;
                     zy_iframe_page_names[files[i]["id"]] = zy_iframe_page_name;
                 }
@@ -526,8 +533,10 @@ DE.upload=(function(){
                 iframeSrc="uploadPlugin/html/zy_set_network_video.html?"+attachments[i]["attachmentId"];
             }else if(mediaType==DE.config.uploadMediaTypes.image){
                 iframeSrc="uploadPlugin/html/zy_set_image.html?"+attachments[i]["attachmentId"];
-            }else{
+            }else if(mediaType==DE.config.uploadMediaTypes.file){
                 iframeSrc="uploadPlugin/html/zy_set_file.html?"+attachments[i]["attachmentId"];
+            }else if(mediaType==DE.config.uploadMediaTypes.flash){
+                iframeSrc="uploadPlugin/html/zy_set_flash.html?"+attachments[i]["attachmentId"];
             }
 
             html+=juicer(tpl,{
@@ -739,6 +748,8 @@ DE.upload=(function(){
                 $("#zy_media_type").text("网络视频");
             }else if(type==DE.config.uploadMediaTypes.file){
                 $("#zy_media_type").text("文件");
+            }else if(type==DE.config.uploadMediaTypes.flash){
+                $("#zy_media_type").text("flash");
             }
 
             //控制类
@@ -912,7 +923,7 @@ DE.upload=(function(){
                 }
             });
 
-            //模拟市区焦点，直接用blur的话点击自动完成的结果会冲突
+            //模拟失去焦点，直接用blur的话点击自动完成的结果会冲突
             $("#de_screen_upload").click(function(event){
                 var target=$(event.target);
                 if(!target.is("#de_input_project_tag")&&target.parents("#mp_de_input_project_tag_list").length==0){
@@ -932,6 +943,7 @@ $(document).ready(function(){
     DE.upload.createUpload({type:DE.config.uploadMediaTypes.ppt,browseButton:"zy_add_ppt",filters:DE.config.uploadFilters.pptFilter});
     DE.upload.createUpload({type:DE.config.uploadMediaTypes.image,browseButton:"zy_add_image",filters:DE.config.uploadFilters.imageFilter});
     DE.upload.createUpload({type:DE.config.uploadMediaTypes.file,browseButton:"zy_add_file",filters:DE.config.uploadFilters.fileFilter});
+    DE.upload.createUpload({type:DE.config.uploadMediaTypes.flash,browseButton:"zy_add_flash",filters:DE.config.uploadFilters.flashFilter});
 
     //步骤控制
     $("#de_upload_step_nav a").click(function(){
@@ -952,12 +964,12 @@ $(document).ready(function(){
 
     //显示上传文件的菜单
     $("#zy_add_medias_button").hover(function(e){
-        $("#zy_add_media_menu").css("height","360px");
+        $("#zy_add_media_menu").css("height","280px");
     },function(e){
         $("#zy_add_media_menu").css("height",0);
     });
     $("#zy_add_media_menu").hover(function(e){
-        $("#zy_add_media_menu").css("height","360px");
+        $("#zy_add_media_menu").css("height","280px");
     },function(e){
         $("#zy_add_media_menu").css("height",0);
     });

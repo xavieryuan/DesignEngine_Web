@@ -220,16 +220,20 @@ DE.entity=(function(){
                 data:{
                     keyword:content,
                     field:isTag?"term":"info",
-                    type:type==DE.config.entityTypes.resource?"resource":"work",
+                    type:type,
                     start:DE.store.searchLoadedCount
                 },
                 success:function(data){
 
-                    DE.store.currentSearch.currentSearchValue=content; //记录下当前搜索的内容
+                    if(first){
 
-                    DE.store.currentSearch.currentSearchType=type;
-                    DE.store.currentSearch.isTag=isTag;
-                    DE.store.currentScrollScreenType=DE.config.scrollScreenType[type];
+                        DE.store.currentSearch.currentSearchValue=content; //记录下当前搜索的内容
+
+                        DE.store.currentSearch.currentSearchType=type;
+                        DE.store.currentSearch.isTag=isTag;
+                        DE.store.currentScrollScreenType=type?DE.config.scrollScreenType[type]:"searchAll";
+                    }
+
 
                     //后台有可能返回response为null
                     if(data.response){
@@ -805,29 +809,21 @@ DE.entity=(function(){
             var ext="";//文件的后缀,视频文件有mp4和swf
 
             //如果上传uploadedMedias中有，那是在预览，用uploadedMedias中的
-            if(mediaType==DE.config.uploadMediaTypes.ppt){
-                if(!$.isEmptyObject(DE.store.uploadedMedias)){
-                    content=DE.config.messageCode.pptHasNotUploaded;
-                }else{
-                    content=target.attr("href");
-                    if(content==DE.config.resultCode.pptx_upload_error){
-                        content=DE.config.messageCode.pptUploadError;
-                    }else if(content==DE.config.resultCode.pptx_upload_wait){
-                        content=DE.config.messageCode.pptHasNotUploaded;
-                    }
-                }
+
+            if(!$.isEmptyObject(DE.store.uploadedMedias)){
+                content=DE.config.messageCode.pptHasNotUploaded;
             }else{
-                if(!$.isEmptyObject(DE.store.uploadedMedias)){
-                    content=DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath];
-                }else{
-                    content=target.attr("href");
+                content=target.attr("href");
+                if(content==DE.config.resultCode.pptx_upload_error){
+                    content=DE.config.messageCode.pptUploadError;
+                }else if(content==DE.config.resultCode.pptx_upload_wait){
+                    content=DE.config.messageCode.pptHasNotUploaded;
                 }
 
                 if(mediaType==DE.config.uploadMediaTypes.localVideo){
                     ext=content.substr(content.lastIndexOf(".")+1);
                 }
             }
-
 
 
 
@@ -878,11 +874,9 @@ $(document).ready(function(){
     $(document).on("click","#de_btn_close_project_detail",function(){
         if($(this).data("behaiver")=="close"){
 
-            //不能放到 hideProjectDetail函数中，因为进入的时候会显示其他页面，会调用这个函数
             history.go(-1);
 
-            //stateChange函数中响应
-            //DE.UIManager.hideProjectDetail();
+            DE.UIManager.hideProjectDetail();
         }else{
 
             DE.menu.logoClickHandler();
@@ -942,7 +936,7 @@ $(document).ready(function(){
     });
 
     //点击附件播放对应媒体文件，上传预览那里也用到
-    $(document).on("click","a.de_only_image,a.de_has_video,a.de_has_3d,a.de_has_ppt,a.de_has_web_video",function(){
+    $(document).on("click","a[data-has-media='true']",function(){
         DE.entity.showMedias($(this));
 
         return false;
