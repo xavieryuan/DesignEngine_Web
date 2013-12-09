@@ -2402,7 +2402,7 @@ ol.mp_list li.mp_selectable {
 	}
 
 /*--------------------显示资源图标---------------------*/
-.de_has_video:before, .de_has_ppt:before, .de_has_3d:before, .de_has_file:before, .de_has_web_video:before, .de_has_flash:before{
+.de_has_media:before{
     content:"";
     width: 50px;
     height: 60px;
