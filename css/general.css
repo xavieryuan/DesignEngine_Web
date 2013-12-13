@@ -2147,6 +2147,7 @@ ol.mp_list li.mp_selectable {
     padding: 160px 40px 40px;
     position: relative;
     width: 60%;
+	overflow-x: hidden;
 }
 
 .de_screen_project_detail h2 {
@@ -2498,7 +2499,7 @@ background: url(../images/icon60_close_white.png) no-repeat;
 
 /*----------------------没有数据处理---------------------------*/
 .de_404_main{
-    width: 720px;
+    max-width: 720px;
     margin: auto;
     border: 1px solid #ccc;
     box-shadow: 0px 0px 2px 2px #ccc;
@@ -2520,8 +2521,8 @@ background: url(../images/icon60_close_white.png) no-repeat;
 }
 .de_404_wrong{
     top: 22px;
-    font-size: 48px;
-    color: #666;
+    font-size: 38px;
+    color: #390;
 }
 .de_404_info{
     top: 30px;
@@ -2616,6 +2617,34 @@ background: url(../images/icon60_close_white.png) no-repeat;
 	.de_popout_login .de_reg_col, .de_popout_edit_profile .de_bind_account
 	{
 		padding-left:10px;
+	}
+	.de_project_header .de_project_toolbar{
+		display:none;
+	}
+	
+	/*404*/
+	.de_404_header{
+		padding-left:0;
+	}
+	.de_404_header p{
+		position:static;
+	}
+	.de_404_info{		
+		width:auto;
+		text-align:center;
+	}
+	.de_404_body>a{
+		display:inline-block;
+		width:100%:
+		}
+	.de_child_img{
+		position:static;
+		margin-top:10px;
+		width:100%;
+		height:auto;
+	}
+	.de_child_info{
+		padding:0;
 	}
 }
 
