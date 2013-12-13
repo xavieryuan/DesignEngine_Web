@@ -74,7 +74,7 @@ DE.config={
         successTitle:"成功提示",
         operationSuccess:"操作成功，请关闭后选择其他操作！",
         registerSuccess:"注册成功，如果您是非QQ登录用户，请进入邮箱激活账户，否则无法登录！",
-        timeout:"登陆超时，请关闭后刷新页面并登录！",
+        timeout:"登录超时，请关闭后刷新页面并登录！",
         networkError:"网络连接失败，请稍后重试！",
         validCodeError:"验证码错误！",
         operationError:"操作失败，请稍后重试！",

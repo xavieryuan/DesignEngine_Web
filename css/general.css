@@ -314,7 +314,6 @@ li {
 
 .de_popout_login .de_misc_field {
     font-size: 12px;
-    height: 20px;
     position: relative;
 }
 
@@ -331,7 +330,7 @@ li {
 
 .de_popout_login .de_forgot_pwd {
     position: absolute;
-    top: 0;
+    top: 2px;
     right: 0;
     margin: 0;
 }
@@ -2575,23 +2574,26 @@ background: url(../images/icon60_close_white.png) no-repeat;
     }
 
     .de_screen_project_detail .de_project_header {
-        left: 10px;
+        left: 25px;
     }
 	.de_project_detail .user_info{
 		left:20px;
 		}
 	.de_screen_project_detail .de_btn_close_project_detail{
-		right:25px;
+		right:0;
 		}	
+	.de_btn_back_to_home{
+		right:0;
+		}
     .de_screen_project_detail .de_project_detail {
         width: auto;
-        margin: 40px 30px;
+        margin: 40px 10px;
 		padding: 160px 20px 20px;
     }
 
     .de_screen_project_detail .de_comment_box {
         width: auto;
-        margin: 40px 100px;
+        margin: 40px 10px;
     }
     .de_screen_project_detail h2 {
         width: auto;
@@ -2599,6 +2601,21 @@ background: url(../images/icon60_close_white.png) no-repeat;
 	
 	.de_close_pop_window{
 		right:25px;
+	}
+	
+	/*弹出窗口*/
+	.de_popout_login .de_forgot_pwd {
+		position:static;
+		margin: 10px 0;
+	}
+	
+	.de_popout_login .de_login_col, .de_popout_edit_profile .de_edit_col 
+	{
+		padding-right:10px;
+	}
+	.de_popout_login .de_reg_col, .de_popout_edit_profile .de_bind_account
+	{
+		padding-left:10px;
 	}
 }
 
