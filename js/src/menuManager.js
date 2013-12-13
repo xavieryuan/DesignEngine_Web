@@ -220,7 +220,7 @@ DE.menu=(function(){
                     return data;
                 },
                 onSelect: function (data) {
-                    me.serachHandler("search/"+data,DE.config.entityTypes.project,false);
+                    me.serachHandler("search/"+data,"",false);
                 },
                 formatNoResults:function(q, $item){
                     return "";
