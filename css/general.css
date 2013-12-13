@@ -1465,7 +1465,7 @@ li {
     position: absolute;
     top: 10px;
     left: 160px;
-    width: 360px;
+    max-width: 360px;
     font-size: 14px;
     text-align: left;
     height: 80px;
@@ -2589,22 +2589,35 @@ background: url(../images/icon60_close_white.png) no-repeat;
 
 @media screen and (max-width: 720px) {
 	.de_logo>a{
-		width: 80px;
+		width: 50px;
 		font-size: 0;
 		background-position:center;
 		text-indent:-9999px;
 	}
 	.de_top_nav{
-		left:80px;
-		width:200px;
+		left:50px;
+		width:220px;
 	}
 	.de_btn_filter{
-		left:280px;
+		left:270px;
+		}
+	.de_btn_filter a {
+		font-size:0;
+		}
+	.de_filter_menu>.de_filter_group{
+		padding: 30px 10px 10px 10px;
 		}
     .de_user_nav .de_btn_upload {
         display: none;
     }
-
+	.de_user_nav>ul>li>a{
+		font-size:0;
+		text-indent:-9999px;
+		width:40px;
+		}
+	.de_user_nav>ul>li>.de_btn_user_profile{
+		display:none;
+		}
     .de_screen_project_detail .de_project_header {
         left: 25px;
     }
