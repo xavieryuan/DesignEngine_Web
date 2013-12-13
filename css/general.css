@@ -768,18 +768,24 @@ li {
 
 .de_logo {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 0;
+    left: 0;
     margin: 0;
-    font-size: 0px;
+	font-size:0;
 }
 
 .de_logo>a {
-    height: 40px;
-    width: 100px;
-    background: url(../images/logo_new.png) no-repeat;
-    text-indent: -9999px;
+    height: 80px;
+	line-height:80px;
+    width: 140px;
+    background: url(../images/logo_40.png) no-repeat 10px center;
+    text-indent: 60px;
+	font-size:18px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#333;
     display: inline-block;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
 }
 
 /********用户菜单**********/
@@ -2582,6 +2588,19 @@ background: url(../images/icon60_close_white.png) no-repeat;
 }
 
 @media screen and (max-width: 720px) {
+	.de_logo>a{
+		width: 80px;
+		font-size: 0;
+		background-position:center;
+		text-indent:-9999px;
+	}
+	.de_top_nav{
+		left:80px;
+		width:200px;
+	}
+	.de_btn_filter{
+		left:280px;
+		}
     .de_user_nav .de_btn_upload {
         display: none;
     }
