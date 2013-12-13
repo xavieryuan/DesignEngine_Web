@@ -714,11 +714,16 @@ li {
     width: 0px;
 }
 .de_remove_bind{
-    cursor: pointer;
-    color:blue;
-    display: inline-block;
-    margin-left: 40px;
+	cursor: pointer;
+	color: #fff;
+	display: inline-block;
+	margin-left: 40px;
+	padding: 4px 10px;
+	background: #390;
 }
+.de_remove_bind:hover{
+	background:#333;
+	}
 /*****************header 部分******************/
 .de_header {
     position: fixed;
