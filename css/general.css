@@ -580,7 +580,7 @@ li {
 
 .de_form_edit_profile {
     margin: 20px 0;
-    padding: 0 0 0 120px;
+    padding: 0 0 0 100px;
     position: relative;
 }
 
@@ -620,7 +620,14 @@ li {
     margin: 5px auto;
     display: block;
 }
-
+.de_photo_field .de_change_figure{
+	display: inline-block;
+	width: 100%;
+	padding-top: 70px;
+	position: absolute;
+	top: 0;
+	left: 0;	
+	}
 .de_about_field {
     margin: 20px 0;
 }
