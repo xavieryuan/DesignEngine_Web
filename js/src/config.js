@@ -5,9 +5,8 @@
  * Time: 上午9:22
  * 配置文件
  */
-var DE=DE||{};
-DE.config={
-    root:"/DesignEngine_Web", //项目名
+
+define([],{
     maxMediaSize:"200m", //最大的媒体文件上传大小
     maxImageSize:"2m", //最大的图片文件上传大小
     defualtEntityThumb:"images/default_thumb_500.png",
@@ -25,6 +24,9 @@ DE.config={
         hotUser:"hotUser",
         project:"project",
         resource:"resource",
+        search:"search",
+        searchProject:"searchProject",
+        searchResource:"searchResource",
         userEntity:"userEntity" //用户页的用户作品
     },
     messageCode:{  //错误提示
@@ -171,5 +173,4 @@ DE.config={
         DE.UIManager.hideLoading();
     }
 
-};
-Object.freeze(DE.config);
+});
