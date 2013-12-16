@@ -93,6 +93,7 @@ DE.login=(function(){
                            url:DE.config.ajaxUrls.sendOpenId,
                            data:{
                                openId:openId,
+                               accessToken:accessToken,
                                openIdSource:"qq"
                            },
                            type:"post",
@@ -159,6 +160,7 @@ DE.login=(function(){
                        url:DE.config.ajaxUrls.bindOldAccount,
                        data:{
                            openId:openId,
+                           accessToken:accessToken,
                            openIdSource:"qq"
                        },
                        type:"post",

@@ -287,7 +287,7 @@ $(document).ready(function(){
     });
 
     //用户菜单（ext菜单项按钮点击事件）
-    $(document).on("click","#de_ext_nav a",function(){
+    $(document).on("click","#de_ext_nav a:not('.de_user_link')",function(){
         DE.menu.extMenuClickHandler($(this).attr("id"));
 
         return false;

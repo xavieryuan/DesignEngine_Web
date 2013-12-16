@@ -1194,7 +1194,7 @@ li {
 
 .de_project_grid .project_info .thumb {
     width: 100%;
-    height: 100%;
+   /* height: 100%;*/
 }
 
 .de_project_grid .project_info h4 {

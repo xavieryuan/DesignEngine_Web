@@ -61,6 +61,7 @@
             <a class="de_btn_hotdogmenu de_borderbox" href="#" id="de_btn_ext_nav">更多</a>
             <ul class="de_ext_nav de_transition" id="de_ext_nav">
                 <li class="de_reg_view "><a href="#" id="de_btn_reset_pwd">修改密码</a></li>
+                <li class="de_reg_view "><a href="user/${user.userId}" class="de_user_link">个人主页</a></li>
                 <li class="de_reg_view "><a href="#" id="de_btn_edit_profile">修改个人信息</a></li>
                 {@if user.role=='user'}
                      <!--<li class="de_reg_view "><a href="#" id="de_btn_bind_account">绑定账号</a></li>-->
@@ -300,12 +301,12 @@
         {@if user.userId}
         <div class="de_comment_form de_reg_view de_borderbox">
             <div class="user_info">
-                <a href="user/${user.userId}" class="de_borderbox">
+                <a href="user/${user.userId}" class="de_borderbox de_user_link">
                     <img src="${user.figure}" class="photo">
                 </a>
             </div>
             <div class="comment_wrapper">
-                <a href="user/${user.userId}" class="name">${user.name}</a>
+                <a href="user/${user.userId}" class="name de_user_link">${user.name}</a>
                 <textarea id="de_comment_content" maxlength="200" class="comment de_borderbox de_inputbox_gray" placeholder="你的评论..."></textarea>
                 <input type="submit" class="de_button de_btn_add_comment" name="de_btn_add_comment"
                        id="de_btn_add_comment" value="提交">
@@ -363,7 +364,7 @@
             </a>
         </div>
         <div class="comment_wrapper">
-            <a href="user/${c.userId}" class="name   de_user_link">${c.userName}</a>
+            <a href="user/${c.userId}" class="name de_user_link">${c.userName}</a>
             <span class="publishtime">${c.commentTime}</span>
 
             {@if c.deleteAble}
@@ -384,7 +385,7 @@
             </a>
         </div>
         <div class="comment_wrapper">
-            <a href="user/${user.userId}" class="name   de_user_link">${user.name}</a>
+            <a href="user/${user.userId}" class="name de_user_link">${user.name}</a>
             <span class="publishtime">${time}</span>
             <a href="${commentId}" class="de_delete_comment">X</a>
             <p class="comment">${content}</p>
@@ -581,7 +582,7 @@
     <h2>${title}</h2>
     <p class="publishtime">${date}</p>
     <div class="user_info">
-        <a href="user/${userId}">
+        <a href="user/${userId}" class="de_user_link">
             <img class="photo" src="${userFigure}">
             <p class="name">${username}</p>
         </a>
