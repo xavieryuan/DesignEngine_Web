@@ -1223,8 +1223,8 @@ li {
 }
 
 .de_project_grid .user_info .photo {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     overflow: hidden;
     border-radius: 60px;
     border: #fff 3px solid;
@@ -2607,6 +2607,9 @@ background: url(../images/icon60_close_white.png) no-repeat;
 	.de_user_nav>ul>li>.de_btn_user_profile{
 		display:none;
 		}
+    .photo{
+        border:none;
+    }
     .de_screen_project_detail .de_project_header {
         left: 25px;
     }
