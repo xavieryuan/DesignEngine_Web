@@ -11,7 +11,9 @@ ul, ol {
     margin: 0;
     padding: 0;
 }
-
+a{
+    text-decoration:none;
+}
 li {
     list-style: none;
 }
@@ -2072,8 +2074,10 @@ ol.mp_list li.mp_selectable {
     position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
-    right: 0;
+    /*bottom: 0;
+    right: 0;*/
+    width: 100%;
+    height: 100%;
     background: rgba(240, 240, 240, 0.95);
     z-index: 1000;
     overflow-y: scroll;
@@ -2084,7 +2088,7 @@ ol.mp_list li.mp_selectable {
     top: 0;
     right: 10%;
     display: inline-block;
-    font-size: 0;
+    font-size: 0px;
     width: 70px;
     height: 70px;
     background: url(../images/icon60_close_gray.png) no-repeat;
