@@ -126,9 +126,19 @@ DE.UIManager=function(){
 		},
         showLoading:function(){
             $("#de_loading").removeClass("de_hidden");
+            $("#de_loading_spinner ").css({
+                webkitAnimationPlayState:"running",
+                mozAnimationPlayState:"running",
+                animationPlayState:"running"
+            });
         },
         hideLoading:function(){
             $("#de_loading").addClass("de_hidden");
+            $("#de_loading_spinner ").css({
+                webkitAnimationPlayState:"paused",
+                mozAnimationPlayState:"paused",
+                animationPlayState:"paused"
+            });
         },
 		showProjectDetail:function(){
             var detailEle=$("#de_screen_project_detail");
