@@ -126,19 +126,11 @@ DE.UIManager=function(){
 		},
         showLoading:function(){
             $("#de_loading").removeClass("de_hidden");
-            $("#de_loading_spinner ").css({
-                webkitAnimationPlayState:"running",
-                mozAnimationPlayState:"running",
-                animationPlayState:"running"
-            });
+            $("#de_loading_spinner ").removeClass("de_animation_stop");
         },
         hideLoading:function(){
             $("#de_loading").addClass("de_hidden");
-            $("#de_loading_spinner ").css({
-                webkitAnimationPlayState:"paused",
-                mozAnimationPlayState:"paused",
-                animationPlayState:"paused"
-            });
+            $("#de_loading_spinner ").addClass("de_animation_stop");
         },
 		showProjectDetail:function(){
             var detailEle=$("#de_screen_project_detail");

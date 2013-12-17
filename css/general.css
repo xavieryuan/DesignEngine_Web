@@ -2359,7 +2359,6 @@ ol.mp_list li.mp_selectable {
 .de_noscroll {
     overflow: hidden !important;
 }
-
 .de_blackout {
     background: #000;
     width: 100%;
@@ -2398,6 +2397,13 @@ ol.mp_list li.mp_selectable {
     -moz-animation: spin 1.2s infinite ease-in-out;
     animation: spin 1.2s infinite ease-in-out;
 	}
+
+/*这里需要注意优先级，如果不使用important，这个声明需要在de_loading_spinner后*/
+.de_animation_stop{
+    -webkit-animation-play-state: paused ;
+    -moz-animation-play-state: paused ;
+    animation-play-state: paused ;
+}
 .de_loading_spinner:before{
 	content:"";
 	background:url(../images/loading_spinner_pin.png) no-repeat;
