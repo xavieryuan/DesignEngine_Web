@@ -121,7 +121,7 @@ DE.user=(function(){
                 },
                 success:function(data){
                     if(data.success){
-                        var length=data.users.length;
+                        var length=data.users.length,i=0;
                         if(length==DE.config.perLoadCount){
                             DE.store.hotUserLoadedCount+=DE.config.perLoadCount;
                         }else{
@@ -130,7 +130,11 @@ DE.user=(function(){
 
                         DE.store.currentScrollScreenType=DE.config.scrollScreenType.hotUser;
 
-
+                        if(DE.config.checkMobile()){
+                            for(;i<length;i++){
+                                data.users[i]["projects"]=DE.entity.formatThumb(data.users[i]["projects"]);
+                            }
+                        }
                         me.showHotUsers(data,first);
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
@@ -288,6 +292,10 @@ DE.user=(function(){
                 success:function(data){
                     if(data.success){
                         userEntities=data.userEntities;
+
+                        if(DE.config.checkMobile()){
+                            userEntities=DE.entity.formatThumb(userEntities);
+                        }
                         me.showUserEntity(true,callback);
 
                         //如果是普通用户，会有优秀作品

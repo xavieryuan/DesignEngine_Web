@@ -87,23 +87,19 @@ DE.history=(function(){
 
                 break;
             case "item":
-                if(oldHref!==undefined){
-                    if(oldHref===""){
-                        handler(null,null,undefined,function(){
-                            DE.entity.entityClickHandler(type+"/"+value);
-                        });
-                    }else{
-                        var obj=handlerHref(oldHref);
-                        handler(obj.type,obj.value,undefined,function(){
-                            DE.entity.entityClickHandler(type+"/"+value);
-                        });
-                    }
+                if(oldHref!==undefined&&oldHref!==""){
+                    var obj=handlerHref(oldHref);
+                    handler(obj.type,obj.value,undefined,function(){
+                        DE.entity.entityClickHandler(type+"/"+value);
+                    });
 
                 }else{
-                    DE.entity.entityClickHandler(type+"/"+value,true);
+                    var showHome=oldHref===""?false:true;
+
+                    handler(null,null,undefined,function(){
+                        DE.entity.entityClickHandler(type+"/"+value,showHome);
+                    });
                 }
-
-
 
                 break;
             default :

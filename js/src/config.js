@@ -10,6 +10,10 @@ DE.config={
     defualtEntityThumb:"images/default_thumb_500.png",
     perLoadCount:10, //作品、评论、资源等每次加载的个数
     hasNoMoreFlag:-1, //作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
+    imagesSize:{
+        thumb:"-200x200",
+        mediaThumb:"-400x300"
+    },
     uploadSize:{
         maxMediaSize:"200m", //最大的媒体文件上传大小
         maxImageSize:"2m"//最大的图片文件上传大小
@@ -39,10 +43,6 @@ DE.config={
         mediaThumbFilepath:"zy_media_thumb_filepath",
         mediaFilename:"zy_media_filename",
         mediaFilepath:"zy_media_filepath"
-    },
-    imgSize:{
-        small:"-200x200",
-        middle:"-400x400"
     },
     userStatus:{   //用户状态（禁言、激活）
         enabled:"enabled",
@@ -239,6 +239,35 @@ DE.config={
     ajaxErrorHandler:function(){
         DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.networkError);
         DE.UIManager.hideLoading();
+    },
+    checkMobile:function(){
+        var userAgentList = new Array("2.0 MMP", "240320", "AvantGo","BlackBerry", "Blazer",
+            "Cellphone", "Danger", "DoCoMo", "Elaine/3.0", "EudoraWeb", "hiptop", "IEMobile", "KYOCERA/WX310K", "LG/U990",
+            "MIDP-2.0", "MMEF20", "MOT-V", "NetFront", "Newt", "Nintendo Wii", "Nitro", "Nokia",
+            "Opera Mini", "Opera Mobi",
+            "Palm", "Playstation Portable", "portalmmm", "Proxinet", "ProxiNet",
+            "SHARP-TQ-GX10", "Small", "SonyEricsson", "Symbian OS", "SymbianOS", "TS21i-10", "UP.Browser", "UP.Link",
+            "Windows CE", "WinWAP", "Android", "iPhone", "iPod", "iPad", "Windows Phone", "HTC"/*, "GTB"*/);
+        var appNameList = new Array("Microsoft Pocket Internet Explorer");
+
+        var userAgent = navigator.userAgent.toString();
+        var appName = navigator.appName.toString();
+        var agentLength=userAgentList.length,appLength=appNameList.length;
+        var i= 0,j=0;
+
+        for (; i<agentLength; i++) {
+            if (userAgent.indexOf(userAgentList[i]) >= 0) {
+                return true;
+            }
+        }
+
+        for (; j<appLength; j++) {
+            if (appName.indexOf(appNameList[j]) >= 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 };

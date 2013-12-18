@@ -12,13 +12,12 @@ DE.store={
     projectLoadedId:0, //分页加载，最后一个作品的时间，-1代表没有更多
     resourceLoadedId:0,
     searchLoadedCount:0,
-    currentShowEntitiesType:DE.config.entityTypes.project, //当前聚合显示的实体类型
     currentEditEntityId:0, //当前编辑的作品、资源的id
     currentScrollScreenType:"", //当前需要滚动加载的类型
     userEntitiesShowCount:0, //查看用户那里的作品，已经显示的个数，本地分页
     uploadedMedias:{}, //上传作品、资源时已经上传的媒体文件
     currentSearch:{
-        currentSearchType:DE.config.entityTypes.project,//目前搜索显示的类型
+        currentSearchType:"",//目前搜索显示的类型
         currentSearchValue:"", //目前搜索的内容
         isTag:true
     },
@@ -30,9 +29,9 @@ DE.store={
         description:"",
         email:"",
         openId:"",
-        openIdSource:"qq",
+        openIdSource:"",
         accessToken:"",
-        status:DE.config.userStatus.enabled,
+        status:"",
         regLocked:true
     },
     currentShowUser:{ //当前显示的用户详情
@@ -44,7 +43,7 @@ DE.store={
     currentShowEntity:{    //当前显示详情的entity的信息
         id:0,
         hasPraised:false,
-        type:DE.config.entityTypes.project,
+        type:"",
         commentLoadedId:0 //详情页面评论加载了的id，-1代表没有更多
     },
 
@@ -57,12 +56,11 @@ DE.store={
         this.projectLoadedId=0;
         this.searchLoadedCount=0;
         this.resourceLoadedId=0;
-        this.currentShowEntitiesType=DE.config.entityTypes.project;
         this.currentShowUser.userId=0;
         this.currentShowUser.name="";
         this.currentShowUser.figure="";
         this.currentShowUser.role="";
-        this.currentSearch.currentSearchType=DE.config.entityTypes.project;
+        this.currentSearch.currentSearchType="";
         this.currentSearch.currentSearchValue="";
         this.currentSearch.isTag=true;
         this.uploadedMedias={};
@@ -73,7 +71,7 @@ DE.store={
     clearCurrentShowEntity:function(){
         this.currentShowEntity.id=0;
         this.currentShowEntity.hasPraised=false;
-        this.currentShowEntity.type=DE.config.entityTypes.project;
+        this.currentShowEntity.type="";
         this.currentShowEntity.commentLoadedId=0;
     },
 
@@ -160,7 +158,7 @@ DE.store={
         this.currentUser.description="";
         this.currentUser.openId="";
         this.currentUser.accessToken="";
-        this.currentUser.status=DE.config.userStatus.enabled;
+        this.currentUser.status="";
         this.currentUser.regLocked=true;
     },
 

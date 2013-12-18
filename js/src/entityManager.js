@@ -61,6 +61,7 @@ DE.entity=(function(){
      * @returns {*}
      */
     function formatSearchData(data){
+
         var length=data.response.docs.length;
         var i=0;
         for(;i<length;i++){
@@ -68,6 +69,12 @@ DE.entity=(function(){
         }
 
         return data.response;
+    }
+
+    function getImageBySize(path,size){
+        var ext=path.substring(path.lastIndexOf("."),path.length);
+
+        return path.substring(0,path.lastIndexOf("."))+size+ext;
     }
 
     return {
@@ -88,6 +95,9 @@ DE.entity=(function(){
                 },
                 success:function(data){
                     if(data.success){
+                        if(DE.config.checkMobile()){
+                           data.attachments=me.formatAttachment(data.attachments);
+                        }
                         me.showAttachment(data);
                     }else{
                        DE.config.ajaxReturnErrorHandler(data);
@@ -98,6 +108,19 @@ DE.entity=(function(){
                 }
 
             });
+        },
+
+        formatAttachment:function(data){
+            var length=data.length,i=0;
+            if(length==0){
+                return [];
+            }else{
+                for(;i<length;i++){
+                    data[i]["attachmentPreviewLocation"]=getImageBySize(data[i]["attachmentPreviewLocation"],DE.config.imagesSize.mediaThumb);
+                }
+
+                return data;
+            }
         },
 
         /**
@@ -190,6 +213,13 @@ DE.entity=(function(){
                         }
 
                         //不管是否有数据，都需要执行函数，因为函数里有显示界面screen的操作
+                        if(DE.config.checkMobile()){
+                            if(data.projects){
+                                data.projects=me.formatThumb(data.projects);
+                            }else{
+                                data.resources=me.formatThumb(data.resources);
+                            }
+                        }
                         me.showEntities(data,type,first,callback);
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
@@ -201,6 +231,19 @@ DE.entity=(function(){
                 }
 
             });
+        },
+
+        formatThumb:function(data){
+            var length=data.length,i=0;
+            if(length==0){
+                return [];
+            }else{
+                for(;i<length;i++){
+                    data[i]["postThumb"]=getImageBySize(data[i]["postThumb"],DE.config.imagesSize.thumb);
+                }
+
+                return data;
+            }
         },
 
         /**
@@ -247,7 +290,9 @@ DE.entity=(function(){
                         DE.store.searchLoadedCount=DE.config.hasNoMoreFlag;
                     }
 
-
+                    if(DE.config.checkMobile()){
+                        data.response.docs=me.formatThumb(data.response.docs);
+                    }
                     me.showSearchEntities(data,first,callback);
 
                 },
@@ -338,6 +383,10 @@ DE.entity=(function(){
                     //如果后台返回的是null
                     if(!data.response){
                         data={response:{docs:[]}};
+                    }
+
+                    if(DE.config.checkMobile()){
+                        data.response.docs=me.formatThumb(data.response.docs);
                     }
                     me.showSimilarEntity(data);
 
@@ -869,6 +918,7 @@ $(document).ready(function(){
 
         return false;
     });
+
 
     //关闭作品详情
     $(document).on("click","#de_btn_close_project_detail",function(){

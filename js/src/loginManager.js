@@ -465,7 +465,8 @@ DE.login=(function(){
 })();
 
 $(document).ready(function(){
-    DE.login.checkLogin();//放到getTags里面
+
+    DE.login.checkLogin();
 
     //注册按钮点击
     $("#de_reg_btn").click(function(){
