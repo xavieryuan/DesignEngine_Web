@@ -2396,7 +2396,7 @@ ol.mp_list li.mp_selectable {
 	left:50%;
 	margin-top:-20px;
     margin-left:-20px;
-    background:url(../images/loading_spinner_bg.png) no-repeat;
+    background:url(../images/loading_spinner.png) no-repeat;
     -webkit-animation: spin 1.2s infinite ease-in-out;
     -moz-animation: spin 1.2s infinite ease-in-out;
     animation: spin 1.2s infinite ease-in-out;
@@ -2408,15 +2408,6 @@ ol.mp_list li.mp_selectable {
     -moz-animation-play-state: paused ;
     animation-play-state: paused ;
 }
-.de_loading_spinner:before{
-	content:"";
-	background:url(../images/loading_spinner_pin.png) no-repeat;
-	width:14px;
-	height:24px;
-	position:absolute;
-	top:10px;
-	left:14px;
-	}
 
 /*--------------------显示资源图标---------------------*/
 .de_has_media:before{
