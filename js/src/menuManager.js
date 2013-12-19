@@ -90,86 +90,10 @@ DE.menu=(function(){
         },
 
         /**
-         * 获取系统标签设置在顶部搜索区域
-         */
-        getTags:function(){
-            var me=this;
-            $.ajax({
-                url:DE.config.ajaxUrls.getTags,
-                type:"get",
-                dataType:"json",
-                success:function(data){
-                    if(data.success){
-                        me.showTags(data);
-                    }else{
-                        DE.config.ajaxReturnErrorHandler(data);
-                    }
-
-                    //进入页面，请求后台是否登录,先获取到tag然后再初始化数据，这样当时tag进入的时候就知道是作品还是资源
-                    DE.login.checkLogin();
-
-                },
-                error:function(){
-                    DE.config.ajaxErrorHandler();
-
-                    //进入页面，请求后台是否登录
-                    DE.login.checkLogin();
-                }
-
-            });
-        },
-
-        /**
-         * 显示系统标签
-         * @param {Object} data 请求系统标签时的json对象
-         */
-        showTags:function(data){
-            var html="";
-            var projectTagTpl=$("#projectTagTpl").html();
-            html=juicer(projectTagTpl,{projecttags:data.work});
-            $("#de_project_tags").html(html);
-
-            var resourceTagTpl=$("#resourceTagTpl").html();
-            html=juicer(resourceTagTpl,{resourcetags:data.resource});
-            $("#de_resource_tags").html(html);
-        },
-
-        /**
-         * 系统标签点击事件
-         * @param {String} href 需要设置的地址
-         * @param {String} searchType 搜索的类型
-         * @param {Boolean} isTag 是否是标签
-         */
-        serachHandler:function(href,searchType,isTag){
-            DE.history.push(href); //由于有清空store的操作，需要最先执行
-            var array=href.split("/");
-            var value=array[1];
-            DE.uiManager.showLoading();
-            DE.entity.getEntityBySearch(value,searchType,isTag,true);
-
-
-            $("#de_search_input").val("");
-        },
-
-        /**
-         * 搜索结果面板的tab切换事件
-         * @param {String} type 需要显示的类型
-         */
-        searchTabClickHandler:function(type){
-
-            //如果当前显示的类型和点击的按钮不一致，则要置换
-            if(type!=DE.store.currentSearch.currentSearchType){
-                DE.store.searchLoadedCount=0;
-                DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,type,DE.store.currentSearch.isTag,true);
-            }
-
-        },
-
-        /**
          * 侧边栏菜单点击事件
          * @param {String} id 点击的菜单id
          */
-        extMenuClickHandler:function(id){
+        extMenuItemClickHandler:function(id){
             if(id=="de_btn_sign_out"){
                 DE.login.logout();
             }else if(id=="de_btn_reset_pwd"){
@@ -190,49 +114,7 @@ DE.menu=(function(){
             DE.entity.getAllEntity(DE.config.entityTypes.project,true);
         },
 
-        /**
-         * 搜素输入框事件
-         */
-        searchInputEventHandler:function(){
-            var me=this;
-            var searchInput= $("#de_search_input");
-            searchInput.keydown(function(event){
-                if(event.keyCode==13){
-                    var value=$(this).val();
-                    if(value.trim()){
-                        me.serachHandler("search/"+value,"",false);
-                    }
-                }
-            });
 
-            searchInput.marcoPolo({
-                url: DE.config.ajaxUrls.searchSuggest,
-                minChars:2,
-                formatData : function (data) {
-                    if(!$.isEmptyObject(data)&&data.spellcheck.suggestions.length){
-                        return data.spellcheck.suggestions[1]["suggestion"];
-                    }else{
-                        return [];
-                    }
-
-                },
-                formatItem: function (data) {
-                    return data;
-                },
-                onSelect: function (data) {
-                    me.serachHandler("search/"+data,"",false);
-                },
-                formatNoResults:function(q, $item){
-                    return "";
-                },
-                formatMinChars :function(minChars, $item){
-                    return "";
-                },
-                formatError :function($item, jqXHR, textStatus, errorThrown){
-                    return "";
-                }
-            });
-        },
         addMobileSources:function(){
             if(DE.config.checkMobile()){
                 $("<link>").attr({ rel: "stylesheet",
@@ -240,130 +122,25 @@ DE.menu=(function(){
                         href: "css/mobile.css"
                 }).insertAfter($("link:eq(0)"));
             }
+        },
+        regBtnClickHandler:function(){
+            DE.login.initLoginForm();
+            DE.uiManager.showLoginPopout();
+        },
+        extMenuClickHandler:function(){
+            DE.uiManager.showExtMenu();
+        },
+        documentClickHandler:function(target){
+            if (target.parents("#de_popout").length == 0 && target.parents("#de_filter_menu").length == 0 &&
+                target.parents("#de_ext_nav").length == 0 && target.parents("#de_pop_window").length == 0) {
+                DE.uiManager.hideAllMenuAndPopouts();
+            }
+        },
+        closePopWindowHandler:function(){
+            DE.uiManager.closeWindow();
+        },
+        popCloseHandler:function(){
+            DE.uiManager.hideAllMenuAndPopouts();
         }
     }
 })();
-
-$(document).ready(function(){
-     //DE.menu.addMobileSources();
-    //获取顶部所有的标签
-    //DE.menu.getTags();
-
-    //顶部菜单点击事件（除上传按钮）
-    $("#de_top_nav a").click(function(){
-        DE.menu.topMenuClickHandler($(this).attr("href"));
-
-        return false;
-    });
-
-    //上传菜单点击事件
-    $(document).on("click","#de_btn_upload",function(){
-        DE.menu.topMenuClickHandler($(this).attr("href"));
-
-        return false;
-    });
-
-    //logo点击事件
-    $("#de_logo").click(function(){
-        DE.menu.logoClickHandler();
-
-        return false;
-    });
-
-    //登录注册按钮点击事件
-    $(document).on("click","#de_btn_login_reg",function(){
-        DE.login.initLoginForm();
-        DE.uiManager.showLoginPopout();
-
-        return false;
-    });
-	
-	//搜索框焦点事件，为了能完整显示自动提示窗体
-    //blur的行为在cleanAllScreens已经有设置
-	/*$(document).on("blur","#de_search_input",function(){
-		$("#de_filter_menu").css("overflow","auto");
-    });*/
-	$("#de_search_input").focus(function(){
-        $("#de_filter_menu").css("overflow","visible");
-    });
-	
-    //ext菜单按钮点击事件（显示隐藏）
-    $(document).on("click","#de_btn_ext_nav",function(evt){
-        DE.uiManager.showExtMenu();
-
-        return false;
-    });
-
-    //用户菜单（ext菜单项按钮点击事件）
-    $(document).on("click","#de_ext_nav a:not('.de_user_link')",function(){
-        DE.menu.extMenuClickHandler($(this).attr("id"));
-
-        return false;
-    });
-	
-	//点击弹窗右上角x关闭弹窗
-	$(document).on("click","#de_popout_x_btn",function(){
-		DE.uiManager.hidePopout();
-		return false;	
-	});
-	
-    //点击body隐藏所有弹窗和菜单
-    $(document).click(function(event){
-        var target=$(event.target);
-        if(target.parents("#de_popout").length==0&&target.parents("#de_filter_menu").length==0&&
-            target.parents("#de_ext_nav").length==0&&target.parents("#de_pop_window").length==0){
-            DE.uiManager.hideAllMenuAndPopouts();
-        }
-    });
-
-    //更多分类按钮点击事件
-    $("#de_btn_filter>a").on("click",function(evt){
-        DE.uiManager.showFilterMenu();
-
-        return false;
-    });
-
-    //点击搜索里面的作品标签事件
-    $(document).on("click","#de_project_tags li>a",function(){
-        DE.menu.serachHandler($(this).attr("href"),DE.config.entityTypes.project,true);
-
-        return false;
-    });
-
-    //点击搜索里面的资源标签事件
-    $(document).on("click","#de_resource_tags li>a",function(){
-        DE.menu.serachHandler($(this).attr("href"),DE.config.entityTypes.resource,true);
-
-        return false;
-    });
-
-    //搜索
-    DE.menu.searchInputEventHandler();
-
-    //搜索结果tab点击事件
-    /*$("#de_search_result_tab a").click(function(){
-        var type=$(this).data("entity-type");
-
-        DE.menu.searchTabClickHandler(type);
-
-        return false;
-    });*/
-
-    //关闭弹出的window
-    $("#de_close_pop_window").click(function(){
-        $(this).parent().addClass("de_hidden");
-        $("#de_pop_window_content").html("");
-        $("#de_blackout").addClass("de_hidden");
-    });
-
-    //关闭pop
-    $("#de_popout_close_btn").click(function(){
-        DE.uiManager.hideAllMenuAndPopouts();
-        return false;
-    });
-
-    //控制滚动分页
-    $(window).scroll(function(){
-        DE.menu.windowScrollHandler();
-    });
-});

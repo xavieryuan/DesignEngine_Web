@@ -6,133 +6,112 @@
  * To change this template use File | Settings | File Templates.
  */
 var DE=DE||{};
-DE.event= (function () {
+DE.event= (function (login,menu,search,entity,user) {
     var init = function () {
         $(document).ready(function () {
 
             //获取顶部所有的标签
-            DE.menu.getTags();
+            //search.getTags();
 
+            //检测是否登录
+            login.checkLogin();
+
+            /*----------------------菜单事件--------------------------------*/
             //顶部菜单点击事件（除上传按钮）
             $("#de_top_nav a").click(function () {
-                DE.menu.topMenuClickHandler($(this).attr("href"));
+                menu.topMenuClickHandler($(this).attr("href"));
 
                 return false;
             });
 
             //上传菜单点击事件
             $(document).on("click", "#de_btn_upload", function () {
-                DE.menu.topMenuClickHandler($(this).attr("href"));
+                menu.topMenuClickHandler($(this).attr("href"));
 
                 return false;
             });
 
             //logo点击事件
             $("#de_logo").click(function () {
-                DE.history.push("");
-                DE.entity.getAllEntity(DE.config.entityTypes.project, true);
+                menu.logoClickHandler();
 
                 return false;
             });
 
-            //登录注册按钮点击事件
-            $(document).on("click", "#de_btn_login_reg", function () {
-                DE.login.initLoginForm();
-                DE.uiManager.showLoginPopout();
-
-                return false;
-            });
 
             //ext菜单按钮点击事件（显示隐藏）
             $(document).on("click", "#de_btn_ext_nav", function (evt) {
-                DE.uiManager.showExtMenu();
+                menu.extMenuClickHandler();
 
                 return false;
             });
 
             //用户菜单（ext菜单项按钮点击事件）
-            $(document).on("click", "#de_ext_nav a", function () {
-                DE.menu.extMenuClickHandler($(this).attr("id"));
+            $(document).on("click", "#de_ext_nav a:not('.de_user_link')", function () {
+                menu.extMenuItemClickHandler($(this).attr("id"));
 
                 return false;
             });
 
             //点击body隐藏所有弹窗和菜单
             $(document).click(function (event) {
-                var target = $(event.target);
-                if (target.parents("#de_popout").length == 0 && target.parents("#de_filter_menu").length == 0 &&
-                    target.parents("#de_ext_nav").length == 0 && target.parents("#de_pop_window").length == 0) {
-                    DE.uiManager.hideAllMenuAndPopouts();
-                }
+                menu.documentClickHandler(event.target);
+            });
+
+            //控制滚动分页
+            $(window).scroll(function () {
+                menu.windowScrollHandler();
+            });
+
+            /*---------------------------------------搜索------------------------*/
+            search.searchInputEventHandler();
+
+            //搜索框焦点事件，为了能完整显示自动提示窗体
+            $("#de_search_input").focus(function(){
+                search.searchInputFocus();
             });
 
             //更多分类按钮点击事件
             $("#de_btn_filter>a").on("click", function (evt) {
-                DE.uiManager.showFilterMenu();
+                search.filterClickHandler();
 
                 return false;
             });
 
-            //点击搜索里面的作品标签事件
-            $(document).on("click", "#de_project_tags li>a", function () {
-                DE.menu.serachHandler($(this).attr("href"), DE.config.entityTypes.project, true);
+            //点击搜索里面的标签事件
+            $(document).on("click", "#de_project_tags li>a,#de_resource_tags li>a", function () {
+                var el=$(this);
+                search.searchHandler(el.attr("href"),el.parents("ul").data("type"), true);
 
                 return false;
             });
 
-            //点击搜索里面的资源标签事件
-            $(document).on("click", "#de_resource_tags li>a", function () {
-                DE.menu.serachHandler($(this).attr("href"), DE.config.entityTypes.resource, true);
 
-                return false;
-            });
 
-            //搜索
-            $("#de_search_input").keydown(function (event) {
-                if (event.keyCode == 13) {
-                    var value = $(this).val();
-                    DE.menu.serachHandler("search/" + value, DE.config.entityTypes.project, false);
-                }
-            });
-
-            //搜索结果tab点击事件
-            $("#de_search_result_tab a").click(function () {
-                var type = $(this).data("entity-type");
-
-                DE.menu.searchTabClickHandler(type);
-
+            /*------------------------------弹层控制-------------------*/
+            //点击弹窗右上角x和消息提示的时候的“关闭”关闭弹窗
+            $(document).on("click","#de_popout_x_btn,#de_popout_close_btn",function(){
+                menu.popCloseHandler();
                 return false;
             });
 
             //关闭弹出的window
             $("#de_close_pop_window").click(function () {
-                $(this).parent().addClass("de_hidden");
-                $("#de_blackout").addClass("de_hidden");
+                menu.closePopWindowHandler();
             });
 
-            //关闭pop
-            $("#de_popout_close_btn").click(function () {
-                DE.uiManager.hideAllMenuAndPopouts();
-                return false;
-            });
 
-            //控制滚动分页
-            $(window).scroll(function () {
-                DE.menu.windowScrollHandler();
-            });
-
-            //显示当个实体详情
+             /*----------------------------------作品详情-----------------------*/
+            //显示单个实体详情
             $(document).on("click", "a.de_entity_link", function () {
-
-                DE.entity.entityClickHandler($(this).attr("href"));
+                entity.entityClickHandler($(this).attr("href"),false);
 
                 return false;
             });
 
             //关闭作品详情
             $(document).on("click", "#de_btn_close_project_detail", function () {
-                DE.uiManager.hideProjectDetail();
-                DE.store.commentLoadedId = 0;
+                entity.closeEntityDetailHandler($(this).data("behavior"));
 
                 return false;
             });
@@ -185,8 +164,13 @@ DE.event= (function () {
                 return false;
             });
 
-            //进入页面，请求后台是否登录
-            DE.login.checkLogin();
+            /*--------------------------------登录注册绑定---------------------*/
+            //登录按钮点击事件
+            $(document).on("click", "#de_btn_login_reg", function () {
+                menu.regBtnClickHandler();
+
+                return false;
+            });
 
             //注册按钮点击
             $("#de_reg_btn").click(function () {
@@ -352,4 +336,4 @@ DE.event= (function () {
     return {
         init: init
     }
-})();
+})(DE.login,DE.menu,DE.search,DE.entity,DE.user);

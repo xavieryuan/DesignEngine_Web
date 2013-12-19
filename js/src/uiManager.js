@@ -103,6 +103,10 @@ DE.uiManager=function(){
 		showScreen:function(screenLink,paraObj){		
 			gotoScreen(screenLink)
 		},
+        closeWindow:function(){
+            $(this).parent().addClass("de_hidden");
+            $("#de_blackout").addClass("de_hidden");
+        },
 		showSearchScreen:function(keyword,type){
 			gotoScreen("#de_screen_search_result",{keyword:keyword,type:type})
 		},	

@@ -614,15 +614,18 @@ DE.entity=(function(){
 
             });
         },
-
-        /**
-         * 作品（资源）聚合点击事件，显示详情
-         * @param {String} href 聚合中a的href（entity/id形式）
-         * @param {Boolean} showHome 是否显示首页按钮，用户直接用详情地址进入的时候需要显示
-         */
         entityClickHandler:function(href,showHome){
             var array=href.split("/");
             var id=array[1];
+            DE.history.push(id,true);
+            this.entityShowHandler(id,showHome)
+        },
+        /**
+         * 作品（资源）聚合点击事件，显示详情
+         * @param {Number} id
+         * @param {Boolean} showHome 是否显示首页按钮，用户直接用详情地址进入的时候需要显示
+         */
+        entityShowHandler:function(id,showHome){
 
             //先隐藏清空数据，然后再显示，因为点击相似作品在同一个页面，如果不清空数据会导致数据重复
             DE.uiManager.hideProjectDetail();
@@ -905,39 +908,22 @@ DE.entity=(function(){
             }else{
                 this.showOrHideEntity(target);
             }
+        },
+        closeEntityDetailHandler:function(behavior){
+            if(behavior==="close"){
+
+                history.go(-1);
+
+                DE.uiManager.hideProjectDetail();
+            }else{
+
+                DE.menu.logoClickHandler();
+            }
         }
     }
 })();
 
 $(document).ready(function(){
-
-    //显示当个实体详情
-    $(document).on("click","a.de_entity_link",function(){
-        var href=$(this).attr("href");
-        DE.entity.entityClickHandler(href);
-
-        //不能放到 entityClickHandler函数中，从浏览器向前进入详情页取数据也调用此函数，此时是不需要push的
-        DE.history.push(href,true);
-
-        return false;
-    });
-
-
-    //关闭作品详情
-    $(document).on("click","#de_btn_close_project_detail",function(){
-        if($(this).data("behaiver")=="close"){
-
-            history.go(-1);
-
-            DE.uiManager.hideProjectDetail();
-        }else{
-
-            DE.menu.logoClickHandler();
-        }
-
-
-        return false;
-    });
 
     //点击赞图标的操作，增加或者删除
     $(document).on("click","#de_entity_praise",function(){

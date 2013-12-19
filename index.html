@@ -228,9 +228,9 @@
 <!--显示工具栏section prepend-->
 <script type="text/template" id="entityToolTpl">
     {@if showHome}
-        <a href="#" data-behaiver="showHome" class="de_btn_back_to_home" id="de_btn_close_project_detail">关闭</a>
+        <a href="#" data-behaivor="showHome" class="de_btn_back_to_home" id="de_btn_close_project_detail">关闭</a>
     {@else}
-        <a href="#" data-behaiver="close" class="de_btn_close_project_detail" id="de_btn_close_project_detail">关闭</a>
+        <a href="#" data-behaivor="close" class="de_btn_close_project_detail" id="de_btn_close_project_detail">关闭</a>
     {@/if}
 
 
@@ -699,7 +699,7 @@
 
         <div class="de_filter_group de_borderbox">
             <h3>设计作品</h3>
-            <ul class="de_menu_list" id="de_project_tags">
+            <ul class="de_menu_list" id="de_project_tags" data-type="project">
                 <li><a href="tag/产品设计">产品设计</a></li>
                 <li><a href="tag/交互设计">交互设计</a></li>
                 <li><a href="tag/界面设计">界面设计</a></li>
@@ -714,7 +714,7 @@
 
         <div class="de_filter_group de_borderbox">
             <h3>学习资源</h3>
-            <ul class="de_menu_list" id="de_resource_tags">
+            <ul class="de_menu_list" id="de_resource_tags" data-type="resource">
                  <li><a href="tag/工业设计史">工业设计史</a></li>
                  <li><a href="tag/汽车造型设计理论与研究">汽车造型设计理论与研究</a></li>
             </ul>
