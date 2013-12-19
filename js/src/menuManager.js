@@ -3,7 +3,7 @@
  * User: ty
  * Date: 13-9-6
  * Time: 上午11:41
- * 顶部菜单、侧栏菜单，window滚动
+ * 顶部菜单、侧栏菜单，window滚动,搜索，搜索tab，弹层关闭等
  */
 var DE=DE||{};
 DE.menu=(function(){
@@ -23,10 +23,14 @@ DE.menu=(function(){
                     if($(document).height()-$(window).height()<=$(window).scrollTop()){
 
                         //作品和资源要看是否是在搜索页面
-                        if(DE.store.currentSearchValue){
-                            alert(DE.store.currentScrollScreenType+"search");
-                            DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,
-                                DE.store.currentSearch.currentSearchType,DE.store.currentSearch.isTag,false);
+                        if(DE.store.currentSearch.currentSearchValue){
+
+                            //alert(DE.store.currentScrollScreenType+"search");
+                            if(DE.store.searchLoadedCount!=DE.config.hasNoMoreFlag){
+                                DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,
+                                    DE.store.currentSearch.currentSearchType,DE.store.currentSearch.isTag,false);
+                            }
+
                         }else{
                             if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.project){
 
@@ -45,15 +49,15 @@ DE.menu=(function(){
                             }else if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.hotUser){
 
                                 //热点用户
-                                if(DE.store.hotUserLoadedId!=DE.config.hasNoMoreFlag){
+                                if(DE.store.hotUserLoadedCount!=DE.config.hasNoMoreFlag){
                                     DE.user.getHotUsers(false);
                                 }
 
                             }else{
 
                                 //用户页
-                                if(DE.store.userEntitiesShow<DE.store.userEntitiesCount){
-                                    $("#de_user_uploads li.de_borderbox").slice(DE.store.userEntitiesShow,DE.store.userEntitiesShow+9).removeClass("de_hidden");
+                                if(DE.store.userEntitiesShowCount!=DE.config.hasNoMoreFlag){
+                                    DE.user.showUserEntity(false);
                                 }
                             }
                         }
@@ -68,19 +72,19 @@ DE.menu=(function(){
          * @param {String} href      需要设置的地址
          */
         topMenuClickHandler:function(href){
-            DE.UIManager.showLoading();
+            DE.uiManager.showLoading();
             DE.history.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var type=array[0];
             if(type==DE.config.topMenus.project){
-                //DE.UIManager.showScreen("#de_screen_project"); //放在此处会导致屏幕闪烁，放到ajax的回调中
+                //DE.uiManager.showScreen("#de_screen_project"); //放在此处会导致屏幕闪烁，放到ajax的回调中
                 DE.entity.getAllEntity(type,true);
             }else if(type==DE.config.topMenus.resource){
                 DE.entity.getAllEntity(type,true);
             }else if(type==DE.config.topMenus.user){
-                DE.user.getHotUsers(true);
+                DE.user.getHotUsersOrder();
             }else if(type==DE.config.topMenus.upload){
-                DE.UIManager.showScreen("#de_screen_upload");
+                DE.uiManager.showScreen("#de_screen_upload");
             }
 
         },
@@ -101,9 +105,15 @@ DE.menu=(function(){
                         DE.config.ajaxReturnErrorHandler(data);
                     }
 
+                    //进入页面，请求后台是否登录,先获取到tag然后再初始化数据，这样当时tag进入的时候就知道是作品还是资源
+                    DE.login.checkLogin();
+
                 },
                 error:function(){
                     DE.config.ajaxErrorHandler();
+
+                    //进入页面，请求后台是否登录
+                    DE.login.checkLogin();
                 }
 
             });
@@ -134,8 +144,11 @@ DE.menu=(function(){
             DE.history.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var value=array[1];
-
+            DE.uiManager.showLoading();
             DE.entity.getEntityBySearch(value,searchType,isTag,true);
+
+
+            $("#de_search_input").val("");
         },
 
         /**
@@ -146,6 +159,7 @@ DE.menu=(function(){
 
             //如果当前显示的类型和点击的按钮不一致，则要置换
             if(type!=DE.store.currentSearch.currentSearchType){
+                DE.store.searchLoadedCount=0;
                 DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,type,DE.store.currentSearch.isTag,true);
             }
 
@@ -159,24 +173,81 @@ DE.menu=(function(){
             if(id=="de_btn_sign_out"){
                 DE.login.logout();
             }else if(id=="de_btn_reset_pwd"){
-                DE.UIManager.showRestPwdPopout();
+                DE.uiManager.showRestPwdPopout();
             }else if(id=="de_btn_edit_profile"){
+                DE.user.accountHasBind();
                 DE.user.setProfile();
-                DE.UIManager.showEditProfilePopout();
-            }else if(id=="de_btn_bind_account"){
-                //QQ绑定
-                DE.login.QQBindHandler();
+                DE.uiManager.showEditProfilePopout();
 
-                DE.UIManager.showBindAccountPopout();
+            }
+        },
+
+        /**
+        *  logo点击事件处理
+        * */
+        logoClickHandler:function(){
+            DE.history.push(document.baseURI||$("#de_base_url").attr("href"));
+            DE.entity.getAllEntity(DE.config.entityTypes.project,true);
+        },
+
+        /**
+         * 搜素输入框事件
+         */
+        searchInputEventHandler:function(){
+            var me=this;
+            var searchInput= $("#de_search_input");
+            searchInput.keydown(function(event){
+                if(event.keyCode==13){
+                    var value=$(this).val();
+                    if(value.trim()){
+                        me.serachHandler("search/"+value,"",false);
+                    }
+                }
+            });
+
+            searchInput.marcoPolo({
+                url: DE.config.ajaxUrls.searchSuggest,
+                minChars:2,
+                formatData : function (data) {
+                    if(!$.isEmptyObject(data)&&data.spellcheck.suggestions.length){
+                        return data.spellcheck.suggestions[1]["suggestion"];
+                    }else{
+                        return [];
+                    }
+
+                },
+                formatItem: function (data) {
+                    return data;
+                },
+                onSelect: function (data) {
+                    me.serachHandler("search/"+data,"",false);
+                },
+                formatNoResults:function(q, $item){
+                    return "";
+                },
+                formatMinChars :function(minChars, $item){
+                    return "";
+                },
+                formatError :function($item, jqXHR, textStatus, errorThrown){
+                    return "";
+                }
+            });
+        },
+        addMobileSources:function(){
+            if(DE.config.checkMobile()){
+                $("<link>").attr({ rel: "stylesheet",
+                        type: "text/css",
+                        href: "css/mobile.css"
+                }).insertAfter($("link:eq(0)"));
             }
         }
     }
 })();
 
 $(document).ready(function(){
-
+     //DE.menu.addMobileSources();
     //获取顶部所有的标签
-    DE.menu.getTags();
+    //DE.menu.getTags();
 
     //顶部菜单点击事件（除上传按钮）
     $("#de_top_nav a").click(function(){
@@ -194,8 +265,7 @@ $(document).ready(function(){
 
     //logo点击事件
     $("#de_logo").click(function(){
-        DE.history.push("");
-        DE.entity.getAllEntity(DE.config.entityTypes.project,true);
+        DE.menu.logoClickHandler();
 
         return false;
     });
@@ -203,37 +273,52 @@ $(document).ready(function(){
     //登录注册按钮点击事件
     $(document).on("click","#de_btn_login_reg",function(){
         DE.login.initLoginForm();
-        DE.UIManager.showLoginPopout();
+        DE.uiManager.showLoginPopout();
 
         return false;
     });
-
+	
+	//搜索框焦点事件，为了能完整显示自动提示窗体
+    //blur的行为在cleanAllScreens已经有设置
+	/*$(document).on("blur","#de_search_input",function(){
+		$("#de_filter_menu").css("overflow","auto");
+    });*/
+	$("#de_search_input").focus(function(){
+        $("#de_filter_menu").css("overflow","visible");
+    });
+	
     //ext菜单按钮点击事件（显示隐藏）
     $(document).on("click","#de_btn_ext_nav",function(evt){
-        DE.UIManager.showExtMenu();
+        DE.uiManager.showExtMenu();
 
         return false;
     });
 
     //用户菜单（ext菜单项按钮点击事件）
-    $(document).on("click","#de_ext_nav a",function(){
+    $(document).on("click","#de_ext_nav a:not('.de_user_link')",function(){
         DE.menu.extMenuClickHandler($(this).attr("id"));
 
         return false;
     });
-
+	
+	//点击弹窗右上角x关闭弹窗
+	$(document).on("click","#de_popout_x_btn",function(){
+		DE.uiManager.hidePopout();
+		return false;	
+	});
+	
     //点击body隐藏所有弹窗和菜单
     $(document).click(function(event){
         var target=$(event.target);
         if(target.parents("#de_popout").length==0&&target.parents("#de_filter_menu").length==0&&
             target.parents("#de_ext_nav").length==0&&target.parents("#de_pop_window").length==0){
-            DE.UIManager.hideAllMenuAndPopouts();
+            DE.uiManager.hideAllMenuAndPopouts();
         }
     });
 
     //更多分类按钮点击事件
     $("#de_btn_filter>a").on("click",function(evt){
-        DE.UIManager.showFilterMenu();
+        DE.uiManager.showFilterMenu();
 
         return false;
     });
@@ -253,31 +338,27 @@ $(document).ready(function(){
     });
 
     //搜索
-    $("#de_search_input").keydown(function(event){
-        if(event.keyCode==13){
-            var value=$(this).val();
-            DE.menu.serachHandler("search/"+value,DE.config.entityTypes.project,false);
-        }
-    });
+    DE.menu.searchInputEventHandler();
 
     //搜索结果tab点击事件
-    $("#de_search_result_tab a").click(function(){
+    /*$("#de_search_result_tab a").click(function(){
         var type=$(this).data("entity-type");
 
         DE.menu.searchTabClickHandler(type);
 
         return false;
-    });
+    });*/
 
     //关闭弹出的window
     $("#de_close_pop_window").click(function(){
         $(this).parent().addClass("de_hidden");
+        $("#de_pop_window_content").html("");
         $("#de_blackout").addClass("de_hidden");
     });
 
     //关闭pop
     $("#de_popout_close_btn").click(function(){
-        DE.UIManager.hideAllMenuAndPopouts();
+        DE.uiManager.hideAllMenuAndPopouts();
         return false;
     });
 

@@ -3,18 +3,46 @@
  * User: ty
  * Date: 13-9-5
  * Time: 上午9:22
- * 配置文件
+ * 配置文件,包括一些变量和出错处理函数以及失踪儿童数据
  */
-
-define([],{
-    maxMediaSize:"200m", //最大的媒体文件上传大小
-    maxImageSize:"2m", //最大的图片文件上传大小
+var DE=DE||{};
+DE.config={
     defualtEntityThumb:"images/default_thumb_500.png",
     perLoadCount:10, //作品、评论、资源等每次加载的个数
     hasNoMoreFlag:-1, //作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
-    imgSize:{
-        small:"-200x200",
-        middle:"-400x400"
+    imagesSize:{
+        thumb:"-200x200",
+        mediaThumb:"-400x300"
+    },
+    uploadSize:{
+        maxMediaSize:"200m", //最大的媒体文件上传大小
+        maxImageSize:"2m"//最大的图片文件上传大小
+    },
+    uploadFilters:{  //媒体类型格式刷选器
+        imageFilter:"jpg,gif,png,jpeg",
+        pptFilter:"pptx",
+        _3dFilter:"3d",
+        videoFilter:"mp4",
+        fileFilter:"zip,pdf",
+        flashFilter:"swf"
+    },
+    uploadMediaTypes:{  //媒体类型
+        image:"zy_image",
+        ppt:"zy_ppt",
+        _3d:"zy_3d",
+        localVideo:"zy_location_video",
+        file:"zy_file",
+        webVideo:"zy_network_video",
+        flash:"zy_flash"
+    },
+    mediaObj:{  //媒体对象
+        mediaTitle:"zy_media_title",
+        mediaMemo:"zy_media_memo",
+        mediaType:"zy_media_type",
+        mediaThumbFilename:"zy_media_thumb_filename",
+        mediaThumbFilepath:"zy_media_thumb_filepath",
+        mediaFilename:"zy_media_filename",
+        mediaFilepath:"zy_media_filepath"
     },
     userStatus:{   //用户状态（禁言、激活）
         enabled:"enabled",
@@ -24,16 +52,29 @@ define([],{
         hotUser:"hotUser",
         project:"project",
         resource:"resource",
-        search:"search",
-        searchProject:"searchProject",
-        searchResource:"searchResource",
-        userEntity:"userEntity" //用户页的用户作品
+        userEntity:"userEntity" //用户页的用户作品,
+    },
+    validError:{
+        emailRequired:"请输入邮箱！",
+        emailFormatError:"请输入正确的邮箱格式！",
+        emailExistWithLogin:"此邮箱已注册，请<a id='de_direct_login' class='de_direct_login' href='#'>直接登录</a>或更换邮箱！",
+        emailExist:"邮箱已经存在！",
+        pwdRequired:"请输入密码！",
+        pwdLengthError:"请输入6-20位的密码！",
+        oldPwdRequired:"请输入旧密码！",
+        newPwdRequired:"请输入新密码！",
+        pwdEqualError:"两次输入的密码不一致，请重新输入！",
+        usernameRequired:"请输入用户名！",
+        usernameExist:"用户名已经被注册，请填写其他用户名！",
+        validCodeRequired:"请输入验证码！",
+        descriptionLengthError:"最多输入140个字！"
     },
     messageCode:{  //错误提示
         errorTitle:"错误提示",
         successTitle:"成功提示",
         operationSuccess:"操作成功，请关闭后选择其他操作！",
-        timeout:"登陆超时，请关闭后刷新页面并登录！",
+        registerSuccess:"注册成功，如果您是非QQ登录用户，请进入邮箱激活账户，否则无法登录！",
+        timeout:"登录超时，请关闭后刷新页面并登录！",
         networkError:"网络连接失败，请稍后重试！",
         validCodeError:"验证码错误！",
         operationError:"操作失败，请稍后重试！",
@@ -44,15 +85,26 @@ define([],{
         notFound:"页面资源未发现，2秒后跳转到首页！",
         changePwdSuccess:"密码修改成功，2秒后跳转到首页并退出！",
         emailNotExist:"输入的邮箱不存在！",
-        emailSendSuccess:"操作成功，请进入邮箱查看邮件！"
+        emailSendSuccess:"操作成功，请进入邮箱查看邮件！",
+        emailChangeSuccess:"绑定成功，请进入邮箱确认！",
+        mediaHasNoThumb:"有媒体文件没有上传缩略图，请上传后再预览！",
+        hasNoMedia:"没有上传媒体文件或者有上传错误的媒体文件，请上传或者删除后再预览！",
+        stepOneUnComplete:"标题、标签、描述、缩略图等没有填写完整！",
+        pptHasNotUploaded:"此资源还没有被上传到资源服务器，暂时不能查看！",
+        pptUploadError:"此资源上传到资源服务器出错，无法查看！",
+        uploadSizeError:"最大文件大小",
+        uploadExtensionError:"只允许上传",
+        uploadIOErrror:"服务器端异常，请稍后重试！",
+        emailPending:"你的新邮箱${email}没有激活，请进入邮箱激活！",
+        emailInvalid:"你提交的新邮箱${email},已被其他人激活，如需修改邮箱，请提交另外一个邮箱！"
     },
     resultCode:{
         account_register_succ:"account_register_succ",
         account_login_succ:"account_login_succ",
         assoicate_email_exists:"assoicate_email_exists",
         associate_sumbit_mail:"associate_sumbit_mail",
-        associate_succ:"associate_succ",
-        unassociate_succ:"unassociate_succ",
+        bind_succ:"bind_succ",
+        unbind_succ:"unbind_succ",
         resource_create_succ:"resource_create_succ",
         post_create_succ:"post_create_succ",
         post_remove_succ:"post_remove_succ",
@@ -66,10 +118,17 @@ define([],{
         comment_add_succ:"comment_add_succ",
         comment_remove_succ:"comment_remove_succ",
         password_change_succ:"password_change_succ",
-        password_reset_succ:"password_reset_succ",
+        password_reset_succ:"password_reset_submit_succ",
         password_reset_invalid_email:"password_reset_invalid_email",
         account_update_succ:"account_update_succ",
-        unauthorized_operation:"unauthorized_operation"
+        unauthorized_operation:"unauthorized_operation",
+        pptx_upload_error:"pptx_upload_error",
+        pptx_upload_wait:"pptx_upload_wait",
+        email_status:{
+            pending:"pending",
+            invalid:"invalid",
+            actived:"actived"
+        }
     },
     errorCode:{
         captcha_unmatches:"captcha_unmatches",
@@ -90,40 +149,48 @@ define([],{
         notFound:"not_found"
     },
     ajaxUrls:{
-        uploadFileUrl:"/design/upload", //文件上传
-        uploadAction:"/design/post/create-by-form", //作品（资源）提交
-        editUploadAction:"/design/post/edit-by-form", //作品（资源）提交
-        getAllProjects:"/DesignEngine_Web/data/projects.json", //获取首页作品
-        getAllResource:"/DesignEngine_Web/data/resource.json", //获取首页资源
-        getEntityMedias:"/design/data/medias.json",  //修改的时候获取作品（资源）已经上传的媒体文件
-        deleteEntity:"/design/post/remove", //删除作品（资源）
-        showOrHideEntity:"/design/post/visible", //隐藏作品（资源）
-        getEntityAttachments:"/DesignEngine_Web/data/attachments.json", //获取作品（资源）附件（媒体文件)
-        getEntityDetail:"/DesignEngine_Web/data/entityDetail.json", //获取作品（资源）详情
-        getEntitiesBySearch:"/DesignEngine_Web/data/similarEntities.json", //根据搜索内容获取作品（资源)
-        getTags:"/DesignEngine_Web/data/tags.json", //获取系统标签
-        addPraise:"/design/post/add-score", //添加赞（勋章）
-        deletePraise:"/design/post/remove-score", //删除赞（勋章）
-        getSimilarEntities:"/design/data/similarEntities.json", //获取相似作品
-        getComments:"/DesignEngine_Web/data/comments.json", //获取评论
-        postComment:"/design/post/add-comment", //发表评论
-        deleteComment:"/design/post/remove-comment", //删除评论
-        getHotUsers:"/DesignEngine_Web/data/hotUsers.json", //获取人点用户
-        getUserById:"/DesignEngine_Web/data/user.json", //根据id获取用户
-        getUserEntities:"/DesignEngine_Web/data/userEntities.json", //获取用户的作品（资源）
-        login:"/design/login", //登录
-        logOut:"/design/logout",
-        checkLogin:"/DesignEngine_Web", //判断是否登录
-        sendOpenId:"/design/login", //发送openId
-        bindOldAccount:"/design/associate/bind", //绑定旧账户
-        unBindAccount:"design/associate/unbind",
-        getValidCode:"/DesignEngine_Web/data/kaptcha.jpg", //获取验证码
-        register:"/design/register", //注册
-        changePassword:"/design/account/change-password", //修改密码
-        forgetPassword:"/design/resetpwd/send-email", //忘记密码
-        changeProfile:"/design/account/change-info", //修改资料
-        emailValidate:"/design/account-email-unique",
-        usernameValidate:"/design/account-fullname-unique"
+        uploadFileUrl:"/pinwall/upload", //文件上传,如果不加design，有时候会出错和flash有关
+        uploadAction:"post/create-by-form", //作品（资源）提交
+        editUploadAction:"post/edit-by-form", //作品（资源）提交
+        getAllProjects:"post/work/firstpage", //获取首页作品
+        getAllResource:"post/resource/firstpage", //获取首页资源
+        getEntityMedias:"data/medias.json",  //修改的时候获取作品（资源）已经上传的媒体文件
+        deleteEntity:"post/remove", //删除作品（资源）
+        showOrHideEntity:"post/visible", //隐藏作品（资源）
+        getEntityAttachments:"post/attachments", //获取作品（资源）附件（媒体文件)
+        getEntityDetail:"post/info", //获取作品（资源）详情
+        getEntitiesBySearch:"query/search", //根据搜索内容获取作品（资源)
+        getTags:"term/frequence", //获取系统标签
+        addPraise:"post/add-score", //添加赞（勋章）
+        deletePraise:"post/remove-score", //删除赞（勋章）
+        getSimilarEntities:"query/moreLikeThis", //获取相似作品
+        //getSimilarEntities:"data/similarEntities.json", //获取相似作品
+        getComments:"post/comments", //获取评论
+        postComment:"post/add-comment", //发表评论
+        deleteComment:"post/remove-comment", //删除评论
+        getHotUsersOrder:"account/rank",
+        getHotUsers:"account/hot", //获取人点用户
+        getUserById:"account/info", //根据id获取用户
+        getUserEntities:"account/posts", //获取用户的作品（资源）
+        login:"login", //登录
+        logOut:"logout",
+        checkHasBind:"associate/is-bind",
+        checkLogin:"account/current", //判断是否登录
+        sendOpenId:"login", //发送openId
+        bindOldAccount:"associate/bind", //绑定旧账户
+        unBindAccount:"associate/unbind",
+        getValidCode:"captcha.jpg", //获取验证码
+        register:"register", //注册
+        changePassword:"account/change-password", //修改密码
+        forgetPassword:"resetpwd/send-email", //忘记密码
+        changeProfile:"account/change-profile", //修改资料
+        changeEmail:"account/change-email",
+        getNewEmail:"account/pending-email",
+        emailValidate:"account-email-unique",
+        usernameValidate:"account-fullname-unique",
+        termSuggest:"query/termSuggest",
+        searchSuggest:"query/searchSuggest"
+        //autoComplete:"http://192.168.2.167:8393/solr/termSuggest"
     },
     entityTypes:{  //实体类型
         project:"project",
@@ -137,10 +204,11 @@ define([],{
         userDetail:"user/userId", //用户页
         search:"search/searchContent", //搜索页
         uploadEntity:"upload/entity",  //上传页
-        editEntity:"edit/entityId"  //修改页
+        editEntity:"edit/entityId",  //修改页
+        entityDetail:"entity/entityId"
     },
     topMenus:{ //顶部菜单类型
-        user:"user", //热门用户
+        user:"user", //热门用户,不写为hotUser是为了配合url地址
         project:"project", //首页作品
         resource:"resource", //首页资源
         upload:"upload" //上传
@@ -152,25 +220,58 @@ define([],{
     },
     ajaxReturnErrorHandler:function(data){
         if(data.errorCode==this.errorCode.notFound){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.notFound);
+            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.notFound);
             setTimeout(function(){
-                window.location.href=this.root;
+                window.location.href=document.baseURI||$("#de_base_url").attr("href");
             },2000);
         }else if(data.errorCode==this.errorCode.timeout){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.timeout);
+            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.timeout);
         }else if(data.errorCode==this.errorCode.thumb_height_not_equals_width){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.imgSizeError);
-        }else if(data.errorCode){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.operationError);
+            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.imgSizeError);
+        }else if(data.errorCode||data.resultCode){
+            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.operationError);
         }else{
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.loadDataError);
+            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.loadDataError);
         }
 
-        DE.UIManager.showLoading();
+        DE.uiManager.hideLoading();
     },
     ajaxErrorHandler:function(){
-        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.networkError);
-        DE.UIManager.hideLoading();
+        DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.networkError);
+        DE.uiManager.hideLoading();
+    },
+    checkMobile:function(){
+        var userAgentList = new Array("2.0 MMP", "240320", "AvantGo","BlackBerry", "Blazer",
+            "Cellphone", "Danger", "DoCoMo", "Elaine/3.0", "EudoraWeb", "hiptop", "IEMobile", "KYOCERA/WX310K", "LG/U990",
+            "MIDP-2.0", "MMEF20", "MOT-V", "NetFront", "Newt", "Nintendo Wii", "Nitro", "Nokia",
+            "Opera Mini", "Opera Mobi",
+            "Palm", "Playstation Portable", "portalmmm", "Proxinet", "ProxiNet",
+            "SHARP-TQ-GX10", "Small", "SonyEricsson", "Symbian OS", "SymbianOS", "TS21i-10", "UP.Browser", "UP.Link",
+            "Windows CE", "WinWAP", "Android", "iPhone", "iPod", "iPad", "Windows Phone", "HTC"/*, "GTB"*/);
+        var appNameList = new Array("Microsoft Pocket Internet Explorer");
+
+        var userAgent = navigator.userAgent.toString();
+        var appName = navigator.appName.toString();
+        var agentLength=userAgentList.length,appLength=appNameList.length;
+        var i= 0,j=0;
+
+        for (; i<agentLength; i++) {
+            if (userAgent.indexOf(userAgentList[i]) >= 0) {
+                return true;
+            }
+        }
+
+        for (; j<appLength; j++) {
+            if (appName.indexOf(appNameList[j]) >= 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-});
+};
+Object.freeze(DE.config);
+
+//获取腾讯的失踪儿童数据
+$.getScript("http://qzone.qq.com/gy/404/data.js");

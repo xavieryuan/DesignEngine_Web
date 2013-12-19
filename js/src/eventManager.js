@@ -5,7 +5,8 @@
  * Time: 下午4:08
  * To change this template use File | Settings | File Templates.
  */
-define(["jquery"], function ($) {
+var DE=DE||{};
+DE.event= (function () {
     var init = function () {
         $(document).ready(function () {
 
@@ -37,14 +38,14 @@ define(["jquery"], function ($) {
             //登录注册按钮点击事件
             $(document).on("click", "#de_btn_login_reg", function () {
                 DE.login.initLoginForm();
-                DE.UIManager.showLoginPopout();
+                DE.uiManager.showLoginPopout();
 
                 return false;
             });
 
             //ext菜单按钮点击事件（显示隐藏）
             $(document).on("click", "#de_btn_ext_nav", function (evt) {
-                DE.UIManager.showExtMenu();
+                DE.uiManager.showExtMenu();
 
                 return false;
             });
@@ -61,13 +62,13 @@ define(["jquery"], function ($) {
                 var target = $(event.target);
                 if (target.parents("#de_popout").length == 0 && target.parents("#de_filter_menu").length == 0 &&
                     target.parents("#de_ext_nav").length == 0 && target.parents("#de_pop_window").length == 0) {
-                    DE.UIManager.hideAllMenuAndPopouts();
+                    DE.uiManager.hideAllMenuAndPopouts();
                 }
             });
 
             //更多分类按钮点击事件
             $("#de_btn_filter>a").on("click", function (evt) {
-                DE.UIManager.showFilterMenu();
+                DE.uiManager.showFilterMenu();
 
                 return false;
             });
@@ -111,7 +112,7 @@ define(["jquery"], function ($) {
 
             //关闭pop
             $("#de_popout_close_btn").click(function () {
-                DE.UIManager.hideAllMenuAndPopouts();
+                DE.uiManager.hideAllMenuAndPopouts();
                 return false;
             });
 
@@ -130,7 +131,7 @@ define(["jquery"], function ($) {
 
             //关闭作品详情
             $(document).on("click", "#de_btn_close_project_detail", function () {
-                DE.UIManager.hideProjectDetail();
+                DE.uiManager.hideProjectDetail();
                 DE.store.commentLoadedId = 0;
 
                 return false;
@@ -140,8 +141,8 @@ define(["jquery"], function ($) {
             $(document).on("click", "#de_entity_praise", function () {
                 if (!DE.store.currentUser.userId) {
                     DE.login.initLoginForm();
-                    DE.UIManager.showLoginPopout();
-                    DE.UIManager.hideProjectDetail();
+                    DE.uiManager.showLoginPopout();
+                    DE.uiManager.hideProjectDetail();
                 } else {
                     DE.entity.handlerPraiseOrHonor();
                 }
@@ -154,8 +155,8 @@ define(["jquery"], function ($) {
             //评论登录
             $(document).on("click", "#de_btn_comment_login", function () {
                 DE.login.initLoginForm();
-                DE.UIManager.showLoginPopout();
-                DE.UIManager.hideProjectDetail();
+                DE.uiManager.showLoginPopout();
+                DE.uiManager.hideProjectDetail();
 
                 return false;
             });
@@ -189,7 +190,7 @@ define(["jquery"], function ($) {
 
             //注册按钮点击
             $("#de_reg_btn").click(function () {
-                DE.UIManager.showRegPopout();
+                DE.uiManager.showRegPopout();
 
                 return false;
             });
@@ -201,7 +202,7 @@ define(["jquery"], function ($) {
 
             //忘记密码按钮点击事件
             $("#de_btn_forgot_pwd").on("click", function () {
-                DE.UIManager.showRecoverPwdPopout();
+                DE.uiManager.showRecoverPwdPopout();
 
                 return false;
             });
@@ -351,4 +352,4 @@ define(["jquery"], function ($) {
     return {
         init: init
     }
-});
+})();

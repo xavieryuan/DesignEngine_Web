@@ -10,13 +10,13 @@ DE.DataManager=function(){
 		doSignIn:function(){
 			
 			//如果登录为注册用户，则显示注册用户视图，此处为调试代码
-			DE.UIManager.regView()
+			DE.uiManager.regView()
 
 			},
 		doSignOut:function(){
 			
 			//恢复访客视图
-			DE.UIManager.guestView()
+			DE.uiManager.guestView()
 			
 			//注销代码写在下面
 			}

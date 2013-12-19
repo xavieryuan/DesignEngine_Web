@@ -1,20 +1,17 @@
 {
-    "success":true,
     "entity":{
         "title":"ssssssssss",
-        "postDescription":"ssssssssssssssssssssssssssssssss",
-        "postDate":"2012-08-09 23:43:23",
-        "userProfileImg":"/design/data/people2.jpg",
+        "description":"ssssssssssssssssssssssssssssssss",
+        "date":"2012-08-09 23:43:23",
+        "userProfile":"/design/data/people2.jpg",
         "userName":"贵大即可",
         "userId":1,
-        "postId":0,
-        "thumb":"/DesignEngine_Web/data/pic2.png",
+        "id":0,
+        "thumb":"/design/data/pic2.png",
         "tags":["ddd","sss","eee"],
-        "postCommentCount":45,
-        "postHonorCount":45,
-        "postPraiseCount":34,
-        "postType":"work",
-        "userPraised":true,
-        "postVisible":true
+        "commentsCount":45,
+        "honorCount":45,
+        "praiseCount":34,
+        "praised":true
     }
 }

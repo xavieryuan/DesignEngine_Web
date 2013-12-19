@@ -25,16 +25,16 @@ DE.login=(function(){
                },
                messages: {
                    de_login_email: {
-                       required:"请输入邮箱！",
-                       email:"请输入正确的邮箱格式！"
+                       required:DE.config.validError.emailRequired,
+                       email:DE.config.validError.emailFormatError
                    },
-                   de_login_pwd: "请输入密码！"
+                   de_login_pwd: DE.config.validError.pwdRequired
 
                },
                submitHandler:function(form) {
 
                    me.rememberMeHandler();
-                   DE.UIManager.showLoading();
+                   DE.uiManager.showLoading();
 
                    $(form).ajaxSubmit({
                        url:DE.config.ajaxUrls.login,
@@ -49,11 +49,12 @@ DE.login=(function(){
                                    userId:data.userinfo.userId,
                                    description:data.userinfo.userDescribe,
                                    email:data.userinfo.userEmail,
-                                   status:data.userinfo.userStatus
+                                   status:data.userinfo.userStatus,
+                                   regLocked:data.userinfo.regLocked
                                });
 
-                               DE.UIManager.showLoginMenu({user:DE.store.currentUser});
-                               DE.UIManager.hideAllMenuAndPopouts();
+                               DE.uiManager.showLoginMenu({user:DE.store.currentUser});
+                               DE.uiManager.hideAllMenuAndPopouts();
 
                                $(form).clearForm();
 
@@ -65,32 +66,10 @@ DE.login=(function(){
                                $("#de_login_error").text(DE.config.messageCode.nameOrPwdError);
                            }
 
-                           DE.UIManager.hideLoading();
+                           DE.uiManager.hideLoading();
                        },
                        error:function (data) {
-                           //DE.config.ajaxErrorHandler();
-
-                           DE.store.initCurrentUser({
-                               role:"user",
-                               figure:"/DesignEngine_Web/data/people1.jpg",
-                               name:"ddd",
-                               userId:2,
-                               description:"dddd",
-                               email:"cs@1111.com",
-                               status:DE.config.userStatus.enabled
-                           });
-
-                           DE.UIManager.showLoginMenu({user:DE.store.currentUser});
-                           DE.UIManager.hideAllMenuAndPopouts();
-
-                           $(form).clearForm();
-
-                           //成功后如果在用户页面需要重新加载数据
-                           if(window.location.href.indexOf("user")!=-1&&window.location.href.indexOf("hot")==-1){
-                               DE.history.initDatas();
-                           }
-
-                           DE.UIManager.hideLoading();
+                           DE.config.ajaxErrorHandler();
                        }
                    });
                }
@@ -106,56 +85,65 @@ DE.login=(function(){
            QC.Login({
                btnId:"de_qq_login"    //插入按钮的节点id
            },function(reqData, oOpts){
-               QC.Login.getMe(function(openId, accessToken){
-                   $.ajax({
-                       url:DE.config.ajaxUrls.sendOpenId,
-                       data:{
-                           openId:openId,
-                           openIdSource:"qq"
-                       },
-                       type:"post",
-                       dataType:"json",
-                       success:function(data){
-                           if(data.success&&data.resultCode==DE.config.resultCode.account_login_succ){
 
-                               DE.store.initCurrentUser({
-                                   role:data.userinfo.userRoles[0],
-                                   figure:data.userinfo.userProfileImg,
-                                   name:data.userinfo.userName,
-                                   userId:data.userinfo.userId,
-                                   description:data.userinfo.userDescribe,
-                                   email:data.userinfo.userEmail,
-                                   status:data.userinfo.userStatus
-                               });
+               //如果已经登录，不发请求，绑定那里也会引起这里发请求
+               if(!DE.store.currentUser.userId){
+                   QC.Login.getMe(function(openId, accessToken){
+                       $.ajax({
+                           url:DE.config.ajaxUrls.sendOpenId,
+                           data:{
+                               openId:openId,
+                               accessToken:accessToken,
+                               openIdSource:"qq"
+                           },
+                           type:"post",
+                           dataType:"json",
+                           success:function(data){
+                               if(data.success&&data.resultCode==DE.config.resultCode.account_login_succ){
+
+                                   DE.store.initCurrentUser({
+                                       role:data.userinfo.userRoles[0],
+                                       figure:data.userinfo.userProfileImg,
+                                       name:data.userinfo.userName,
+                                       userId:data.userinfo.userId,
+                                       description:data.userinfo.userDescribe,
+                                       email:data.userinfo.userEmail,
+                                       status:data.userinfo.userStatus,
+                                       regLocked:data.userinfo.regLocked
+                                   });
 
 
-                               DE.UIManager.showLoginMenu({user:DE.store.currentUser});
-                               DE.UIManager.hideAllMenuAndPopouts();
+                                   DE.uiManager.showLoginMenu({user:DE.store.currentUser});
+                                   DE.uiManager.hideAllMenuAndPopouts();
 
-                               //成功后如果在用户页面需要重新加载数据
-                               if(window.location.href.indexOf("user")!=-1&&window.location.href.indexOf("hot")==-1){
-                                   DE.history.initDatas();
-                               }
+                                   //成功后如果在用户页面需要重新加载数据
+                                   if(window.location.href.indexOf("user")!=-1&&window.location.href.indexOf("hot")==-1){
+                                       DE.history.initDatas();
+                                   }
 
-                           }else{
-                               if(data.errorCode==DE.config.errorCode.account_required){
-
-                                   //记录下openId，然后再注册的时候带回给后台
-                                   DE.store.currentUser.openId=openId;
-                                   DE.store.currentUser.accessToken=accessToken;
-                                   DE.UIManager.showRegPopout();
                                }else{
-                                   DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.operationError);
-                                   QC.Login.signOut();
-                               }
-                           }
-                       },
-                       error:function(){
-                           DE.config.ajaxErrorHandler();
-                       }
-                   })
+                                   if(data.errorCode==DE.config.errorCode.account_required){
 
-               });
+                                       //记录下openId，然后再注册的时候带回给后台
+                                       DE.store.currentUser.openId=openId;
+                                       DE.store.currentUser.accessToken=accessToken;
+                                       DE.uiManager.showRegPopout();
+                                   }else{
+                                       DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.operationError);
+
+                                   }
+                               }
+
+                               QC.Login.signOut();
+                           },
+                           error:function(){
+                               DE.config.ajaxErrorHandler();
+                               QC.Login.signOut();
+                           }
+                       })
+
+                   });
+               }
            });
        },
 
@@ -172,23 +160,29 @@ DE.login=(function(){
                        url:DE.config.ajaxUrls.bindOldAccount,
                        data:{
                            openId:openId,
+                           accessToken:accessToken,
                            openIdSource:"qq"
                        },
                        type:"post",
                        dataType:"json",
                        success:function(data){
-                           if(data.success&&data.resultCode==DE.config.resultCode.associate_succ){
+                           if(data.success&&data.resultCode==DE.config.resultCode.bind_succ){
 
                                //显示绑定成功
-                               $("#de_band_account_btn").html("已绑定");
-                               $("#de_remove_band").removeClass("de_hidden");
+                               $("#de_bind_account_btn").addClass("de_hidden");
+                               $("#de_remove_bind").removeClass("de_hidden");
+                               $("#de_has_bind").removeClass("de_hidden");
                            }else{
-                               DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.operationError);
-                               QC.Login.signOut();
+                               DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.operationError);
+
                            }
+
+                           //让QQ登出
+                           QC.Login.signOut();
                        },
                        error:function(){
                            DE.config.ajaxErrorHandler();
+                           QC.Login.signOut();
                        }
                    })
 
@@ -205,15 +199,22 @@ DE.login=(function(){
                type:"post",
                dataType:"json",
                success:function(data){
-                    if(data.success&&data.resultCode==DE.config.resultCode.unassociate_succ){
-                        QC.Login.signOut();
-                        $(this).addClass("de_hidden");
+                    if(data.success&&data.resultCode==DE.config.resultCode.unbind_succ){
+
+                        $("#de_has_bind").addClass("de_hidden");
+                        $("#de_bind_account_btn").removeClass("de_hidden");
+                        $("#de_remove_bind").addClass("de_hidden");
+
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
                     }
+
+                   //让QQ登出
+                   QC.Login.signOut();
                },
                error:function(data){
                    DE.config.ajaxErrorHandler();
+                   QC.Login.signOut();
                }
            });
        },
@@ -222,6 +223,7 @@ DE.login=(function(){
         * 注册
         */
        ajaxRegister:function(){
+           var me=this;
            $("#de_register_form").validate({
                rules:{
                    de_reg_username:{
@@ -243,25 +245,25 @@ DE.login=(function(){
                },
                messages:{
                    de_reg_username:{
-                       required:"请输入用户名！",
-                       remote:"用户名已经被注册，请填写其他用户名！"
+                       required:DE.config.validError.usernameRequired,
+                       remote:DE.config.validError.usernameExist
                    },
                    de_reg_email:{
-                       required:"请输入邮箱！",
-                       email:"请输入正确的邮箱格式！",
-                       remote:"此邮箱已注册，请直接登录绑定，或更换邮箱！"
+                       required:DE.config.validError.emailRequired,
+                       email:DE.config.validError.emailFormatError,
+                       remote:DE.config.validError.emailExistWithLogin
                    },
                    de_reg_pwd:{
-                       required:"请输入密码！",
-                       rangelength:"请输入6-20位的密码！"
+                       required:DE.config.validError.pwdRequired,
+                       rangelength:DE.config.validError.pwdLengthError
                    },
                    de_reg_code:{
-                       required:"请输入验证码！"
+                       required:DE.config.validError.validCodeRequired
                    }
                },
                submitHandler:function(form) {
 
-                   DE.UIManager.showLoading();
+                   DE.uiManager.showLoading();
                    $(form).ajaxSubmit({
                        url:DE.config.ajaxUrls.register,
                        type:"post",
@@ -276,37 +278,31 @@ DE.login=(function(){
 
                                //通过qq登录的才设置store的currentUser，显示用户菜单，关闭弹出层，清空form
                                if(DE.store.currentUser.openId){
-                                   DE.store.initCurrentUser({
-                                       role:data.userinfo.userRoles[0],
-                                       figure:data.userinfo.userProfileImg,
-                                       name:data.userinfo.userName,
-                                       userId:data.userinfo.userId,
-                                       description:data.userinfo.userDescribe,
-                                       email:data.userinfo.userEmail,
-                                       status:data.userinfo.userStatus
-                                   });
 
-                                   DE.UIManager.showLoginMenu({user:DE.store.currentUser});
+                                   //重新获取登录用户
+                                   me.checkLogin();
 
-                                   //默认显示首页
-                                   DE.UIManager.hideAllMenuAndPopouts();
+                                   //DE.uiManager.showLoginMenu({user:DE.store.currentUser});
+
+                                   //隐藏弹出层
+                                   //DE.uiManager.hideAllMenuAndPopouts();
                                }
 
-                               DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
+                               DE.uiManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.registerSuccess);
                                $(form).clearForm();
 
-                               //不管注册成功或者失败，都需要重新刷一次验证码
-                               $("#de_captcha_img").removeAttr("src").attr("src",DE.config.ajaxUrls.getValidCode);
                            }else{
                                if(data.errorCode=="captcha_unmatches"){
                                    $("#de_reg_error").text(DE.config.messageCode.validCodeError);
                                }else{
                                    $("#de_reg_error").text(DE.config.messageCode.operationError);
                                }
-                               $("#de_captcha_img").removeAttr("src").attr("src",DE.config.ajaxUrls.getValidCode);
                            }
 
-                           DE.UIManager.hideLoading();
+                           //不管注册成功或者失败，都需要重新刷一次验证码
+                           $("#de_captcha_img").removeAttr("src").attr("src",DE.config.ajaxUrls.getValidCode);
+
+                           DE.uiManager.hideLoading();
                        },
                        error:function (data) {
                            DE.config.ajaxErrorHandler();
@@ -329,23 +325,26 @@ DE.login=(function(){
                },
                messages:{
                    email:{
-                       required:"请输入邮箱！",
-                       email:"请输入正确的邮箱格式！"
+                       required:DE.config.validError.emailRequired,
+                       email:DE.config.validError.emailFormatError
                    }
                },
                submitHandler:function(form) {
+                   DE.uiManager.showLoading();
                    $(form).ajaxSubmit({
                        url:DE.config.ajaxUrls.forgetPassword,
                        type:"post",
                        dataType:"json",
                        success:function (data) {
                            if(data.success&&data.resultCode==DE.config.resultCode.password_reset_succ){
-                               DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.emailSendSuccess);
+                               DE.uiManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.emailSendSuccess);
                            }else if(data.success&&data.resultCode==DE.config.resultCode.password_reset_invalid_email){
-                               DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.emailNotExist);
+                               DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.emailNotExist);
                            }else{
                                 DE.config.ajaxReturnErrorHandler(data);
                            }
+
+                           DE.uiManager.hideLoading();
                        },
                        error:function (data) {
                            DE.config.ajaxErrorHandler();
@@ -370,9 +369,9 @@ DE.login=(function(){
                        QC.Login.signOut();
 
                        //跳转页面
-                       window.location.href="";
+                       window.location.href=document.baseURI||$("#de_base_url").attr("href");
                    }else{
-                       DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.operationError);
+                       DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.operationError);
                    }
                },
                error:function(){
@@ -391,13 +390,13 @@ DE.login=(function(){
                var expiration = new Date((new Date()).getTime() + 7*24*60* 60000);//设置时间
                $.cookie("email", emailValue, { expires: expiration }); // 存储一个带15分钟期限的 cookie
            }
-           if ($("#de_remember_me").is(":checked")) {
+           if ($("#de_remember_me").prop("checked")) {
                var password = $("#de_login_pwd").val();
                var expiration = new Date((new Date()).getTime() + 7*24*60* 60000);//设置时间
-               $.cookie("rememberMe", "true", { expires: expiration }); // 存储一个带15分钟期限的 cookie
+               $.cookie("remember", "true", { expires: expiration }); // 存储一个带15分钟期限的 cookie
                $.cookie("password", password, { expires: expiration }); // 存储一个带15分钟期限的 cookie
            }else {
-               $.cookie("rememberMe", "false", { expires: -1 });
+               $.cookie("remember", "false", { expires: -1 });
                //$.cookie("username", '', { expires: -1 });
                $.cookie("password", '', { expires: -1 });
            }
@@ -408,8 +407,8 @@ DE.login=(function(){
         */
        initLoginForm:function(){
            $("#de_login_email").val($.cookie("email"));
-           if ($.cookie("rememberMe") == "true") {
-               $("#de_remember_me").prop("checked","checked");
+           if ($.cookie("remember") == "true") {
+               $("#de_remember_me").prop("checked",true);
                $("#de_login_pwd").val($.cookie("password"));
            }
        },
@@ -418,9 +417,6 @@ DE.login=(function(){
        * 每次进入页面都需要向后台请求是否登录,后台根据session判断是否登录
        * */
        checkLogin:function(){
-
-           //设置为第一次进入页面，在store的clear中进行清除
-           DE.store.isFirstLoad=true;
 
            $.ajax({
                url:DE.config.ajaxUrls.checkLogin,
@@ -435,23 +431,33 @@ DE.login=(function(){
                             userId:data.user.userId,
                             description:data.user.userDescribe,
                             email:data.user.userEmail,
-                            status:data.user.userStatus
+                            status:data.user.userStatus,
+                            regLocked:data.user.regLocked
                         });
                     }
 
-                    //每次进入页面都需要根据地址取数据,需要在login那里的checkLogin里面调用
-                    DE.history.initDatas();
+                    //只有不存在openid时才初始化数据，如果存在是从QQ登录来的，此时已经有数据了
+                    if(!DE.store.currentUser.openId){
+
+                       //每次进入页面都需要根据地址取数据,需要在login那里的checkLogin里面调用
+                       DE.history.initDatas();
+                    }
 
                     //不管是否登录都初始化登陆菜单
-                    DE.UIManager.showLoginMenu({user:DE.store.currentUser});
+                    DE.uiManager.showLoginMenu({user:DE.store.currentUser});
+
                },
                error:function(){
 
-                   //每次进入页面都需要根据地址取数据,需要在login那里的checkLogin里面调用
-                   DE.history.initDatas();
+                   //只有不存在openid是才初始化数据，如果存在是从QQ登录来的，此时已经有数据了
+                   if(!DE.store.currentUser.openId){
+                       //每次进入页面都需要根据地址取数据,需要在login那里的checkLogin里面调用
+                       DE.history.initDatas();
+                   }
 
                    //不管是否登录都初始化登陆菜单
-                   DE.UIManager.showLoginMenu({user:DE.store.currentUser});
+                   DE.uiManager.showLoginMenu({user:DE.store.currentUser});
+
                }
            });
        }
@@ -460,24 +466,31 @@ DE.login=(function(){
 
 $(document).ready(function(){
 
-    //进入页面，请求后台是否登录
     DE.login.checkLogin();
 
     //注册按钮点击
     $("#de_reg_btn").click(function(){
-        DE.UIManager.showRegPopout();
+
+        DE.uiManager.showRegPopout();
 
         return false;
     });
 
     //取消绑定
-    $("#de_remove_band").click(function(){
+    $("#de_remove_bind").click(function(){
         DE.login.unBindHandler();
+    });
+
+    //邮箱已经被注册，直接登录
+    $(document).on("click","#de_direct_login",function(){
+        DE.login.initLoginForm();
+        DE.uiManager.showLoginPopout();
+        return false;
     });
 
     //忘记密码按钮点击事件
     $("#de_btn_forgot_pwd").on("click",function(){
-        DE.UIManager.showRecoverPwdPopout();
+        DE.uiManager.showRecoverPwdPopout();
 
         return false;
     });

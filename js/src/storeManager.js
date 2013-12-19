@@ -8,19 +8,16 @@
 var DE=DE||{};
 DE.store={
     scrollTimer:null, //滚动的时候的timeout
-    isFirstLoad: false, //是否第一次进入，由于火狐第一次不响应popstate，谷歌响应需要记录下来
-    hotUserLoadedId:0, //记录下热门用户已经加载了的最后一个的id，-1代表没有更多
+    hotUserLoadedCount:0, //记录下热门用户已经加载了的最后一个的id，-1代表没有更多
     projectLoadedId:0, //分页加载，最后一个作品的时间，-1代表没有更多
-    commentLoadedId:0, //详情页面评论加载了的id，-1代表没有更多
     resourceLoadedId:0,
-    currentShowEntitiesType:DE.config.entityTypes.project, //当前聚合显示的实体类型
+    searchLoadedCount:0,
     currentEditEntityId:0, //当前编辑的作品、资源的id
     currentScrollScreenType:"", //当前需要滚动加载的类型
-    userEntitiesCount:0, //用户的作品数量
-    userEntitiesShow:0, //查看用户那里的作品，已经显示的个数，本地分页
+    userEntitiesShowCount:0, //查看用户那里的作品，已经显示的个数，本地分页
     uploadedMedias:{}, //上传作品、资源时已经上传的媒体文件
     currentSearch:{
-        currentSearchType:"project",//目前搜索显示的类型
+        currentSearchType:"",//目前搜索显示的类型
         currentSearchValue:"", //目前搜索的内容
         isTag:true
     },
@@ -32,9 +29,10 @@ DE.store={
         description:"",
         email:"",
         openId:"",
-        openIdSource:"qq",
+        openIdSource:"",
         accessToken:"",
-        status:DE.config.userStatus.enabled
+        status:"",
+        regLocked:true
     },
     currentShowUser:{ //当前显示的用户详情
         userId:0,
@@ -45,41 +43,36 @@ DE.store={
     currentShowEntity:{    //当前显示详情的entity的信息
         id:0,
         hasPraised:false,
-        type:DE.config.entityTypes.project
+        type:"",
+        commentLoadedId:0 //详情页面评论加载了的id，-1代表没有更多
     },
 
     /**
      * 清空存储的数据
-     * @param clearFirstLoadFlag
      */
-    clearStore:function(clearFirstLoadFlag){
-
-        /* clearFirstLoadFlag是否重置isFirstLoad此标志，当页面进入时，history的initDatas函数调用了handler函数，handler函数里面
-         * 调用了clearStore，那么会重置isFirstLoad，那么会在谷歌第一次进入，响应popstate的函数stateChange中再请求一次数据
-         * */
-        this.userEntitiesCount=0;
-        this.userEntitiesShow=0;
-        this.hotUserLoadedId=0;
+    clearStore:function(){
+        this.userEntitiesShowCount=0;
+        this.hotUserLoadedCount=0;
         this.projectLoadedId=0;
+        this.searchLoadedCount=0;
         this.resourceLoadedId=0;
-        this.currentShowEntitiesType="project";
         this.currentShowUser.userId=0;
         this.currentShowUser.name="";
         this.currentShowUser.figure="";
         this.currentShowUser.role="";
-        this.currentSearch.currentSearchType=DE.config.entityTypes.project;
+        this.currentSearch.currentSearchType="";
         this.currentSearch.currentSearchValue="";
         this.currentSearch.isTag=true;
         this.uploadedMedias={};
         this.currentEditEntityId=0;
+        this.currentScrollScreenType="";
+    },
+
+    clearCurrentShowEntity:function(){
         this.currentShowEntity.id=0;
         this.currentShowEntity.hasPraised=false;
-        this.currentShowEntity.type=DE.config.entityTypes.project;
-        this.currentScrollScreenType="";
-
-        if(clearFirstLoadFlag){
-            this.isFirstLoad=false;
-        }
+        this.currentShowEntity.type="";
+        this.currentShowEntity.commentLoadedId=0;
     },
 
     /**
@@ -101,20 +94,6 @@ DE.store={
         this.currentShowEntity.id=entity.id;
         this.currentShowEntity.hasPraised=entity.hasPraised;
         this.currentShowEntity.type=entity.type;
-    },
-
-    /**
-     * 清空编辑时留下的数据，新建、修改作品（资源）提交时使用
-     */
-    clearEditData:function(){
-        $("#de_input_project_title").val("");
-        $("#de_input_tag").html("");
-        $("#de_project_description").val("");
-        $("#de_input_project_tag").val("");
-        $("#zy_media_iframe").removeAttr("src");
-        $("#de_project_thumb").attr("src",DE.config.defualtEntityThumb);
-        $("#zy_uploaded_medias_ol").html("");
-        DE.UIManager.gotoUploadStep("#de_upload_step1");
     },
 
     /**
@@ -161,9 +140,9 @@ DE.store={
             userEntityList.html("");
         }
 
-        //判断是否是修改，如果不是清除上传的数据
+        //判断是否是修改，如果不是清除上传界面的数据
         if(location.href.match("edit")==null){
-            this.clearEditData();
+            DE.upload.clearEditData();
         }
     },
 
@@ -179,7 +158,8 @@ DE.store={
         this.currentUser.description="";
         this.currentUser.openId="";
         this.currentUser.accessToken="";
-        this.currentUser.status=DE.config.userStatus.enabled
+        this.currentUser.status="";
+        this.currentUser.regLocked=true;
     },
 
     /**
@@ -192,7 +172,8 @@ DE.store={
         this.currentUser.role=data.role?data.role:this.currentUser.role;
         this.currentUser.name=data.name?data.name:this.currentUser.name;
         this.currentUser.email=data.email?data.email:this.currentUser.email;
-        this.currentUser.description=data.description?data.description:this.currentUser.description;
+        this.currentUser.description=typeof data.description!=="undefined"?data.description:this.currentUser.description;
         this.currentUser.status=data.status?data.status:this.currentUser.status;
+        this.currentUser.regLocked=typeof data.regLocked!=="undefined"?data.regLocked:this.currentUser.regLocked;
     }
 };

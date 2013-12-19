@@ -20,49 +20,58 @@ DE.history=(function(){
      * 针对不同的url的数据处理,对应config中的urls
      * @param {String} type 要请求数据的类型
      * @param {String} value 要请求的数据的参数值
-     * @param {Boolean} clearFirstLoadFlag 是否清楚第一次进入页面的标志，chrome第一次也响应statechange而firefox不响应
+     * @param {*} oldHref 旧的url，主要是详情页使用
+     * @param {Function} callback 回调函数,主要是显示作品详情
      */
-    function handler(type,value,clearFirstLoadFlag){
+    function handler(type,value,oldHref,callback){
 
-        DE.store.clearStore(clearFirstLoadFlag);
-        DE.store.clearEditData();
+        DE.store.clearStore();
+        DE.upload.clearEditData();
         //DE.store.clearCurrentUser();
+        DE.uiManager.showLoading();
 
         switch (type){
             case "tag":
 
                 //请求点击标签的数据
-                DE.entity.getEntityByTag(value,type,true);
+                value=decodeURI(value);
+                $("#de_resource_tags a").each(function(index,b){
+                     if(value==$(this).text()){
+                         type=DE.config.entityTypes.resource;
+                         return false;
+                     }
+                });
+                DE.entity.getEntityBySearch(value,type,true,true,callback);
 
                 break;
             case "project":
 
                 //请求首页作品聚合
-                DE.entity.getAllEntity(DE.config.entityTypes.project,true);
+                DE.entity.getAllEntity(DE.config.entityTypes.project,true,callback);
 
                 break;
             case "user":
 
                 //请求用户数据
                 if(value=="hot"){
-                    DE.user.getHotUsers(true);
+                    DE.user.getHotUsersOrder();
                 }else{
                     DE.user.getUserById(value);
-                    DE.user.getUserEntities(value);
-                    DE.UIManager.showScreen("#de_screen_user_profile");
+                    DE.user.getUserEntities(value,callback);
+                    //DE.uiManager.showScreen("#de_screen_user_profile");
                 }
 
                 break;
             case "search":
 
                 //请求搜索数据
-                DE.entity.getEntityByTag(value,type,true);
+                DE.entity.getEntityBySearch(decodeURI(value),"",false,true,callback);
 
                 break;
             case "upload":
 
                 //请求上传数据
-                DE.UIManager.showScreen("#de_screen_upload");
+                DE.uiManager.showScreen("#de_screen_upload");
 
                 break;
             case "edit":
@@ -74,13 +83,29 @@ DE.history=(function(){
             case "resource":
 
                 //请求首页资源数据
-                DE.entity.getAllEntity(DE.config.entityTypes.resource,true);
+                DE.entity.getAllEntity(DE.config.entityTypes.resource,true,callback);
+
+                break;
+            case "item":
+                if(oldHref!==undefined&&oldHref!==""){
+                    var obj=handlerHref(oldHref);
+                    handler(obj.type,obj.value,undefined,function(){
+                        DE.entity.entityClickHandler(type+"/"+value);
+                    });
+
+                }else{
+                    var showHome=oldHref===""?false:true;
+
+                    handler(null,null,undefined,function(){
+                        DE.entity.entityClickHandler(type+"/"+value,showHome);
+                    });
+                }
 
                 break;
             default :
 
                 //默认请求首页作品数据
-                DE.entity.getAllEntity(DE.config.entityTypes.project,true);
+                DE.entity.getAllEntity(DE.config.entityTypes.project,true,callback);
 
             }
     }
@@ -115,18 +140,43 @@ DE.history=(function(){
 
             var obj=null;
             if(supports_history_api()){
+                var baseURI=document.baseURI||$("#de_base_url").attr("href");
+
+                //回退到首页的时候是null,第一次进入非首页回退的时候浏览器默认会根据代码生成state
                 if(event.state){
+
                     var href=event.state.href;
-                    obj=handlerHref(href);
+                    if(typeof event.state.oldHref!=="undefined"){
+
+                        //前进或者后退到详情页,不管如何都需要重新处理数据
+                        obj=handlerHref(href);
+                    }else{
+
+                        //由于存在详情页回退是不需要刷新数据的，这里应该要判断是否加载了数据
+                        if(!DE.store.currentShowEntity.id||(DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
+                            DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&DE.store.searchLoadedCount===0)){
+
+                            if(href==baseURI){
+                                obj={type:null,value:null};
+                            }else{
+                                obj=handlerHref(href);
+                            }
+                        }
+                    }
+
+                    /*
+                    * 这里调用和下面调用都是为了防止在详情页面，用户直接前进后退，
+                    * 此时页面详情没有事件关闭，应该调用一次关闭
+                    * */
+                    DE.uiManager.hideProjectDetail();
                 }else{
 
-                    /*如果不是第一次进入页面，而且地址又到了首页，需要进行处理
-                      此处进行判断是因为谷歌第一次进入也会相应事件，而此时不应该让此事件操作，因为默认会加载数据，不需要通过此事件
-                      来进行数据的加载，所以要通过标志来处理第一次不进行事件操作的行为
-                    * */
-                    if(!DE.store.isFirstLoad){
-                        handler(null,null,true);
+                    //退回到第一次进入时的首页state为{}或者为null,还有chrome的第一次响应(判断作品是否加载过)
+                    if(DE.store.projectLoadedId===0&&location.href==baseURI){
+                        handler(null,null);
+                        DE.uiManager.hideProjectDetail();
                     }
+
                 }
             }else{
                 if(location.hash){
@@ -141,24 +191,38 @@ DE.history=(function(){
             *一种是第一次进入网站，这个时候不需要响应数据，由initData响应
             *一种是退回到首页或者点击logo到首页，这个时候是需要处理的，在上面处理了
             */
+
+
             if(obj!=null){
-                handler(obj.type,obj.value,true);
+
+                handler(obj.type,obj.value,event.state.oldHref);
             }
+
         },
 
         /**
          * 无刷新改变地址栏
          * @param {String} href 需要设置的地址
+         * @param {Boolean} isEntityDetail 是否是详情页，如果是则不需要clearStore,可选
          */
-        push:function(href){
+        push:function(href,isEntityDetail){
 
             //首页传的href可能只有一个"/"或者"/engine"这种形式
 
             //当url变化的时候，清空存储器
-            DE.store.clearStore(true);
+            if(!isEntityDetail){
+                DE.store.clearStore();
+            }
+
 
             if(supports_history_api()){
-                history.pushState({href:href},"",href);
+                if(isEntityDetail){
+                    var baseURI=document.baseURI||$("#de_base_url").attr("href");
+                    var oldHref=location.href.substring(baseURI.length);
+                    history.pushState({href:href,oldHref:oldHref},"",href);
+                }else{
+                    history.pushState({href:href},"",href);
+                }
             }else{
                 location.hash="#!"+href;
             }
@@ -170,25 +234,13 @@ DE.history=(function(){
         initDatas:function(){
 
             var href=window.location.href;
-            href=href.substring(href.indexOf(DE.config.root));
-            var hrefArray=href.split("/");
-            var lenght=hrefArray.length;
-
-            if(!DE.store.currentUser.userId){
-                if(hrefArray[2]=="edit"||hrefArray[2]=="upload"){
-                    window.location.href=DE.config.root;
-                    return ;
-                }
-            }
-
-            if(lenght==3){
-
-                //如果路径只有两个元素(其中一个为空:/design)，那进入的是首页
-                handler(null,null,false);
-            }else if(lenght==4){
-
-                //从其他地址进入/design/tag/tagName，需要获取数据
-                handler(hrefArray[2],hrefArray[3],false)
+            var baseURI=document.baseURI||$("#de_base_url").attr("href");
+            href=href.substring(baseURI.length);
+            if(!href){
+                handler(null,null);
+            }else{
+                var hrefArray=href.split("/");
+                handler(hrefArray[0],hrefArray[1])
             }
         }
     }
@@ -198,11 +250,8 @@ $(document).ready(function(){
 
     //popstate事件
     window.onpopstate=function(event){
-        if(event){
 
-             //火狐第一次进入不响应此事件，event为空会报错，需要判断一下
-             DE.history.stateChange(event);
-        }
+        //火狐第一次进入不响应此事件
+        DE.history.stateChange(event);
     }
-
 });

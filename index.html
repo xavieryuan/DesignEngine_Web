@@ -1,24 +1,28 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="fragment" content="!">
+    <meta name="description" content="图钉墙”是由湖南大学设计艺术学院自主开发的设计作品与教学资源库，其中收录了湖南大学设计艺术学院及其他兄弟院校的各类课程作业、设计研究报告、教学课件和讲课视频。" />
+    <meta name="baidu-tc-cerfication" content="622f31c8e7be07f0ac794950d45efc53" />
+    <meta name="keywords" content="图钉墙, 工业设计, 艺术设计, 设计教育, 设计作品, 设计资源, 湖南大学设计艺术学院" />
     <title>图钉墙 - HNU Design</title>
-    <base href="http://localhost/DesignEngine_Web/">
+    <base id="de_base_url" href="http://192.168.1.18/design/"/>
     <link href="css/general.css" rel="stylesheet" type="text/css"/>
-    <!--<script type="text/javascript" data-main="js/src/main.js" src="js/lib/require.min.js"></script>-->
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/lib/juicer-min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.form.js"></script>
     <script type="text/javascript" src="js/lib/plupload.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.marcopolo.min.js"></script>
     <script type="text/javascript" src="js/lib/plupload.flash.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
     <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
-          data-redirecturi="http://lotusprize.com/design/redirect.html" data-appid="100502817"
+          data-redirecturi="http://design.hnu.cn/pinwall/redirect.html" data-appid="100564490"
           charset="utf-8"></script>
-    <script src="js/DE.UIManager.js"></script>
-    <script src="js/DE.DataManager.js"></script>
+    <script src="js/src/googleAnalytics.js"></script>
+    <script src="js/src/uiManager.js"></script>
     <script src="js/src/config.js"></script>
     <script src="js/src/storeManager.js"></script>
     <script src="js/src/historyManager.js"></script>
@@ -44,31 +48,34 @@
 <!--用户菜单-->
 <script type="text/template" id="userMenuTpl">
     {@if user.userId}
-    <li class="de_reg_view">
-        <a class="de_btn_user_profile de_borderbox de_user_link" id="de_btn_user_profile"
-           href="user/${user.userId}">
-            <img class="photo" src="${user.figure}" title="USER_NAME">${user.name}
-        </a>
-    </li>
-    <li class="de_reg_view"><a class="de_btn_upload de_borderbox" href="upload/entity" id="de_btn_upload">上传</a>
-    </li>
-    <li class="de_reg_view ">
-        <a class="de_btn_hotdogmenu de_borderbox" href="#" id="de_btn_ext_nav">更多</a>
-        <ul class="de_ext_nav de_transition" id="de_ext_nav">
-            <li class="de_reg_view "><a href="#" id="de_btn_reset_pwd">修改密码</a></li>
-            <li class="de_reg_view "><a href="#" id="de_btn_edit_profile">修改个人信息</a></li>
-            {@if user.role=="user"}
-                 <li class="de_reg_view "><a href="#" id="de_btn_bind_account">绑定账号</a></li>
-            {@else if user.role=="vip"}
-            {@else}
-                <li class="de_admin_view "><a href="user/manage">用户管理</a></li>
-                <li class="de_admin_view "><a href="#">管理员专用子菜单</a></li>
-                <li class="de_admin_view "><a href="#">管理员专用子菜单</a></li>
-            {@/if}
-            <li class="de_reg_view "><a href="#" id="de_btn_sign_out">退出登录</a></li>
-        </ul>
-        {@else}
-    <li class="de_guest_view"><a class="de_btn_login_reg de_borderbox" href="#" id="de_btn_login_reg">登录/注册</a></li>
+        <li class="de_reg_view">
+            <a class="de_btn_user_profile de_borderbox de_user_link" id="de_btn_user_profile"
+               href="user/${user.userId}">
+                <img class="photo" src="${user.figure}" title="USER_NAME">${user.name}
+            </a>
+        </li>
+        {@if user.role!='admin'}
+            <li class="de_reg_view"><a class="de_btn_upload de_borderbox" href="upload/entity" id="de_btn_upload">上传</a></li>
+        {@/if}
+        <li class="de_reg_view ">
+            <a class="de_btn_hotdogmenu de_borderbox" href="#" id="de_btn_ext_nav">更多</a>
+            <ul class="de_ext_nav de_transition" id="de_ext_nav">
+                <li class="de_reg_view "><a href="#" id="de_btn_reset_pwd">修改密码</a></li>
+                <li class="de_reg_view "><a href="user/${user.userId}" class="de_user_link">个人主页</a></li>
+                <li class="de_reg_view "><a href="#" id="de_btn_edit_profile">修改个人信息</a></li>
+                {@if user.role=='user'}
+                     <!--<li class="de_reg_view "><a href="#" id="de_btn_bind_account">绑定账号</a></li>-->
+                {@else if user.role=='vip'}
+                {@else}
+                    <li class="de_admin_view "><a href="user/manage">用户管理</a></li>
+                    <li class="de_admin_view "><a href="#">管理员专用子菜单</a></li>
+                    <li class="de_admin_view "><a href="#">管理员专用子菜单</a></li>
+                {@/if}
+                <li class="de_reg_view "><a href="#" id="de_btn_sign_out">退出登录</a></li>
+            </ul>
+        </li>
+    {@else}
+        <li class="de_guest_view"><a class="de_btn_login_reg de_borderbox" href="#" id="de_btn_login_reg">登录/注册</a></li>
     {@/if}
 </script>
 <!-- 显示作品聚合-->
@@ -83,7 +90,7 @@
             </a>
         </div>
         <div class="project_info">
-            <a href="entity/${p.postId}" class="de_entity_link">
+            <a href="item/${p.postId}" class="de_entity_link">
                 <img class="thumb" src="${p.postThumb}">
                 <h4>${p.postTitle}</h4>
 
@@ -109,7 +116,7 @@
             </a>
         </div>
         <div class="project_info">
-            <a href="entity/${r.postId}" class="de_entity_link">
+            <a href="item/${r.postId}" class="de_entity_link">
                 <img class="thumb" src="${r.postThumb}"/>
                 <h4>${r.postTitle}</h4>
 
@@ -131,6 +138,9 @@
             {@/if}
             {@if r.postHasFile}
                 <li class="tag_file">文档</li>
+            {@/if}
+            {@if r.postHasFlash}
+                <li class="tag_flash">flash</li>
             {@/if}
         </ul>
     </li>
@@ -155,7 +165,7 @@
         </div>
         <ul class="project_info">
             {@each user.projects as project,index}
-            <li><a href="entity/${project.postId}" class="de_entity_link"><img src="${project.postThumb}"></a></li>
+            <li><a href="item/${project.postId}" class="de_entity_link"><img src="${project.postThumb}"></a></li>
             {@/each}
 
         </ul>
@@ -168,44 +178,45 @@
 </script>
 <!-- 显示搜索结果-->
 <script type="text/template" id="searchResultTpl">
-    {@each entities as e}
+    {@each docs as e}
     <li class="de_borderbox">
         <div class="user_info">
             <a href="user/${e.userId}" class="de_user_link">
-                <img class="photo" src="${e.userProfile}"/>
-
+                <img class="photo" src="${e.userProfileImg}"/>
                 <p class="name">${e.userName}</p>
             </a>
         </div>
         <div class="project_info">
-            <a href="entity/${e.id}" class="de_entity_link">
-                <img class="thumb" src="${e.thumb}">
-                <h4>${e.title}</h4>
-
-                <p class="date">${e.date}</p>
+            <a href="item/${e.postId}" class="de_entity_link">
+                <img class="thumb" src="${e.postThumb}">
+                <h4>${e.postTitle}</h4>
+                <p class="date">${e.postDate}</p>
             </a>
         </div>
-        {@if e.type=='project'}
+        {@if e.postType=='work'}
             <ul class="de_stats_tags">
-                <li class="likes">${e.praiseCount}</li>
-                <li class="comments">${e.commentCount}</li>
+                <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
+                <li class="comments">${e.postCommentCount}</li>
             </ul>
         {@else}
         <ul class="de_media_tags">
-            {@if e.hasPpt}
+            {@if e.postHasPpt}
                 <li class="tag_ppt">PPT</li>
             {@/if}
-            {@if e.hasWebVideo}
+            {@if e.postHasWebVideo}
                 <li class="tag_web_video">网络视频</li>
             {@/if}
-            {@if e.hasLocalVideo}
+            {@if e.postHasLocalVideo}
                 <li class="tag_local_video">本地视频</li>
             {@/if}
-            {@if e.has3d}
+            {@if e.postHas3d}
                 <li class="tag_3d">3D</li>
             {@/if}
-            {@if e.hasFile}
+            {@if e.postHasFile}
                 <li class="tag_file">文档</li>
+            {@/if}
+            {@if e.postHasFile}
+                <li class="tag_flash">flash</li>
             {@/if}
         </ul>
         {@/if}
@@ -216,7 +227,12 @@
 <!--作品、资源详情模板-->
 <!--显示工具栏section prepend-->
 <script type="text/template" id="entityToolTpl">
-    <a href="#" class="de_btn_close_project_detail" id="de_btn_close_project_detail">关闭</a>
+    {@if showHome}
+        <a href="#" data-behaiver="showHome" class="de_btn_back_to_home" id="de_btn_close_project_detail">关闭</a>
+    {@else}
+        <a href="#" data-behaiver="close" class="de_btn_close_project_detail" id="de_btn_close_project_detail">关闭</a>
+    {@/if}
+
 
     <div class="de_project_header de_borderbox">
         {@if postType=="work"}
@@ -230,12 +246,12 @@
 
         {@if canShowToolBar}
         <ul class="de_project_toolbar de_transition" id="de_entity_toolbar">
-            <li><a class="de_toolbar_edit" href="edit/${id}" title="编辑">编辑</a></li>
-            <li><a class="de_toolbar_delete" href="${id}" title="删除">删除</a></li>
+            <li><a class="de_toolbar_edit" data-handler="edit" href="edit/${id}" title="编辑">编辑</a></li>
+            <li><a class="de_toolbar_delete" data-handler="delete" href="${id}" title="删除">删除</a></li>
             {@if postVisible}
-                 <li><a class="de_toolbar_invisible" data-target-visible="true" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
+                 <li><a class="de_toolbar_invisible" data-handler="setVisible" data-target-visible="true" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
             {@else}
-                 <li><a class="de_toolbar_visible" data-target-visible="false" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
+                 <li><a class="de_toolbar_visible" data-handler="setVisible" data-target-visible="false" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
             {@/if}
 
         </ul>
@@ -258,16 +274,18 @@
                 <p class="name">${userName}</p>
             </a>
         </div>
-        {@if postType=="work"}
-            <ul class="de_stats_tags">
+
+        <ul class="de_stats_tags">
+            {@if postType=="work"}
                 <li class="badges" id="honorCount" title="勋章">${postHonorCount}</li>
                 <li class="likes" id="praiseCount" title="赞">${postPraiseCount}</li>
-                <li class="comments" id="commentsCount" title="评论">${postCommentCount}</li>
-            </ul>
-        {@/if}
+            {@/if}
+            <li class="comments" id="commentsCount" title="评论">${postCommentCount}</li>
+        </ul>
+
 
         <p class="abstract">
-            ${postDescription}
+            ${postDescribe}
         </p>
 
         <!--附件-->
@@ -278,18 +296,18 @@
     <div id="de_comments" class="de_comment_box de_boxshadow de_borderbox">
         <ul id="de_comment_list" class="de_comment_list"></ul>
 
-        <span id="de_comment_more_btn" class="de_comment_more_btn">+加载更多</span>
+        <span id="de_comment_more_btn" class="de_comment_more_btn de_hidden">加载更多...</span>
 
         {@if user.userId}
         <div class="de_comment_form de_reg_view de_borderbox">
             <div class="user_info">
-                <a href="user/${user.userId}" class="de_borderbox">
+                <a href="user/${user.userId}" class="de_borderbox de_user_link">
                     <img src="${user.figure}" class="photo">
                 </a>
             </div>
             <div class="comment_wrapper">
-                <a href="user/${user.userId}" class="name">${user.name}</a>
-                <textarea id="de_comment_content" class="comment de_borderbox de_inputbox_gray" placeholder="你的评论..."></textarea>
+                <a href="user/${user.userId}" class="name de_user_link">${user.name}</a>
+                <textarea id="de_comment_content" maxlength="200" class="comment de_borderbox de_inputbox_gray" placeholder="你的评论..."></textarea>
                 <input type="submit" class="de_button de_btn_add_comment" name="de_btn_add_comment"
                        id="de_btn_add_comment" value="提交">
             </div>
@@ -313,9 +331,19 @@
     <figure>
         <!--根据类型添加class-->
         {@if at.attachmentType=='zy_image'}
-             <a href="${at.attachmentPreviewLocation}"><img src="${at.attachmentPreviewLocation}"/></a>
-        {@else}
-            <a href="${at.attachmentPreviewLocation}" class="video"><img src="${at.attachmentPreviewLocation}"/></a>
+             <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_only_image"><img data-media-type="zy_image" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+        {@else if at.attachmentType=='zy_location_video'}
+            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_video"><img data-media-type="zy_location_video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+        {@else if at.attachmentType=='zy_network_video'}
+            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_web_video"><img data-media-type="zy_network_video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+        {@else if at.attachmentType=='zy_3d'}
+            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_3d"><img data-media-type="zy_3d" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+        {@else if at.attachmentType=='zy_ppt'}
+            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_ppt"><img data-media-type="zy_ppt" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+        {@else if at.attachmentType=='zy_file'}
+            <a href="${at.attachmentMediaLocation}" class="de_has_file de_has_media"><img data-media-type="zy_file" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
+        {@else if at.attachmentType=='zy_flash'}
+            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_flash de_has_media"><img data-media-type="zy_flash" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
         {@/if}
 
         {@if at.attachmentTitle}
@@ -336,9 +364,13 @@
             </a>
         </div>
         <div class="comment_wrapper">
-            <a href="user/${c.userId}" class="name   de_user_link">${c.userName}</a>
+            <a href="user/${c.userId}" class="name de_user_link">${c.userName}</a>
             <span class="publishtime">${c.commentTime}</span>
-            <a href="${c.commentId}" class="de_delete_comment">X</a>
+
+            {@if c.deleteAble}
+                <a href="${c.commentId}" class="de_delete_comment">X</a>
+            {@/if}
+
             <p class="comment">${c.commentContent}</p>
         </div>
     </li>
@@ -353,54 +385,57 @@
             </a>
         </div>
         <div class="comment_wrapper">
-            <a href="user/${user.userId}" class="name   de_user_link">${user.name}</a>
+            <a href="user/${user.userId}" class="name de_user_link">${user.name}</a>
             <span class="publishtime">${time}</span>
-            <a href="${c.commentId}" class="de_delete_comment">X</a>
+            <a href="${commentId}" class="de_delete_comment">X</a>
             <p class="comment">${content}</p>
         </div>
     </li>
 </script>
 <!--显示相似作品de_project_grid ul append-->
 <script type="text/template" id="similarEntityTpl">
-    {@each entities as e}
+    {@each docs as e}
 
     <li class="de_borderbox">
         <div class="user_info">
             <a href="user/${e.userId}" class="de_user_link">
-                <img class="photo" src="${e.userProfile}"/>
+                <img class="photo" src="${e.userProfileImg}"/>
 
                 <p class="name">${e.userName}</p>
             </a>
         </div>
         <div class="project_info">
-            <a href="entity/${e.id}" class="de_entity_link">
-                <img class="thumb" src="${e.thumb}">
-                <h4>${e.title}</h4>
+            <a href="item/${e.postId}" class="de_entity_link">
+                <img class="thumb" src="${e.postThumb}">
+                <h4>${e.postTitle}</h4>
 
-                <p class="date">${e.date}</p>
+                <p class="date">${e.postDate}</p>
             </a>
         </div>
-        {@if e.type=='project'}
+        {@if e.postType=='work'}
         <ul class="de_stats_tags">
-            <li class="likes">${e.praiseCount}</li>
-            <li class="comments">${e.commentsCount}</li>
+            <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
+            <li class="comments">${e.postCommentCount}</li>
         </ul>
         {@else}
         <ul class="de_media_tags">
-            {@if e.hasPpt}
+            {@if e.postHasPpt}
             <li class="tag_ppt">PPT</li>
             {@/if}
-            {@if e.hasWebVideo}
+            {@if e.postHasWebVideo}
             <li class="tag_web_video">网络视频</li>
             {@/if}
-            {@if e.hasLocalVideo}
+            {@if e.postHasLocalVideo}
             <li class="tag_local_video">本地视频</li>
             {@/if}
-            {@if e.has3d}
+            {@if e.postHas3d}
             <li class="tag_3d">3D</li>
             {@/if}
-            {@if e.hasFile}
+            {@if e.postHasFile}
             <li class="tag_file">文档</li>
+            {@/if}
+            {@if e.postHasFlash}
+            <li class="tag_flash">flash</li>
             {@/if}
         </ul>
         {@/if}
@@ -411,45 +446,50 @@
 
 <!--个人页面-->
 <script type="text/template" id="userDetailTpl">
-    <div class="user_info">
-        <a href="user/${userId}" class="de_borderbox de_user_link">
-            <img src="${userProfileImg}" class="photo"/>
+    <div class="de_designer_list">
+        <article class="de_user_info_card" id="de_user_info_card">
+            <div class="user_info">
+                <a href="user/${userId}" class="de_borderbox de_user_link">
+                    <img src="${userProfileImg}" class="photo"/>
 
-            <p class="name">${userName}</p>
-        </a>
-        {@if userDescribe}
-            <p class="user_about">${userDescribe}</p>
-        {@else}
-            <p class="user_about">这个人很懒，什么也没留下</p>
-        {@/if}
+                    <p class="name">${userName}</p>
+                </a>
+                {@if userDescribe}
+                    <p class="user_about">${userDescribe}</p>
+                {@else}
+                    <p class="user_about">这个人很懒，什么也没留下</p>
+                {@/if}
+            </div>
+            <ul class="project_info" id="de_user_honor_projects">
+                <!--预留给第二次的作品请求-->
+            </ul>
+            <ul class="de_stats_tags">
+                <li class="uploads" title="上传">${userUploadCount}</li>
+                <li class="badges" title="勋章">${userPraiseCount}</li>
+            </ul>
+        </article>
     </div>
-    <ul class="project_info" id="de_user_honor_projects">
-        <!--预留给第二次的作品请求-->
-    </ul>
-    <ul class="de_stats_tags">
-        <li class="uploads" title="上传">${userUploadCount}</li>
-        <li class="badges" title="勋章">${userPraiseCount}</li>
-    </ul>
+    <article class="de_user_uploads">
+       <!-- <nav class="de_category_filter de_borderbox">
+            {@if role=="vip"}
+            <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
+            {@else}
+            <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
+            {@/if}
+        </nav>-->
+
+        <ul class="de_project_grid" id="de_user_uploads"></ul>
+    </article>
 </script>
 <!--优秀作品-->
 <script type="text/template" id="userHonorProjectTpl">
     {@each projects as p}
-        <li><a href="entity/${p.postId}" class="de_entity_link"><img src="${p.postThumb}"></a></li>
+        <li><a href="item/${p.postId}" class="de_entity_link"><img src="${p.postThumb}"></a></li>
     {@/each}
 </script>
 <!--作品、资源-->
 <script type="text/template" id="userEntitiesTpl">
-    <nav class="de_category_filter de_borderbox">
-        {@if role=="vip"}
-        <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
-        {@else}
-        <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
-        {@/if}
-    </nav>
-
-    <ul class="de_project_grid">
         {@each userEntities as e,index}
-        {@if index<10}
             <li class="de_borderbox">
                 <div class="user_info">
                     <a href="user/${userId}" class="de_user_link">
@@ -459,7 +499,7 @@
                     </a>
                 </div>
                 <div class="project_info">
-                    <a href="entity/${e.postId}" class="de_entity_link">
+                    <a href="item/${e.postId}" class="de_entity_link">
                         <img class="thumb" src="${e.postThumb}">
                         <h4>${e.postTitle}</h4>
 
@@ -488,79 +528,25 @@
                     {@if e.postHasFile}
                     <li class="tag_file">文档</li>
                     {@/if}
-                </ul>
-                {@/if}
-                {@if showToolBar}
-                <ul class="de_project_toolbar de_transition">
-                    <li><a class="de_toolbar_edit" href="edit/${e.postId}" title="编辑">编辑</a></li>
-                    <li><a class="de_toolbar_delete" href="${e.postId}" title="删除">删除</a></li>
-                    {@if e.postVisible}
-                    <li><a class="de_toolbar_invisible" data-target-visible="true" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
-                    {@else}
-                    <li><a class="de_toolbar_visible" data-target-visible="false" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
-                    {@/if}
-
-                </ul>
-                {@/if}
-            </li>
-        {@else}
-            <li class="de_borderbox de_hidden">
-                <div class="user_info">
-                    <a href="user/${userId}" class="de_user_link">
-                        <img class="photo" src="${userProfileImg}"/>
-
-                        <p class="name">${userName}</p>
-                    </a>
-                </div>
-                <div class="project_info">
-                    <a href="entity/${e.postId}" class="de_entity_link">
-                        <img class="thumb" src="${e.postThumb}">
-                        <h4>${e.postTitle}</h4>
-
-                        <p class="date">${e.postDate}</p>
-                    </a>
-                </div>
-                {@if role=="user"}
-                <ul class="de_stats_tags">
-                    <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
-                    <li class="comments">${e.postCommentCount}</li>
-                </ul>
-                {@else}
-                <ul class="de_media_tags">
-                    {@if e.hasPpt}
-                    <li class="tag_ppt">PPT</li>
-                    {@/if}
-                    {@if e.hasWebVideo}
-                    <li class="tag_web_video">网络视频</li>
-                    {@/if}
-                    {@if e.hasLocalVideo}
-                    <li class="tag_local_video">本地视频</li>
-                    {@/if}
-                    {@if e.has3d}
-                    <li class="tag_3d">3D</li>
-                    {@/if}
-                    {@if e.hasFile}
-                    <li class="tag_file">文档</li>
+                    {@if e.postHasFlash}
+                    <li class="tag_flash">flash</li>
                     {@/if}
                 </ul>
                 {@/if}
                 {@if showToolBar}
                 <ul class="de_project_toolbar de_transition">
-                    <li><a class="de_toolbar_edit" href="edit/${e.postId}" title="编辑">编辑</a></li>
-                    <li><a class="de_toolbar_delete" href="${e.postId}" title="删除">删除</a></li>
+                    <li><a class="de_toolbar_edit" data-handler="edit" href="edit/${e.postId}" title="编辑">编辑</a></li>
+                    <li><a class="de_toolbar_delete" data-handler="delete" href="${e.postId}" title="删除">删除</a></li>
                     {@if e.postVisible}
-                    <li><a class="de_toolbar_invisible" data-target-visible="true" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
+                    <li><a class="de_toolbar_invisible" data-handler="setVisible" data-target-visible="true" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
                     {@else}
-                    <li><a class="de_toolbar_visible" data-target-visible="false" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
+                    <li><a class="de_toolbar_visible" data-handler="setVisible" data-target-visible="false" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
                     {@/if}
 
                 </ul>
                 {@/if}
             </li>
-        {@/if}
-
         {@/each}
-    </ul>
 </script>
 
 <!--    上传标签   -->
@@ -596,7 +582,7 @@
     <h2>${title}</h2>
     <p class="publishtime">${date}</p>
     <div class="user_info">
-        <a href="user/${userId}">
+        <a href="user/${userId}" class="de_user_link">
             <img class="photo" src="${userFigure}">
             <p class="name">${username}</p>
         </a>
@@ -619,16 +605,64 @@
 </script>
 <!--输入网络视频-->
 <script type="text/template" id="webVideoInput">
-    <label for="de_input_web_video">请输入网络视频通用地址:</label>
+    <label for="de_input_web_video">请输入网络视频通用（含iframe标签）地址:</label>
     <input type="text" id="de_input_web_video" class="de_input_web_video">
     <input type="button" id="de_input_web_video_ok" class="de_input_web_video_ok" value="确定">
 </script>
-
+<!--播放媒体文件-->
+<script type="text/template" id="showMediaContent">
+    {@if type=='zy_location_video'}
+        {@if ext=='mp4'}
+             <video autoplay controls src="${content}"></video>
+        {@else}
+            <object type="application/x-shockwave-flash" data="js/lib/dplayer.swf"height="100%" width="100%" id="9144" style="visibility: visible;">
+                <param name="menu" value="false"><param name="allowFullScreen" value="true">
+                <param name="allowscriptaccess" value="sameDomain">
+                <param name="flashvars" value="media_link=${content}">
+            </object>
+        {@/if}
+    {@else if type=='zy_network_video'}
+        $${content}
+    {@else if type=='zy_ppt'}
+        $${content}
+    {@else if type=='zy_3d'}
+    {@else if type=='zy_image'}
+        <img src="${content}">
+    {@else if type=='zy_flash'}
+        <object type="application/x-shockwave-flash" data="js/lib/dplayer.swf"height="100%" width="100%" id="9144" style="visibility: visible;">
+            <param name="menu" value="false"><param name="allowFullScreen" value="true">
+            <param name="allowscriptaccess" value="sameDomain">
+            <param name="flashvars" value="media_link=${content}">
+        </object>
+    {@/if}
+</script>
+<!--没有数据模板-->
+<script type="text/template" id="noDataTpl">
+    <div class="de_404_main de_borderbox">
+        <header class="de_404_header">
+            <p class="de_404_wrong">Oops! </p>
+            <p class="de_404_info"> 您访问的数据没有了，但我们可以一起寻找失踪宝贝！</p>
+        </header>
+        <article class="de_404_body">
+            <a class="de_child_img" href="${url}" target="_blank">
+                <img src="${child_pic}">
+            </a>
+            <div class="de_child_info">
+                <p class="name"> <span>姓 名：</span> ${name} </p>
+                <p class="sex"> <span>性 别：</span> ${sex} </p>
+                <p class="birthday"> <span>出生日期：</span> ${birth_time} </p>
+                <p class="losttime"> <span>失踪时间：</span> ${lost_time} </p>
+                <p class="lostadd"> <span>失踪地点：</span> ${lost_place} </p>
+                <p class="lostinfo"> <span>失踪人特征描述：</span> $${child_feature} </p>
+            </div>
+        </article>
+    </div>
+</script>
 <body>
 <div class="de_page_wrapper">
 <header class="de_header">
 
-    <h1 class="de_logo"><a href="#" id="de_logo">图钉墙 - HNU Design</a></h1>
+    <h1 class="de_logo"><a href="" id="de_logo">图钉墙</a></h1>
 
     <!-----用户菜单----->
     <nav class="de_user_nav de_borderbox" id="de_user_nav">
@@ -660,33 +694,33 @@
     </nav>
 
     <!-----顶部分类筛选----->
-    <div class="de_btn_filter" id="de_btn_filter"><a href="#" class="de_borderbox de_transition">发现更多...</a></div>
+    <div class="de_btn_filter" id="de_btn_filter"><a href="#" class="de_borderbox">发现更多...</a></div>
     <nav id="de_filter_menu" class="de_filter_menu de_borderbox">
 
         <div class="de_filter_group de_borderbox">
             <h3>设计作品</h3>
             <ul class="de_menu_list" id="de_project_tags">
-                <!--<li><a href="#de_screen_search_result">产品设计</a></li>
-                <li><a href="#de_screen_search_result">交互设计</a></li>
-                <li><a href="#de_screen_search_result">图形界面设计</a></li>
-                <li><a href="#de_screen_search_result">交通工具设计</a></li>
-                <li><a href="#de_screen_search_result">服务设计</a></li>
-                <li><a href="#de_screen_search_result">平面设计</a></li>
-                <li><a href="#de_screen_search_result">影像设计</a></li>
-                <li><a href="#de_screen_search_result">绘画艺术</a></li>
-                <li><a href="#de_screen_search_result">摄影艺术</a></li>-->
+                <li><a href="tag/产品设计">产品设计</a></li>
+                <li><a href="tag/交互设计">交互设计</a></li>
+                <li><a href="tag/界面设计">界面设计</a></li>
+                <li><a href="tag/交通工具设计">交通工具设计</a></li>
+                <li><a href="tag/服务设计">服务设计</a></li>
+                <li><a href="tag/平面设计">平面设计</a></li>
+                <li><a href="tag/影像设计">影像设计</a></li>
+                <li><a href="tag/绘画艺术">绘画艺术</a></li>
+                <li><a href="tag/摄影艺术">摄影艺术</a></li>
             </ul>
         </div>
 
         <div class="de_filter_group de_borderbox">
             <h3>学习资源</h3>
             <ul class="de_menu_list" id="de_resource_tags">
-                <!-- <li><a href="#de_screen_search_result">工业设计史</a></li>
-                 <li><a href="#de_screen_search_result">汽车造型设计理论与研究</a></li>-->
+                 <li><a href="tag/工业设计史">工业设计史</a></li>
+                 <li><a href="tag/汽车造型设计理论与研究">汽车造型设计理论与研究</a></li>
             </ul>
         </div>
 
-        <div class="de_filter_group de_borderbox">
+        <div class="de_filter_group de_filter_group_search de_borderbox">
             <h3>搜索</h3>
 
             <div class="de_top_search" id="de_top_search">
@@ -720,140 +754,7 @@
               <li class="likes">34</li>
               <li class="comments">34</li>
           </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people2.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic2.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people3.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic3.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people4.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic4.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people5.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic5.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-         <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people6.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic6.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people5.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic7.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>
-        <li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people3.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic8.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>    -->
+      </li>-->
     </ul>
 </section>
 
@@ -881,167 +782,7 @@
                 <li class="tag_3d">3D</li>
                 <li class="tag_file">文档</li>
             </ul>
-         </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher2.jpg" />
-            <p class="name">谭征宇</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>感性设计讲义，第3节</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_file">文档</li>
-            </ul>
-
-        </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher3.jpg" />
-            <p class="name">季铁</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>疆Home Style社会创新夏令营工作总结</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_local_video">本地视频</li>
-            </ul>
-        </li>
-<li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher1.jpg" />
-            <p class="name">何人可</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>工业设计史 - 中国设计地图</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_web_video">网络视频</li>
-                <li class="tag_local_video">本地视频</li>
-                <li class="tag_3d">3D</li>
-                <li class="tag_file">文档</li>
-            </ul>
-         </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher2.jpg" />
-            <p class="name">谭征宇</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>感性设计讲义，第3节</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_file">文档</li>
-            </ul>
-
-        </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher3.jpg" />
-            <p class="name">季铁</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>疆Home Style社会创新夏令营工作总结</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_local_video">本地视频</li>
-            </ul>
-        </li><li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher1.jpg" />
-            <p class="name">何人可</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>工业设计史 - 中国设计地图</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_web_video">网络视频</li>
-                <li class="tag_local_video">本地视频</li>
-                <li class="tag_3d">3D</li>
-                <li class="tag_file">文档</li>
-            </ul>
-         </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher2.jpg" />
-            <p class="name">谭征宇</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>感性设计讲义，第3节</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_file">文档</li>
-            </ul>
-
-        </li>
-        <li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher3.jpg" />
-            <p class="name">季铁</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>疆Home Style社会创新夏令营工作总结</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_local_video">本地视频</li>
-            </ul>   
-        </li>-->
+         </li>-->
     </ul>
 </section>
 
@@ -1063,130 +804,19 @@
                <li class="uploads" title="上传">34</li>
                <li class="badges" title="勋章">46</li>
            </ul>
-        </li>
-        <li class="de_user_info_card">
-           <div class="user_info">
-           <a href="#" class="de_borderbox">
-           <img src="data/ranking2.jpg" class="photo"/>
-           <p class="name">寇睿</p>
-           </a>
-           <p class="user_about">不卑不亢。</p>
-           </div>
-           <ul class="project_info">
-               <li><a href="#"><img src="images/default_thumb_500.png"></a></li>
-               <li><a href="#"><img src="images/default_thumb_500.png"></a></li>
-               <li><a href="#"><img src="images/default_thumb_500.png"></a></li>
-           </ul>
-
-           <ul class="de_stats_tags">
-               <li class="uploads" title="上传">34</li>
-               <li class="badges" title="勋章">46</li>
-           </ul>
-        </li>
-        <li class="de_user_info_card">
-            <div class="user_info">
-                <a href="#" class="de_borderbox"><img src="data/ranking3.jpg" class="photo" />
-                <p class="name">姚亚敏</p>
-                </a>
-                <p class="user_about">迷失时，我们才开始了解自己。</p>
-            </div>
-           <ul class="project_info">
-               <li><a href="#"><img src="images/default_thumb_500.png"></a></li>
-           </ul>
-           <ul class="de_stats_tags">
-               <li class="uploads" title="上传">34</li>
-               <li class="badges" title="勋章">46</li>
-           </ul>
-        </li>
-        -->
+        </li>-->
     </ul>
 </section>
 
 <!-----------搜索结果----------->
 <section class="de_screen_search_result de_hidden" id="de_screen_search_result">
-    <nav class="de_category_filter de_borderbox" id="de_search_result_tab">
+    <!--<nav class="de_category_filter de_borderbox" id="de_search_result_tab">
         <a href="#" data-entity-type="project" class="de_category_filter_option_project de_borderbox active">设计作品</a>
         <a href="#" data-entity-type="resource" class="de_category_filter_option_resource de_borderbox">学习资源</a>
-    </nav>
+    </nav>-->
 
     <ul class="de_project_grid" id="de_search_result">
         <!--<li class="de_borderbox">
-            <div class="user_info">
-                <a href="#">
-                <img class="photo" src="data/people1.jpg" />
-                <p class="name">淘宝鬼脚七</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="#" >
-                <img class="thumb" src="data/pic1.png">
-                <h4>书院文化相关视频</h4>
-                <p class="date">2013-09-28</p>
-                </a>
-                </div>
-            <ul class="de_stats_tags">
-                <li class="likes">34</li>
-                <li class="comments">34</li>
-            </ul>
-        </li>
-    <li class="de_borderbox">
-            <div class="user_info">
-                <a href="#">
-                <img class="photo" src="data/people1.jpg" />
-                <p class="name">淘宝鬼脚七</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="#" >
-                <img class="thumb" src="data/pic1.png">
-                <h4>书院文化相关视频</h4>
-                <p class="date">2013-09-28</p>
-                </a>
-                </div>
-            <ul class="de_stats_tags">
-                <li class="likes">34</li>
-                <li class="comments">34</li>
-            </ul>
-        </li>
-    <li class="de_borderbox">
-            <div class="user_info">
-                <a href="#">
-                <img class="photo" src="data/people1.jpg" />
-                <p class="name">淘宝鬼脚七</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="#" >
-                <img class="thumb" src="data/pic1.png">
-                <h4>书院文化相关视频</h4>
-                <p class="date">2013-09-28</p>
-                </a>
-                </div>
-            <ul class="de_stats_tags">
-                <li class="likes">34</li>
-                <li class="comments">34</li>
-            </ul>
-        </li>
-    <li class="de_borderbox">
-            <div class="user_info">
-                <a href="#">
-                <img class="photo" src="data/people1.jpg" />
-                <p class="name">淘宝鬼脚七</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="#" >
-                <img class="thumb" src="data/pic1.png">
-                <h4>书院文化相关视频</h4>
-                <p class="date">2013-09-28</p>
-                </a>
-                </div>
-            <ul class="de_stats_tags">
-                <li class="likes">34</li>
-                <li class="comments">34</li>
-            </ul>
-        </li>
-    <li class="de_borderbox">
             <div class="user_info">
                 <a href="#">
                 <img class="photo" src="data/people1.jpg" />
@@ -1210,9 +840,9 @@
 
 <!-----------用户首页----------->
 <section class="de_screen_user_profile de_hidden" id="de_screen_user_profile">
-    <div class="de_designer_list">
+    <!--<div class="de_designer_list">
         <article class="de_user_info_card" id="de_user_info_card">
-            <!-- <div class="user_info">
+             <div class="user_info">
                 <a href="#" class="de_borderbox">
                 <img src="data/ranking1.jpg" class="photo" />
                 <p class="name">张新磊</p>
@@ -1229,138 +859,43 @@
             <ul class="de_stats_tags">
                 <li class="uploads" title="上传">34</li>
                 <li class="badges" title="勋章">46</li>
-            </ul>-->
+            </ul>
         </article>
     </div>
     <article class="de_user_uploads" id="de_user_uploads">
-        <!-- <nav class="de_category_filter de_borderbox">
-                <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
-                <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
-            </nav>
+        <nav class="de_category_filter de_borderbox">
+            <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
+            <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
+        </nav>
 
-            <ul class="de_project_grid">
-               <li class="de_borderbox">
-                    <div class="user_info">
-                        <a href="#">
+        <ul class="de_project_grid">
+            <li class="de_borderbox">
+                <div class="user_info">
+                    <a href="#">
                         <img class="photo" src="data/people1.jpg" />
                         <p class="name">淘宝鬼脚七</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="#" >
+                    </a>
+                </div>
+                <div class="project_info">
+                    <a href="#" >
                         <img class="thumb" src="data/pic1.png">
                         <h4>书院文化相关视频</h4>
                         <p class="date">2013-09-28</p>
-                        </a>
-                        </div>
-                    <ul class="de_stats_tags">
-                        <li class="likes">34</li>
-                        <li class="comments">34</li>
-                    </ul>
-                    <ul class="de_project_toolbar de_transition">
-                        <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                        <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                        <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                    </ul>
-                </li>
-                <li class="de_borderbox">
-                    <div class="user_info">
-                        <a href="#">
-                        <img class="photo" src="data/people1.jpg" />
-                        <p class="name">淘宝鬼脚七</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="#" >
-                        <img class="thumb" src="data/pic1.png">
-                        <h4>书院文化相关视频</h4>
-                        <p class="date">2013-09-28</p>
-                        </a>
-                        </div>
-                    <ul class="de_stats_tags">
-                        <li class="likes">34</li>
-                        <li class="comments">34</li>
-                    </ul>
-                    <ul class="de_project_toolbar de_transition">
-                        <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                        <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                        <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                    </ul>
-                </li>
-                <li class="de_borderbox">
-                    <div class="user_info">
-                        <a href="#">
-                        <img class="photo" src="data/people1.jpg" />
-                        <p class="name">淘宝鬼脚七</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="#" >
-                        <img class="thumb" src="data/pic1.png">
-                        <h4>书院文化相关视频</h4>
-                        <p class="date">2013-09-28</p>
-                        </a>
-                        </div>
-                    <ul class="de_stats_tags">
-                        <li class="likes">34</li>
-                        <li class="comments">34</li>
-                    </ul>
-                    <ul class="de_project_toolbar de_transition">
-                        <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                        <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                        <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                    </ul>
-                </li>
-                <li class="de_borderbox">
-                    <div class="user_info">
-                        <a href="#">
-                        <img class="photo" src="data/people1.jpg" />
-                        <p class="name">淘宝鬼脚七</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="#" >
-                        <img class="thumb" src="data/pic1.png">
-                        <h4>书院文化相关视频</h4>
-                        <p class="date">2013-09-28</p>
-                        </a>
-                        </div>
-                    <ul class="de_stats_tags">
-                        <li class="likes">34</li>
-                        <li class="comments">34</li>
-                    </ul>
-                    <ul class="de_project_toolbar de_transition">
-                        <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                        <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                        <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                    </ul>
-                </li>
-                <li class="de_borderbox">
-                    <div class="user_info">
-                        <a href="#">
-                        <img class="photo" src="data/people1.jpg" />
-                        <p class="name">淘宝鬼脚七</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="#" >
-                        <img class="thumb" src="data/pic1.png">
-                        <h4>书院文化相关视频</h4>
-                        <p class="date">2013-09-28</p>
-                        </a>
-                        </div>
-                    <ul class="de_stats_tags">
-                        <li class="likes">34</li>
-                        <li class="comments">34</li>
-                    </ul>
-                    <ul class="de_project_toolbar de_transition">
-                        <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                        <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                        <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                    </ul>
-                </li>
-            </ul>-->
-    </article>
+                    </a>
+                </div>
+                <ul class="de_stats_tags">
+                    <li class="likes">34</li>
+                    <li class="comments">34</li>
+                </ul>
+                <ul class="de_project_toolbar de_transition">
+                    <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
+                    <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
+                    <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </article>  -->
 </section>
 
 <!-----------上传作品----------->
@@ -1376,7 +911,7 @@
         <div class="de_upload_step de_upload_step1 de_borderbox" id="de_upload_step1">
             <p class="de_field_project_title">
                 <label for="de_input_project_title">标题</label>
-                <input type="text" autocomplete="default" value="" class="de_borderbox de_inputbox_gray"
+                <input type="text" autocomplete="default" maxlength="80" value="" class="de_borderbox de_inputbox_gray"
                        name="title" id="de_input_project_title" placeholder="">
             </p>
 
@@ -1388,11 +923,11 @@
                 <li><a href="#">产品设计</a></li>-->
             </ul>
             <input type="text" autocomplete="default" value=""
-                   class="de_inputbox_gray de_borderbox de_input_project_tag " name="de_input_project_tag"
+                   class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20" name="de_input_project_tag"
                    id="de_input_project_tag" placeholder="新标签...">
             </p>
             <p class="de_field_project_description">
-                <label for="de_input_project_tag">内容说明</label>
+                <label for="de_project_description">内容说明</label>
                 <textarea class="de_borderbox de_inputbox_gray" name="description" id="de_project_description" placeholder=""></textarea></p>
 
             <p class="de_field_project_thumb" id="de_upload_thumb_container">
@@ -1408,7 +943,7 @@
         <!-- step 2-->
         <div class="de_upload_step de_upload_step2 de_hidden" id="de_upload_step2">
             <div class="zy_uploader_column_left">
-                <span class="zy_section_left_header" id="zy_add_medias_button"></span>
+                <span class="zy_section_left_header" id="zy_add_medias_button">添加文件</span>
                 <!--媒体文件类型的menu-->
 
                 <div id="zy_add_media_menu" class="zy_add_media_menu">
@@ -1419,6 +954,7 @@
                         <li><a id="zy_add_3d" class="zy_types4">3D文件</a></li>
                         <li><a id="zy_add_ppt" class="zy_types5">ppt文件</a></li>
                         <li><a id="zy_add_file" class="zy_types6">文件</a></li>
+                        <li><a id="zy_add_flash" class="zy_types7">flash</a></li>
                     </ul>
                 </div>
                 <ol id="zy_uploaded_medias_ol" class="zy_uploaded_medias_ol"></ol>
@@ -1679,7 +1215,7 @@
 <!-----------弹窗小组件----------->
 <section class="de_popout de_boxshadow de_hidden de_borderbox" id="de_popout">
     <h3 class="de_popout_title">标题</h3>
-
+	<a href="#" class="de_popout_x_btn" id="de_popout_x_btn">关闭</a>
     <div class="de_inner_wrapper de_transition">
 
         <!-- 0.登录弹窗开始 -->
@@ -1720,7 +1256,7 @@
         <!-- 1.注册弹窗开始 -->
         <article class="de_borderbox de_popout_reg" id="de_popout_reg">
             <div class="de_reg_col de_borderbox">
-                <h4>即将完成注册，请填写下列信息：</h4>
+               
 
                 <form id="de_register_form" method="post">
                     <p class="de_username_field">
@@ -1739,9 +1275,9 @@
                     </p>
 
                     <p class="de_jcaptcha" id="de_jcaptcha">
-                        <a href="#refreshjcaptcha">
-                            <img class="de_jcaptcha_img de_borderbox" id="de_captcha_img" src="http://localhost/DesignEngine_Web/data/kaptcha.jpg"/>
-                            <span class="de_jcaptcha_refresh" id="de_refresh_captcha">看不清？换一张</span>
+                        <a href="#refreshjcaptcha" id="de_refresh_captcha">
+                            <img class="de_jcaptcha_img de_borderbox" id="de_captcha_img"/>
+                            <span class="de_jcaptcha_refresh">看不清？换一张</span>
                         </a>
                         <input type="text" name="de_reg_code" autocomplete="off" class="de_borderbox de_jcaptcha_input"
                                placeholder="请输入左侧字符">
@@ -1771,7 +1307,7 @@
 
         <!-- 3.消息弹窗开始 -->
         <article class="de_borderbox de_popout_msg" id="de_popout_msg">
-            <p class="de_popout_msg"></p>
+            <p></p>
             <a href="#" class="de_button de_borderbox de_popout_close_btn" id="de_popout_close_btn">关闭</a>
         </article>
         <!-- 消息弹窗结束 -->
@@ -1804,51 +1340,55 @@
 
         <!-- 5.更新个人信息弹窗开始 -->
         <article class="de_borderbox de_popout_edit_profile" id="de_popout_edit_profile">
+            <div class="de_edit_col de_borderbox">
+                <form class="de_form_edit_profile" id="de_form_edit_profile">
+                    <p class="de_photo_field" id="de_change_figure_container">
+                        <img id="de_edit_figure" class="photo" src="images/default_user_photo.png">
+                        <a href="#" id="de_change_figure" class="de_change_figure"> 更换头像</a>
+                    </p>
 
-            <form class="de_form_edit_profile" id="de_form_edit_profile">
-                <p class="de_photo_field" id="de_change_figure_container">
-                    <img id="de_edit_figure" class="photo" src="data/people1.jpg">
-                    <a href="#" id="de_change_figure"> 更换头像</a>
+                    <p><em id="de_user_name">USER_NAME</em><span class="de_form_tip">（不可更改）</span></p>
+
+                    <p class="de_about_field">
+                        <textarea class="de_borderbox de_inputbox_gray" placeholder="关于你..." name="description"
+                                  id="de_edit_description"></textarea></p>
+                    <input type="submit" class="de_button de_btn_save_profile" name="de_btn_save_profile"
+                           id="de_btn_save_profile" value="保存">
+
+                </form>
+            </div>
+            <div class="de_borderbox de_bind_account">
+            
+            	<h4>绑定登录邮箱</h4>
+                <form id="de_form_edit_email">
+                    <p class="de_email_field de_bind_email">
+                            <input type="email" autocomplete="default" class="de_borderbox de_inputbox_gray" name="email" id="de_edit_login_email" placeholder="邮箱"/>
+                    <input type="submit" class="de_button de_btn_save_email" name="de_btn_save_email"
+                               id="de_btn_save_email" value="绑定">
+                    <label class="de_error" id="de_email_error"></label>
+                </form>
                 </p>
-
-                <p><em id="de_user_name">USER_NAME</em><span class="de_form_tip">（不可修改）</span></p>
-
-                <p class="de_email_field">
-                    <input type="email" autocomplete="default" class="de_borderbox de_inputbox_gray"
-                           name="email" id="de_edit_login_email" placeholder="邮箱"/>
+                <h4>绑定其他网站账号（可快速登录）</h4>
+                <p><em>腾讯QQ:</em><span id="de_bind_account_btn" class="de_bind_account_btn"></span>
+                    <span id="de_has_bind" class="de_has_bind">已绑定</span>
+                    <span id="de_remove_bind" class="de_remove_bind">移除绑定</span>
                 </p>
-
-                <p class="de_about_field">
-                    <textarea class="de_borderbox de_inputbox_gray" placeholder="关于你..." name="description"
-                              id="de_edit_description"></textarea></p>
-                <input type="submit" class="de_button de_btn_save_profile" name="de_btn_save_profile"
-                       id="de_btn_save_profile" value="保存">
-
-            </form>
-
+            </div>
         </article>
         <!-- 更新个人信息弹窗开结束 -->
-
-        <!-- 6.绑定账号弹窗开始 -->
-        <article class="de_borderbox de_bind_account" id="de_bind_account">
-            <h4>绑定其他网站账号，下次快速登录。</h4>
-            <p><em>腾讯QQ:</em><span id="de_bind_account_btn" class="de_bind_account_btn">已绑定</span>
-                <span id="de_remove_bind" class="de_remove_bind de_hidden">移除绑定</span>
-            </p>
-        </article>
-        <!-- 绑定账号弹窗结束 -->
-
     </div>
 </section>
 
 <section class="de_pop_window de_pop_web_video de_hidden" id="de_pop_window">
-    <span id="de_close_pop_window">X</span>
-    <div id="de_pop_window_content"></div>
+    <span id="de_close_pop_window" class="de_close_pop_window">关闭</span>
+    <div id="de_pop_window_content" class="de_pop_window_content"></div>
 
 </section>
 
 <div id="de_blackout" class="de_hidden de_blackout"></div>
-<div id="de_loading" class="de_loading de_hidden">loading...</div>
+<div id="de_loading" class="de_loading de_hidden">
+	<div class="de_loading_spinner" id="de_loading_spinner"></div>
+</div>
 
 </body>
 </html>
