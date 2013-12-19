@@ -284,7 +284,7 @@ $(document).ready(function(){
 		$("#de_filter_menu").css("overflow","auto");
     });*/
 	$("#de_search_input").focus(function(){
-        $("#de_filter_menu").css("overflow","visible");
+        $("#de_filter_menu").addClass("de_overflow_visible");
     });
 	
     //ext菜单按钮点击事件（显示隐藏）

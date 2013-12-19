@@ -17,7 +17,9 @@ a{
 li {
     list-style: none;
 }
-
+.de_overflow_visible{
+    overflow: visible;
+}
 /*****************通用元素******************/
 .de_borderbox {
     -moz-box-sizing: border-box;

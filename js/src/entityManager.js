@@ -263,7 +263,7 @@ DE.entity=(function(){
                 data:{
                     keyword:content,
                     field:isTag?"term":"info",
-                    type:type,
+                    type:type===DE.config.entityTypes.project?"work":type,
                     start:DE.store.searchLoadedCount
                 },
                 success:function(data){
