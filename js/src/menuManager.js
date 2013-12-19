@@ -232,12 +232,20 @@ DE.menu=(function(){
                     return "";
                 }
             });
+        },
+        addMobileSources:function(){
+            if(DE.config.checkMobile()){
+                $("<link>").attr({ rel: "stylesheet",
+                        type: "text/css",
+                        href: "css/mobile.css"
+                }).insertAfter($("link:eq(0)"));
+            }
         }
     }
 })();
 
 $(document).ready(function(){
-
+     //DE.menu.addMobileSources();
     //获取顶部所有的标签
     //DE.menu.getTags();
 

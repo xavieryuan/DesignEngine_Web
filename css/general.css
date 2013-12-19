@@ -2502,9 +2502,9 @@ background: url(../images/icon60_close_white.png) no-repeat;
     width: 50px;
     cursor: pointer;
 }
-.de_pop_window_content video,.de_pop_window_content iframe,.de_pop_window_content embed,.de_pop_window_content object{
-    width: 100% !important;
-    height: 100% !important;
+.de_pop_window_content video,.de_pop_window_content iframe,.de_pop_window_content object{
+    width: 100%;
+    height: 100%;
     margin: auto;
 }
 .de_pop_window_content img{
@@ -2653,13 +2653,12 @@ background: url(../images/icon60_close_white.png) no-repeat;
     .de_screen_project_detail h2 {
         width: auto;
     }
-    .de_pop_window_content{
-        top:70px;
-    }
 	.de_close_pop_window{
 		right:25px;
 	}
-	
+    .de_pop_window_content video{
+        margin: 70px auto 0px auto;
+    }
 	/*弹出窗口*/
 	.de_popout_login .de_forgot_pwd {
 		position:static;

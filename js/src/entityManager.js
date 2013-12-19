@@ -328,7 +328,6 @@ DE.entity=(function(){
                         var praiseCountEl=$("#praiseCount");
                         var honorCountEl=$("#honorCount");
                         var countEl=$(".de_entity_link[href='entity/"+DE.store.currentShowEntity.id+"']").parents("li").find(".likes");
-                        $.merge(countEl,$(".badges"));  //同时要设置介绍那里的数量
                         var oldCount=parseInt(countEl.text());
                         if(DE.store.currentShowEntity.hasPraised){
                             DE.store.currentShowEntity.hasPraised=false;
@@ -874,14 +873,18 @@ DE.entity=(function(){
                 }
             }
 
+            //ios移动设备上视频(mp4)使用新窗口播放
+            if(ext==="mp4"&&mediaType===DE.config.uploadMediaTypes.localVideo&&navigator.userAgent.match(/(iPad|iPhone|iPod)/g)!==null){
+                 window.open(content);
+            }else{
+                //显示元素界面
+                var tpl=$("#showMediaContent").html();
+                var html=juicer(tpl,{type:mediaType,content:content,ext:ext});
+                $("#de_pop_window").removeClass("de_hidden de_pop_web_video_input").addClass("de_pop_show_media");
+                $("#de_pop_window_content").html(html);
+                $("#de_blackout").removeClass("de_hidden");
+            }
 
-
-            //显示元素界面
-            var tpl=$("#showMediaContent").html();
-            var html=juicer(tpl,{type:mediaType,content:content,ext:ext});
-            $("#de_pop_window").removeClass("de_hidden de_pop_web_video_input").addClass("de_pop_show_media");
-            $("#de_pop_window_content").html(html);
-            $("#de_blackout").removeClass("de_hidden");
         },
 
         /**
