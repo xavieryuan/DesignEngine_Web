@@ -90,7 +90,7 @@ DE.UIManager=function(){
 		
 			//恢复视图初始状态		
 			$("#de_screen_container>section").addClass("de_hidden");
-			$("#de_btn_filter>a").html("更多分类...").removeClass("active");
+			$("#de_btn_filter>a").html("发现...").removeClass("active");
 			$("#de_top_nav .active").removeClass("active");
 			$("#de_screen_search_result>.de_category_filter .active").removeClass("active");
 			
