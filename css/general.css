@@ -2076,10 +2076,8 @@ ol.mp_list li.mp_selectable {
     position: fixed;
     top: 0;
     left: 0;
-    /*bottom: 0;
-    right: 0;*/
-    width: 100%;
-    height: 100%;
+    bottom: 0;
+    right: 0;
     background: rgba(240, 240, 240, 0.95);
     z-index: 1000;
     overflow-y: scroll;
@@ -2089,8 +2087,8 @@ ol.mp_list li.mp_selectable {
     position: fixed;
     top: 0;
     right: 10%;
+    font-size: 0;
     display: inline-block;
-    font-size: 0px;
     width: 70px;
     height: 70px;
     background: url(../images/icon60_close_gray.png) no-repeat;
@@ -2101,15 +2099,7 @@ ol.mp_list li.mp_selectable {
     background: url(../images/icon60_close_white.png) no-repeat;
 }
 .de_btn_back_to_home{
-    position: fixed;
-    top: 0;
-    right: 10%;
-    display: inline-block;
-    font-size: 0;
-    width: 70px;
-    height: 70px;
     background: url(../images/icon60_backtohome_gray.png) no-repeat;
-	z-index: 9999;	
 	}
 .de_btn_back_to_home:hover{
 	background: url(../images/icon60_backtohome_white.png) no-repeat;
@@ -2595,6 +2585,7 @@ background: url(../images/icon60_close_white.png) no-repeat;
 		}
 	.de_btn_filter a {
 		font-size:0;
+        text-indent: -9999px;
 		}
 	.de_filter_menu>.de_filter_group{
 		padding: 30px 10px 10px 10px;
@@ -2605,34 +2596,25 @@ background: url(../images/icon60_close_white.png) no-repeat;
     .de_link_openid_login{
         display: none;
     }
-   /* .de_user_nav .de_btn_upload {
-        display: none;
-    }
-	.de_user_nav>ul>li>a{
-		font-size:0;
-		text-indent:-9999px;
-		width:40px;
-		}
-	.de_user_nav>ul>li>.de_btn_user_profile{
-		display:none;
-		}*/
 
     /*和前面定义的权重不一样，要加important*/
     .photo{
         border:none !important;
     }
+
     .de_screen_project_detail .de_project_header {
         left: 25px;
     }
 	.de_project_detail .user_info{
 		left:20px;
 		}
-	.de_screen_project_detail .de_btn_close_project_detail{
+	.de_btn_close_project_detail{
 		right:0;
+        text-indent: 80px;
+        overflow: hidden;
+        white-space: nowrap;
 		}	
-	.de_btn_back_to_home{
-		right:0;
-		}
+
     .de_screen_project_detail .de_project_detail {
         width: auto;
         margin: 40px 10px;
@@ -2648,6 +2630,9 @@ background: url(../images/icon60_close_white.png) no-repeat;
     }
 	.de_close_pop_window{
 		right:25px;
+        text-indent: 80px;
+        overflow: hidden;
+        white-space: nowrap;
 	}
     .de_pop_window_content video{
         margin: 70px auto 0px auto;

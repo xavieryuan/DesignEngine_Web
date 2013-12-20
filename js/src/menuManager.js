@@ -234,18 +234,22 @@ DE.menu=(function(){
             });
         },
         addMobileSources:function(){
-            if(DE.config.checkMobile()){
-                $("<link>").attr({ rel: "stylesheet",
+            var head=$("head");
+            if(navigator.userAgent.match("Android")!==null){
+               /* $("<link>").attr({ rel: "stylesheet",
                         type: "text/css",
                         href: "css/mobile.css"
-                }).insertAfter($("link:eq(0)"));
+                }).insertAfter($("link:eq(0)"));*/
+                $("<script src='js/lib/touchScroll.js'></script>").appendTo(head);
             }
         }
     }
 })();
 
 $(document).ready(function(){
-     //DE.menu.addMobileSources();
+
+     DE.menu.addMobileSources();
+
     //获取顶部所有的标签
     //DE.menu.getTags();
 
