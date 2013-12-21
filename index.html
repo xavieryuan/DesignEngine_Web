@@ -8,7 +8,7 @@
     <meta name="baidu-tc-cerfication" content="622f31c8e7be07f0ac794950d45efc53" />
     <meta name="keywords" content="图钉墙, 工业设计, 艺术设计, 设计教育, 设计作品, 设计资源, 湖南大学设计艺术学院" />
     <title>图钉墙 - HNU Design</title>
-    <base id="de_base_url" href="http://192.168.1.18/design/"/>
+    <base id="de_base_url" href="http://design.hnu.cn/pinwall/"/>
     <link href="css/general.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/lib/juicer-min.js"></script>
@@ -669,20 +669,7 @@
     <!-----用户菜单----->
     <nav class="de_user_nav de_borderbox" id="de_user_nav">
         <ul id="de_menu">
-            <!--<li class="de_guest_view"><a class="de_btn_login_reg de_borderbox" href="#" id="de_btn_login_reg">登录/注册</a></li>
-            <li class="de_reg_view de_hidden"><a class="de_btn_user_profile de_borderbox" id="de_btn_user_profile" href="#de_screen_user_profile"><img class="photo" src="images/default_user_photo.png" title="USER_NAME">USER_NAME</a></li>
-            <li class="de_reg_view de_hidden"><a class="de_btn_upload de_borderbox" href="#de_screen_upload" id="de_btn_upload">上传</a></li>
-            <li class="de_reg_view de_hidden">
-                <a class="de_btn_hotdogmenu de_borderbox" href="#" id="de_btn_ext_nav">更多</a>
-                <ul class="de_ext_nav de_transition" id="de_ext_nav">
-                    <li class="de_reg_view de_hidden"><a href="#" id="de_btn_reset_pwd">修改密码</a></li>
-                    <li class="de_reg_view de_hidden"><a href="#" id="de_btn_edit_profile">修改个人信息</a></li>
-                    <li class="de_admin_view de_hidden"><a href="#">管理员专用子菜单</a></li>
-                    <li class="de_admin_view de_hidden"><a href="#">管理员专用子菜单</a></li>
-                    <li class="de_admin_view de_hidden"><a href="#">管理员专用子菜单</a></li>
-                    <li class="de_reg_view de_hidden"><a href="#" id="de_btn_sign_out">退出登录</a></li>
-                </ul>
-            </li>-->
+            <!-- 模板内容加载区 -->
         </ul>
     </nav>
 
@@ -692,11 +679,12 @@
             <li><a href="project/all" class="de_btn_project de_borderbox active">设计作品</a></li>
             <li><a href="resource/all" class="de_btn_resource de_borderbox">学习资源</a></li>
             <li><a href="user/hot" class="de_btn_designer de_borderbox">人气榜</a></li>
+            <li class="de_btn_filter" id="de_btn_filter"><a href="#" class="de_borderbox">发现...</a></li>
         </ul>
     </nav>
 
     <!-----顶部分类筛选----->
-    <div class="de_btn_filter" id="de_btn_filter"><a href="#" class="de_borderbox">发现更多...</a></div>
+    <!--<div class="de_btn_filter" id="de_btn_filter"><a href="#" class="de_borderbox">发现更多...</a></div>-->
     <nav id="de_filter_menu" class="de_filter_menu de_borderbox">
 
         <div class="de_filter_group de_borderbox">
@@ -709,8 +697,6 @@
                 <li><a href="tag/服务设计">服务设计</a></li>
                 <li><a href="tag/平面设计">平面设计</a></li>
                 <li><a href="tag/影像设计">影像设计</a></li>
-                <li><a href="tag/绘画艺术">绘画艺术</a></li>
-                <li><a href="tag/摄影艺术">摄影艺术</a></li>
             </ul>
         </div>
 
@@ -719,6 +705,7 @@
             <ul class="de_menu_list" id="de_resource_tags">
                  <li><a href="tag/工业设计史">工业设计史</a></li>
                  <li><a href="tag/汽车造型设计理论与研究">汽车造型设计理论与研究</a></li>
+                 <li><a href="tag/数字界面原型">数字界面原型</a></li>
             </ul>
         </div>
 
@@ -738,166 +725,36 @@
 <!-----------设计作品----------->
 <section class="de_screen_project" id="de_screen_project">
     <ul class="de_project_grid" id="de_project_list">
-        <!--<li class="de_borderbox">
-          <div class="user_info">
-              <a href="#">
-              <img class="photo" src="data/people1.jpg" />
-              <p class="name">淘宝鬼脚七</p>
-              </a>
-          </div>
-          <div class="project_info">
-              <a href="#" >
-              <img class="thumb" src="data/pic1.png">
-              <h4>书院文化相关视频</h4>
-              <p class="date">2013-09-28</p>
-              </a>
-              </div>
-          <ul class="de_stats_tags">
-              <li class="likes">34</li>
-              <li class="comments">34</li>
-          </ul>
-      </li>-->
+       <!-- 模板内容加载区 -->
     </ul>
 </section>
 
 <!-----------课程资源----------->
 <section class="de_screen_resource de_hidden" id="de_screen_resource">
     <ul class="de_project_grid" id="de_resource_list">
-        <!--<li class="de_borderbox">
-               <div class="user_info">
-            <a href="#">
-            <img class="photo" src="data/teacher1.jpg" />
-            <p class="name">何人可</p>
-            </a>
-            </div>
-            <div class="project_info">
-            <a href="#">
-            <img class="thumb" src="images/default_thumb_500.png" />
-            <h4>工业设计史 - 中国设计地图</h4>
-            <p class="date">2013-09-28</p>
-            </a>
-            </div>
-            <ul class="de_media_tags">
-                <li class="tag_ppt">PPT</li>
-                <li class="tag_web_video">网络视频</li>
-                <li class="tag_local_video">本地视频</li>
-                <li class="tag_3d">3D</li>
-                <li class="tag_file">文档</li>
-            </ul>
-         </li>-->
+        <!-- 模板内容加载区 -->
     </ul>
 </section>
 
 <!-----------荣誉榜----------->
 <section class="de_screen_designer de_hidden" id="de_screen_designer">
     <ul class="de_designer_list" id="de_hot_user_list">
-        <!--<li class="de_user_info_card">
-            <div class="user_info">
-               <a href="#" class="de_borderbox">
-               <img src="data/ranking1.jpg" class="photo" />
-                <p class="name">张新磊</p>
-               </a>
-               <p class="user_about">这个人很懒，什么也没留下。</p>
-            </div>
-            <ul class="project_info">
-           <li><a href="#"><img src="images/default_thumb_500.png"></a></li>
-           </ul>
-           <ul class="de_stats_tags">
-               <li class="uploads" title="上传">34</li>
-               <li class="badges" title="勋章">46</li>
-           </ul>
-        </li>-->
+        <!-- 模板内容加载区 -->
     </ul>
 </section>
 
 <!-----------搜索结果----------->
 <section class="de_screen_search_result de_hidden" id="de_screen_search_result">
-    <!--<nav class="de_category_filter de_borderbox" id="de_search_result_tab">
-        <a href="#" data-entity-type="project" class="de_category_filter_option_project de_borderbox active">设计作品</a>
-        <a href="#" data-entity-type="resource" class="de_category_filter_option_resource de_borderbox">学习资源</a>
-    </nav>-->
+    <!-- 模板内容加载区 -->
 
     <ul class="de_project_grid" id="de_search_result">
-        <!--<li class="de_borderbox">
-            <div class="user_info">
-                <a href="#">
-                <img class="photo" src="data/people1.jpg" />
-                <p class="name">淘宝鬼脚七</p>
-                </a>
-            </div>
-            <div class="project_info">
-                <a href="#" >
-                <img class="thumb" src="data/pic1.png">
-                <h4>书院文化相关视频</h4>
-                <p class="date">2013-09-28</p>
-                </a>
-                </div>
-            <ul class="de_stats_tags">
-                <li class="likes">34</li>
-                <li class="comments">34</li>
-            </ul>
-        </li>-->
+        <!-- 模板内容加载区 -->
     </ul>
 </section>
 
 <!-----------用户首页----------->
 <section class="de_screen_user_profile de_hidden" id="de_screen_user_profile">
-    <!--<div class="de_designer_list">
-        <article class="de_user_info_card" id="de_user_info_card">
-             <div class="user_info">
-                <a href="#" class="de_borderbox">
-                <img src="data/ranking1.jpg" class="photo" />
-                <p class="name">张新磊</p>
-                </a>
-                <p class="user_about">这个人很懒，什么也没留下。</p>
-             </div>
-             <ul class="project_info">
-                <li><a href="#"><img src="data/pic1.png"></a></li>
-                <li><a href="#"><img src="data/pic2.png"></a></li>
-                <li><a href="#"><img src="data/pic3.png"></a></li>
-                <li><a href="#"><img src="data/pic4.png"></a></li>
-                <li><a href="#"><img src="data/pic5.png"></a></li>
-            </ul>
-            <ul class="de_stats_tags">
-                <li class="uploads" title="上传">34</li>
-                <li class="badges" title="勋章">46</li>
-            </ul>
-        </article>
-    </div>
-    <article class="de_user_uploads" id="de_user_uploads">
-        <nav class="de_category_filter de_borderbox">
-            <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
-            <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
-        </nav>
-
-        <ul class="de_project_grid">
-            <li class="de_borderbox">
-                <div class="user_info">
-                    <a href="#">
-                        <img class="photo" src="data/people1.jpg" />
-                        <p class="name">淘宝鬼脚七</p>
-                    </a>
-                </div>
-                <div class="project_info">
-                    <a href="#" >
-                        <img class="thumb" src="data/pic1.png">
-                        <h4>书院文化相关视频</h4>
-                        <p class="date">2013-09-28</p>
-                    </a>
-                </div>
-                <ul class="de_stats_tags">
-                    <li class="likes">34</li>
-                    <li class="comments">34</li>
-                </ul>
-                <ul class="de_project_toolbar de_transition">
-                    <li><a class="de_toolbar_edit" href="#" title="编辑">编辑</a></li>
-                    <li><a class="de_toolbar_delete" href="#" title="删除">删除</a></li>
-                    <li><a class="de_toolbar_visible" href="#" title="显示/隐藏">显示/隐藏</a></li>
-                </ul>
-            </li>
-
-        </ul>
-    </article>  -->
+    <!-- 模板内容加载区 -->
 </section>
 
 <!-----------上传作品----------->
@@ -920,9 +777,6 @@
             <p class="de_field_project_tag">
                 <label for="de_input_project_tag">标签</label>
             <ul class="de_borderbox de_category_tag_box" id="de_input_tag">
-                <!--<li><a href="#">工业设计</a></li>
-                <li><a href="#">交互设计</a></li>
-                <li><a href="#">产品设计</a></li>-->
             </ul>
             <input type="text" autocomplete="default" value=""
                    class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20" name="de_input_project_tag"
@@ -972,34 +826,7 @@
             <input type="submit" autocomplete="default" value="提交" class="de_borderbox de_submit_upload"
                    name="de_submit_upload" id="de_submit_upload"/>
             <article id="de_upload_preview" class="de_project_detail de_borderbox">
-               <!-- <h2>项目标题可能会非常非常的长，项目标题可能会非常非常的长</h2>
-
-                <p class="publishtime">2013-07-23</p>
-                <div class="user_info">
-                    <a href="#">
-                        <img class="photo" src="data/people1.jpg">
-
-                        <p class="name">淘宝鬼脚七</p>
-                    </a>
-                </div>
-                <p class="abstract">
-                    《设计模型》课程的教学思路从2010年开始进行了较大改革，模型技能培养从传统的手工制作为主向虚拟模型构建为主、物质模型制作为辅转变，特别强调虚实模型之间快速精确转换的关键技术传授和操作方法实践指导。通过三年多设计的探索，以“在做中学，在做中教”的思想为指引，使学生在进行“设计构思—实物模型---数字模型”的过程中去意会“心到、眼到、手到”的感觉，以此不断提升实物模型制作和虚拟模型构建两方面的能力。
-                </p>
-
-                <div class="main_content">
-                    <figure>
-                        <img src="data/01.jpg"/>
-                        <figcaption>关于这张图片的说明与描述</figcaption>
-                    </figure>
-                    <figure>
-                        <img src="data/02.jpg"/>
-                        <figcaption>关于这张图片的说明与描述</figcaption>
-                    </figure>
-                    <figure>
-                        <img src="data/03.jpg"/>
-                        <figcaption>关于这张图片的说明与描述</figcaption>
-                    </figure>
-                </div>-->
+               <!-- 模板内容加载区 -->
             </article>
         </div>
     </form>

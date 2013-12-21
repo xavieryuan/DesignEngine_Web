@@ -254,7 +254,7 @@ $(document).ready(function(){
     //DE.menu.getTags();
 
     //顶部菜单点击事件（除上传按钮）
-    $("#de_top_nav a").click(function(){
+    $("#de_top_nav li").not("#de_btn_filter").find("a").click(function(){
         DE.menu.topMenuClickHandler($(this).attr("href"));
 
         return false;

@@ -777,10 +777,11 @@ li {
     left: 0;
     margin: 0;
 	font-size:0;
+	height:100%;
 }
 
 .de_logo>a {
-    height: 80px;
+    height:100%;
 	line-height:80px;
     width: 140px;
     background: url(../images/logo_40.png) no-repeat 10px center;
@@ -816,7 +817,7 @@ li {
 
 .de_user_nav>ul>li>a {
     display: block;
-    width: 60px;
+    width: 70px;
     height: 80px;
     padding-top: 50px;
     text-decoration: none;
@@ -828,7 +829,6 @@ li {
     display: block;
     letter-spacing: 2px;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
-    margin-right: 10px;
 }
 
 .de_user_nav .de_btn_login_reg:before {
@@ -853,7 +853,10 @@ li {
     margin-left: -15px;
     background: url(../images/icon30_register_gray.png) no-repeat center;
 }
-
+.de_user_nav .de_btn_upload{
+    border-left: #333 1px dotted;	
+    border-right: #333 1px dotted;
+}
 .de_user_nav .de_btn_upload:before {
     content: "";
     width: 38px;
@@ -862,17 +865,15 @@ li {
     bottom: 30px;
     left: 50%;
     margin-left: -19px;
-    background: url(../images/icon30_upload_gray.png) no-repeat center;
+    background: url(../images/icon30_upload_gray.png) no-repeat center;	
+
 }
 
 .de_user_nav>ul>li>.de_btn_hotdogmenu {
-    width: 70px;
-    height: 80px;
     font-size: 0;
     padding: 0;
     text-indent: -9999px;
     margin: 0;
-    border-left: #333 1px dotted;
 }
 
 .de_user_nav>ul>li>.de_btn_hotdogmenu:before {
@@ -949,28 +950,31 @@ li {
     position: absolute;
     left: 140px;
     bottom: 0;
-    width: 320px;
+    width: 40%;
     text-align: center;
     font-size: 12px;
     letter-spacing: 2px;
     color: #666;
+	height:100%;
 }
 
 .de_top_nav ul {
     white-space: nowrap;
     font-size: 0;
+	height:100%;
 }
 
 .de_top_nav ul li {
     display: inline-block;
-    width: 33.3%;
+    width: 25%;
     max-width: 200px;
+	height:100%;
 }
 
 .de_top_nav ul li a {
     display: inline-block;
     width: 100%;
-    height: 80px;
+    height:100%;
     line-height: 80px;
     padding: 0 5px;
     color: #333;
@@ -982,6 +986,7 @@ li {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+	position:relative;
 }
 
 .de_top_nav ul li a.active {
@@ -1019,11 +1024,7 @@ li {
 
 /*************筛选按钮****************/
 .de_btn_filter {
-    position: absolute;
-    top: 0;
-    left: 460px;
     border-left: #666 1px dotted;
-    width: 200px;
 	font-size:0;
 }
 
@@ -1043,24 +1044,25 @@ li {
     width: 100%;
 }
 
-.de_btn_filter a:before {
+/*.de_btn_filter a:before {
     content: "";
     display: inline-block;
-    background: url(../images/triangle.png) no-repeat center;
+    background: url(../images/icon14_search_dark.png) no-repeat center;
     width: 30px;
     height: 80px;
     position: absolute;
     top: 0;
     left: 10px;
-}
+}*/
 
 .de_btn_filter a.active {
     background: url(../images/top_nav_btn_active_bg.png) no-repeat;
 }
 
 .de_btn_filter a.focused {
-    background: #333;
+    background: #333 !important;
     color: #ccc;
+	text-shadow: none;
 }
 
 /*************筛选菜单****************/
@@ -1088,10 +1090,10 @@ li {
 	overflow:visible;
 	}
 .de_filter_group> h3 {
-    font-size: 18px;
+    font-size: 16px;
     font-style: italic;
     margin: 0;
-    padding: 0 10px 10px;
+    padding: 0 10px;
     color: #ccc;
     letter-spacing: 4px;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 1);
@@ -1130,7 +1132,6 @@ li {
 .de_filter_group > .de_menu_list li a:hover {
     font-size: 14px;
     color: #FFF;
-    line-height: 40px;
 }
 
 /*************搜索框****************/
@@ -2571,6 +2572,7 @@ background: url(../images/icon60_close_white.png) no-repeat;
 }
 
 @media screen and (max-width: 720px) {
+	/*顶部导航*/
 	.de_logo>a{
 		width: 50px;
 		font-size: 0;
@@ -2579,25 +2581,56 @@ background: url(../images/icon60_close_white.png) no-repeat;
 	}
 	.de_top_nav{
 		left:50px;
-		width:220px;
+		width:70%;
 	}
-	.de_btn_filter{
-		left:270px;
-		}
-	.de_btn_filter a {
-		font-size:0;
-        text-indent: -9999px;
-		}
 	.de_filter_menu>.de_filter_group{
-		padding: 30px 10px 10px 10px;
+		padding: 10px;
 		}
-    .de_user_nav{
-        display: none;
+	.de_user_nav>ul>li>a{
+		width:48px;
+		
+	}
+	.de_btn_login_reg{
+		font-size:0;
+		text-indent:-9999px;
+	}
+    .de_btn_user_profile{
+        display:none !important;
+    }
+	.de_btn_upload{
+        display:none !important;
     }
     .de_link_openid_login{
         display: none;
     }
-
+	
+	/*筛选面板*/
+	.de_filter_group> h3{
+		padding: 0 5px;
+		font-size:12px;
+		margin-bottom:5px;
+		color: #999;
+	}
+	.de_filter_group > .de_menu_list li a{
+		padding: 0 5px;
+		height:40px;
+		line-height:40px;
+	}
+	.de_top_search{
+		padding:5px;
+	}
+	
+	/*人气榜*/
+	.de_user_info_card .user_info a{
+		width: 80px;
+	}
+	.de_user_info_card .user_about{
+		left: 100px;	
+	}
+	.de_user_info_card .de_stats_tags{
+		left:90px;
+	}
+	
     /*和前面定义的权重不一样，要加important*/
     .photo{
         border:none !important;
