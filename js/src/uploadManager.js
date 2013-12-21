@@ -131,7 +131,7 @@ DE.upload=(function(){
 
         if (jQuery("#zy_uploaded_medias_ol .zy_media_list_active").length == 0) {
             classString = classString == "" ? "class='zy_media_list_active'" : "class='zy_media_list_active zy_media_list_error'";
-            jQuery("#zy_media_iframe").attr("src", params.iframeSrc);
+            showIframe(params.iframeSrc);
         }
 
         //组装显示的数据
@@ -150,6 +150,14 @@ DE.upload=(function(){
         $("#zy_uploaded_medias_ol").append(html);
     }
 
+    function showIframe(src){
+        if($("#zy_media_iframe").length!=0){
+            $("#zy_media_iframe").remove();
+        }
+        var tpl=$("#zy_upload_iframe_tpl").html();
+        var html=juicer(tpl,{src:src});
+        $("#zy_uploader_column_right").append(html);
+    }
 
     /**
      * 将已经上传的媒体文件记录到DE.store.uploadedMedias对象中(hash表)
@@ -239,6 +247,8 @@ DE.upload=(function(){
             }else{
                 if(response.errorCode=="thumb_height_not_equals_width"){
                     DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.imgSizeError);
+                }else{
+                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadIOErrror);
                 }
             }
         });
@@ -394,7 +404,7 @@ DE.upload=(function(){
                     DE.upload.drag();
                 }
             } else {
-
+                DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadIOErrror);
             }
         });
     }
@@ -588,7 +598,8 @@ DE.upload=(function(){
             $("#de_input_tag").html("");
             $("#de_project_description").val("");
             $("#de_input_project_tag").val("");
-            $("#zy_media_iframe").removeAttr("src");
+            $("#zy_media_iframe").remove();
+
             $("#de_project_thumb").attr("src",DE.config.defualtEntityThumb);
             $("#zy_uploaded_medias_ol").html("");
             $("#de_thumb_name").val("");
@@ -714,10 +725,10 @@ DE.upload=(function(){
                 if($("#zy_uploaded_medias_ol li").not(".zy_uncomplete_li").length!=0){
                     $("#zy_uploaded_medias_ol li").removeClass("zy_media_list_active");
                     $("#zy_uploaded_medias_ol li:eq(0)").addClass("zy_media_list_active");
-                    $("#zy_media_iframe").attr("src",$("#zy_uploaded_medias_ol li:eq(0)").find("a").attr("href"));
+                    showIframe($("#zy_uploaded_medias_ol li:eq(0)").find("a").attr("href"));
                     $("#zy_uploaded_medias_ol").scrollTop(0);
                 }else{
-                    $("#zy_media_iframe").removeAttr("src");
+                    $("#zy_media_iframe").remove();
                 }
             }
         },
@@ -736,6 +747,7 @@ DE.upload=(function(){
 
             //设置媒体类型
             var type=target.data("zy-media-type");
+
             if(type==DE.config.uploadMediaTypes.localVideo){
                 $("#zy_media_type").text("本地视频");
             }else if(type==DE.config.uploadMediaTypes._3d){
@@ -754,6 +766,9 @@ DE.upload=(function(){
 
             //控制类
             target.parent("li").addClass("zy_media_list_active");
+
+            var src=target.attr("href");
+            showIframe(src);
         },
 
         /**
@@ -764,7 +779,7 @@ DE.upload=(function(){
                 var firstLi=$("#zy_uploaded_medias_ol li:eq(0)");
                 if(firstLi.length!=0){
                     firstLi.addClass("zy_media_list_active");
-                    $("#zy_media_iframe").attr("src",firstLi.find("a").attr("href"));
+                    showIframe(firstLi.find("a").attr("href"));
                 }
             }
         },
@@ -856,7 +871,9 @@ DE.upload=(function(){
 
                         //跳到用户首页
                         DE.user.userClickHandler("user/"+DE.store.currentUser.userId,function(){
-                            DE.entity.entityClickHandler("entity/"+postId);
+                            var href="item/"+postId;
+                            DE.entity.entityClickHandler("item/"+postId,false);
+                            DE.history.push(href,true);
                         });
 
 
@@ -1008,6 +1025,8 @@ $(document).ready(function(){
     //列表中每一项的点击事件，如果选中的列表没有填写完整，则不能选择其他列表
     $(document).on("click","a.zy_media_list",function(){
         DE.upload.uploadedLiClickHandler($(this));
+
+        return false;
     });
 
     //表单提交

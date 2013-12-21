@@ -141,7 +141,7 @@ DE.store={
         }
 
         //判断是否是修改，如果不是清除上传界面的数据
-        if(location.href.match("edit")==null){
+        if(location.href.match("edit")===null){
             DE.upload.clearEditData();
         }
     },

@@ -94,7 +94,7 @@ DE.config={
         pptUploadError:"此资源上传到资源服务器出错，无法查看！",
         uploadSizeError:"最大文件大小",
         uploadExtensionError:"只允许上传",
-        uploadIOErrror:"服务器端异常，请稍后重试！",
+        uploadIOErrror:"服务器端异常，请刷新后重试！",
         emailPending:"你的新邮箱${email}没有激活，请进入邮箱激活！",
         emailInvalid:"你提交的新邮箱${email},已被其他人激活，如需修改邮箱，请提交另外一个邮箱！"
     },
@@ -205,7 +205,7 @@ DE.config={
         search:"search/searchContent", //搜索页
         uploadEntity:"upload/entity",  //上传页
         editEntity:"edit/entityId",  //修改页
-        entityDetail:"entity/entityId"
+        entityDetail:"item/itemId"
     },
     topMenus:{ //顶部菜单类型
         user:"user", //热门用户,不写为hotUser是为了配合url地址

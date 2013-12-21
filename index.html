@@ -576,7 +576,9 @@
         </a>
     </li>
 </script>
-
+<script type="text/template" id="zy_upload_iframe_tpl">
+    <iframe id="zy_media_iframe" name="zy_media_iframe" class="zy_iframe" src="${src}"></iframe>
+</script>
 <!--预览-->
 <script type="text/template" id="uploadPreview">
     <h2>${title}</h2>
@@ -959,10 +961,9 @@
                 </div>
                 <ol id="zy_uploaded_medias_ol" class="zy_uploaded_medias_ol"></ol>
             </div>
-            <div class="zy_uploader_column_right">
+            <div class="zy_uploader_column_right" id="zy_uploader_column_right">
                 <header class="zy_section_right_header"><p><b id="zy_media_type">图片</b></p></header>
-                <iframe id="zy_media_iframe" name="zy_media_iframe" class="zy_iframe" >
-                </iframe>
+
             </div>
         </div>
 

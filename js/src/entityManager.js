@@ -327,7 +327,7 @@ DE.entity=(function(){
                     if(data.success&&(data.resultCode==DE.config.resultCode.praise_add_succ||data.resultCode==DE.config.resultCode.praise_remove_succ)){
                         var praiseCountEl=$("#praiseCount");
                         var honorCountEl=$("#honorCount");
-                        var countEl=$(".de_entity_link[href='entity/"+DE.store.currentShowEntity.id+"']").parents("li").find(".likes");
+                        var countEl=$(".de_entity_link[href='item/"+DE.store.currentShowEntity.id+"']").parents("li").find(".likes");
                         var oldCount=parseInt(countEl.text());
                         if(DE.store.currentShowEntity.hasPraised){
                             DE.store.currentShowEntity.hasPraised=false;
@@ -468,7 +468,7 @@ DE.entity=(function(){
                         var commentCountEl=$("#commentsCount");
                         var count=parseInt(commentCountEl.text())-1;
                         commentCountEl.text(count);
-                        $(".de_entity_link[href='entity/"+DE.store.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
+                        $(".de_entity_link[href='item/"+DE.store.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
 
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
@@ -529,8 +529,9 @@ DE.entity=(function(){
 
                         //界面更新,有可能在详情页，也有可能在用户页
                         DE.UIManager.hideProjectDetail();
-                        $(".de_entity_link[href='entity/"+id+"']").parents("li").remove();
-                        $(".uploads").text(parseInt($(this).text())-1);
+                        $(".de_entity_link[href='item/"+id+"']").parents("li").remove();
+                        var uploadCountEl=$(".uploads");
+                        uploadCountEl.text(parseInt(uploadCountEl.text())-1);
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
                     }
@@ -576,7 +577,7 @@ DE.entity=(function(){
                 success:function(data){
                      if(data.success&&data.resultCode==DE.config.resultCode.visible_set_succ){
                          DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
-                         var li=$(".de_entity_link[href='entity/"+id+"']").parents("li");
+                         var li=$(".de_entity_link[href='item/"+id+"']").parents("li");
                          var toolbarA=li.find(".de_project_toolbar li:eq(2) a");
 
                          if(el[0]!=toolbarA[0]){
@@ -814,7 +815,7 @@ DE.entity=(function(){
                             var count=parseInt(commentCountEl.text())+1;
 
                             commentCountEl.text(count);
-                            $(".de_entity_link[href='entity/"+DE.store.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
+                            $(".de_entity_link[href='item/"+DE.store.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
                         }else{
                             DE.config.ajaxReturnErrorHandler(data);
                         }

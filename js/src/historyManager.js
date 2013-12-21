@@ -153,8 +153,8 @@ DE.history=(function(){
                     }else{
 
                         //由于存在详情页回退是不需要刷新数据的，这里应该要判断是否加载了数据
-                        if(!DE.store.currentShowEntity.id||(DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
-                            DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&DE.store.searchLoadedCount===0)){
+                        if(DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
+                            DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&DE.store.searchLoadedCount===0){
 
                             if(href==baseURI){
                                 obj={type:null,value:null};

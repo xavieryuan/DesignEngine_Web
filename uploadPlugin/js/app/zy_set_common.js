@@ -67,7 +67,7 @@ var config={
         pptUploadError:"此资源上传到资源服务器出错，无法查看！",
         uploadSizeError:"最大文件大小",
         uploadExtensionError:"只允许上传",
-        uploadIOErrror:"服务器端异常，请稍后重试！"
+        uploadIOErrror:"服务器端异常，请刷新后重试！"
     }
 };
 var zy_set_common = (function(){

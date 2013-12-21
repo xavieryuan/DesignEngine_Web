@@ -259,6 +259,7 @@ li {
 	position:absolute;
 	top:0;
 	right:0;
+    font-size: 0px;
 	opacity:0.5;
 	}
 .de_popout>.de_popout_x_btn:hover{
@@ -2646,14 +2647,21 @@ background: url(../images/icon60_close_white.png) no-repeat;
 	.de_popout_login .de_login_col, .de_popout_edit_profile .de_edit_col 
 	{
 		padding-right:10px;
+        border-right: none;
+        width: 95%;
 	}
 	.de_popout_login .de_reg_col, .de_popout_edit_profile .de_bind_account
 	{
 		padding-left:10px;
+        display: none;
 	}
 	.de_project_toolbar{
 		display:none;
 	}
+    .de_popout_x_btn{
+        white-space: nowrap;
+        text-indent: 80px;
+    }
 	
 	/*404*/
 	.de_404_header{
