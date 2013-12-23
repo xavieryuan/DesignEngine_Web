@@ -31,17 +31,20 @@ DE.history=(function(){
         DE.UIManager.showLoading();
 
         switch (type){
-            case "tag":
+            case "resource-tag":
 
                 //请求点击标签的数据
                 value=decodeURI(value);
-                $("#de_resource_tags a").each(function(index,b){
-                     if(value==$(this).text()){
-                         type=DE.config.entityTypes.resource;
-                         return false;
-                     }
-                });
-                DE.entity.getEntityBySearch(value,type,true,true,callback);
+
+                DE.entity.getEntityBySearch(value,DE.config.entityTypes.resource,true,true,callback);
+
+                break;
+            case "project-tag":
+
+                //请求点击标签的数据
+                value=decodeURI(value);
+
+                DE.entity.getEntityBySearch(value,DE.config.entityTypes.project,true,true,callback);
 
                 break;
             case "project":
@@ -87,10 +90,11 @@ DE.history=(function(){
 
                 break;
             case "item":
+
                 if(oldHref!==undefined&&oldHref!==""){
                     var obj=handlerHref(oldHref);
                     handler(obj.type,obj.value,undefined,function(){
-                        DE.entity.entityClickHandler(type+"/"+value);
+                        DE.entity.entityClickHandler(type+"/"+value,false);
                     });
 
                 }else{
@@ -240,7 +244,12 @@ DE.history=(function(){
                 handler(null,null);
             }else{
                 var hrefArray=href.split("/");
-                handler(hrefArray[0],hrefArray[1])
+                var value=hrefArray[1];
+                if(value.indexOf("?")!==-1){
+                    DE.store.appAgent=value.substring(value.indexOf("?appAgent=")+1);
+                    value=value.substring(0,value.indexOf("?"));
+                }
+                handler(hrefArray[0],value);
             }
         }
     }

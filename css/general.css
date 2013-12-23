@@ -2590,7 +2590,7 @@ background: url(../images/icon60_close_white.png) no-repeat;
 		width:48px;
 		
 	}
-	.de_btn_login_reg{
+	.de_guest_view .de_btn_login_reg{
 		font-size:0;
 		text-indent:-9999px;
 	}
@@ -2672,11 +2672,6 @@ background: url(../images/icon60_close_white.png) no-repeat;
         margin: 70px auto 0px auto;
     }
 	/*弹出窗口*/
-	.de_popout_login .de_forgot_pwd {
-		position:static;
-		margin: 10px 0;
-	}
-	
 	.de_popout_login .de_login_col, .de_popout_edit_profile .de_edit_col 
 	{
 		padding-right:10px;

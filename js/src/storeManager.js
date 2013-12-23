@@ -15,6 +15,7 @@ DE.store={
     currentEditEntityId:0, //当前编辑的作品、资源的id
     currentScrollScreenType:"", //当前需要滚动加载的类型
     userEntitiesShowCount:0, //查看用户那里的作品，已经显示的个数，本地分页
+    appAgent:"",
     uploadedMedias:{}, //上传作品、资源时已经上传的媒体文件
     currentSearch:{
         currentSearchType:"",//目前搜索显示的类型

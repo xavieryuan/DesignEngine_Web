@@ -199,7 +199,8 @@ DE.config={
     urls:{  //history的url
         indexProject:"project/all", //首页作品
         indexResource:"resource/all", //首页资源
-        tagEntities:"tag/tagName", //点击标签
+        searchResourceEntities:"resource-tag/tagName", //点击标签
+        searchProjectEntities:"project-tag/tagName",
         hotUsers:"user/hot", //热门用户
         userDetail:"user/userId", //用户页
         search:"search/searchContent", //搜索页

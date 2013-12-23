@@ -253,7 +253,7 @@ $(document).ready(function(){
     //获取顶部所有的标签
     //DE.menu.getTags();
 
-    //顶部菜单点击事件（除上传按钮）
+    //顶部菜单点击事件（除刷选按钮）
     $("#de_top_nav li").not("#de_btn_filter").find("a").click(function(){
         DE.menu.topMenuClickHandler($(this).attr("href"));
 
