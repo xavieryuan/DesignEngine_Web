@@ -235,12 +235,17 @@ DE.menu=(function(){
         },
         addMobileSources:function(){
             var head=$("head");
-            if(navigator.userAgent.match("Android")!==null){
-               /* $("<link>").attr({ rel: "stylesheet",
-                        type: "text/css",
-                        href: "css/mobile.css"
-                }).insertAfter($("link:eq(0)"));*/
+            if(navigator.userAgent.match("Android")!==null&&navigator.userAgent.match("UCBrowser")===null){
                 $("<script src='js/lib/touchScroll.js'></script>").appendTo(head);
+
+                //登录、评论输入框
+                $("input,textarea").focus(function(){
+                    $("#de_popout").css("top","250px");
+                    $("body").addClass("de_noscroll");
+                });
+                $("input,textarea").blur(function(){
+                    $("body").removeClass("de_noscroll");
+                });
             }
         }
     }

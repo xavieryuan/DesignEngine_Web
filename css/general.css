@@ -2565,7 +2565,6 @@ background: url(../images/icon60_close_white.png) no-repeat;
     color: #545454;
 }
 
-
 /*************Media Query****************/
 @media screen and (max-width: 990px) and (min-width: 720px) {
 
@@ -2672,6 +2671,7 @@ background: url(../images/icon60_close_white.png) no-repeat;
     .de_pop_window_content video{
         margin: 70px auto 0px auto;
     }
+
 	/*弹出窗口*/
 	.de_popout_login .de_login_col, .de_popout_edit_profile .de_edit_col 
 	{
@@ -2716,8 +2716,13 @@ background: url(../images/icon60_close_white.png) no-repeat;
 	.de_child_info{
 		padding:0;
 	}
-}
 
+}
+@media screen and (max-width: 480px) {
+    .de_btn_filter{
+        display: none!important;
+    }
+}
 /*动画定义*/
 @-webkit-keyframes spin{
      0%{

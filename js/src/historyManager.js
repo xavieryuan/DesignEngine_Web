@@ -244,12 +244,8 @@ DE.history=(function(){
                 handler(null,null);
             }else{
                 var hrefArray=href.split("/");
-                var value=hrefArray[1];
-                if(value.indexOf("?")!==-1){
-                    DE.store.appAgent=value.substring(value.indexOf("?appAgent=")+1);
-                    value=value.substring(0,value.indexOf("?"));
-                }
-                handler(hrefArray[0],value);
+
+                handler(hrefArray[0],hrefArray[1]);
             }
         }
     }
