@@ -59,7 +59,8 @@ DE.login=(function(){
                                $(form).clearForm();
 
                                //成功后如果在用户页面需要重新加载数据
-                               if(window.location.href.indexOf("user")!=-1&&window.location.href.indexOf("hot")==-1){
+                               var href=window.location.href;
+                               if((href.indexOf("user")!=-1&&href.indexOf("hot")==-1)||href.indexOf("item")!=-1){
                                    DE.history.initDatas();
                                }
                            }else{
@@ -117,7 +118,8 @@ DE.login=(function(){
                                    DE.UIManager.hideAllMenuAndPopouts();
 
                                    //成功后如果在用户页面需要重新加载数据
-                                   if(window.location.href.indexOf("user")!=-1&&window.location.href.indexOf("hot")==-1){
+                                   var href=window.location.href;
+                                   if((href.indexOf("user")!=-1&&href.indexOf("hot")==-1)||href.indexOf("item")!=-1){
                                        DE.history.initDatas();
                                    }
 

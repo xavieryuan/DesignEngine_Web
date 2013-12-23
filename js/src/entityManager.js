@@ -136,8 +136,7 @@ DE.entity=(function(){
                 async:false,  //用同步，需要显示元素，以便后面的请求的数据进行渲染
                 dataType:"json",
                 data:{
-                    postId:id,
-                    appAgent:DE.store.appAgent
+                    postId:id
                 },
                 success:function(data){
                     if(data.success){
