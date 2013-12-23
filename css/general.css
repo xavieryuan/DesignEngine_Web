@@ -2590,7 +2590,8 @@ background: url(../images/icon60_close_white.png) no-repeat;
 		width:48px;
 		
 	}
-	.de_guest_view .de_btn_login_reg{
+
+	.de_user_nav .de_btn_login_reg{
 		font-size:0;
 		text-indent:-9999px;
 	}
