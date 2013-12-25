@@ -235,22 +235,39 @@ DE.menu=(function(){
         },
         addMobileSources:function(){
             var head=$("head");
-            if(navigator.userAgent.match("Android")!==null&&navigator.userAgent.match("UCBrowser")===null){
-                $("<script src='js/lib/touchScroll.js'></script>").appendTo(head);
+            var userAgent=navigator.userAgent;
+            if((userAgent.match("Android")!==null||userAgent.match("iPhone")!==null)&&userAgent.match("UCBrowser")===null){
+                if(userAgent.match("iPhone")===null){
 
-                //登录、评论输入框
-                $("input,textarea").focus(function(){
-                    $("#de_popout").css("top","250px");
-                    $("body").addClass("de_noscroll");
-                });
-                $("input,textarea").blur(function(){
-                    $("body").removeClass("de_noscroll");
-                });
+                    //只有原生android浏览器需要加这个
+                    $("<script src='js/lib/touchScroll.js'></script>").appendTo(head);
+
+                    //登录、评论输入框
+                    $("input,textarea").focus(function(){
+                        $("#de_popout").css("top","250px");
+                        $("body").addClass("de_noscroll");
+                    });
+                    $("input,textarea").blur(function(){
+                        $("body").removeClass("de_noscroll");
+                    });
+                }else{
+                    $("#de_popout input,#de_popout textarea").focus(function(){
+                        $("#de_popout").css("top","250px");
+                    });
+                }
             }
         }
     }
 })();
 
+//移动平台进入全屏，原理是手动滚动一下
+window.onload=function(){
+    if(DE.config.checkMobile()){
+        setTimeout(function(){
+            window.scrollTo(0,1);
+        },500);
+    }
+};
 $(document).ready(function(){
 
      DE.menu.addMobileSources();
