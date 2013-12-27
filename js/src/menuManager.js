@@ -196,13 +196,22 @@ DE.menu=(function(){
         searchInputEventHandler:function(){
             var me=this;
             var searchInput= $("#de_search_input");
+            var filterMenu=$("#de_filter_menu");
             searchInput.keydown(function(event){
                 if(event.keyCode==13){
                     var value=$(this).val();
                     if(value.trim()){
                         me.serachHandler("search/"+value,"",false);
+                        searchInput.trigger("marcopoloblur");
                     }
                 }
+            });
+
+            searchInput.on('marcopoloblur', function (event) {
+                filterMenu.removeClass("de_overflow_visible");
+            });
+            searchInput.on('marcopolofocus', function (event) {
+                filterMenu.addClass("de_overflow_visible");
             });
 
             searchInput.marcoPolo({
@@ -221,6 +230,7 @@ DE.menu=(function(){
                 },
                 onSelect: function (data) {
                     me.serachHandler("search/"+data,"",false);
+                    searchInput.trigger("marcopoloblur");
                 },
                 formatNoResults:function(q, $item){
                     return "";
@@ -302,15 +312,6 @@ $(document).ready(function(){
         DE.UIManager.showLoginPopout();
 
         return false;
-    });
-	
-	//搜索框焦点事件，为了能完整显示自动提示窗体
-    //blur的行为在cleanAllScreens已经有设置
-	/*$(document).on("blur","#de_search_input",function(){
-		$("#de_filter_menu").css("overflow","auto");
-    });*/
-	$("#de_search_input").focus(function(){
-        $("#de_filter_menu").addClass("de_overflow_visible");
     });
 	
     //ext菜单按钮点击事件（显示隐藏）

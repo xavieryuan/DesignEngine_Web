@@ -112,9 +112,7 @@ DE.UIManager=function(){
 			$("#de_btn_filter>a").addClass("focused");
 		},
 		hideFilterMenu:function(){
-			$("#de_filter_menu").animate({"height":0},200,function(){
-                $("#de_filter_menu").css("overflow","hidden");
-            });
+			$("#de_filter_menu").animate({"height":0},200);
 			$("#de_btn_filter>a").removeClass("focused")		
 		},
 		showExtMenu:function(){
