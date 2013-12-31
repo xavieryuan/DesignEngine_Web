@@ -10,7 +10,7 @@ DE.config={
     defualtEntityThumb:"images/default_thumb_500.png",
     perLoadCount:10, //作品、评论、资源等每次加载的个数
     hasNoMoreFlag:-1, //作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
-    imagesSize:{
+    imagePrefix:{
         thumb:"-200x200",
         mediaThumb:"-400x300"
     },
@@ -48,10 +48,17 @@ DE.config={
         enabled:"enabled",
         disabled:"disabled"
     },
+    entityTypes:{  //实体类型
+        project:"project",
+        resource:"resource"
+    },
     scrollScreenType:{ //当前在哪个页面滚动
         hotUser:"hotUser",
         project:"project",
         resource:"resource",
+        search:"search",
+        searchProject:"searchProject",
+        searchResource:"searchResource",
         userEntity:"userEntity" //用户页的用户作品,
     },
     validError:{
@@ -94,7 +101,7 @@ DE.config={
         pptUploadError:"此资源上传到资源服务器出错，无法查看！",
         uploadSizeError:"最大文件大小",
         uploadExtensionError:"只允许上传",
-        uploadIOErrror:"服务器端异常，请稍后重试！",
+        uploadIOErrror:"服务器端异常，请刷新后重试！",
         emailPending:"你的新邮箱${email}没有激活，请进入邮箱激活！",
         emailInvalid:"你提交的新邮箱${email},已被其他人激活，如需修改邮箱，请提交另外一个邮箱！"
     },
@@ -192,20 +199,17 @@ DE.config={
         searchSuggest:"query/searchSuggest"
         //autoComplete:"http://192.168.2.167:8393/solr/termSuggest"
     },
-    entityTypes:{  //实体类型
-        project:"project",
-        resource:"resource"
-    },
     urls:{  //history的url
         indexProject:"project/all", //首页作品
         indexResource:"resource/all", //首页资源
-        tagEntities:"tag/tagName", //点击标签
+        searchResourceEntities:"resource-tag/tagName", //点击标签
+        searchProjectEntities:"project-tag/tagName",
         hotUsers:"user/hot", //热门用户
         userDetail:"user/userId", //用户页
         search:"search/searchContent", //搜索页
         uploadEntity:"upload/entity",  //上传页
         editEntity:"edit/entityId",  //修改页
-        entityDetail:"entity/entityId"
+        entityDetail:"item/itemId"
     },
     topMenus:{ //顶部菜单类型
         user:"user", //热门用户,不写为hotUser是为了配合url地址
@@ -220,25 +224,25 @@ DE.config={
     },
     ajaxReturnErrorHandler:function(data){
         if(data.errorCode==this.errorCode.notFound){
-            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.notFound);
+            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.notFound);
             setTimeout(function(){
                 window.location.href=document.baseURI||$("#de_base_url").attr("href");
             },2000);
         }else if(data.errorCode==this.errorCode.timeout){
-            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.timeout);
+            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.timeout);
         }else if(data.errorCode==this.errorCode.thumb_height_not_equals_width){
-            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.imgSizeError);
+            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.imgSizeError);
         }else if(data.errorCode||data.resultCode){
-            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.operationError);
+            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.operationError);
         }else{
-            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.loadDataError);
+            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.loadDataError);
         }
 
-        DE.uiManager.hideLoading();
+        DE.UIManager.hideLoading();
     },
     ajaxErrorHandler:function(){
-        DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.networkError);
-        DE.uiManager.hideLoading();
+        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.networkError);
+        DE.UIManager.hideLoading();
     },
     checkMobile:function(){
         var userAgentList = new Array("2.0 MMP", "240320", "AvantGo","BlackBerry", "Blazer",
