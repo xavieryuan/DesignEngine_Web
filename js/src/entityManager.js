@@ -858,9 +858,13 @@ DE.entity=(function(){
             var ext="";//文件的后缀,视频文件有mp4和swf
 
             //如果上传uploadedMedias中有，那是在预览，用uploadedMedias中的
-
             if(!$.isEmptyObject(DE.store.uploadedMedias)){
-                content=DE.config.messageCode.pptHasNotUploaded;
+                if(mediaType===DE.config.uploadMediaTypes.ppt){
+                    content=DE.config.messageCode.pptHasNotUploaded;
+                }else{
+                    content=DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath];
+                }
+
             }else{
                 content=target.attr("href");
                 if(content==DE.config.resultCode.pptx_upload_error){

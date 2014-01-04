@@ -194,18 +194,18 @@ DE.upload=(function(){
      */
     function createThumbUpload(){
         var uploaderThumb = new plupload.Uploader({
-            runtimes:"flash",
+            runtimes:"html5",
             multi_selection:false,
             max_file_size:DE.config.uploadSize.maxImageSize,
             browse_button:"de_upload_thumb_btn",
             container:"de_upload_thumb_container",
             url:DE.config.ajaxUrls.uploadFileUrl,
             unique_names:true,
-            urlstream_upload:true,
-            flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
+            //urlstream_upload:true,
+            //flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
             multipart_params:{
-                isThumb:true,
-                userId:DE.store.currentUser.userId
+                isThumb:true
+                //userId:DE.store.currentUser.userId
             },
             filters:[
                 {title:"Image files", extensions:DE.config.uploadFilters.imageFilter}
@@ -262,19 +262,19 @@ DE.upload=(function(){
      */
     function createMediaUpload(browseButton,type,filters){
         var uploaderMedia=new plupload.Uploader({
-            runtimes:"flash",
+            runtimes:"html5",
             multi_selection:true,
             max_file_size:DE.config.uploadSize.maxMediaSize,
             browse_button:browseButton,
             container:"zy_add_media_menu",
             url:DE.config.ajaxUrls.uploadFileUrl,
             unique_names:true,
-            urlstream_upload:true,
-            flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
+            //urlstream_upload:true,
+            //flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
             //chunk_size:"10mb",
-            multipart_params:{
+            /*multipart_params:{
                 userId:DE.store.currentUser.userId
-            },
+            },*/
             filters : [
                 {title : "Media files", extensions : filters}
             ]
@@ -940,7 +940,7 @@ DE.upload=(function(){
                 }
             });
 
-            //模拟失去焦点，直接用blur的话点击自动完成的结果会冲突
+            //模拟失去焦点，直接用blur的话与自动完成中的事件冲突
             $("#de_screen_upload").click(function(event){
                 var target=$(event.target);
                 if(!target.is("#de_input_project_tag")&&target.parents("#mp_de_input_project_tag_list").length==0){
@@ -1039,4 +1039,10 @@ $(document).ready(function(){
         return false;
     });
 
+    //火狐里面阻止form提交
+    $("input[type='text']").keydown(function(e){
+        if(e.keyCode==13){
+            return false;
+        }
+    })
 });

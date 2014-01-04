@@ -155,19 +155,19 @@ var zy_set_common = (function(){
          * */
         "zy_create_media_uploader":function(filters,zy_media_id){
             var uploader_media=new plupload.Uploader({
-                runtimes:"flash",
+                runtimes:"html5",
                 multi_selection:false,
                 max_file_size:config.uploadSize.maxMediaSize,
                 browse_button:"zy_upload_media_button",
                 container:"zy_left_top",
                 unique_names:true,
-                urlstream_upload:true,
+                //urlstream_upload:true,
                 //chunk_size:"10mb",
                 url: config.uploadFileUrl,
-                flash_swf_url : '../js/lib/plupload.flash.swf',
-                multipart_params:{
+                //flash_swf_url : '../js/lib/plupload.flash.swf',
+                /*multipart_params:{
                     userId:currentUserId
-                },
+                },*/
                 filters : [
                     {title : "Media files", extensions : filters}
                 ]
@@ -238,18 +238,18 @@ var zy_set_common = (function(){
          * */
         "zy_create_thumb_uploader":function(zy_media_id){
             var uploader_thumb=new plupload.Uploader({
-                runtimes:"flash",
+                runtimes:"html5",
                 multi_selection:false,
                 max_file_size:config.uploadSize.maxImageSize,
                 browse_button:"zy_upload_thumb_button",
                 container:"zy_left_bottom",
                 unique_names:true,
-                urlstream_upload:true,
+                //urlstream_upload:true,
                 url: config.uploadFileUrl, //parent在每个js里面都有定义
-                flash_swf_url:'../js/lib/plupload.flash.swf',
-                multipart_params:{
+                //flash_swf_url:'../js/lib/plupload.flash.swf',
+                /*multipart_params:{
                     userId:currentUserId
-                },
+                },*/
                 filters : [
                     {title : "Image files", extensions : config.uploadFilters.imageFilter}
                 ]

@@ -167,6 +167,7 @@ DE.config={
         //getSimilarEntities:"data/similarEntities.json", //获取相似作品
         getComments:"post/comments", //获取评论
         postComment:"post/add-comment", //发表评论
+        changeCommentStatus:"#",
         deleteComment:"post/remove-comment", //删除评论
         getHotUsersOrder:"account/rank",
         getHotUsers:"account/hot", //获取人点用户
@@ -189,8 +190,13 @@ DE.config={
         emailValidate:"account-email-unique",
         usernameValidate:"account-fullname-unique",
         termSuggest:"query/termSuggest",
-        searchSuggest:"query/searchSuggest"
-        //autoComplete:"http://192.168.2.167:8393/solr/termSuggest"
+        searchSuggest:"query/searchSuggest",
+        getAllUsers:"#",
+        getAllComments:"#",
+        getAllEntities:"#",
+        changeUserStatus:"#",
+        deleteUser:"#"
+
     },
     entityTypes:{  //实体类型
         project:"project",
