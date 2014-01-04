@@ -341,7 +341,7 @@ DE.user=(function(){
                     oldPassword:{
                         required:true
                     },
-                    de_reset_pwd:{
+                    newPassword:{
                         required:true,
                         rangelength:[6,20]
                     },
@@ -354,7 +354,7 @@ DE.user=(function(){
                     oldPassword:{
                         required:DE.config.validError.oldPwdRequired
                     },
-                    de_reset_pwd: {
+                    newPassword: {
                         required:DE.config.validError.newPwdRequired,
                         rangelength:DE.config.validError.pwdLengthError
                     },
