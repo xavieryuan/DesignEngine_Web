@@ -1129,8 +1129,7 @@ li {
     color: #fff;
 }
 
-.de_filter_group > .de_menu_list li a:hover {
-    font-size: 14px;
+.de_filter_group > .de_menu_list li a:hover {    
     color: #FFF;
 }
 
@@ -2730,10 +2729,42 @@ background: url(../images/icon60_close_white.png) no-repeat;
 
 }
 @media screen and (max-width: 480px) {
-    .de_btn_filter{
-        display: none!important;
+	.de_logo>a {
+		width:70px;
+	}
+	.de_top_nav{
+		left:70px;
+		width:50%;
+	}
+	.de_top_nav ul{
+		text-align:left;
+	}
+    .de_top_nav ul li{
+		display:none;
+	}
+	.de_btn_filter{
+        display: inline-block!important;
+		width:100%!important;
     }
+	
+	.de_filter_menu>.de_filter_group{
+		width: auto;
+		float:none;
+		height:auto;
+		padding-bottom: 0;
+	}
+	.de_filter_menu>.de_filter_group_search h3{
+		display:none;
+		}
+	.de_filter_group > .de_menu_list li a{
+		height:30px;
+		line-height:30px;
+		font-size:12px;
+	}
 }
+
+
+
 /*动画定义*/
 @-webkit-keyframes spin{
      0%{
