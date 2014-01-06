@@ -2583,13 +2583,13 @@ background: url(../images/icon60_close_white.png) no-repeat;
 @media screen and (max-width: 720px) {
 	/*顶部导航*/
 	.de_logo>a{
-		width: 50px;
+		width: 70px;
 		font-size: 0;
 		background-position:center;
 		text-indent:-9999px;
 	}
 	.de_top_nav{
-		left:50px;
+		left:70px;
 		width:70%;
 	}
 	.de_filter_menu>.de_filter_group{
@@ -2729,15 +2729,12 @@ background: url(../images/icon60_close_white.png) no-repeat;
 
 }
 @media screen and (max-width: 480px) {
-	.de_logo>a {
-		width:70px;
-	}
+
 	.de_top_nav{
-		left:70px;
-		width:50%;
+		width:30%;
 	}
 	.de_top_nav ul{
-		text-align:left;
+		text-align:center;
 	}
     .de_top_nav ul li{
 		display:none;
