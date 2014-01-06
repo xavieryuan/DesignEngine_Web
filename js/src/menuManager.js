@@ -266,6 +266,12 @@ DE.menu=(function(){
                     });
                 }
             }
+        },
+        documentClickHandler:function(target){
+            if(target.parents("#de_popout").length==0&&target.parents("#de_filter_menu").length==0&&
+                target.parents("#de_ext_nav").length==0&&target.parents("#de_pop_window").length==0){
+                DE.UIManager.hideAllMenuAndPopouts();
+            }
         }
     }
 })();
@@ -337,11 +343,12 @@ $(document).ready(function(){
     //点击body隐藏所有弹窗和菜单
     $(document).click(function(event){
         var target=$(event.target);
-        if(target.parents("#de_popout").length==0&&target.parents("#de_filter_menu").length==0&&
-            target.parents("#de_ext_nav").length==0&&target.parents("#de_pop_window").length==0){
-            DE.UIManager.hideAllMenuAndPopouts();
-        }
+        DE.menu.documentClickHandler(target);
     });
+    document.addEventListener("touchend",function(event){
+        var target=$(event.target);
+        DE.menu.documentClickHandler(target);
+    },false);
 
     //更多分类按钮点击事件
     $("#de_btn_filter>a").on("click",function(evt){

@@ -82,8 +82,8 @@ DE.upload=(function(){
             var img_src=DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaThumbFilepath];
             //var img_src_compress=$(this).find("img").attr("src");
 
-            obj.title=title;
-            obj.memo=memo;
+            obj.title=title?title:"";
+            obj.memo=memo?memo:"";
 
             if(type==DE.config.uploadMediaTypes.image){
                 obj.content='<a data-has-media="true" class="de_only_image"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.image+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
@@ -1040,7 +1040,7 @@ $(document).ready(function(){
     });
 
     //火狐里面阻止form提交
-    $("input[type='text']").keydown(function(e){
+    $("input[type='text'],input[type='password']").keydown(function(e){
         if(e.keyCode==13){
             return false;
         }

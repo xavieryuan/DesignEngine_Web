@@ -15,7 +15,7 @@
 var config={
     uploadFileUrl:"/pinwall/upload",
     uploadSize:{
-        maxMediaSize:"200m", //最大的媒体文件上传大小
+        maxMediaSize:"300m", //最大的媒体文件上传大小
         maxImageSize:"2m"//最大的图片文件上传大小
     },
     uploadFilters:{  //媒体类型格式刷选器

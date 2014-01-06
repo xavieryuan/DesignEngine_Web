@@ -859,7 +859,9 @@ DE.entity=(function(){
 
             //如果上传uploadedMedias中有，那是在预览，用uploadedMedias中的
             if(!$.isEmptyObject(DE.store.uploadedMedias)){
-                if(mediaType===DE.config.uploadMediaTypes.ppt){
+                if(mediaType===DE.config.uploadMediaTypes.ppt&&
+                    DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath].match("<iframe")===null){
+
                     content=DE.config.messageCode.pptHasNotUploaded;
                 }else{
                     content=DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath];
