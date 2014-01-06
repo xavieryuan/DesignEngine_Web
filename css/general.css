@@ -2279,6 +2279,7 @@ ol.mp_list li.mp_selectable {
 .de_comment_list li {
     padding: 20px 40px 20px 20px;
     border-bottom: #ccc 1px dotted;
+	position:relative;
 }
 .de_comment_more_btn{
     height: 60px;
@@ -2325,9 +2326,15 @@ ol.mp_list li.mp_selectable {
     margin-left: 20px;
 }
 .de_comment_box .de_delete_comment {
-    font-size: 12px;
+    font-size: 0;
     color: #ccc;
-    margin-left: 20px;
+    display: block;
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background:url(../images/trash_30.png) no-repeat;
 }
 
 .de_comment_box .comment {
