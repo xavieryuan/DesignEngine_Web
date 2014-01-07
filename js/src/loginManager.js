@@ -64,7 +64,11 @@ DE.login=(function(){
                                    DE.history.initDatas();
                                }
                            }else{
-                               $("#de_login_error").text(DE.config.messageCode.nameOrPwdError);
+                               if(data.resultCode===DE.config.resultCode.mail_not_confirm){
+                                   $("#de_login_error").text(DE.config.messageCode.emailNotConfirm);
+                               }else{
+                                   $("#de_login_error").text(DE.config.messageCode.nameOrPwdError);
+                               }
                            }
 
                            DE.UIManager.hideLoading();
