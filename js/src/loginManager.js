@@ -64,7 +64,7 @@ DE.login=(function(){
                                    DE.history.initDatas();
                                }
                            }else{
-                               if(data.resultCode===DE.config.resultCode.mail_not_confirm){
+                               if(data.errorCode&&data.errorCode===DE.config.errorCode.mail_not_confirm){
                                    $("#de_login_error").text(DE.config.messageCode.emailNotConfirm);
                                }else{
                                    $("#de_login_error").text(DE.config.messageCode.nameOrPwdError);

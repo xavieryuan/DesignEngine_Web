@@ -103,7 +103,6 @@ DE.config={
         account_register_succ:"account_register_succ",
         account_login_succ:"account_login_succ",
         assoicate_email_exists:"assoicate_email_exists",
-        mail_not_confirm:"mail_not_confirm",
         associate_sumbit_mail:"associate_sumbit_mail",
         bind_succ:"bind_succ",
         unbind_succ:"unbind_succ",
@@ -135,6 +134,7 @@ DE.config={
     errorCode:{
         captcha_unmatches:"captcha_unmatches",
         account_update_fail:"account_update_fail",
+        mail_not_confirm:"mail_not_confirm",
         account_required:"account_required",
         account_fullname_required:"account_fullname_required",
         authentication_error:"authentication_error",
