@@ -2279,6 +2279,7 @@ ol.mp_list li.mp_selectable {
 .de_comment_list li {
     padding: 20px 40px 20px 20px;
     border-bottom: #ccc 1px dotted;
+	position:relative;
 }
 .de_comment_more_btn{
     height: 60px;
@@ -2325,9 +2326,15 @@ ol.mp_list li.mp_selectable {
     margin-left: 20px;
 }
 .de_comment_box .de_delete_comment {
-    font-size: 12px;
+    font-size: 0;
     color: #ccc;
-    margin-left: 20px;
+    display: block;
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background:url(../images/trash_30.png) no-repeat;
 }
 
 .de_comment_box .comment {
@@ -2583,13 +2590,13 @@ background: url(../images/icon60_close_white.png) no-repeat;
 @media screen and (max-width: 720px) {
 	/*顶部导航*/
 	.de_logo>a{
-		width: 50px;
+		width: 70px;
 		font-size: 0;
 		background-position:center;
 		text-indent:-9999px;
 	}
 	.de_top_nav{
-		left:50px;
+		left:70px;
 		width:70%;
 	}
 	.de_filter_menu>.de_filter_group{
@@ -2729,15 +2736,12 @@ background: url(../images/icon60_close_white.png) no-repeat;
 
 }
 @media screen and (max-width: 480px) {
-	.de_logo>a {
-		width:70px;
-	}
+
 	.de_top_nav{
-		left:70px;
-		width:50%;
+		width:30%;
 	}
 	.de_top_nav ul{
-		text-align:left;
+		text-align:center;
 	}
     .de_top_nav ul li{
 		display:none;
