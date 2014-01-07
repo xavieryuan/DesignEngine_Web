@@ -134,7 +134,7 @@ DE.config={
     errorCode:{
         captcha_unmatches:"captcha_unmatches",
         account_update_fail:"account_update_fail",
-        mail_not_confirm:"mail_not_confirm",
+        email_not_confirm:"email_not_confirm",
         account_required:"account_required",
         account_fullname_required:"account_fullname_required",
         authentication_error:"authentication_error",
