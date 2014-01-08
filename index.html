@@ -636,10 +636,7 @@
     {@else if type=='zy_image'}
         <img src="${content}">
     {@else if type=='zy_flash'}
-        <object type="application/x-shockwave-flash" data="js/lib/dplayer.swf"height="100%" width="100%" id="9144" style="visibility: visible;">
-            <param name="menu" value="false"><param name="allowFullScreen" value="true">
-            <param name="allowscriptaccess" value="sameDomain">
-            <param name="flashvars" value="media_link=${content}">
+        <object type="application/x-shockwave-flash" data="${content}"height="100%" width="100%" id="9144" style="visibility: visible;">
         </object>
     {@/if}
 </script>
