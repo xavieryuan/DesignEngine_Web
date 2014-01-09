@@ -559,6 +559,8 @@ DE.upload=(function(){
             });
         }
         $("#zy_uploaded_medias_ol").html(html);
+
+        DE.upload.drag();
     }
 
     /**
