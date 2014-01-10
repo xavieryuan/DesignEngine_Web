@@ -13,19 +13,21 @@
     <title>图钉墙 - HNU Design</title>
     <base id="de_base_url" href="http://design.hnu.cn/pinwall/"/>
     <link href="css/general.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>-->
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/lib/juicer-min.js"></script>
+    <!--<script type="text/javascript" src="js/lib/jquery.dataTables.min.js"></script>-->
     <script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.form.js"></script>
     <script type="text/javascript" src="js/lib/plupload.js"></script>
     <script type="text/javascript" src="js/lib/jquery.marcopolo.min.js"></script>
-    <script type="text/javascript" src="js/lib/plupload.flash.js"></script>
+    <script type="text/javascript" src="js/lib/plupload.html5.js"></script>
     <script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
     <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
           data-redirecturi="http://design.hnu.cn/pinwall/redirect.html" data-appid="100564490"
           charset="utf-8"></script>
-    <script src="js/src/googleAnalytics.js"></script>
-    <script src="js/src/modules/DE.UIManager.js"></script>
+    <script src="js/src/modules/googleAnalytics.js"></script>
+    <script src="js/src/modules/uiManager.js"></script>
     <script src="js/src/config.js"></script>
     <script src="js/src/modules/storeManager.js"></script>
     <script src="js/src/modules/historyManager.js"></script>
@@ -34,6 +36,7 @@
     <script src="js/src/modules/menuManager.js"></script>
     <script src="js/src/modules/uploadManager.js"></script>
     <script src="js/src/modules/loginManager.js"></script>
+    <script src="js/src/index.js"></script>
 </head>
 
 <!--模板文件-->
@@ -620,7 +623,7 @@
         {@if ext=='mp4'}
              <video autoplay controls src="${content}"></video>
         {@else}
-            <object type="application/x-shockwave-flash" data="js/lib/dplayer.swf"height="100%" width="100%" id="9144" style="visibility: visible;">
+            <object type="application/x-shockwave-flash" data="js/lib/dplayer.swf" height="100%" width="100%" id="9144" style="visibility: visible;">
                 <param name="menu" value="false"><param name="allowFullScreen" value="true">
                 <param name="allowscriptaccess" value="sameDomain">
                 <param name="flashvars" value="media_link=${content}">
@@ -634,10 +637,7 @@
     {@else if type=='zy_image'}
         <img src="${content}">
     {@else if type=='zy_flash'}
-        <object type="application/x-shockwave-flash" data="js/lib/dplayer.swf"height="100%" width="100%" id="9144" style="visibility: visible;">
-            <param name="menu" value="false"><param name="allowFullScreen" value="true">
-            <param name="allowscriptaccess" value="sameDomain">
-            <param name="flashvars" value="media_link=${content}">
+        <object type="application/x-shockwave-flash" data="${content}"height="100%" width="100%" id="9144" style="visibility: visible;">
         </object>
     {@/if}
 </script>
@@ -781,6 +781,7 @@
                 <label for="de_input_project_tag">标签</label>
             <ul class="de_borderbox de_category_tag_box" id="de_input_tag">
             </ul>
+            <p class="de_form_tip">在下方输入标签，按回车确认。</p>
             <input type="text" autocomplete="default" value=""
                    class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20" name="de_input_project_tag"
                    id="de_input_project_tag" placeholder="新标签...">
@@ -790,8 +791,9 @@
                 <textarea class="de_borderbox de_inputbox_gray" name="description" id="de_project_description" placeholder=""></textarea></p>
 
             <p class="de_field_project_thumb" id="de_upload_thumb_container">
-
+			<span class="de_form_tip">请上传高宽比为1:1的jpg或png图像。</span>
                 <a href="#" class="de_btn_upload_thumb de_button" id="de_upload_thumb_btn">上传缩略图</a>
+                
                 <img class="de_project_thumb" id="de_project_thumb" width="400" height="400" src="images/default_thumb_500.png"/>
                 <input type="hidden" name="previewFilename" id="de_thumb_name">
                 <input type="hidden" name="previewLocation" id="de_thumb_url">

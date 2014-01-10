@@ -6,7 +6,7 @@
  * 用户相关模块（热点用户，用户页面，修改资料，绑定账号)
  */
 var DE=DE||{};
-DE.user=(function(){
+DE.userManager=(function(){
     var userEntities=null;//存储到本地的用户作品资源数据
     var hotUsersOrder=null;
     return {
@@ -16,18 +16,18 @@ DE.user=(function(){
          */
         createFigureUpload:function(){
             var uploaderFigure = new plupload.Uploader({
-                runtimes:"flash",
+                runtimes:"html5",
                 multi_selection:false,
                 max_file_size:DE.config.uploadSize.maxImageSize,
                 browse_button:"de_change_figure",
                 container:"de_change_figure_container",
                 url:DE.config.ajaxUrls.uploadFileUrl,
                 unique_names:true,
-                urlstream_upload:true,
-                flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
+                //urlstream_upload:true,
+                //flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
                 multipart_params:{
-                    isThumb:true,
-                    userId:DE.store.currentUser.userId
+                    isThumb:true
+                    //userId:DE.storeManager.currentUser.userId
                 },
                 filters:[
                     {title:"Image files", extensions:DE.config.uploadFilters.imageFilter}
@@ -46,11 +46,11 @@ DE.user=(function(){
             uploaderFigure.bind("Error", function (up, err) {
                 if(err.message.match("Init")==null){
                     if(err.message.match("size")){
-                        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadSizeError+DE.config.uploadSize.maxMediaSize);
+                        DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerSizeError+DE.config.uploadSize.maxMediaSize);
                     }else if(err.message.match("extension")){
-                        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadExtensionError+DE.config.uploadFilters.imageFilter);
+                        DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerExtensionError+DE.config.uploadFilters.imageFilter);
                     }else{
-                        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadIOErrror);
+                        DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerIOErrror);
                     }
                 }
                 up.refresh();
@@ -86,7 +86,7 @@ DE.user=(function(){
                             me.getHotUsers(true);
                         }else{
                             me.showHotUsers({users:[]},true);
-                            DE.store.hotUserLoadedCount=DE.config.hasNoMoreFlag;
+                            DE.storeManager.hotUserLoadedCount=DE.config.hasNoMoreFlag;
                         }
 
                     }else{
@@ -107,10 +107,10 @@ DE.user=(function(){
         getHotUsers:function(first){
             var me=this;
             var userId="";
-            if(DE.store.hotUserLoadedCount+DE.config.perLoadCount<hotUsersOrder.length){
-                userId=hotUsersOrder.slice(DE.store.hotUserLoadedCount,DE.store.hotUserLoadedCount+DE.config.perLoadCount).join(",")
+            if(DE.storeManager.hotUserLoadedCount+DE.config.perLoadCount<hotUsersOrder.length){
+                userId=hotUsersOrder.slice(DE.storeManager.hotUserLoadedCount,DE.storeManager.hotUserLoadedCount+DE.config.perLoadCount).join(",")
             }else{
-                userId=hotUsersOrder.slice(DE.store.hotUserLoadedCount).join(",");
+                userId=hotUsersOrder.slice(DE.storeManager.hotUserLoadedCount).join(",");
             }
             $.ajax({
                 url:DE.config.ajaxUrls.getHotUsers,
@@ -123,16 +123,16 @@ DE.user=(function(){
                     if(data.success){
                         var length=data.users.length,i=0;
                         if(length==DE.config.perLoadCount){
-                            DE.store.hotUserLoadedCount+=DE.config.perLoadCount;
+                            DE.storeManager.hotUserLoadedCount+=DE.config.perLoadCount;
                         }else{
-                            DE.store.hotUserLoadedCount=DE.config.hasNoMoreFlag;
+                            DE.storeManager.hotUserLoadedCount=DE.config.hasNoMoreFlag;
                         }
 
-                        DE.store.currentScrollScreenType=DE.config.scrollScreenType.hotUser;
+                        DE.storeManager.currentScrollScreenType=DE.config.scrollScreenType.hotUser;
 
                         if(DE.config.checkMobile()){
                             for(;i<length;i++){
-                                data.users[i]["projects"]=DE.entity.formatThumb(data.users[i]["projects"]);
+                                data.users[i]["projects"]=DE.entityManager.formatThumb(data.users[i]["projects"]);
                             }
                         }
                         me.showHotUsers(data,first);
@@ -164,7 +164,7 @@ DE.user=(function(){
                     html=juicer(tpl,jsondata.data[index]);
                 }
                 $("#de_hot_user_list").html(html);
-                DE.UIManager.showScreen("#de_screen_designer");
+                DE.uiManager.showScreen("#de_screen_designer");
             }else{
                 $("#de_hot_user_list").append($(html));
             }
@@ -187,8 +187,8 @@ DE.user=(function(){
                 },
                 success:function(data){
                     if(data.success){
-                        DE.store.initCurrentShowUser(data.user);
-                        DE.store.currentScrollScreenType=DE.config.scrollScreenType.userEntity;
+                        DE.storeManager.initCurrentShowUser(data.user);
+                        DE.storeManager.currentScrollScreenType=DE.config.scrollScreenType.userEntity;
                         me.showUserDetail(data);
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
@@ -220,18 +220,18 @@ DE.user=(function(){
         showUserEntity:function(isFirst,callback){
             var tpl=$("#userEntitiesTpl").html();
             var dataObj={};
-            dataObj.userId=DE.store.currentShowUser.userId;
-            dataObj.userName=DE.store.currentShowUser.name;
-            dataObj.userProfileImg=DE.store.currentShowUser.figure;
-            dataObj.role=DE.store.currentShowUser.role;
+            dataObj.userId=DE.storeManager.currentShowUser.userId;
+            dataObj.userName=DE.storeManager.currentShowUser.name;
+            dataObj.userProfileImg=DE.storeManager.currentShowUser.figure;
+            dataObj.role=DE.storeManager.currentShowUser.role;
             dataObj.showToolBar=this.canShowToolbar();
 
-            if(DE.store.userEntitiesShowCount+DE.config.perLoadCount<userEntities.length){
-                dataObj.userEntities=userEntities.slice(DE.store.userEntitiesShowCount,DE.store.userEntitiesShowCount+DE.config.perLoadCount);
-                DE.store.userEntitiesShowCount+=DE.config.perLoadCount;
+            if(DE.storeManager.userEntitiesShowCount+DE.config.perLoadCount<userEntities.length){
+                dataObj.userEntities=userEntities.slice(DE.storeManager.userEntitiesShowCount,DE.storeManager.userEntitiesShowCount+DE.config.perLoadCount);
+                DE.storeManager.userEntitiesShowCount+=DE.config.perLoadCount;
             }else{
-                dataObj.userEntities=userEntities.slice(DE.store.userEntitiesShowCount);
-                DE.store.userEntitiesShowCount=DE.config.hasNoMoreFlag;
+                dataObj.userEntities=userEntities.slice(DE.storeManager.userEntitiesShowCount);
+                DE.storeManager.userEntitiesShowCount=DE.config.hasNoMoreFlag;
             }
 
             var html=juicer(tpl,dataObj);
@@ -245,7 +245,7 @@ DE.user=(function(){
             }
 
             if(isFirst){
-                DE.UIManager.showScreen("#de_screen_user_profile");
+                DE.uiManager.showScreen("#de_screen_user_profile");
                 if(callback){
                     callback();
                 }
@@ -267,7 +267,7 @@ DE.user=(function(){
          * @returns {boolean} true|false
          */
         canShowToolbar:function(){
-            if(DE.store.currentShowUser.userId==DE.store.currentUser.userId||DE.store.currentUser.role==DE.config.roles.admin){
+            if(DE.storeManager.currentShowUser.userId==DE.storeManager.currentUser.userId||DE.storeManager.currentUser.role==DE.config.roles.admin){
                 return true;
             }
 
@@ -294,12 +294,12 @@ DE.user=(function(){
                         userEntities=data.userEntities;
 
                         if(DE.config.checkMobile()){
-                            userEntities=DE.entity.formatThumb(userEntities);
+                            userEntities=DE.entityManager.formatThumb(userEntities);
                         }
                         me.showUserEntity(true,callback);
 
                         //如果是普通用户，会有优秀作品
-                        if(DE.store.currentShowUser.role==DE.config.roles.user){
+                        if(DE.storeManager.currentShowUser.role==DE.config.roles.user){
                             me.showHonorEntity(me.filterProjects(data));
                         }
                     }else{
@@ -320,15 +320,15 @@ DE.user=(function(){
          * @param {Function} callback 用户也显示完，需要执行的操作,主要是显示作品详情
          */
         userClickHandler:function(href,callback){
-            DE.UIManager.showLoading();
-            DE.history.push(href);  //由于有清空store的操作，需要最先执行
+            DE.uiManager.showLoading();
+            DE.historyManager.push(href);  //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var id=array[1];
 
             this.getUserById(id);
             this.getUserEntities(id,callback);
 
-            //DE.UIManager.showScreen("#de_screen_user_profile");
+            //DE.uiManager.showScreen("#de_screen_user_profile");
 
         },
 
@@ -341,7 +341,7 @@ DE.user=(function(){
                     oldPassword:{
                         required:true
                     },
-                    de_reset_pwd:{
+                    newPassword:{
                         required:true,
                         rangelength:[6,20]
                     },
@@ -354,7 +354,7 @@ DE.user=(function(){
                     oldPassword:{
                         required:DE.config.validError.oldPwdRequired
                     },
-                    de_reset_pwd: {
+                    newPassword: {
                         required:DE.config.validError.newPwdRequired,
                         rangelength:DE.config.validError.pwdLengthError
                     },
@@ -365,7 +365,7 @@ DE.user=(function(){
                 },
                 submitHandler:function(form) {
 
-                    DE.UIManager.showLoading();
+                    DE.uiManager.showLoading();
 
                     $(form).ajaxSubmit({
                         url:DE.config.ajaxUrls.changePassword,
@@ -373,7 +373,7 @@ DE.user=(function(){
                         type:"post",
                         success:function (data) {
                             if(data.success&&data.resultCode==DE.config.resultCode.password_change_succ){
-                                DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.changePwdSuccess);
+                                DE.uiManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.changePwdSuccess);
                                 setTimeout(function(){
                                     window.location.href=document.baseURI||$("#de_base_url").attr("href");
                                 },2000);
@@ -393,12 +393,12 @@ DE.user=(function(){
          * 进入修改时设置信息
          */
         setProfile:function(){
-            $("#de_user_name").text(DE.store.currentUser.name);
-            $("#de_edit_description").val(DE.store.currentUser.description);
-            $("#de_edit_login_email").val(DE.store.currentUser.email);
-            $("#de_edit_figure").attr("src",DE.store.currentUser.figure);
+            $("#de_user_name").text(DE.storeManager.currentUser.name);
+            $("#de_edit_description").val(DE.storeManager.currentUser.description);
+            $("#de_edit_login_email").val(DE.storeManager.currentUser.email);
+            $("#de_edit_figure").attr("src",DE.storeManager.currentUser.figure);
 
-            if(!DE.store.currentUser.regLocked){
+            if(!DE.storeManager.currentUser.regLocked){
                 $.ajax({
                     url:DE.config.ajaxUrls.getNewEmail,
                     type:"get",
@@ -410,7 +410,7 @@ DE.user=(function(){
                             }else if(data.status==DE.config.resultCode.email_status.invalid){
                                 $("#de_email_error").text(DE.config.messageCode.emailInvalid.replace("${email}",data.email));
                             }else{
-                                DE.store.initCurrentUser({
+                                DE.storeManager.initCurrentUser({
                                     email:data.email,
                                     regLocked:true
                                 });
@@ -456,19 +456,19 @@ DE.user=(function(){
                 },
                 submitHandler:function(form) {
 
-                    DE.UIManager.showLoading();
+                    DE.uiManager.showLoading();
                     $(form).ajaxSubmit({
                         url:DE.config.ajaxUrls.changeEmail,
                         dataType:"json",
                         type:"post",
                         success:function (data) {
                             if(data.success&&data.resultCode==DE.config.resultCode.account_update_succ){
-                                DE.store.initCurrentUser({
+                                DE.storeManager.initCurrentUser({
                                     regLocked:false
                                 });
 
-                                DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.emailChangeSuccess);
-                                DE.UIManager.hideLoading();
+                                DE.uiManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.emailChangeSuccess);
+                                DE.uiManager.hideLoading();
                             }else{
                                 DE.config.ajaxReturnErrorHandler(data);
                             }
@@ -498,7 +498,7 @@ DE.user=(function(){
                 },
                 submitHandler:function(form) {
 
-                    DE.UIManager.showLoading();
+                    DE.uiManager.showLoading();
                     var profileImg= $("#de_edit_figure").attr("src");
                     $(form).ajaxSubmit({
                         url:DE.config.ajaxUrls.changeProfile,
@@ -510,16 +510,16 @@ DE.user=(function(){
                         success:function (data) {
                             if(data.success&&data.resultCode==DE.config.resultCode.account_update_succ){
                                 var description=$("#de_edit_description").val();
-                                DE.store.initCurrentUser({
+                                DE.storeManager.initCurrentUser({
                                     description:description,
                                     figure:profileImg
                                 });
-                                $(".de_user_link[href='user/"+DE.store.currentUser.userId+"'] img").attr("src",profileImg);
+                                $(".de_user_link[href='user/"+DE.storeManager.currentUser.userId+"'] img").attr("src",profileImg);
 
                                 $(".user_about").text(description);
 
-                                DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
-                                DE.UIManager.hideLoading();
+                                DE.uiManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
+                                DE.uiManager.hideLoading();
                             }else{
                                  DE.config.ajaxReturnErrorHandler(data);
                             }
@@ -559,14 +559,14 @@ DE.user=(function(){
                         if(!data.bind){
 
                             //QQ绑定
-                            //DE.login.QQBindHandler();
+                            //DE.loginManager.QQBindHandler();
                             $("#de_has_bind").addClass("de_hidden");
                             $("#de_remove_bind").addClass("de_hidden");
                         }else{
                             $("#de_bind_account_btn").addClass("de_hidden");
                         }
-                        DE.login.QQBindHandler();
-                        //DE.UIManager.showBindAccountPopout();
+                        DE.loginManager.QQBindHandler();
+                        //DE.uiManager.showBindAccountPopout();
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
                     }
@@ -578,21 +578,5 @@ DE.user=(function(){
         }
     };
 })();
-
-$(document).ready(function(){
-    $(document).on("click","a.de_user_link",function(){
-        DE.user.userClickHandler($(this).attr("href"));
-
-        return false;
-    });
-
-    DE.user.createFigureUpload();
-
-    DE.user.changeProfile();
-
-    DE.user.changeEmail();
-
-    DE.user.changePassword();
-});
 
 

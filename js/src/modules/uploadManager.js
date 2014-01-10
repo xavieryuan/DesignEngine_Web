@@ -6,7 +6,7 @@
  *上传（新建、修改）作品资源模块
  */
 var DE=DE||{};
-DE.upload=(function(){
+DE.uploadManager=(function(){
 
     var addedTags={}; //已经添加的标签
 
@@ -76,14 +76,14 @@ DE.upload=(function(){
         $(".zy_media_list").each(function(index,m){
             var obj={};//幻灯片每一页的对象
             var media_id=$(this).data("zy-media-id");
-            var title=DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaTitle];
-            var type=DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaType];
-            var memo=DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaMemo];
-            var img_src=DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaThumbFilepath];
+            var title=DE.storeManager.uploadedMedias[media_id][DE.config.mediaObj.mediaTitle];
+            var type=DE.storeManager.uploadedMedias[media_id][DE.config.mediaObj.mediaType];
+            var memo=DE.storeManager.uploadedMedias[media_id][DE.config.mediaObj.mediaMemo];
+            var img_src=DE.storeManager.uploadedMedias[media_id][DE.config.mediaObj.mediaThumbFilepath];
             //var img_src_compress=$(this).find("img").attr("src");
 
-            obj.title=title;
-            obj.memo=memo;
+            obj.title=title?title:"";
+            obj.memo=memo?memo:"";
 
             if(type==DE.config.uploadMediaTypes.image){
                 obj.content='<a data-has-media="true" class="de_only_image"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.image+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
@@ -96,7 +96,7 @@ DE.upload=(function(){
             }else if(type==DE.config.uploadMediaTypes.webVideo){
                 obj.content='<a data-has-media="true" class="de_has_web_video de_has_media"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.webVideo+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
             }else if(type==DE.config.uploadMediaTypes.file){
-                obj.content='<a class="de_has_file de_has_media"  href="'+DE.store.uploadedMedias[media_id][DE.config.mediaObj.mediaFilepath]+'"><img data-media-type="'+DE.config.uploadMediaTypes.file+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
+                obj.content='<a class="de_has_file de_has_media"  href="'+DE.storeManager.uploadedMedias[media_id][DE.config.mediaObj.mediaFilepath]+'"><img data-media-type="'+DE.config.uploadMediaTypes.file+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
             }else if(type==DE.config.uploadMediaTypes.flash){
                 obj.content='<a data-has-media="true" class="de_has_flash de_has_media"  href="'+img_src+'"><img data-media-type="'+DE.config.uploadMediaTypes.flash+'" src="'+img_src+'" data-media-id="'+media_id+'" /></a>';
             }
@@ -160,7 +160,7 @@ DE.upload=(function(){
     }
 
     /**
-     * 将已经上传的媒体文件记录到DE.store.uploadedMedias对象中(hash表)
+     * 将已经上传的媒体文件记录到DE.storeManager.uploadedMedias对象中(hash表)
      * @param {String} type 媒体文件类型
      * @param {String} filename 媒体文件名称
      * @param {String} url 媒体文件地址
@@ -169,7 +169,7 @@ DE.upload=(function(){
     function setUploadedMediasObj(type,filename,url,mediaId){
 
         //设置de_uploaded_medias
-        DE.store.uploadedMedias[mediaId] = {
+        DE.storeManager.uploadedMedias[mediaId] = {
 
             //声明一个空的对象，后续将内容全部加入
         };
@@ -177,15 +177,15 @@ DE.upload=(function(){
         if (type == DE.config.uploadMediaTypes.image) {
 
             //如果是图片媒体，需要同时设置四个信息
-            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaThumbFilename] = filename;
-            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaThumbFilepath] = url;
-            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilename] = filename;
-            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath] = url;
+            DE.storeManager.uploadedMedias[mediaId][DE.config.mediaObj.mediaThumbFilename] = filename;
+            DE.storeManager.uploadedMedias[mediaId][DE.config.mediaObj.mediaThumbFilepath] = url;
+            DE.storeManager.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilename] = filename;
+            DE.storeManager.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath] = url;
         } else {
-            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilename] =filename;
-            DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath] = url;
+            DE.storeManager.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilename] =filename;
+            DE.storeManager.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath] = url;
         }
-        DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaType] = type;
+        DE.storeManager.uploadedMedias[mediaId][DE.config.mediaObj.mediaType] = type;
     }
 
 
@@ -194,18 +194,18 @@ DE.upload=(function(){
      */
     function createThumbUpload(){
         var uploaderThumb = new plupload.Uploader({
-            runtimes:"flash",
+            runtimes:"html5",
             multi_selection:false,
             max_file_size:DE.config.uploadSize.maxImageSize,
             browse_button:"de_upload_thumb_btn",
             container:"de_upload_thumb_container",
             url:DE.config.ajaxUrls.uploadFileUrl,
             unique_names:true,
-            urlstream_upload:true,
-            flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
+            //urlstream_upload:true,
+            //flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
             multipart_params:{
-                isThumb:true,
-                userId:DE.store.currentUser.userId
+                isThumb:true
+                //userId:DE.storeManager.currentUser.userId
             },
             filters:[
                 {title:"Image files", extensions:DE.config.uploadFilters.imageFilter}
@@ -224,11 +224,11 @@ DE.upload=(function(){
         uploaderThumb.bind("Error", function (up, err) {
             if(err.message.match("Init")==null){
                 if(err.message.match("size")){
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadSizeError+DE.config.uploadSize.maxImageSize);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerSizeError+DE.config.uploadSize.maxImageSize);
                 }else if(err.message.match("extension")){
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadExtensionError+DE.config.uploadFilters.imageFilter);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerExtensionError+DE.config.uploadFilters.imageFilter);
                 }else{
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadIOErrror);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerIOErrror);
                 }
             }
             up.refresh();
@@ -246,9 +246,9 @@ DE.upload=(function(){
                 $("#de_thumb_url").val(response.url);
             }else{
                 if(response.errorCode=="thumb_height_not_equals_width"){
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.imgSizeError);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.imgSizeError);
                 }else{
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadIOErrror);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerIOErrror);
                 }
             }
         });
@@ -262,19 +262,19 @@ DE.upload=(function(){
      */
     function createMediaUpload(browseButton,type,filters){
         var uploaderMedia=new plupload.Uploader({
-            runtimes:"flash",
+            runtimes:"html5",
             multi_selection:true,
             max_file_size:DE.config.uploadSize.maxMediaSize,
             browse_button:browseButton,
             container:"zy_add_media_menu",
             url:DE.config.ajaxUrls.uploadFileUrl,
             unique_names:true,
-            urlstream_upload:true,
-            flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
+            //urlstream_upload:true,
+            //flash_swf_url : (document.baseURI||$("#de_base_url").attr("href"))+'js/lib/plupload.flash.swf',
             //chunk_size:"10mb",
-            multipart_params:{
-                userId:DE.store.currentUser.userId
-            },
+            /*multipart_params:{
+                userId:DE.storeManager.currentUser.userId
+            },*/
             filters : [
                 {title : "Media files", extensions : filters}
             ]
@@ -363,11 +363,11 @@ DE.upload=(function(){
             //由于这里4个上传按钮放到一个面板中，会出现init错误，但是不影响使用，
             if(err.message.match("Init")==null){
                 if(err.message.match("size")){
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadSizeError+DE.config.uploadSize.maxMediaSize);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerSizeError+DE.config.uploadSize.maxMediaSize);
                 }else if(err.message.match("extension")){
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadExtensionError+filters);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerExtensionError+filters);
                 }else{
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadIOErrror);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerIOErrror);
                 }
             }
             up.refresh();
@@ -401,10 +401,10 @@ DE.upload=(function(){
                     });
 
                     //执行一次拖拽,因为元素是动态添加的，应该在添加后添加拖拽事件
-                    DE.upload.drag();
+                    DE.uploadManager.drag();
                 }
             } else {
-                DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.uploadIOErrror);
+                DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCoDE.uploadManagerIOErrror);
             }
         });
     }
@@ -468,7 +468,7 @@ DE.upload=(function(){
         $("#de_thumb_url").val(entity.postThumb);
 
         //显示界面
-        DE.UIManager.showScreen("#de_screen_upload");
+        DE.uiManager.showScreen("#de_screen_upload");
 
     }
 
@@ -500,14 +500,14 @@ DE.upload=(function(){
     }
 
     /**
-     * 将后台返回的附件数据，转化成前台需要的数据形式，保存到DE.store.uploadedMedias
+     * 将后台返回的附件数据，转化成前台需要的数据形式，保存到DE.storeManager.uploadedMedias
      * @param {Object} attachments 已经上传了的媒体文件数据
      */
     function attachmentsToObject(attachments){
         var length=attachments.length;
         var i=0;
         for(;i<length;i++){
-            DE.store.uploadedMedias[attachments[i]["attachmentId"]]={
+            DE.storeManager.uploadedMedias[attachments[i]["attachmentId"]]={
                 "zy_media_memo":attachments[i]["attachmentDescribe"],
                 "zy_media_title":attachments[i]["attachmentTitle"],
                 "zy_media_thumb_filename":attachments[i]["attachmentPreviewFilename"],
@@ -559,6 +559,8 @@ DE.upload=(function(){
             });
         }
         $("#zy_uploaded_medias_ol").html(html);
+
+        DE.uploadManager.drag();
     }
 
     /**
@@ -568,9 +570,9 @@ DE.upload=(function(){
         var data={};
         data.title=$("#de_input_project_title").val();
         data.date=toDay();
-        data.userId=DE.store.currentUser.userId;
-        data.userFigure=DE.store.currentUser.figure;
-        data.username=DE.store.currentUser.name;
+        data.userId=DE.storeManager.currentUser.userId;
+        data.userFigure=DE.storeManager.currentUser.figure;
+        data.username=DE.storeManager.currentUser.name;
         data.description=$("#de_project_description").text();
         data.medias=getSlidePages();
         var tpl=$("#uploadPreview").html();
@@ -585,7 +587,7 @@ DE.upload=(function(){
          * @param {Number} id 需要修改的作品（资源）id
          */
         editEntity:function(id){
-            DE.store.currentEditEntityId=id;
+            DE.storeManager.currentEditEntityId=id;
             initEntityDetail(id);
             initEntityMedias(id);
         },
@@ -606,7 +608,7 @@ DE.upload=(function(){
             $("#de_thumb_url").val("");
             $("#de_entity_id").val("");
             addedTags={};
-            DE.UIManager.gotoUploadStep("#de_upload_step1");
+            DE.uiManager.gotoUploadStep("#de_upload_step1");
         },
 
         /**
@@ -687,7 +689,7 @@ DE.upload=(function(){
                 //生成zy_media_id
                 var zy_media_id=getRandom("zy_network_");
 
-                //设置DE.store.uploadedMedias对象
+                //设置DE.storeManager.uploadedMedias对象
                 setUploadedMediasObj("zy_network_video",filename,filename,zy_media_id);
 
 
@@ -717,8 +719,8 @@ DE.upload=(function(){
         deleteUploadedFile:function(target){
             if(confirm("确定删除吗？")){
                 var media_id=target.parent().data("zy-media-id");
-                DE.store.uploadedMedias[media_id]=undefined;
-                delete DE.store.uploadedMedias[media_id];
+                DE.storeManager.uploadedMedias[media_id]=undefined;
+                delete DE.storeManager.uploadedMedias[media_id];
                 target.parents("li").remove();
 
                 //让第一个选中
@@ -809,7 +811,7 @@ DE.upload=(function(){
         stepControl:function(href){
             if(href=="#de_upload_step2"){
                 if($("#de_input_project_title").val()==""||$("#de_input_tag li").length==0||$("#de_thumb_name").val()==""){
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.stepOneUnComplete);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.stepOneUnComplete);
                     return false;
                 }
 
@@ -820,16 +822,16 @@ DE.upload=(function(){
 
                 if($(".zy_media_list").length!=0&&$(".zy_uncomplete_li").length==0){
 
-                    for(var obj in DE.store.uploadedMedias){
+                    for(var obj in DE.storeManager.uploadedMedias){
 
                         //如果有媒体文件没有传缩略图，则不能到第三步
-                        if(!DE.store.uploadedMedias[obj]["zy_media_thumb_filename"]){
-                            DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.mediaHasNoThumb);
+                        if(!DE.storeManager.uploadedMedias[obj]["zy_media_thumb_filename"]){
+                            DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.mediaHasNoThumb);
                             return false;
                         }
                     }
                 }else{
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.hasNoMedia);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.hasNoMedia);
                     return false;
                 }
 
@@ -837,7 +839,7 @@ DE.upload=(function(){
                 preview();
             }
 
-            DE.UIManager.gotoUploadStep(href);
+            DE.uiManager.gotoUploadStep(href);
         },
 
         /**
@@ -850,30 +852,29 @@ DE.upload=(function(){
                 order[$(this).data("zy-media-id")]=index+1;
             });
 
-            if(DE.store.currentEditEntityId){
+            if(DE.storeManager.currentEditEntityId){
                 url=DE.config.ajaxUrls.editUploadAction;
             }
             $("#de_upload_form").ajaxSubmit({
                 url:url,
                 type:"post",
                 data:{
-                    attachmentJson:jsonToStr(DE.store.uploadedMedias),
+                    attachmentJson:jsonToStr(DE.storeManager.uploadedMedias),
                     orderJson:jsonToStr(order)
                 },
                 dataType:"json",
                 success:function (data) {
                     if(data.success&&data.resultCode==DE.config.resultCode.post_create_succ){
-                        DE.UIManager.hideLoading();
-                        DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
+                        DE.uiManager.hideLoading();
+                        DE.uiManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
 
-                        //将postId保存起来，在跳转页面的时候DE.store.currentEditEntityId会被清除
-                        var postId=DE.store.currentEditEntityId||data.postId;
+                        //将postId保存起来，在跳转页面的时候DE.storeManager.currentEditEntityId会被清除
+                        var postId=DE.storeManager.currentEditEntityId||data.postId;
 
                         //跳到用户首页
-                        DE.user.userClickHandler("user/"+DE.store.currentUser.userId,function(){
+                        DE.userManager.userClickHandler("user/"+DE.storeManager.currentUser.userId,function(){
                             var href="item/"+postId;
-                            DE.entity.entityClickHandler("item/"+postId,false);
-                            DE.history.push(href,true);
+                            DE.entityManager.entityClickHandler("item/"+postId,false,true);
                         });
 
 
@@ -882,7 +883,7 @@ DE.upload=(function(){
                     }
                 },
                 error:function (data) {
-                    DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.networkError);
+                    DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.networkError);
                 }
             });
         },
@@ -940,103 +941,25 @@ DE.upload=(function(){
                 }
             });
 
-            //模拟失去焦点，直接用blur的话点击自动完成的结果会冲突
+            //模拟失去焦点，直接用blur的话与自动完成中的事件冲突
             $("#de_screen_upload").click(function(event){
                 var target=$(event.target);
                 if(!target.is("#de_input_project_tag")&&target.parents("#mp_de_input_project_tag_list").length==0){
                     me.showInputTag(tagInput.val());
                 }
             });
+        },
+        showWebVideoPanel:function(){
+            var tpl=$("#webVideoInput").html();
+            $("#de_pop_window").removeClass("de_hidden de_pop_show_media").addClass("de_pop_web_video_input");
+            $("#de_pop_window_content").html(tpl);
+            $("#de_blackout").removeClass("de_hidden");
+        },
+        uploadSubmit:function(){
+
+            //防止重复提交
+            DE.uiManager.showLoading();
+            DE.uploadManager.ajaxUploadForm();
         }
     }
 })();
-
-$(document).ready(function(){
-
-    //创建上传句柄
-    DE.upload.createUpload({type:"thumb"});
-    DE.upload.createUpload({type:DE.config.uploadMediaTypes.localVideo,browseButton:"zy_add_location_video",filters:DE.config.uploadFilters.videoFilter});
-    DE.upload.createUpload({type:DE.config.uploadMediaTypes._3d,browseButton:"zy_add_3d",filters:DE.config.uploadFilters._3dFilter});
-    DE.upload.createUpload({type:DE.config.uploadMediaTypes.ppt,browseButton:"zy_add_ppt",filters:DE.config.uploadFilters.pptFilter});
-    DE.upload.createUpload({type:DE.config.uploadMediaTypes.image,browseButton:"zy_add_image",filters:DE.config.uploadFilters.imageFilter});
-    DE.upload.createUpload({type:DE.config.uploadMediaTypes.file,browseButton:"zy_add_file",filters:DE.config.uploadFilters.fileFilter});
-    DE.upload.createUpload({type:DE.config.uploadMediaTypes.flash,browseButton:"zy_add_flash",filters:DE.config.uploadFilters.flashFilter});
-
-    //步骤控制
-    $("#de_upload_step_nav a").click(function(){
-        DE.upload.stepControl($(this).attr("href"));
-
-        return false;
-    });
-
-    //标签删除事件
-    $(document).on("click","#de_input_tag a",function(){
-        DE.upload.deleteTag($(this));
-
-        return false;
-    });
-
-    //标签输入事件
-    DE.upload.tagInputEventHandler();
-
-    //显示上传文件的菜单
-    $("#zy_add_medias_button").hover(function(e){
-        $("#zy_add_media_menu").css("height","280px");
-    },function(e){
-        $("#zy_add_media_menu").css("height",0);
-    });
-    $("#zy_add_media_menu").hover(function(e){
-        $("#zy_add_media_menu").css("height","280px");
-    },function(e){
-        $("#zy_add_media_menu").css("height",0);
-    });
-
-    //控制网络视频,显示输入面板
-    $("#zy_add_network_video").click(function(){
-        var tpl=$("#webVideoInput").html();
-        $("#de_pop_window").removeClass("de_hidden de_pop_show_media").addClass("de_pop_web_video_input");
-        $("#de_pop_window_content").html(tpl);
-        $("#de_blackout").removeClass("de_hidden");
-
-        return false;
-    });
-
-    //网络视频输入确定
-    $(document).on("click","#de_input_web_video_ok",function(){
-        var value=$("#de_input_web_video").val();
-        DE.upload.webVideoInput(value);
-    });
-
-    //删除未上传的文件
-    $(document).on("click","span.zy_uncomplete_delete",function(){
-        if(confirm("确定删除吗？")){
-            $(this).parents("li").remove();
-        }
-    });
-
-    //删除已经上传的文件
-    $(document).on("click","span.zy_media_delete",function(event){
-        DE.upload.deleteUploadedFile($(this));
-
-        //阻止事件冒泡到a
-        return false;
-    });
-
-    //列表中每一项的点击事件，如果选中的列表没有填写完整，则不能选择其他列表
-    $(document).on("click","a.zy_media_list",function(){
-        DE.upload.uploadedLiClickHandler($(this));
-
-        return false;
-    });
-
-    //表单提交
-    $("#de_submit_upload").click(function(){
-
-        //防止重复提交
-        DE.UIManager.showLoading();
-        DE.upload.ajaxUploadForm();
-
-        return false;
-    });
-
-});

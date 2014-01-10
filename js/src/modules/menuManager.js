@@ -6,7 +6,7 @@
  * 顶部菜单、侧栏菜单，window滚动,搜索，搜索tab，弹层关闭等
  */
 var DE=DE||{};
-DE.menu=(function(){
+DE.menuManager=(function(){
     return {
 
         /**
@@ -14,50 +14,50 @@ DE.menu=(function(){
          */
         windowScrollHandler:function(){
 
-            if(DE.store.scrollTimer){
-                clearTimeout(DE.store.scrollTimer);
+            if(DE.storeManager.scrollTimer){
+                clearTimeout(DE.storeManager.scrollTimer);
             }
 
-            if(DE.store.currentScrollScreenType){
-                DE.store.scrollTimer=setTimeout(function(){
+            if(DE.storeManager.currentScrollScreenType){
+                DE.storeManager.scrollTimer=setTimeout(function(){
                     if($(document).height()-$(window).height()<=$(window).scrollTop()){
 
                         //作品和资源要看是否是在搜索页面
-                        if(DE.store.currentSearch.currentSearchValue){
+                        if(DE.storeManager.currentSearch.currentSearchValue){
 
-                            //alert(DE.store.currentScrollScreenType+"search");
-                            if(DE.store.searchLoadedCount!=DE.config.hasNoMoreFlag){
-                                DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,
-                                    DE.store.currentSearch.currentSearchType,DE.store.currentSearch.isTag,false);
+                            //alert(DE.storeManager.currentScrollScreenType+"search");
+                            if(DE.storeManager.searchLoadedCount!=DE.config.hasNoMoreFlag){
+                                DE.entityManager.getEntityBySearch(DE.storeManager.currentSearch.currentSearchValue,
+                                    DE.storeManager.currentSearch.currentSearchType,DE.storeManager.currentSearch.isTag,false);
                             }
 
                         }else{
-                            if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.project){
+                            if(DE.storeManager.currentScrollScreenType==DE.config.scrollScreenType.project){
 
                                 //首页作品
-                                if(DE.store.projectLoadedId!=DE.config.hasNoMoreFlag){
-                                    DE.entity.getAllEntity(DE.config.entityTypes.project,false);
+                                if(DE.storeManager.projectLoadedId!=DE.config.hasNoMoreFlag){
+                                    DE.entityManager.getAllEntity(DE.config.entityTypes.project,false);
                                 }
 
-                            }else if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.resource){
+                            }else if(DE.storeManager.currentScrollScreenType==DE.config.scrollScreenType.resource){
 
                                 //首页资源
-                                if(DE.store.resourceLoadedId!=DE.config.hasNoMoreFlag){
-                                    DE.entity.getAllEntity(DE.config.entityTypes.resource,false);
+                                if(DE.storeManager.resourceLoadedId!=DE.config.hasNoMoreFlag){
+                                    DE.entityManager.getAllEntity(DE.config.entityTypes.resource,false);
                                 }
 
-                            }else if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.hotUser){
+                            }else if(DE.storeManager.currentScrollScreenType==DE.config.scrollScreenType.hotUser){
 
                                 //热点用户
-                                if(DE.store.hotUserLoadedCount!=DE.config.hasNoMoreFlag){
-                                    DE.user.getHotUsers(false);
+                                if(DE.storeManager.hotUserLoadedCount!=DE.config.hasNoMoreFlag){
+                                    DE.userManager.getHotUsers(false);
                                 }
 
                             }else{
 
                                 //用户页
-                                if(DE.store.userEntitiesShowCount!=DE.config.hasNoMoreFlag){
-                                    DE.user.showUserEntity(false);
+                                if(DE.storeManager.userEntitiesShowCount!=DE.config.hasNoMoreFlag){
+                                    DE.userManager.showUserEntity(false);
                                 }
                             }
                         }
@@ -72,19 +72,19 @@ DE.menu=(function(){
          * @param {String} href      需要设置的地址
          */
         topMenuClickHandler:function(href){
-            DE.UIManager.showLoading();
-            DE.history.push(href); //由于有清空store的操作，需要最先执行
+            DE.uiManager.showLoading();
+            DE.historyManager.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var type=array[0];
             if(type==DE.config.topMenus.project){
-                //DE.UIManager.showScreen("#de_screen_project"); //放在此处会导致屏幕闪烁，放到ajax的回调中
-                DE.entity.getAllEntity(type,true);
+                //DE.uiManager.showScreen("#de_screen_project"); //放在此处会导致屏幕闪烁，放到ajax的回调中
+                DE.entityManager.getAllEntity(type,true);
             }else if(type==DE.config.topMenus.resource){
-                DE.entity.getAllEntity(type,true);
+                DE.entityManager.getAllEntity(type,true);
             }else if(type==DE.config.topMenus.user){
-                DE.user.getHotUsersOrder();
+                DE.userManager.getHotUsersOrder();
             }else if(type==DE.config.topMenus.upload){
-                DE.UIManager.showScreen("#de_screen_upload");
+                DE.uiManager.showScreen("#de_screen_upload");
             }
 
         },
@@ -106,14 +106,14 @@ DE.menu=(function(){
                     }
 
                     //进入页面，请求后台是否登录,先获取到tag然后再初始化数据，这样当时tag进入的时候就知道是作品还是资源
-                    DE.login.checkLogin();
+                    DE.loginManager.checkLogin();
 
                 },
                 error:function(){
                     DE.config.ajaxErrorHandler();
 
                     //进入页面，请求后台是否登录
-                    DE.login.checkLogin();
+                    DE.loginManager.checkLogin();
                 }
 
             });
@@ -134,22 +134,7 @@ DE.menu=(function(){
             $("#de_resource_tags").html(html);
         },
 
-        /**
-         * 系统标签点击事件
-         * @param {String} href 需要设置的地址
-         * @param {String} searchType 搜索的类型
-         * @param {Boolean} isTag 是否是标签
-         */
-        serachHandler:function(href,searchType,isTag){
-            DE.history.push(href); //由于有清空store的操作，需要最先执行
-            var array=href.split("/");
-            var value=array[1];
-            DE.UIManager.showLoading();
-            DE.entity.getEntityBySearch(value,searchType,isTag,true);
 
-
-            $("#de_search_input").val("");
-        },
 
         /**
          * 搜索结果面板的tab切换事件
@@ -158,9 +143,9 @@ DE.menu=(function(){
         searchTabClickHandler:function(type){
 
             //如果当前显示的类型和点击的按钮不一致，则要置换
-            if(type!=DE.store.currentSearch.currentSearchType){
-                DE.store.searchLoadedCount=0;
-                DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,type,DE.store.currentSearch.isTag,true);
+            if(type!=DE.storeManager.currentSearch.currentSearchType){
+                DE.storeManager.searchLoadedCount=0;
+                DE.entityManager.getEntityBySearch(DE.storeManager.currentSearch.currentSearchValue,type,DE.storeManager.currentSearch.isTag,true);
             }
 
         },
@@ -169,15 +154,15 @@ DE.menu=(function(){
          * 侧边栏菜单点击事件
          * @param {String} id 点击的菜单id
          */
-        extMenuClickHandler:function(id){
+        extMenuItemClickHandler:function(id){
             if(id=="de_btn_sign_out"){
-                DE.login.logout();
+                DE.loginManager.logout();
             }else if(id=="de_btn_reset_pwd"){
-                DE.UIManager.showRestPwdPopout();
+                DE.uiManager.showRestPwdPopout();
             }else if(id=="de_btn_edit_profile"){
-                DE.user.accountHasBind();
-                DE.user.setProfile();
-                DE.UIManager.showEditProfilePopout();
+                DE.userManager.accountHasBind();
+                DE.userManager.setProfile();
+                DE.uiManager.showEditProfilePopout();
 
             }
         },
@@ -186,211 +171,23 @@ DE.menu=(function(){
         *  logo点击事件处理
         * */
         logoClickHandler:function(){
-            DE.history.push(document.baseURI||$("#de_base_url").attr("href"));
-            DE.entity.getAllEntity(DE.config.entityTypes.project,true);
+            DE.historyManager.push(document.baseURI||$("#de_base_url").attr("href"));
+            DE.entityManager.getAllEntity(DE.config.entityTypes.project,true);
         },
 
         /**
          * 搜素输入框事件
          */
-        searchInputEventHandler:function(){
-            var me=this;
-            var searchInput= $("#de_search_input");
-            var filterMenu=$("#de_filter_menu");
-            searchInput.keydown(function(event){
-                if(event.keyCode==13){
-                    var value=$(this).val();
-                    if(value.trim()){
-                        me.serachHandler("search/"+value,"",false);
-                        searchInput.trigger("marcopoloblur");
-                    }
-                }
-            });
-
-            searchInput.on('marcopoloblur', function (event) {
-                filterMenu.removeClass("de_overflow_visible");
-            });
-            searchInput.on('marcopolofocus', function (event) {
-                filterMenu.addClass("de_overflow_visible");
-            });
-
-            searchInput.marcoPolo({
-                url: DE.config.ajaxUrls.searchSuggest,
-                minChars:2,
-                formatData : function (data) {
-                    if(!$.isEmptyObject(data)&&data.spellcheck.suggestions.length){
-                        return data.spellcheck.suggestions[1]["suggestion"];
-                    }else{
-                        return [];
-                    }
-
-                },
-                formatItem: function (data) {
-                    return data;
-                },
-                onSelect: function (data) {
-                    me.serachHandler("search/"+data,"",false);
-                    searchInput.trigger("marcopoloblur");
-                },
-                formatNoResults:function(q, $item){
-                    return "";
-                },
-                formatMinChars :function(minChars, $item){
-                    return "";
-                },
-                formatError :function($item, jqXHR, textStatus, errorThrown){
-                    return "";
-                }
-            });
-        },
-        addMobileSources:function(){
-            var head=$("head");
-            var userAgent=navigator.userAgent;
-            if((userAgent.match("Android")!==null||userAgent.match("iPhone")!==null)&&userAgent.match("UCBrowser")===null){
-                if(userAgent.match("iPhone")===null){
-
-                    //只有原生android浏览器需要加这个
-                    $("<script src='js/lib/touchScroll.js'></script>").appendTo(head);
-
-                    //登录、评论输入框
-                    $("input,textarea").focus(function(){
-                        $("#de_popout").css("top","250px");
-                        $("body").addClass("de_noscroll");
-                    });
-                    $("input,textarea").blur(function(){
-                        $("body").removeClass("de_noscroll");
-                    });
-                }else{
-                    $("#de_popout input,#de_popout textarea").focus(function(){
-                        $("#de_popout").css("top","250px");
-                    });
-                }
+        documentClickHandler:function(target){
+            if(target.parents("#de_popout").length==0&&target.parents("#de_filter_menu").length==0&&
+                target.parents("#de_ext_nav").length==0&&target.parents("#de_pop_window").length==0){
+                DE.uiManager.hideAllMenuAndPopouts();
             }
+        },
+        extMenuBtnClickHandler:function(){
+            DE.uiManager.showExtMenu();
         }
     }
 })();
 
-//移动平台进入全屏，原理是手动滚动一下
-window.onload=function(){
-    if(DE.config.checkMobile()){
-        setTimeout(function(){
-            window.scrollTo(0,1);
-        },500);
-    }
-};
-$(document).ready(function(){
 
-     DE.menu.addMobileSources();
-
-    //获取顶部所有的标签
-    //DE.menu.getTags();
-
-    //顶部菜单点击事件（除刷选按钮）
-    $("#de_top_nav li").not("#de_btn_filter").find("a").click(function(){
-        DE.menu.topMenuClickHandler($(this).attr("href"));
-
-        return false;
-    });
-
-    //上传菜单点击事件
-    $(document).on("click","#de_btn_upload",function(){
-        DE.menu.topMenuClickHandler($(this).attr("href"));
-
-        return false;
-    });
-
-    //logo点击事件
-    $("#de_logo").click(function(){
-        DE.menu.logoClickHandler();
-
-        return false;
-    });
-
-    //登录注册按钮点击事件
-    $(document).on("click","#de_btn_login_reg",function(){
-        DE.login.initLoginForm();
-        DE.UIManager.showLoginPopout();
-
-        return false;
-    });
-	
-    //ext菜单按钮点击事件（显示隐藏）
-    $(document).on("click","#de_btn_ext_nav",function(evt){
-        DE.UIManager.showExtMenu();
-
-        return false;
-    });
-
-    //用户菜单（ext菜单项按钮点击事件）
-    $(document).on("click","#de_ext_nav a:not('.de_user_link')",function(){
-        DE.menu.extMenuClickHandler($(this).attr("id"));
-
-        return false;
-    });
-	
-	//点击弹窗右上角x关闭弹窗
-	$(document).on("click","#de_popout_x_btn",function(){
-		DE.UIManager.hidePopout();
-		return false;	
-	});
-	
-    //点击body隐藏所有弹窗和菜单
-    $(document).click(function(event){
-        var target=$(event.target);
-        if(target.parents("#de_popout").length==0&&target.parents("#de_filter_menu").length==0&&
-            target.parents("#de_ext_nav").length==0&&target.parents("#de_pop_window").length==0){
-            DE.UIManager.hideAllMenuAndPopouts();
-        }
-    });
-
-    //更多分类按钮点击事件
-    $("#de_btn_filter>a").on("click",function(evt){
-        DE.UIManager.showFilterMenu();
-
-        return false;
-    });
-
-    //点击搜索里面的作品标签事件
-    $(document).on("click","#de_project_tags li>a",function(){
-        DE.menu.serachHandler($(this).attr("href"),DE.config.entityTypes.project,true);
-
-        return false;
-    });
-
-    //点击搜索里面的资源标签事件
-    $(document).on("click","#de_resource_tags li>a",function(){
-        DE.menu.serachHandler($(this).attr("href"),DE.config.entityTypes.resource,true);
-
-        return false;
-    });
-
-    //搜索
-    DE.menu.searchInputEventHandler();
-
-    //搜索结果tab点击事件
-    /*$("#de_search_result_tab a").click(function(){
-        var type=$(this).data("entity-type");
-
-        DE.menu.searchTabClickHandler(type);
-
-        return false;
-    });*/
-
-    //关闭弹出的window
-    $("#de_close_pop_window").click(function(){
-        $(this).parent().addClass("de_hidden");
-        $("#de_pop_window_content").html("");
-        $("#de_blackout").addClass("de_hidden");
-    });
-
-    //关闭pop
-    $("#de_popout_close_btn").click(function(){
-        DE.UIManager.hideAllMenuAndPopouts();
-        return false;
-    });
-
-    //控制滚动分页
-    $(window).scroll(function(){
-        DE.menu.windowScrollHandler();
-    });
-});

@@ -51,15 +51,15 @@ DE.uiManager=function(){
             $(".de_top_nav .de_btn_project").addClass("active");
 
             //清理已经加载的数据
-            DE.store.clearScreenData("project");
+            DE.storeManager.clearScreenData("project");
         }else if(screenLink=="#de_screen_resource"){
             $(".de_top_nav .de_btn_resource").addClass("active");
 
-            DE.store.clearScreenData("resource");
+            DE.storeManager.clearScreenData("resource");
         }else if(screenLink=="#de_screen_designer"){
             $(".de_top_nav .de_btn_designer").addClass("active");
 
-            DE.store.clearScreenData("hotUser");
+            DE.storeManager.clearScreenData("hotUser");
         }else if(screenLink=="#de_screen_search_result"){
             if(paraObj && paraObj.keyword){
                 $("#de_btn_filter>a").html( "搜索："+paraObj.keyword ).addClass("active");
@@ -70,11 +70,11 @@ DE.uiManager=function(){
                 $("#de_screen_search_result>.de_category_filter>.de_category_filter_option_project").addClass("active");
             }
 
-            DE.store.clearScreenData("search");
+            DE.storeManager.clearScreenData("search");
         }else if(screenLink=="#de_screen_user_profile"){
-            DE.store.clearScreenData("user");
+            DE.storeManager.clearScreenData("user");
         }else if(screenLink=="#de_screen_upload"){
-            DE.store.clearScreenData("upload");
+            DE.storeManager.clearScreenData("upload");
         }
         $(window).scrollTop(0);
 
@@ -149,7 +149,7 @@ DE.uiManager=function(){
 			$("#de_screen_project_detail").scrollTop(0).addClass("de_hidden").
                 html('');
 			$("body").removeClass("de_noscroll");
-            DE.store.clearCurrentShowEntity();
+            DE.storeManager.clearCurrentShowEntity();
 
 		},
 		showLoginPopout:function(){

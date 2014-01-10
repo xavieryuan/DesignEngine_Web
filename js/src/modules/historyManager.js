@@ -6,7 +6,7 @@
  * 管理url地址历史，针对不同的url地址做不同的处理
  */
 var DE=DE||{};
-DE.history=(function(){
+DE.historyManager=(function(){
 
     /**
      * 是否支持history的api
@@ -25,10 +25,10 @@ DE.history=(function(){
      */
     function handler(type,value,oldHref,callback){
 
-        DE.store.clearStore();
-        DE.upload.clearEditData();
-        //DE.store.clearCurrentUser();
-        DE.UIManager.showLoading();
+        DE.storeManager.clearStore();
+        DE.uploadManager.clearEditData();
+        //DE.storeManager.clearCurrentUser();
+        DE.uiManager.showLoading();
 
         switch (type){
             case "resource-tag":
@@ -36,7 +36,7 @@ DE.history=(function(){
                 //请求点击标签的数据
                 value=decodeURI(value);
 
-                DE.entity.getEntityBySearch(value,DE.config.entityTypes.resource,true,true,callback);
+                DE.entityManager.getEntityBySearch(value,DE.config.entityTypes.resource,true,true,callback);
 
                 break;
             case "project-tag":
@@ -44,49 +44,49 @@ DE.history=(function(){
                 //请求点击标签的数据
                 value=decodeURI(value);
 
-                DE.entity.getEntityBySearch(value,DE.config.entityTypes.project,true,true,callback);
+                DE.entityManager.getEntityBySearch(value,DE.config.entityTypes.project,true,true,callback);
 
                 break;
             case "project":
 
                 //请求首页作品聚合
-                DE.entity.getAllEntity(DE.config.entityTypes.project,true,callback);
+                DE.entityManager.getAllEntity(DE.config.entityTypes.project,true,callback);
 
                 break;
             case "user":
 
                 //请求用户数据
                 if(value=="hot"){
-                    DE.user.getHotUsersOrder();
+                    DE.userManager.getHotUsersOrder();
                 }else{
-                    DE.user.getUserById(value);
-                    DE.user.getUserEntities(value,callback);
-                    //DE.UIManager.showScreen("#de_screen_user_profile");
+                    DE.userManager.getUserById(value);
+                    DE.userManager.getUserEntities(value,callback);
+                    //DE.uiManager.showScreen("#de_screen_user_profile");
                 }
 
                 break;
             case "search":
 
                 //请求搜索数据
-                DE.entity.getEntityBySearch(decodeURI(value),"",false,true,callback);
+                DE.entityManager.getEntityBySearch(decodeURI(value),"",false,true,callback);
 
                 break;
             case "upload":
 
                 //请求上传数据
-                DE.UIManager.showScreen("#de_screen_upload");
+                DE.uiManager.showScreen("#de_screen_upload");
 
                 break;
             case "edit":
 
                 //请求修改数据
-                DE.upload.editEntity(value);
+                DE.uploadManager.editEntity(value);
 
                 break;
             case "resource":
 
                 //请求首页资源数据
-                DE.entity.getAllEntity(DE.config.entityTypes.resource,true,callback);
+                DE.entityManager.getAllEntity(DE.config.entityTypes.resource,true,callback);
 
                 break;
             case "item":
@@ -94,14 +94,14 @@ DE.history=(function(){
                 if(oldHref!==undefined&&oldHref!==""){
                     var obj=handlerHref(oldHref);
                     handler(obj.type,obj.value,undefined,function(){
-                        DE.entity.entityClickHandler(type+"/"+value,false);
+                        DE.entityManager.entityClickHandler(type+"/"+value,false,false);
                     });
 
                 }else{
                     var showHome=oldHref===""?false:true;
 
                     handler(null,null,undefined,function(){
-                        DE.entity.entityClickHandler(type+"/"+value,showHome);
+                        DE.entityManager.entityClickHandler(type+"/"+value,showHome,false);
                     });
                 }
 
@@ -109,7 +109,7 @@ DE.history=(function(){
             default :
 
                 //默认请求首页作品数据
-                DE.entity.getAllEntity(DE.config.entityTypes.project,true,callback);
+                DE.entityManager.getAllEntity(DE.config.entityTypes.project,true,callback);
 
             }
     }
@@ -157,8 +157,8 @@ DE.history=(function(){
                     }else{
 
                         //由于存在详情页回退是不需要刷新数据的，这里应该要判断是否加载了数据
-                        if(DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
-                            DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&DE.store.searchLoadedCount===0){
+                        if(DE.storeManager.userEntitiesShowCount===0&&DE.storeManager.projectLoadedId===0&&
+                            DE.storeManager.resourceLoadedId===0&&DE.storeManager.hotUserLoadedCount===0&&DE.storeManager.searchLoadedCount===0){
 
                             if(href==baseURI){
                                 obj={type:null,value:null};
@@ -172,13 +172,13 @@ DE.history=(function(){
                     * 这里调用和下面调用都是为了防止在详情页面，用户直接前进后退，
                     * 此时页面详情没有事件关闭，应该调用一次关闭
                     * */
-                    DE.UIManager.hideProjectDetail();
+                    DE.uiManager.hideProjectDetail();
                 }else{
 
                     //退回到第一次进入时的首页state为{}或者为null,还有chrome的第一次响应(判断作品是否加载过)
-                    if(DE.store.projectLoadedId===0&&location.href==baseURI){
+                    if(DE.storeManager.projectLoadedId===0&&location.href==baseURI){
                         handler(null,null);
-                        DE.UIManager.hideProjectDetail();
+                        DE.uiManager.hideProjectDetail();
                     }
 
                 }
@@ -215,7 +215,7 @@ DE.history=(function(){
 
             //当url变化的时候，清空存储器
             if(!isEntityDetail){
-                DE.store.clearStore();
+                DE.storeManager.clearStore();
             }
 
 
@@ -250,13 +250,3 @@ DE.history=(function(){
         }
     }
 })();
-
-$(document).ready(function(){
-
-    //popstate事件
-    window.onpopstate=function(event){
-
-        //火狐第一次进入不响应此事件
-        DE.history.stateChange(event);
-    }
-});

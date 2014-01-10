@@ -13,7 +13,7 @@
 var zy_set_common = (function(){
 
     var parent=window.parent;
-    var uploaded_medias=parent.DE.store.uploadedMedias; //已经上传了的媒体文件
+    var uploaded_medias=parent.DE.storeManager.uploadedMedias; //已经上传了的媒体文件
 
     return {
         /*

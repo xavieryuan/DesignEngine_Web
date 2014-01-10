@@ -10,12 +10,12 @@ DE.config={
     defualtEntityThumb:"images/default_thumb_500.png",
     perLoadCount:10, //作品、评论、资源等每次加载的个数
     hasNoMoreFlag:-1, //作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
-    imagePrefix:{
+    imagesSize:{
         thumb:"-200x200",
         mediaThumb:"-400x300"
     },
     uploadSize:{
-        maxMediaSize:"200m", //最大的媒体文件上传大小
+        maxMediaSize:"300m", //最大的媒体文件上传大小
         maxImageSize:"2m"//最大的图片文件上传大小
     },
     uploadFilters:{  //媒体类型格式刷选器
@@ -48,17 +48,10 @@ DE.config={
         enabled:"enabled",
         disabled:"disabled"
     },
-    entityTypes:{  //实体类型
-        project:"project",
-        resource:"resource"
-    },
     scrollScreenType:{ //当前在哪个页面滚动
         hotUser:"hotUser",
         project:"project",
         resource:"resource",
-        search:"search",
-        searchProject:"searchProject",
-        searchResource:"searchResource",
         userEntity:"userEntity" //用户页的用户作品,
     },
     validError:{
@@ -89,6 +82,7 @@ DE.config={
         loadDataError:"请求数据失败！",
         filenameError:"文件名必须是数字下划线汉字字母,且不能以下划线开头！",
         nameOrPwdError:"用户名或者密码错误！",
+        emailNotConfirm:"请登录邮箱进行激活！",
         notFound:"页面资源未发现，2秒后跳转到首页！",
         changePwdSuccess:"密码修改成功，2秒后跳转到首页并退出！",
         emailNotExist:"输入的邮箱不存在！",
@@ -140,6 +134,7 @@ DE.config={
     errorCode:{
         captcha_unmatches:"captcha_unmatches",
         account_update_fail:"account_update_fail",
+        email_not_confirm:"email_not_confirm",
         account_required:"account_required",
         account_fullname_required:"account_fullname_required",
         authentication_error:"authentication_error",
@@ -174,6 +169,7 @@ DE.config={
         //getSimilarEntities:"data/similarEntities.json", //获取相似作品
         getComments:"post/comments", //获取评论
         postComment:"post/add-comment", //发表评论
+        changeCommentStatus:"#",
         deleteComment:"post/remove-comment", //删除评论
         getHotUsersOrder:"account/rank",
         getHotUsers:"account/hot", //获取人点用户
@@ -196,8 +192,17 @@ DE.config={
         emailValidate:"account-email-unique",
         usernameValidate:"account-fullname-unique",
         termSuggest:"query/termSuggest",
-        searchSuggest:"query/searchSuggest"
-        //autoComplete:"http://192.168.2.167:8393/solr/termSuggest"
+        searchSuggest:"query/searchSuggest",
+        getAllUsers:"#",
+        getAllComments:"#",
+        getAllEntities:"#",
+        changeUserStatus:"#",
+        deleteUser:"#"
+
+    },
+    entityTypes:{  //实体类型
+        project:"project",
+        resource:"resource"
     },
     urls:{  //history的url
         indexProject:"project/all", //首页作品
@@ -224,25 +229,25 @@ DE.config={
     },
     ajaxReturnErrorHandler:function(data){
         if(data.errorCode==this.errorCode.notFound){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.notFound);
+            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.notFound);
             setTimeout(function(){
                 window.location.href=document.baseURI||$("#de_base_url").attr("href");
             },2000);
         }else if(data.errorCode==this.errorCode.timeout){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.timeout);
+            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.timeout);
         }else if(data.errorCode==this.errorCode.thumb_height_not_equals_width){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.imgSizeError);
+            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.imgSizeError);
         }else if(data.errorCode||data.resultCode){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.operationError);
+            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.operationError);
         }else{
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.loadDataError);
+            DE.uiManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.loadDataError);
         }
 
-        DE.UIManager.hideLoading();
+        DE.uiManager.hideLoading();
     },
     ajaxErrorHandler:function(){
-        DE.UIManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.networkError);
-        DE.UIManager.hideLoading();
+        DE.uiManager.showMsgPopout(DE.config.messageCode.errorTitle,DE.config.messageCode.networkError);
+        DE.uiManager.hideLoading();
     },
     checkMobile:function(){
         var userAgentList = new Array("2.0 MMP", "240320", "AvantGo","BlackBerry", "Blazer",

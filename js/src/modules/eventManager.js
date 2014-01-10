@@ -6,7 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 var DE=DE||{};
-DE.event= (function (login,menu,search,entity,user) {
+DE.eventManager= (function (loginManager,mobileManager,menuManager,searchManager,entityManager,
+                            userManager,popManager,storeManager,uploadManager,config,historyManager) {
     var init = function () {
         $(document).ready(function () {
 
@@ -14,26 +15,26 @@ DE.event= (function (login,menu,search,entity,user) {
             //search.getTags();
 
             //检测是否登录
-            login.checkLogin();
+            loginManager.checkLogin();
 
             /*----------------------菜单事件--------------------------------*/
             //顶部菜单点击事件（除上传按钮）
             $("#de_top_nav a").click(function () {
-                menu.topMenuClickHandler($(this).attr("href"));
+                menuManager.topMenuClickHandler($(this).attr("href"));
 
                 return false;
             });
 
             //上传菜单点击事件
             $(document).on("click", "#de_btn_upload", function () {
-                menu.topMenuClickHandler($(this).attr("href"));
+                menuManager.topMenuClickHandler($(this).attr("href"));
 
                 return false;
             });
 
             //logo点击事件
             $("#de_logo").click(function () {
-                menu.logoClickHandler();
+                menuManager.logoClickHandler();
 
                 return false;
             });
@@ -41,39 +42,36 @@ DE.event= (function (login,menu,search,entity,user) {
 
             //ext菜单按钮点击事件（显示隐藏）
             $(document).on("click", "#de_btn_ext_nav", function (evt) {
-                menu.extMenuClickHandler();
+                menuManager.extMenuBtnClickHandler();
 
                 return false;
             });
 
             //用户菜单（ext菜单项按钮点击事件）
             $(document).on("click", "#de_ext_nav a:not('.de_user_link')", function () {
-                menu.extMenuItemClickHandler($(this).attr("id"));
+                menuManager.extMenuItemClickHandler($(this).attr("id"));
 
                 return false;
             });
 
             //点击body隐藏所有弹窗和菜单
             $(document).click(function (event) {
-                menu.documentClickHandler(event.target);
+                menuManager.documentClickHandler(event.target);
             });
 
             //控制滚动分页
             $(window).scroll(function () {
-                menu.windowScrollHandler();
+                menuManager.windowScrollHandler();
             });
 
             /*---------------------------------------搜索------------------------*/
-            search.searchInputEventHandler();
 
-            //搜索框焦点事件，为了能完整显示自动提示窗体
-            $("#de_search_input").focus(function(){
-                search.searchInputFocus();
-            });
+            searchManager.searchInputEventHandler();
+
 
             //更多分类按钮点击事件
             $("#de_btn_filter>a").on("click", function (evt) {
-                search.filterClickHandler();
+                searchManager.filterClickHandler();
 
                 return false;
             });
@@ -81,7 +79,7 @@ DE.event= (function (login,menu,search,entity,user) {
             //点击搜索里面的标签事件
             $(document).on("click", "#de_project_tags li>a,#de_resource_tags li>a", function () {
                 var el=$(this);
-                search.searchHandler(el.attr("href"),el.parents("ul").data("type"), true);
+                searchManager.searchHandler(el.attr("href"),el.parents("ul").data("type"), true);
 
                 return false;
             });
@@ -89,43 +87,37 @@ DE.event= (function (login,menu,search,entity,user) {
 
 
             /*------------------------------弹层控制-------------------*/
+
             //点击弹窗右上角x和消息提示的时候的“关闭”关闭弹窗
             $(document).on("click","#de_popout_x_btn,#de_popout_close_btn",function(){
-                menu.popCloseHandler();
+                popManager.popCloseHandler();
                 return false;
             });
 
             //关闭弹出的window
             $("#de_close_pop_window").click(function () {
-                menu.closePopWindowHandler();
+                popManager.closePopWindowHandler();
             });
 
 
              /*----------------------------------作品详情-----------------------*/
             //显示单个实体详情
             $(document).on("click", "a.de_entity_link", function () {
-                entity.entityClickHandler($(this).attr("href"),false);
+                entityManager.entityClickHandler($(this).attr("href"),false,true);
 
                 return false;
             });
 
             //关闭作品详情
             $(document).on("click", "#de_btn_close_project_detail", function () {
-                entity.closeEntityDetailHandler($(this).data("behavior"));
+                entityManager.closeEntityDetailHandler($(this).data("behavior"));
 
                 return false;
             });
 
             //点击赞图标的操作，增加或者删除
             $(document).on("click", "#de_entity_praise", function () {
-                if (!DE.store.currentUser.userId) {
-                    DE.login.initLoginForm();
-                    DE.uiManager.showLoginPopout();
-                    DE.uiManager.hideProjectDetail();
-                } else {
-                    DE.entity.handlerPraiseOrHonor();
-                }
-
+                entityManager.praiseClickHandler();
 
                 return false;
             });
@@ -133,157 +125,177 @@ DE.event= (function (login,menu,search,entity,user) {
 
             //评论登录
             $(document).on("click", "#de_btn_comment_login", function () {
-                DE.login.initLoginForm();
-                DE.uiManager.showLoginPopout();
-                DE.uiManager.hideProjectDetail();
+                entityManager.commentLoginClickHandler();
 
                 return false;
             });
 
             //添加评论
             $(document).on("click", "#de_btn_add_comment", function () {
-                DE.entity.addCommentHandler();
+                entityManager.addCommentHandler();
+            });
+
+
+            //删除评论
+            $(document).on("click","a.de_delete_comment",function(){
+               entityManager.commentDeleteHandler($(this));
+
+                return false;
             });
 
             //评论加载更多
             $(document).on("click", "#de_comment_more_btn", function () {
-                DE.entity.getComments(DE.store.currentShowEntity.id);
+                entityManager.getComments(DE.config.ajaxUrls.getComments,storeManager.currentShowEntity.id);
             });
 
             //工具栏点击事件
             $(document).on("click", ".de_project_toolbar a", function () {
-                var className = $(this).attr("class");
-                if (className == "de_toolbar_edit") {
-                    DE.entity.editEntity($(this).attr("href"));
-                } else if (className == "de_toolbar_delete") {
-                    DE.entity.deleteEntity($(this).attr("href"));
-                } else {
-                    DE.entity.showOrHideEntity($(this));
-                }
+                entityManager.entityToolbarHandler($(this));
+
+                return false;
+            });
+
+            //点击附件播放对应媒体文件，上传预览那里也用到
+            $(document).on("click","a[data-has-media='true']",function(){
+                entityManager.showMedias($(this));
 
                 return false;
             });
 
             /*--------------------------------登录注册绑定---------------------*/
-            //登录按钮点击事件
-            $(document).on("click", "#de_btn_login_reg", function () {
-                menu.regBtnClickHandler();
+
+            //登录按钮点击事件||邮箱已经注册，直接登录
+            $(document).on("click", "#de_btn_login_reg，#de_direct_login", function () {
+                loginManager.loginBtnClickHandler();
 
                 return false;
             });
 
             //注册按钮点击
             $("#de_reg_btn").click(function () {
-                DE.uiManager.showRegPopout();
+                loginManager.regBtnClickHandler();
 
                 return false;
             });
 
             //取消绑定
             $("#de_remove_band").click(function () {
-                DE.login.unBindHandler();
+                loginManager.unBindHandler();
             });
 
             //忘记密码按钮点击事件
             $("#de_btn_forgot_pwd").on("click", function () {
-                DE.uiManager.showRecoverPwdPopout();
+                loginManager.forgetPasswordClickHandler();
 
                 return false;
             });
 
             //刷新验证码
             $("#de_refresh_captcha").click(function () {
-                $("#de_captcha_img").removeAttr("src").attr("src", DE.config.ajaxUrls.getValidCode);
-
-                //$(this).attr('src')+'?'+Math.random()
+                loginManager.validCodeRefreshHandler();
 
                 return false;
             });
 
             //enter提交表单
             $("#de_login_pwd").keydown(function (event) {
-                if (event.keyCode == 13) {
-                    $("#de_login_form").submit();
-                }
+                loginManager.pwdInputKeyDownHandler(event.keyCode);
             });
 
             //登陆
-            DE.login.ajaxLogin();
+            loginManager.ajaxLogin();
 
             //注册
-            DE.login.ajaxRegister();
+            loginManager.ajaxRegister();
 
             //QQ登陆
-            DE.login.QQLoginHandler();
-
+            loginManager.QQLoginHandler();
 
             //忘记密码
-            DE.login.forgetPassword();
+            loginManager.forgetPassword();
+
+            //popstate事件
+            window.onpopstate = function (event) {
+
+                //火狐第一次进入不响应此事件
+                loginManager.stateChangeHandler();
+            };
+
+
+            /*--------------------------------用户相关-------------------------*/
 
             //点击用户头像
             $(document).on("click", "a.de_user_link", function () {
-                DE.user.userClickHandler($(this).attr("href"));
+                userManager.userClickHandler($(this).attr("href"),null);
 
                 return false;
             });
 
             //用户头像
-            DE.user.createFigureUpload();
+            userManager.createFigureUpload();
 
             //修改资料提交
-            DE.user.changeProfile();
+            userManager.changeProfile();
 
             //修改密码提交
-            DE.user.changePassword();
+            userManager.changePassword();
+
+            //修改邮箱提交
+            userManager.changeEmail();
+
+
+
+            /*--------------------------------上传相关-------------------------*/
 
             //创建上传句柄
-            DE.upload.createUpload({type: "thumb"});
-            DE.upload.createUpload({type: "zy_location_video", browseButton: "zy_add_location_video", filters: "mp4"});
-            DE.upload.createUpload({type: "zy_3d", browseButton: "zy_add_3d", filters: "zip"});
-            DE.upload.createUpload({type: "zy_ppt", browseButton: "zy_add_ppt", filters: "pptx"});
-            DE.upload.createUpload({type: "zy_image", browseButton: "zy_add_image", filters: "jpg,gif,png,jpeg"});
-            DE.upload.createUpload({type: "zy_file", browseButton: "zy_add_file", filters: "zip"});
+            //创建上传句柄
+            uploadManager.createUpload({type:"thumb"});
+            uploadManager.createUpload({type:config.uploadMediaTypes.localVideo,browseButton:"zy_add_location_video",
+                filters:config.uploadFilters.videoFilter});
+            uploadManager.createUpload({type:config.uploadMediaTypes._3d,browseButton:"zy_add_3d",
+                filters:config.uploadFilters._3dFilter});
+            uploadManager.createUpload({type:config.uploadMediaTypes.ppt,browseButton:"zy_add_ppt",
+                filters:config.uploadFilters.pptFilter});
+            uploadManager.createUpload({type:config.uploadMediaTypes.image,browseButton:"zy_add_image",
+                filters:config.uploadFilters.imageFilter});
+            uploadManager.createUpload({type:config.uploadMediaTypes.file,browseButton:"zy_add_file",
+                filters:config.uploadFilters.fileFilter});
+            uploadManager.createUpload({type:config.uploadMediaTypes.flash,browseButton:"zy_add_flash",
+                filters:config.uploadFilters.flashFilter});
 
             //步骤控制
-            $("#de_upload_step_nav a").click(function () {
-                DE.upload.stepControl($(this).attr("href"));
+            $("#de_upload_step_nav a").click(function(){
+                uploadManager.stepControl($(this).attr("href"));
 
                 return false;
             });
 
             //标签删除事件
-            $(document).on("click", "#de_input_tag a", function () {
-                $(this).parent().remove();
+            $(document).on("click","#de_input_tag a",function(){
+                uploadManager.deleteTag($(this));
 
                 return false;
             });
 
+
             //标签输入事件
-            $("#de_input_project_tag").keydown(function (event) {
-                if (event.keyCode == 13) {
-                    DE.upload.showInputTag($(this).val());
-                    $(this).val("");
-                }
-            });
+            uploadManager.tagInputEventHandler();
 
             //显示上传文件的菜单
-            $("#zy_add_medias_button").hover(function (e) {
-                $("#zy_add_media_menu").css("height", "360px");
-            }, function (e) {
-                $("#zy_add_media_menu").css("height", 0);
+            $("#zy_add_medias_button").hover(function(e){
+                $("#zy_add_media_menu").css("height","280px");
+            },function(e){
+                $("#zy_add_media_menu").css("height",0);
             });
-            $("#zy_add_media_menu").hover(function (e) {
-                $("#zy_add_media_menu").css("height", "360px");
-            }, function (e) {
-                $("#zy_add_media_menu").css("height", 0);
+            $("#zy_add_media_menu").hover(function(e){
+                $("#zy_add_media_menu").css("height","280px");
+            },function(e){
+                $("#zy_add_media_menu").css("height",0);
             });
 
             //控制网络视频,显示输入面板
             $("#zy_add_network_video").click(function () {
-                var tpl = $("#webVideoInput").html();
-                $("#de_pop_window").removeClass("de_hidden de_pop_show_media").addClass("de_pop_web_video");
-                $("#de_pop_window_content").html(tpl);
-                $("#de_blackout").removeClass("de_hidden");
+                uploadManager.showWebVideoPanel();
 
                 return false;
             });
@@ -291,19 +303,19 @@ DE.event= (function (login,menu,search,entity,user) {
             //网络视频输入确定
             $(document).on("click", "#de_input_web_video_ok", function () {
                 var value = $("#de_input_web_video").val();
-                DE.upload.webVideoInput(value);
+                uploadManager.webVideoInput(value);
             });
 
             //删除未上传的文件
             $(document).on("click", "span.zy_uncomplete_delete", function () {
-                if (confirm("如果文件在上传过程中或者在等待上传，则无法删除！尝试删除吗？")) {
+                if(confirm("确定删除吗？")){
                     $(this).parents("li").remove();
                 }
             });
 
             //删除已经上传的文件
             $(document).on("click", "span.zy_media_delete", function (event) {
-                DE.upload.deleteUploadedFile($(this));
+                uploadManager.deleteUploadedFile($(this));
 
                 //阻止事件冒泡到a
                 return false;
@@ -311,29 +323,39 @@ DE.event= (function (login,menu,search,entity,user) {
 
             //列表中每一项的点击事件，如果选中的列表没有填写完整，则不能选择其他列表
             $(document).on("click", "a.zy_media_list", function () {
-                DE.upload.uploadedLiClickHandler($(this));
+                uploadManager.uploadedLiClickHandler($(this));
+
+                return false;
             });
 
             //表单提交
             $("#de_submit_upload").click(function () {
-                DE.upload.ajaxUploadForm();
+
+                uploadManager.uploadSubmit();
+
                 return false;
             });
-
-            //popstate事件
-            window.onpopstate = function (event) {
-                if (event) {
-
-                    //火狐第一次进入不响应此事件，event为空会报错，需要判断一下
-                    DE.history.stateChange(event);
-                }
-            }
-
         });
 
+        /*----------------------------------------手机兼容-------------------------------*/
+
+        mobileManager.addMobileSources();
+
+        document.addEventListener("touchend",function(event){
+            var target=$(event.target);
+            DE.menuManager.documentClickHandler(target);
+        },false);
+
+        //火狐里面阻止form提交
+        $("input[type='text'],input[type='password']").keydown(function(e){
+            if(e.keyCode==13){
+                return false;
+            }
+        })
     };
 
     return {
         init: init
     }
-})(DE.login,DE.menu,DE.search,DE.entity,DE.user);
+})(DE.loginManager,DE.mobileManager,DE.menuManager,DE.searchManager,DE.entityManager,DE.userManager,
+        DE.popManager,DE.storeManager,DE.uploadManager,DE.config,DE.historyManager);

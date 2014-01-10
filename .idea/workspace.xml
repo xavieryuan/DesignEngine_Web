@@ -4,26 +4,26 @@
     <list default="true" id="757b1de4-e954-4b0a-b335-394cfef751c2" name="Default" comment="" />
     <ignored path="DesignEngine_Web.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1388391278814" ignored="false" />
-    <file path="/historyManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379476799039" ignored="false" />
+    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389335501383" ignored="false" />
+    <file path="/historyManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389340252677" ignored="false" />
     <file path="/test.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378454965883" ignored="false" />
-    <file path="/uploadManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379467092712" ignored="false" />
+    <file path="/uploadManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389343383560" ignored="false" />
     <file path="/config.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1388213583048" ignored="false" />
-    <file path="/loginManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382350953022" ignored="false" />
+    <file path="/loginManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389343682449" ignored="false" />
     <file path="/statusManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378350996330" ignored="false" />
     <file path="/worksManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378367791308" ignored="false" />
     <file path="/userManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382405200609" ignored="false" />
     <file path="/dataManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378375658811" ignored="false" />
     <file path="/wkRsManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378376505411" ignored="false" />
     <file path="/storeManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379476817663" ignored="false" />
-    <file path="/entityManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1388213496640" ignored="false" />
-    <file path="/index.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378438493130" ignored="false" />
-    <file path="/menuManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1387424539422" ignored="false" />
+    <file path="/entityManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389341417018" ignored="false" />
+    <file path="/index.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389338307102" ignored="false" />
+    <file path="/menuManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389336598812" ignored="false" />
     <file path="/works.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378449595788" ignored="false" />
     <file path="/resource.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382348799318" ignored="false" />
-    <file path="/a.dummy" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1388213468975" ignored="false" />
+    <file path="/a.dummy" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389340905710" ignored="false" />
     <file path="/projects.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382348079031" ignored="false" />
-    <file path="/index.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1387426056958" ignored="false" />
+    <file path="/index.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389335915507" ignored="false" />
     <file path="/hotUsers.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349148947" ignored="false" />
     <file path="/entityDetail.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349629784" ignored="false" />
     <file path="/attachments.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349621465" ignored="false" />
@@ -50,9 +50,13 @@
     <file path="/a.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379472058106" ignored="false" />
     <file path="/redirect.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1379473862398" ignored="false" />
     <file path="/main.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1387419204402" ignored="false" />
-    <file path="/eventManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1387425928956" ignored="false" />
+    <file path="/eventManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389343444183" ignored="false" />
     <file path="/uiManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1387424400014" ignored="false" />
     <file path="/searchManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1387425059698" ignored="false" />
+    <file path="$PROJECT_DIR$/uploadPlugin/js/app/zy_set_common.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389340721831" ignored="false" />
+    <file path="/mobileManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389336338740" ignored="false" />
+    <file path="/popManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389338019215" ignored="false" />
+    <file path="$PROJECT_DIR$/uploadPlugin/js/zy_set_common.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389340721831" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,19 +76,64 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="menuManager.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/src/modules/menuManager.js">
+      <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/src/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="50" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0">
+            <state line="169" column="8" selection-start="6547" selection-end="6547" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="general.css" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/css/general.css">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="20" selection-start="280" selection-end="299" vertical-scroll-proportion="0.031539887">
+            <state line="542" column="45" selection-start="21908" selection-end="21926" vertical-scroll-proportion="-3.2941177">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="eventManager.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/src/modules/eventManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="219" column="66" selection-start="6452" selection-end="6452" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="uploadManager.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/src/modules/uploadManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="951" column="25" selection-start="35481" selection-end="35498" vertical-scroll-proportion="-13.2">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="menuManager.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/src/modules/menuManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="173" column="53" selection-start="6144" selection-end="6144" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="loginManager.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/src/modules/loginManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="73" selection-start="283" selection-end="283" vertical-scroll-proportion="0.27567568">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="historyManager.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/src/modules/historyManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="252" column="0" selection-start="7214" selection-end="7214" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -110,29 +159,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/data/user.json" />
-        <option value="$PROJECT_DIR$/js/src/userManager.js" />
-        <option value="$PROJECT_DIR$/js/DE.UIManager.js" />
-        <option value="$PROJECT_DIR$/js/src/main.js" />
-        <option value="$PROJECT_DIR$/uploadPlugin/js/app/zy_set_common.js" />
-        <option value="$PROJECT_DIR$/js/DE.DataManager.js" />
-        <option value="$PROJECT_DIR$/js/index.js" />
-        <option value="$PROJECT_DIR$/js/src/uiManager.js" />
-        <option value="$PROJECT_DIR$/css/general.css" />
-        <option value="$PROJECT_DIR$/js/src/searchManager.js" />
-        <option value="$PROJECT_DIR$/js/src/menuManager.js" />
-        <option value="$PROJECT_DIR$/js/src/eventManager.js" />
         <option value="$PROJECT_DIR$/js/src/entityManager.js" />
-        <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/src/modules/entityManager.js" />
         <option value="$PROJECT_DIR$/js/src/config.js" />
+        <option value="$PROJECT_DIR$/css/general.css" />
+        <option value="$PROJECT_DIR$/js/src/admin/usersManager.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/src/modules/mobileManager.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/searchManager.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/popManager.js" />
+        <option value="$PROJECT_DIR$/js/src/index.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/entityManager.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/userManager.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/historyManager.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/menuManager.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/uploadManager.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/eventManager.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/loginManager.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-15" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1382" />
-    <option name="height" value="728" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -185,6 +235,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -273,7 +324,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -283,16 +333,16 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../template" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\apache_work\DesignEngine_Web\js\src\modules" />
       <recent name="D:\apache_work\DesignEngine_Web\js\lib" />
       <recent name="D:\apache_work\DesignEngine_Web\images" />
       <recent name="D:\apache_work\DesignEngine_Web\uploadPlugin\images\data" />
       <recent name="D:\apache_work\DesignEngine_Web\uploadPlugin\images\app" />
-      <recent name="D:\apache_work\DesignEngine_Web\js\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\apache_work\DesignEngine_Web\js\src\modules" />
@@ -347,13 +397,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-15" y="0" width="1382" height="728" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32646048" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19136262" sideWeight="0.3539519" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19136262" sideWeight="0.6731449" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19136262" sideWeight="0.6735395" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24944155" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
@@ -362,7 +413,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32685512" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -431,83 +481,120 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/js/src/modules/qqManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/uiManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/admin/usersManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/mobileManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="10" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#153#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/searchManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="21" selection-start="1823" selection-end="1836" vertical-scroll-proportion="-1.572973">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/popManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="54" selection-start="519" selection-end="519" vertical-scroll-proportion="0.36756757">
+          <folding>
+            <element signature="e#0#153#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="2" selection-end="2" vertical-scroll-proportion="0.061261263">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="169" column="8" selection-start="6547" selection-end="6547" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="542" column="45" selection-start="21908" selection-end="21926" vertical-scroll-proportion="-3.2941177">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/entityManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="957" column="0" selection-start="33107" selection-end="33107" vertical-scroll-proportion="0.8118081">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/userManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="568" column="74" selection-start="21057" selection-end="21057" vertical-scroll-proportion="0.65498155">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/historyManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="252" column="0" selection-start="7214" selection-end="7214" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/menuManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="50" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0">
+        <state line="173" column="53" selection-start="6144" selection-end="6144" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/uploadManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="924" column="65" selection-start="28915" selection-end="31477" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/historyManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="222" column="17" selection-start="6397" selection-end="6397" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uploadPlugin/js/app/zy_set_common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="25" selection-start="2301" selection-end="2301" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/loginManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="468" column="30" selection-start="17731" selection-end="17753" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index_back.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="20" selection-start="291" selection-end="291" vertical-scroll-proportion="-4.576923" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/uiManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="198" column="8" selection-start="6896" selection-end="6896" vertical-scroll-proportion="5.8348794" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/entityManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="241" column="98" selection-start="7578" selection-end="7578" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/menuManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="50" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0">
+        <state line="951" column="25" selection-start="35481" selection-end="35498" vertical-scroll-proportion="-13.2">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/eventManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="47" selection-start="3348" selection-end="3372" vertical-scroll-proportion="3.5640075" />
+        <state line="219" column="66" selection-start="6452" selection-end="6452" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/searchManager.js">
+    <entry file="file://$PROJECT_DIR$/js/src/modules/loginManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="65" selection-start="2244" selection-end="2244" vertical-scroll-proportion="-0.9461967" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="48" selection-start="1716" selection-end="1716" vertical-scroll-proportion="0.5046382" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="233" column="25" selection-start="9331" selection-end="9331" vertical-scroll-proportion="0.0331384" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/general.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="20" selection-start="280" selection-end="299" vertical-scroll-proportion="0.031539887">
+        <state line="15" column="73" selection-start="283" selection-end="283" vertical-scroll-proportion="0.27567568">
           <folding />
         </state>
       </provider>

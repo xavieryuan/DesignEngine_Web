@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 var DE=DE||{};
-DE.search=(function(){
+DE.searchManager=(function(){
     return {
 
         /**
@@ -26,14 +26,14 @@ DE.search=(function(){
                     }
 
                     //进入页面，请求后台是否登录,先获取到tag然后再初始化数据，这样当时tag进入的时候就知道是作品还是资源
-                    DE.login.checkLogin();
+                    DE.loginManager.checkLogin();
 
                 },
                 error:function(){
                     DE.config.ajaxErrorHandler();
 
                     //进入页面，请求后台是否登录
-                    DE.login.checkLogin();
+                    DE.loginManager.checkLogin();
                 }
 
             });
@@ -57,6 +57,7 @@ DE.search=(function(){
         filterClickHandler:function(){
              DE.uiManager.showFilterMenu();
         },
+
         /**
          * 系统标签点击事件
          * @param {String} href 需要设置的地址
@@ -64,16 +65,12 @@ DE.search=(function(){
          * @param {Boolean} isTag 是否是标签
          */
         searchHandler:function(href,searchType,isTag){
-            DE.history.push(href); //由于有清空store的操作，需要最先执行
+            DE.historyManager.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var value=array[1];
             DE.uiManager.showLoading();
-            DE.entity.getEntityBySearch(value,searchType,isTag,true);
+            DE.entityManager.getEntityBySearch(value,searchType,isTag,true);
             $("#de_search_input").val("");
-        },
-
-        searchInputFocus:function(){
-            $("#de_filter_menu").addClass("de_overflow_visible");
         },
 
         /**
@@ -83,9 +80,9 @@ DE.search=(function(){
         searchTabClickHandler:function(type){
 
             //如果当前显示的类型和点击的按钮不一致，则要置换
-            if(type!=DE.store.currentSearch.currentSearchType){
-                DE.store.searchLoadedCount=0;
-                DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,type,DE.store.currentSearch.isTag,true);
+            if(type!=DE.storeManager.currentSearch.currentSearchType){
+                DE.storeManager.searchLoadedCount=0;
+                DE.entityManager.getEntityBySearch(DE.storeManager.currentSearch.currentSearchValue,type,DE.storeManager.currentSearch.isTag,true);
             }
 
         },
@@ -96,13 +93,22 @@ DE.search=(function(){
         searchInputEventHandler:function(){
             var me=this;
             var searchInput= $("#de_search_input");
+            var filterMenu=$("#de_filter_menu");
             searchInput.keydown(function(event){
                 if(event.keyCode==13){
                     var value=$(this).val();
                     if(value.trim()){
                         me.serachHandler("search/"+value,"",false);
+                        searchInput.trigger("marcopoloblur");
                     }
                 }
+            });
+
+            searchInput.on('marcopoloblur', function (event) {
+                filterMenu.removeClass("de_overflow_visible");
+            });
+            searchInput.on('marcopolofocus', function (event) {
+                filterMenu.addClass("de_overflow_visible");
             });
 
             searchInput.marcoPolo({
@@ -121,6 +127,7 @@ DE.search=(function(){
                 },
                 onSelect: function (data) {
                     me.serachHandler("search/"+data,"",false);
+                    searchInput.trigger("marcopoloblur");
                 },
                 formatNoResults:function(q, $item){
                     return "";
@@ -132,6 +139,6 @@ DE.search=(function(){
                     return "";
                 }
             });
-        },
+        }
     }
 })();

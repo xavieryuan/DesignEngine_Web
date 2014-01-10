@@ -6,7 +6,7 @@
  * 存储器
  */
 var DE=DE||{};
-DE.store={
+DE.storeManager={
     scrollTimer:null, //滚动的时候的timeout
     hotUserLoadedCount:0, //记录下热门用户已经加载了的最后一个的id，-1代表没有更多
     projectLoadedId:0, //分页加载，最后一个作品的时间，-1代表没有更多
@@ -142,7 +142,7 @@ DE.store={
 
         //判断是否是修改，如果不是清除上传界面的数据
         if(location.href.match("edit")===null){
-            DE.upload.clearEditData();
+            DE.uploadManager.clearEditData();
         }
     },
 

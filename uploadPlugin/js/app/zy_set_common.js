@@ -15,7 +15,7 @@
 var config={
     uploadFileUrl:"/pinwall/upload",
     uploadSize:{
-        maxMediaSize:"200m", //最大的媒体文件上传大小
+        maxMediaSize:"300m", //最大的媒体文件上传大小
         maxImageSize:"2m"//最大的图片文件上传大小
     },
     uploadFilters:{  //媒体类型格式刷选器
@@ -73,9 +73,9 @@ var config={
 var zy_set_common = (function(){
 
     var parent=window.parent;
-    var uploaded_medias=parent.DE.store.uploadedMedias; //已经上传了的媒体文件
-    var UI=parent.DE.UIManager;
-    var currentUserId=parent.DE.store.currentUser.userId;
+    var uploaded_medias=parent.DE.storeManager.uploadedMedias; //已经上传了的媒体文件
+    var UI=parent.DE.uiManager;
+    var currentUserId=parent.DE.storeManager.currentUser.userId;
 
     return {
         /*
@@ -155,19 +155,19 @@ var zy_set_common = (function(){
          * */
         "zy_create_media_uploader":function(filters,zy_media_id){
             var uploader_media=new plupload.Uploader({
-                runtimes:"flash",
+                runtimes:"html5",
                 multi_selection:false,
                 max_file_size:config.uploadSize.maxMediaSize,
                 browse_button:"zy_upload_media_button",
                 container:"zy_left_top",
                 unique_names:true,
-                urlstream_upload:true,
+                //urlstream_upload:true,
                 //chunk_size:"10mb",
                 url: config.uploadFileUrl,
-                flash_swf_url : '../js/lib/plupload.flash.swf',
-                multipart_params:{
+                //flash_swf_url : '../js/lib/plupload.flash.swf',
+                /*multipart_params:{
                     userId:currentUserId
-                },
+                },*/
                 filters : [
                     {title : "Media files", extensions : filters}
                 ]
@@ -196,11 +196,11 @@ var zy_set_common = (function(){
                 //一般采用父级别的错误提示
                 if(err.message.match("Init")==null){
                     if(err.message.match("size")){
-                       UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadSizeError+config.uploadSize.maxMediaSize);
+                       UI.showMsgPopout(config.messageCode.errorTitle,config.messageCoDE.uploadManagerSizeError+config.uploadSize.maxMediaSize);
                     }else if(err.message.match("extension")){
                         UI.showMsgPopout(config.messageCode.errorTitle,filters);
                     }else{
-                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadIOErrror);
+                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCoDE.uploadManagerIOErrror);
                     }
                 }
 
@@ -226,7 +226,7 @@ var zy_set_common = (function(){
                     $("#zy_file_info").html(file.name);
                     $("#zy_upload_media_button").removeClass("zy_hidden");
                 }else{
-                    UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadIOErrror);
+                    UI.showMsgPopout(config.messageCode.errorTitle,config.messageCoDE.uploadManagerIOErrror);
                 }
 
             });
@@ -238,18 +238,18 @@ var zy_set_common = (function(){
          * */
         "zy_create_thumb_uploader":function(zy_media_id){
             var uploader_thumb=new plupload.Uploader({
-                runtimes:"flash",
+                runtimes:"html5",
                 multi_selection:false,
                 max_file_size:config.uploadSize.maxImageSize,
                 browse_button:"zy_upload_thumb_button",
                 container:"zy_left_bottom",
                 unique_names:true,
-                urlstream_upload:true,
+                //urlstream_upload:true,
                 url: config.uploadFileUrl, //parent在每个js里面都有定义
-                flash_swf_url:'../js/lib/plupload.flash.swf',
-                multipart_params:{
+                //flash_swf_url:'../js/lib/plupload.flash.swf',
+                /*multipart_params:{
                     userId:currentUserId
-                },
+                },*/
                 filters : [
                     {title : "Image files", extensions : config.uploadFilters.imageFilter}
                 ]
@@ -275,11 +275,11 @@ var zy_set_common = (function(){
                 //一般采用父级别的错误提示
                 if(err.message.match("Init")==null){
                     if(err.message.match("size")){
-                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadSizeError+config.uploadSize.maxImageSize);
+                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCoDE.uploadManagerSizeError+config.uploadSize.maxImageSize);
                     }else if(err.message.match("extension")){
-                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadExtensionError+config.uploadFilters.imageFilter);
+                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCoDE.uploadManagerExtensionError+config.uploadFilters.imageFilter);
                     }else{
-                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadIOErrror);
+                        UI.showMsgPopout(config.messageCode.errorTitle,config.messageCoDE.uploadManagerIOErrror);
                     }
                 }
                 up.refresh();
@@ -325,7 +325,7 @@ var zy_set_common = (function(){
                     }
 
                 }else{
-                    UI.showMsgPopout(config.messageCode.errorTitle,config.messageCode.uploadIOErrror);
+                    UI.showMsgPopout(config.messageCode.errorTitle,config.messageCoDE.uploadManagerIOErrror);
                 }
             });
         }
