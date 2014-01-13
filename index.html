@@ -1211,6 +1211,66 @@
     </div>
 </section>
 
+<!--***************************************管理界面*******************************-->
+<!-------------------用户管理------>
+<setction class="de_screen_manager_panel de_hidden" id="de_screen_users_manager">
+    <div class="de_manager_search">
+        <span>用户管理</span>
+        <input type="text">
+        <select disabled>
+            <option value="userName">用户名</option>
+        </select>
+        <input type="button" value="刷选">
+    </div>
+    <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_users_grid">
+        <thead>
+            <tr class="bar"><th>用户</th><th>上传作品</th><th>发表评论</th><th>获得奖章</th><th>权限</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</setction>
+
+<!-------------------作品管理------>
+<setction class="de_screen_manager_panel de_hidden" id="de_screen_projects_manager">
+    <div class="de_manager_search">
+        <span>作品管理</span>
+        <input type="text">
+        <select>
+            <option value="projectTag">作品标签</option>
+            <option value="userName">用户名</option>
+        </select>
+        <input type="button" value="刷选">
+    </div>
+    <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_projects_grid">
+        <thead>
+            <tr><th>作品</th><th>上传者</th><th>上传时间</th><th>评论</th><th>赞</th><th>奖章</th><th>状态</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</setction>
+
+<!-------------------评论管理------>
+<setction class="de_screen_manager_panel de_hidden" id="de_screen_comments_manager">
+    <div class="de_manager_search">
+        <span>评论管理</span>
+        <input type="text">
+        <select>
+            <option value="userName">用户名</option>
+            <option value="projectTag">作品标签</option>
+        </select>
+        <input type="button" value="刷选">
+    </div>
+    <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_comments_grid">
+        <thead>
+            <tr><th>评论</th><th>评论者</th><th>评论作品</th><th>评论时间</th><th>状态</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</setction>
+
 <section class="de_pop_window de_pop_web_video de_hidden" id="de_pop_window">
     <span id="de_close_pop_window" class="de_close_pop_window">关闭</span>
     <div id="de_pop_window_content" class="de_pop_window_content"></div>
