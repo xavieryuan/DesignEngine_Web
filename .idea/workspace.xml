@@ -4,12 +4,12 @@
     <list default="true" id="757b1de4-e954-4b0a-b335-394cfef751c2" name="Default" comment="" />
     <ignored path="DesignEngine_Web.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389335501383" ignored="false" />
+    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389575964411" ignored="false" />
     <file path="/historyManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389340252677" ignored="false" />
     <file path="/test.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378454965883" ignored="false" />
     <file path="/uploadManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389343383560" ignored="false" />
-    <file path="/config.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1388213583048" ignored="false" />
-    <file path="/loginManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389343682449" ignored="false" />
+    <file path="/config.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389577395352" ignored="false" />
+    <file path="/loginManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389578930688" ignored="false" />
     <file path="/statusManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378350996330" ignored="false" />
     <file path="/worksManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378367791308" ignored="false" />
     <file path="/userManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382405200609" ignored="false" />
@@ -21,7 +21,7 @@
     <file path="/menuManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389336598812" ignored="false" />
     <file path="/works.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378449595788" ignored="false" />
     <file path="/resource.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382348799318" ignored="false" />
-    <file path="/a.dummy" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389340905710" ignored="false" />
+    <file path="/a.dummy" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389578503176" ignored="false" />
     <file path="/projects.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382348079031" ignored="false" />
     <file path="/index.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389335915507" ignored="false" />
     <file path="/hotUsers.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349148947" ignored="false" />
@@ -79,7 +79,7 @@
       <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="169" column="8" selection-start="6547" selection-end="6547" vertical-scroll-proportion="0.0">
+            <state line="250" column="6" selection-start="9833" selection-end="9833" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -88,7 +88,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="542" column="45" selection-start="21908" selection-end="21926" vertical-scroll-proportion="-3.2941177">
+            <state line="542" column="45" selection-start="21908" selection-end="21926" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -106,7 +106,7 @@
       <file leaf-file-name="uploadManager.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/modules/uploadManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="951" column="25" selection-start="35481" selection-end="35498" vertical-scroll-proportion="-13.2">
+            <state line="951" column="25" selection-start="35481" selection-end="35498" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -124,7 +124,16 @@
       <file leaf-file-name="loginManager.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/src/modules/loginManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="73" selection-start="283" selection-end="283" vertical-scroll-proportion="0.27567568">
+            <state line="495" column="103" selection-start="18165" selection-end="18165" vertical-scroll-proportion="3.5826924">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="entityManager.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/src/modules/entityManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="79" column="13" selection-start="1878" selection-end="1878" vertical-scroll-proportion="-4.24">
               <folding />
             </state>
           </provider>
@@ -160,7 +169,6 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/js/src/entityManager.js" />
-        <option value="$PROJECT_DIR$/js/src/config.js" />
         <option value="$PROJECT_DIR$/css/general.css" />
         <option value="$PROJECT_DIR$/js/src/admin/usersManager.js" />
         <option value="$PROJECT_DIR$/index.html" />
@@ -174,6 +182,7 @@
         <option value="$PROJECT_DIR$/js/src/modules/menuManager.js" />
         <option value="$PROJECT_DIR$/js/src/modules/uploadManager.js" />
         <option value="$PROJECT_DIR$/js/src/modules/eventManager.js" />
+        <option value="$PROJECT_DIR$/js/src/config.js" />
         <option value="$PROJECT_DIR$/js/src/modules/loginManager.js" />
       </list>
     </option>
@@ -318,6 +327,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DesignEngine_Web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DesignEngine_Web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -333,8 +364,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../template" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -397,7 +428,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -499,18 +530,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/admin/usersManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="8" column="0" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/mobileManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="10" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#153#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="33" column="10" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/searchManager.js">
@@ -522,11 +547,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/popManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="54" selection-start="519" selection-end="519" vertical-scroll-proportion="0.36756757">
-          <folding>
-            <element signature="e#0#153#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="18" column="54" selection-start="519" selection-end="519" vertical-scroll-proportion="0.36756757" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/index.js">
@@ -536,23 +557,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="169" column="8" selection-start="6547" selection-end="6547" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="542" column="45" selection-start="21908" selection-end="21926" vertical-scroll-proportion="-3.2941177">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/entityManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="957" column="0" selection-start="33107" selection-end="33107" vertical-scroll-proportion="0.8118081">
+        <state line="542" column="45" selection-start="21908" selection-end="21926" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -580,7 +587,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/uploadManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="951" column="25" selection-start="35481" selection-end="35498" vertical-scroll-proportion="-13.2">
+        <state line="951" column="25" selection-start="35481" selection-end="35498" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -592,9 +599,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="250" column="6" selection-start="9833" selection-end="9833" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/entityManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="13" selection-start="1878" selection-end="1878" vertical-scroll-proportion="-4.24">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/loginManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="73" selection-start="283" selection-end="283" vertical-scroll-proportion="0.27567568">
+        <state line="495" column="103" selection-start="18165" selection-end="18165" vertical-scroll-proportion="3.5826924">
           <folding />
         </state>
       </provider>
