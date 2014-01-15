@@ -217,14 +217,9 @@ DE.menu=(function(){
             searchInput.marcoPolo({
                 url: DE.config.ajaxUrls.searchSuggest,
                 minChars:2,
-                formatData : function (data) {
-                    if(!$.isEmptyObject(data)&&data.spellcheck.suggestions.length){
-                        return data.spellcheck.suggestions[1]["suggestion"];
-                    }else{
-                        return [];
-                    }
-
-                },
+                /*formatData : function (data) {
+                    return data;
+                },*/
                 formatItem: function (data) {
                     return data;
                 },

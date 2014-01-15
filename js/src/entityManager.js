@@ -62,13 +62,13 @@ DE.entity=(function(){
      */
     function formatSearchData(data){
 
-        var length=data.response.docs.length;
+        var length=data.docs.length;
         var i=0;
         for(;i<length;i++){
-            data.response.docs[i]["postDate"]=formatDate(data.response.docs[i]["postDate"]);
+            data.docs[i]["postDate"]=formatDate(data.docs[i]["postDate"]);
         }
 
-        return data.response;
+        return data;
     }
 
     function getImageBySize(path,size){
@@ -279,19 +279,14 @@ DE.entity=(function(){
 
 
                     //后台有可能返回response为null
-                    if(data.response){
-                        if(data.response.docs.length<DE.config.perLoadCount){
-                            DE.store.searchLoadedCount=DE.config.hasNoMoreFlag;
-                        }else{
-                            DE.store.searchLoadedCount+=data.response.docs.length;
-                        }
-                    }else{
-                        data={response:{docs:[]}};
+                    if(data.docs.length<DE.config.perLoadCount){
                         DE.store.searchLoadedCount=DE.config.hasNoMoreFlag;
+                    }else{
+                        DE.store.searchLoadedCount+=data.docs.length;
                     }
 
                     if(DE.config.checkMobile()){
-                        data.response.docs=me.formatThumb(data.response.docs);
+                        data.docs=me.formatThumb(data.docs);
                     }
                     me.showSearchEntities(data,first,callback);
 
@@ -379,13 +374,8 @@ DE.entity=(function(){
                 },
                 success:function(data){
 
-                    //如果后台返回的是null
-                    if(!data.response){
-                        data={response:{docs:[]}};
-                    }
-
                     if(DE.config.checkMobile()){
-                        data.response.docs=me.formatThumb(data.response.docs);
+                        data.docs=me.formatThumb(data.docs);
                     }
                     me.showSimilarEntity(data);
 
