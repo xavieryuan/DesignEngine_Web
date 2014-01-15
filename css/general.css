@@ -2072,10 +2072,10 @@ ol.mp_list li.mp_selectable {
 .de_footer {
     padding: 5px 0;
     margin: 20px 0 0 0;
-    color: #eee;
+    color: #999;
+	text-shadow: 0 1px rgba(255,255,255,1);
     font-size: 12px;
     height: 40px;
-    background: #333;
     width: 100%;
     overflow: hidden;
     text-align: center;
