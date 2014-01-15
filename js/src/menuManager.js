@@ -202,16 +202,9 @@ DE.menu=(function(){
                     var value=$(this).val();
                     if(value.trim()){
                         me.serachHandler("search/"+value,"",false);
-                        searchInput.trigger("marcopoloblur");
+                        searchInput.blur();
                     }
                 }
-            });
-
-            searchInput.on('marcopoloblur', function (event) {
-                filterMenu.removeClass("de_overflow_visible");
-            });
-            searchInput.on('marcopolofocus', function (event) {
-                filterMenu.addClass("de_overflow_visible");
             });
 
             searchInput.marcoPolo({
@@ -220,12 +213,24 @@ DE.menu=(function(){
                 /*formatData : function (data) {
                     return data;
                 },*/
+                onBlur:function(){
+                    filterMenu.removeClass("de_overflow_visible");
+                },
+                onFocus:function(){
+                    filterMenu.addClass("de_overflow_visible");
+                },
                 formatItem: function (data) {
                     return data;
                 },
                 onSelect: function (data) {
                     me.serachHandler("search/"+data,"",false);
-                    searchInput.trigger("marcopoloblur");
+
+                    //select后会失去焦点，但是源代码中有一个1s的timeout，重新让输入框获取到焦点，彻底失去焦点用下面方法
+                    //此解决方法不优雅
+                    setTimeout(function(){
+                        searchInput.blur();
+                    },1.5);
+
                 },
                 formatNoResults:function(q, $item){
                     return "";
