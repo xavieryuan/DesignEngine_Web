@@ -367,7 +367,7 @@ $(document).ready(function(){
     });
 
     //点击搜索里面的标签事件
-    $(document).on("click","#de_project_tags li>a,#de_resource_tags li>a",function(){
+    $(".de_menu_list a").click(function(){
         DE.menu.serachHandler($(this).attr("href"));
 
         return false;
