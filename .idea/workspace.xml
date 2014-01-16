@@ -4,7 +4,7 @@
     <list default="true" id="757b1de4-e954-4b0a-b335-394cfef751c2" name="Default" comment="" />
     <ignored path="DesignEngine_Web.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389575964411" ignored="false" />
+    <file path="/Dummy.txt" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389853280231" ignored="false" />
     <file path="/historyManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389340252677" ignored="false" />
     <file path="/test.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1378454965883" ignored="false" />
     <file path="/uploadManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389343383560" ignored="false" />
@@ -23,7 +23,7 @@
     <file path="/resource.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382348799318" ignored="false" />
     <file path="/a.dummy" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389578503176" ignored="false" />
     <file path="/projects.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382348079031" ignored="false" />
-    <file path="/index.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389335915507" ignored="false" />
+    <file path="/index.html" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389853722208" ignored="false" />
     <file path="/hotUsers.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349148947" ignored="false" />
     <file path="/entityDetail.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349629784" ignored="false" />
     <file path="/attachments.json" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1382349621465" ignored="false" />
@@ -52,7 +52,7 @@
     <file path="/main.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1387419204402" ignored="false" />
     <file path="/eventManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389343444183" ignored="false" />
     <file path="/uiManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1387424400014" ignored="false" />
-    <file path="/searchManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1387425059698" ignored="false" />
+    <file path="/searchManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389853452236" ignored="false" />
     <file path="$PROJECT_DIR$/uploadPlugin/js/app/zy_set_common.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389340721831" ignored="false" />
     <file path="/mobileManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389336338740" ignored="false" />
     <file path="/popManager.js" changelist="757b1de4-e954-4b0a-b335-394cfef751c2" time="1389338019215" ignored="false" />
@@ -76,19 +76,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/src/config.js">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="250" column="6" selection-start="9833" selection-end="9833" vertical-scroll-proportion="0.0">
+            <state line="31" column="33" selection-start="2103" selection-end="2103" vertical-scroll-proportion="-0.73913044">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file leaf-file-name="loginManager.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/src/modules/loginManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="542" column="45" selection-start="21908" selection-end="21926" vertical-scroll-proportion="0.0">
+            <state line="495" column="103" selection-start="18165" selection-end="18165" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -97,52 +97,7 @@
       <file leaf-file-name="eventManager.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/modules/eventManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="219" column="66" selection-start="6452" selection-end="6452" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="uploadManager.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/src/modules/uploadManager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="951" column="25" selection-start="35481" selection-end="35498" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="menuManager.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/src/modules/menuManager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="173" column="53" selection-start="6144" selection-end="6144" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="loginManager.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/src/modules/loginManager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="495" column="103" selection-start="18165" selection-end="18165" vertical-scroll-proportion="3.5826924">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="entityManager.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/src/modules/entityManager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="13" selection-start="1878" selection-end="1878" vertical-scroll-proportion="-4.24">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="historyManager.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/src/modules/historyManager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="252" column="0" selection-start="7214" selection-end="7214" vertical-scroll-proportion="0.0">
+            <state line="79" column="68" selection-start="2368" selection-end="2368" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -171,9 +126,7 @@
         <option value="$PROJECT_DIR$/js/src/entityManager.js" />
         <option value="$PROJECT_DIR$/css/general.css" />
         <option value="$PROJECT_DIR$/js/src/admin/usersManager.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/src/modules/mobileManager.js" />
-        <option value="$PROJECT_DIR$/js/src/modules/searchManager.js" />
         <option value="$PROJECT_DIR$/js/src/modules/popManager.js" />
         <option value="$PROJECT_DIR$/js/src/index.js" />
         <option value="$PROJECT_DIR$/js/src/modules/entityManager.js" />
@@ -181,9 +134,11 @@
         <option value="$PROJECT_DIR$/js/src/modules/historyManager.js" />
         <option value="$PROJECT_DIR$/js/src/modules/menuManager.js" />
         <option value="$PROJECT_DIR$/js/src/modules/uploadManager.js" />
-        <option value="$PROJECT_DIR$/js/src/modules/eventManager.js" />
-        <option value="$PROJECT_DIR$/js/src/config.js" />
         <option value="$PROJECT_DIR$/js/src/modules/loginManager.js" />
+        <option value="$PROJECT_DIR$/js/src/config.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/searchManager.js" />
+        <option value="$PROJECT_DIR$/js/src/modules/eventManager.js" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -364,8 +319,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../template" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -428,12 +383,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32646048" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19136262" sideWeight="0.3539519" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19136262" sideWeight="0.6735395" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -444,6 +398,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32646048" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -521,11 +476,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/uiManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/admin/usersManager.js">
@@ -538,13 +489,6 @@
         <state line="33" column="10" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/searchManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="21" selection-start="1823" selection-end="1836" vertical-scroll-proportion="-1.572973">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/popManager.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="54" selection-start="519" selection-end="519" vertical-scroll-proportion="0.36756757" />
@@ -553,13 +497,6 @@
     <entry file="file://$PROJECT_DIR$/js/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="0" selection-start="2" selection-end="2" vertical-scroll-proportion="0.061261263">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="542" column="45" selection-start="21908" selection-end="21926" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -578,44 +515,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/menuManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="53" selection-start="6144" selection-end="6144" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/uploadManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="951" column="25" selection-start="35481" selection-end="35498" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/modules/eventManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="219" column="66" selection-start="6452" selection-end="6452" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/src/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="250" column="6" selection-start="9833" selection-end="9833" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/entityManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="13" selection-start="1878" selection-end="1878" vertical-scroll-proportion="-4.24">
+        <state line="79" column="13" selection-start="1878" selection-end="1878" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/modules/loginManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="495" column="103" selection-start="18165" selection-end="18165" vertical-scroll-proportion="3.5826924">
+        <state line="495" column="103" selection-start="18165" selection-end="18165" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="206" column="16" selection-start="7936" selection-end="7936" vertical-scroll-proportion="0.39399624">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/searchManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="39" selection-start="2331" selection-end="2331" vertical-scroll-proportion="0.7767355">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/menuManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="173" column="53" selection-start="6144" selection-end="6144" vertical-scroll-proportion="5.299099">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/uploadManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="951" column="25" selection-start="35481" selection-end="35498" vertical-scroll-proportion="0.3873874">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/modules/eventManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="68" selection-start="2368" selection-end="2368" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="33" selection-start="2103" selection-end="2103" vertical-scroll-proportion="-0.73913044">
           <folding />
         </state>
       </provider>

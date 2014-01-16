@@ -77,9 +77,8 @@ DE.eventManager= (function (loginManager,mobileManager,menuManager,searchManager
             });
 
             //点击搜索里面的标签事件
-            $(document).on("click", "#de_project_tags li>a,#de_resource_tags li>a", function () {
-                var el=$(this);
-                searchManager.searchHandler(el.attr("href"),el.parents("ul").data("type"), true);
+            $(document).on("click", ".de_menu_list a", function () {
+                searchManager.searchHandler($(this).attr("href"));
 
                 return false;
             });

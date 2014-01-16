@@ -61,15 +61,23 @@ DE.searchManager=(function(){
         /**
          * 系统标签点击事件
          * @param {String} href 需要设置的地址
-         * @param {String} searchType 搜索的类型
-         * @param {Boolean} isTag 是否是标签
          */
-        searchHandler:function(href,searchType,isTag){
+        searchHandler:function(href){
             DE.historyManager.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var value=array[1];
+            var searchUrlType=array[0];
+            var searchType="";
+            var isTag=false;
+
+            //设置searchType和isTag的值，如果是search直接使用默认值
+            if(searchUrlType===DE.config.searchUrlType.projectTag){
+                searchType=DE.config.entityTypes.project;
+            }else if(searchUrlType===DE.config.searchUrlType.resourceTag){
+                searchType=DE.config.entityTypes.resource;
+            }
             DE.uiManager.showLoading();
-            DE.entityManager.getEntityBySearch(value,searchType,isTag,true);
+            DE.entityManager.getEntityBySearch(value,searchType,isTag,true,null);
             $("#de_search_input").val("");
         },
 
@@ -99,35 +107,34 @@ DE.searchManager=(function(){
                     var value=$(this).val();
                     if(value.trim()){
                         me.serachHandler("search/"+value,"",false);
-                        searchInput.trigger("marcopoloblur");
+                        searchInput.blur();
                     }
                 }
-            });
-
-            searchInput.on('marcopoloblur', function (event) {
-                filterMenu.removeClass("de_overflow_visible");
-            });
-            searchInput.on('marcopolofocus', function (event) {
-                filterMenu.addClass("de_overflow_visible");
             });
 
             searchInput.marcoPolo({
                 url: DE.config.ajaxUrls.searchSuggest,
                 minChars:2,
-                formatData : function (data) {
-                    if(!$.isEmptyObject(data)&&data.spellcheck.suggestions.length){
-                        return data.spellcheck.suggestions[1]["suggestion"];
-                    }else{
-                        return [];
-                    }
-
+                /*formatData : function (data) {
+                    return data;
+                },*/
+                onBlur:function(){
+                    filterMenu.removeClass("de_overflow_visible");
+                },
+                onFocus:function(){
+                    filterMenu.addClass("de_overflow_visible");
                 },
                 formatItem: function (data) {
                     return data;
                 },
                 onSelect: function (data) {
                     me.serachHandler("search/"+data,"",false);
-                    searchInput.trigger("marcopoloblur");
+
+                    //select后会失去焦点，但是源代码中有一个1s的timeout，重新让输入框获取到焦点，彻底失去焦点用下面方法
+                    //此解决方法不优雅
+                    setTimeout(function(){
+                        searchInput.blur();
+                    },1.5);
                 },
                 formatNoResults:function(q, $item){
                     return "";

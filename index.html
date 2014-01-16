@@ -36,7 +36,6 @@
     <script src="js/src/modules/menuManager.js"></script>
     <script src="js/src/modules/uploadManager.js"></script>
     <script src="js/src/modules/loginManager.js"></script>
-    <script src="js/src/index.js"></script>
 </head>
 
 <!--模板文件-->
@@ -708,7 +707,9 @@
             <ul class="de_menu_list" id="de_resource_tags">
                  <li><a href="resource-tag/工业设计史">工业设计史</a></li>
                  <li><a href="resource-tag/汽车造型设计理论与研究">汽车造型设计理论与研究</a></li>
-                 <li><a href="resource-tag/数字界面原型">数字界面原型</a></li>
+                 <li><a href="search/设计概论">设计概论</a></li>
+                 <li><a href="search/计算机辅助设计3">计算机辅助设计3</a></li>
+                 <li><a href="search/数字界面原型">数字界面原型</a></li>
             </ul>
         </div>
 
@@ -1211,6 +1212,66 @@
         <!-- 更新个人信息弹窗开结束 -->
     </div>
 </section>
+
+<!--***************************************管理界面*******************************-->
+<!-------------------用户管理------>
+<setction class="de_screen_manager_panel de_hidden" id="de_screen_users_manager">
+    <div class="de_manager_search">
+        <span>用户管理</span>
+        <input type="text">
+        <select disabled>
+            <option value="userName">用户名</option>
+        </select>
+        <input type="button" value="刷选">
+    </div>
+    <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_users_grid">
+        <thead>
+            <tr class="bar"><th>用户</th><th>上传作品</th><th>发表评论</th><th>获得奖章</th><th>权限</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</setction>
+
+<!-------------------作品管理------>
+<setction class="de_screen_manager_panel de_hidden" id="de_screen_projects_manager">
+    <div class="de_manager_search">
+        <span>作品管理</span>
+        <input type="text">
+        <select>
+            <option value="projectTag">作品标签</option>
+            <option value="userName">用户名</option>
+        </select>
+        <input type="button" value="刷选">
+    </div>
+    <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_projects_grid">
+        <thead>
+            <tr><th>作品</th><th>上传者</th><th>上传时间</th><th>评论</th><th>赞</th><th>奖章</th><th>状态</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</setction>
+
+<!-------------------评论管理------>
+<setction class="de_screen_manager_panel de_hidden" id="de_screen_comments_manager">
+    <div class="de_manager_search">
+        <span>评论管理</span>
+        <input type="text">
+        <select>
+            <option value="userName">用户名</option>
+            <option value="projectTag">作品标签</option>
+        </select>
+        <input type="button" value="刷选">
+    </div>
+    <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_comments_grid">
+        <thead>
+            <tr><th>评论</th><th>评论者</th><th>评论作品</th><th>评论时间</th><th>状态</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</setction>
 
 <section class="de_pop_window de_pop_web_video de_hidden" id="de_pop_window">
     <span id="de_close_pop_window" class="de_close_pop_window">关闭</span>
