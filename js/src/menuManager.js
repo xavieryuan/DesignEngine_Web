@@ -137,15 +137,24 @@ DE.menu=(function(){
         /**
          * 系统标签点击事件
          * @param {String} href 需要设置的地址
-         * @param {String} searchType 搜索的类型
-         * @param {Boolean} isTag 是否是标签
          */
-        serachHandler:function(href,searchType,isTag){
+        serachHandler:function(href){
             DE.history.push(href); //由于有清空store的操作，需要最先执行
             var array=href.split("/");
             var value=array[1];
+            var searchUrlType=array[0];
+            var searchType="";
+            var isTag=false;
+
+            //设置searchType和isTag的值，如果是search直接使用默认值
+            if(searchUrlType===DE.config.searchUrlType.projectTag){
+                searchType=DE.config.entityTypes.project;
+            }else if(searchUrlType===DE.config.searchUrlType.resourceTag){
+                searchType=DE.config.entityTypes.resource;
+            }
+
             DE.UIManager.showLoading();
-            DE.entity.getEntityBySearch(value,searchType,isTag,true);
+            DE.entity.getEntityBySearch(value,searchType,isTag,true,null);
 
 
             $("#de_search_input").val("");
@@ -201,7 +210,7 @@ DE.menu=(function(){
                 if(event.keyCode==13){
                     var value=$(this).val();
                     if(value.trim()){
-                        me.serachHandler("search/"+value,"",false);
+                        me.serachHandler("search/"+value);
                         searchInput.blur();
                     }
                 }
@@ -223,7 +232,7 @@ DE.menu=(function(){
                     return data;
                 },
                 onSelect: function (data) {
-                    me.serachHandler("search/"+data,"",false);
+                    me.serachHandler("search/"+data);
 
                     //select后会失去焦点，但是源代码中有一个1s的timeout，重新让输入框获取到焦点，彻底失去焦点用下面方法
                     //此解决方法不优雅
@@ -357,19 +366,13 @@ $(document).ready(function(){
         return false;
     });
 
-    //点击搜索里面的作品标签事件
-    $(document).on("click","#de_project_tags li>a",function(){
-        DE.menu.serachHandler($(this).attr("href"),DE.config.entityTypes.project,true);
+    //点击搜索里面的标签事件
+    $(document).on("click","#de_project_tags li>a,#de_resource_tags li>a",function(){
+        DE.menu.serachHandler($(this).attr("href"));
 
         return false;
     });
 
-    //点击搜索里面的资源标签事件
-    $(document).on("click","#de_resource_tags li>a",function(){
-        DE.menu.serachHandler($(this).attr("href"),DE.config.entityTypes.resource,true);
-
-        return false;
-    });
 
     //搜索
     DE.menu.searchInputEventHandler();

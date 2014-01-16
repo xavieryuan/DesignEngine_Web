@@ -204,6 +204,11 @@ DE.config={
         project:"project",
         resource:"resource"
     },
+    searchUrlType:{
+        search:"search",
+        projectTag:"project-tag",
+        resourceTag:"resource-tag"
+    },
     urls:{  //history的url
         indexProject:"project/all", //首页作品
         indexResource:"resource/all", //首页资源
