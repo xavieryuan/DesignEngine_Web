@@ -29,6 +29,24 @@ DE.loginManager=(function(uiManager,config,historyManager,storeManager){
         }
     }
 
+    /**
+     * 重新加载数据
+     */
+    function reloadData(){
+
+        //成功后如果在用户页面、作品详情页需要重新加载数据
+        var href=window.location.href;
+        if((href.indexOf("user")!==-1&&href.indexOf("hot")===-1)||href.indexOf("item")!==-1){
+            historyManager.initDatas();
+        }
+    }
+
+    /**
+     * 登录ajax提交
+     * @param {Object} targetForm 需要提交的form
+     * @param {String} url 提交的地址
+     * @param {Function} callback 提交后执行的操作
+     */
     function loginSubmitHandler(targetForm,url,callback){
 
         rememberMeHandler();
@@ -45,6 +63,12 @@ DE.loginManager=(function(uiManager,config,historyManager,storeManager){
             }
         });
     }
+
+    /**
+     * 登录提交后执行的操作（回调函数）
+     * @param {Object} data 后台的json数据
+     * @param {Object} targetForm 提交的form
+     */
     function loginCallback(data,targetForm){
         if(data.success&&data.resultCode==config.resultCode.account_login_succ){
             storeManager.initCurrentUser({
@@ -63,11 +87,7 @@ DE.loginManager=(function(uiManager,config,historyManager,storeManager){
 
             targetForm.clearForm();
 
-            //成功后如果在用户页面需要重新加载数据
-            var href=window.location.href;
-            if((href.indexOf("user")!=-1&&href.indexOf("hot")==-1)||href.indexOf("item")!=-1){
-                historyManager.initDatas();
-            }
+            reloadData();
         }else{
             if(data.errorCode&&data.errorCode===config.errorCode.email_not_confirm){
                 $("#de_login_error").text(config.messageCode.emailNotConfirm);
@@ -78,6 +98,214 @@ DE.loginManager=(function(uiManager,config,historyManager,storeManager){
 
         uiManager.hideLoading();
     }
+
+    /**
+     * 发送openId到后台
+     * @param {String} url 发送地址
+     * @param {Object} params 参数{openId,accessToken,openIdSource}
+     * @param {Function} callback 完成后执行的操作
+     */
+    function sendOpenId(url,params,callback){
+        $.ajax({
+            url:url,
+            data:params,
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                callback(data,params);
+            },
+            error:function(){
+                config.ajaxErrorHandler();
+                QC.Login.signOut();
+            }
+        });
+    }
+
+    /**
+     * 发送openId的回调函数
+     * @param {Object} data 后台返回的json数据
+     * @param {Object} params 参数{openId,accessToken,openIdSource}
+     */
+    function sendOpenIdCallback(data,params){
+
+        if(data.success&&data.resultCode==config.resultCode.account_login_succ){
+
+            //非第一次登录
+            storeManager.initCurrentUser({
+                role:data.userinfo.userRoles[0],
+                figure:data.userinfo.userProfileImg,
+                name:data.userinfo.userName,
+                userId:data.userinfo.userId,
+                description:data.userinfo.userDescribe,
+                email:data.userinfo.userEmail,
+                status:data.userinfo.userStatus,
+                regLocked:data.userinfo.regLocked
+            });
+
+
+            uiManager.showLoginMenu({user:storeManager.currentUser});
+            uiManager.hideAllMenuAndPopouts();
+
+
+            reloadData();
+        }else{
+
+            //第一次登录
+            if(data.errorCode==config.errorCode.account_required){
+
+                //记录下openId，然后再注册的时候带回给后台
+                storeManager.currentUser.openId=params.openId;
+                storeManager.currentUser.accessToken=params.accessToken;
+                uiManager.showRegPopout();
+            }else{
+                uiManager.showMsgPopout(config.messageCode.errorTitle,config.messageCode.operationError);
+
+            }
+        }
+
+        //获取到信息后登出QQ，以免影响系统本身逻辑
+        QC.Login.signOut();
+    }
+
+    /**
+     * 绑定账户
+     * @param {String} url 发送地址
+     * @param {Object} params 参数{openId,accessToken,openIdSource}
+     * @param {Function} callback 完成后执行的操作
+     */
+    function bindCount(url,params,callback){
+        $.ajax({
+            url:url,
+            data:params,
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                callback(data);
+            },
+            error:function(){
+                config.ajaxErrorHandler();
+                QC.Login.signOut();
+            }
+        });
+    }
+
+    /**
+     * 绑定账户回调函数
+     * @param {Object} data 后台返回的json数据
+     */
+    function bindCountCallback(data){
+
+        if(data.success&&data.resultCode==config.resultCode.bind_succ){
+
+            //显示绑定成功
+            $("#de_bind_account_btn").addClass("de_hidden");
+            $("#de_remove_bind").removeClass("de_hidden");
+            $("#de_has_bind").removeClass("de_hidden");
+        }else{
+            uiManager.showMsgPopout(config.messageCode.errorTitle,config.messageCode.operationError);
+
+        }
+
+        //让QQ登出
+        QC.Login.signOut();
+    }
+
+    function unBind(url,callback){
+        $.ajax({
+            url:url,
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                callback(data);
+            },
+            error:function(data){
+                config.ajaxErrorHandler();
+                QC.Login.signOut();
+            }
+        });
+    }
+
+    function unBindCallback(data){
+        if(data.success&&data.resultCode==config.resultCode.unbind_succ){
+
+            $("#de_has_bind").addClass("de_hidden");
+            $("#de_bind_account_btn").removeClass("de_hidden");
+            $("#de_remove_bind").addClass("de_hidden");
+
+        }else{
+            config.ajaxReturnErrorHandler(data);
+        }
+
+        //让QQ登出
+        QC.Login.signOut();
+    }
+
+    /**
+     * 登录ajax提交
+     * @param {Object} targetForm 需要提交的form
+     * @param {String} url 提交的地址
+     * @param {Function} callback 提交后执行的操作
+     */
+    function registerSubmitHandler(targetForm,url,callback){
+
+        uiManager.showLoading();
+        targetForm.ajaxSubmit({
+            url:url,
+            type:"post",
+            data:{
+                openId:storeManager.currentUser.openId,
+                openIdSource:storeManager.currentUser.openIdSource,
+                accessToken:storeManager.currentUser.accessToken
+            },
+            dataType:"json",
+            success:function (data) {
+                callback(data);
+            },
+            error:function (data) {
+                config.ajaxErrorHandler();
+            }
+        });
+    }
+
+    /**
+     * 登录提交后执行的操作（回调函数）
+     * @param {Object} data 后台的json数据
+     * @param {Object} targetForm 提交的form
+     */
+    function registerCallback(data,targetForm){
+        if(data.success&&data.resultCode==config.resultCode.account_register_succ){
+
+            //通过qq登录的才设置store的currentUser，显示用户菜单，关闭弹出层，清空form
+            if(storeManager.currentUser.openId){
+
+                //重新获取登录用户
+                this.checkLogin();
+
+                //uiManager.showLoginMenu({user:storeManager.currentUser});
+
+                //隐藏弹出层
+                //uiManager.hideAllMenuAndPopouts();
+            }
+
+            uiManager.showMsgPopout(config.messageCode.successTitle,config.messageCode.registerSuccess);
+            $(form).clearForm();
+
+        }else{
+            if(data.errorCode=="captcha_unmatches"){
+                $("#de_reg_error").text(config.messageCode.validCodeError);
+            }else{
+                $("#de_reg_error").text(config.messageCode.operationError);
+            }
+        }
+
+        //不管注册成功或者失败，都需要重新刷一次验证码
+        $("#de_captcha_img").removeAttr("src").attr("src",config.ajaxUrls.getValidCode);
+
+        uiManager.hideLoading();
+    }
+
+
+
 
     return {
 
@@ -122,59 +350,12 @@ DE.loginManager=(function(uiManager,config,historyManager,storeManager){
                //如果已经登录，不发请求，绑定那里也会引起这里发请求
                if(!storeManager.currentUser.userId){
                    QC.Login.getMe(function(openId, accessToken){
-                       $.ajax({
-                           url:config.ajaxUrls.sendOpenId,
-                           data:{
-                               openId:openId,
-                               accessToken:accessToken,
-                               openIdSource:"qq"
-                           },
-                           type:"post",
-                           dataType:"json",
-                           success:function(data){
-                               if(data.success&&data.resultCode==config.resultCode.account_login_succ){
 
-                                   storeManager.initCurrentUser({
-                                       role:data.userinfo.userRoles[0],
-                                       figure:data.userinfo.userProfileImg,
-                                       name:data.userinfo.userName,
-                                       userId:data.userinfo.userId,
-                                       description:data.userinfo.userDescribe,
-                                       email:data.userinfo.userEmail,
-                                       status:data.userinfo.userStatus,
-                                       regLocked:data.userinfo.regLocked
-                                   });
-
-
-                                   uiManager.showLoginMenu({user:storeManager.currentUser});
-                                   uiManager.hideAllMenuAndPopouts();
-
-                                   //成功后如果在用户页面需要重新加载数据
-                                   var href=window.location.href;
-                                   if((href.indexOf("user")!=-1&&href.indexOf("hot")==-1)||href.indexOf("item")!=-1){
-                                       historyManager.initDatas();
-                                   }
-
-                               }else{
-                                   if(data.errorCode==config.errorCode.account_required){
-
-                                       //记录下openId，然后再注册的时候带回给后台
-                                       storeManager.currentUser.openId=openId;
-                                       storeManager.currentUser.accessToken=accessToken;
-                                       uiManager.showRegPopout();
-                                   }else{
-                                       uiManager.showMsgPopout(config.messageCode.errorTitle,config.messageCode.operationError);
-
-                                   }
-                               }
-
-                               QC.Login.signOut();
-                           },
-                           error:function(){
-                               config.ajaxErrorHandler();
-                               QC.Login.signOut();
-                           }
-                       })
+                       sendOpenId(config.ajaxUrls.sendOpenId,{
+                           openId:openId,
+                           accessToken:accessToken,
+                           openIdSource:"qq"
+                       },sendOpenIdCallback);
 
                    });
                }
@@ -190,35 +371,12 @@ DE.loginManager=(function(uiManager,config,historyManager,storeManager){
            },function(reqData, oOpts){
 
                QC.Login.getMe(function(openId, accessToken){
-                   $.ajax({
-                       url:config.ajaxUrls.bindOldAccount,
-                       data:{
-                           openId:openId,
-                           accessToken:accessToken,
-                           openIdSource:"qq"
-                       },
-                       type:"post",
-                       dataType:"json",
-                       success:function(data){
-                           if(data.success&&data.resultCode==config.resultCode.bind_succ){
 
-                               //显示绑定成功
-                               $("#de_bind_account_btn").addClass("de_hidden");
-                               $("#de_remove_bind").removeClass("de_hidden");
-                               $("#de_has_bind").removeClass("de_hidden");
-                           }else{
-                               uiManager.showMsgPopout(config.messageCode.errorTitle,config.messageCode.operationError);
-
-                           }
-
-                           //让QQ登出
-                           QC.Login.signOut();
-                       },
-                       error:function(){
-                           config.ajaxErrorHandler();
-                           QC.Login.signOut();
-                       }
-                   })
+                   bindCount(config.ajaxUrls.bindOldAccount,{
+                       openId:openId,
+                       accessToken:accessToken,
+                       openIdSource:"qq"
+                   },bindCountCallback);
 
                });
            });
@@ -228,29 +386,7 @@ DE.loginManager=(function(uiManager,config,historyManager,storeManager){
         * 解除绑定
         */
        unBindHandler:function(){
-           $.ajax({
-               url:config.ajaxUrls.unBindAccount,
-               type:"post",
-               dataType:"json",
-               success:function(data){
-                    if(data.success&&data.resultCode==config.resultCode.unbind_succ){
-
-                        $("#de_has_bind").addClass("de_hidden");
-                        $("#de_bind_account_btn").removeClass("de_hidden");
-                        $("#de_remove_bind").addClass("de_hidden");
-
-                    }else{
-                        config.ajaxReturnErrorHandler(data);
-                    }
-
-                   //让QQ登出
-                   QC.Login.signOut();
-               },
-               error:function(data){
-                   config.ajaxErrorHandler();
-                   QC.Login.signOut();
-               }
-           });
+           unBind(config.ajaxUrls.unBindAccount,unBindCallback);
        },
 
        /**
@@ -297,51 +433,7 @@ DE.loginManager=(function(uiManager,config,historyManager,storeManager){
                },
                submitHandler:function(form) {
 
-                   uiManager.showLoading();
-                   $(form).ajaxSubmit({
-                       url:config.ajaxUrls.register,
-                       type:"post",
-                       data:{
-                           openId:storeManager.currentUser.openId,
-                           openIdSource:storeManager.currentUser.openIdSource,
-                           accessToken:storeManager.currentUser.accessToken
-                       },
-                       dataType:"json",
-                       success:function (data) {
-                           if(data.success&&data.resultCode==config.resultCode.account_register_succ){
 
-                               //通过qq登录的才设置store的currentUser，显示用户菜单，关闭弹出层，清空form
-                               if(storeManager.currentUser.openId){
-
-                                   //重新获取登录用户
-                                   me.checkLogin();
-
-                                   //uiManager.showLoginMenu({user:storeManager.currentUser});
-
-                                   //隐藏弹出层
-                                   //uiManager.hideAllMenuAndPopouts();
-                               }
-
-                               uiManager.showMsgPopout(config.messageCode.successTitle,config.messageCode.registerSuccess);
-                               $(form).clearForm();
-
-                           }else{
-                               if(data.errorCode=="captcha_unmatches"){
-                                   $("#de_reg_error").text(config.messageCode.validCodeError);
-                               }else{
-                                   $("#de_reg_error").text(config.messageCode.operationError);
-                               }
-                           }
-
-                           //不管注册成功或者失败，都需要重新刷一次验证码
-                           $("#de_captcha_img").removeAttr("src").attr("src",config.ajaxUrls.getValidCode);
-
-                           uiManager.hideLoading();
-                       },
-                       error:function (data) {
-                           config.ajaxErrorHandler();
-                       }
-                   });
                }
            });
        },
