@@ -15,7 +15,7 @@ DE.eventManager= (function (loginManager,mobileManager,menuManager,searchManager
             //search.getTags();
 
             //检测是否登录
-            loginManager.checkLogin();
+            loginManager.checkLogin(config.ajaxUrls.checkLogin,loginManager.checkLoginCallback);
 
             /*----------------------菜单事件--------------------------------*/
             //顶部菜单点击事件（除上传按钮）
@@ -217,7 +217,7 @@ DE.eventManager= (function (loginManager,mobileManager,menuManager,searchManager
             window.onpopstate = function (event) {
 
                 //火狐第一次进入不响应此事件
-                loginManager.stateChangeHandler();
+                historyManager.stateChange(event.state);
             };
 
 
@@ -281,16 +281,8 @@ DE.eventManager= (function (loginManager,mobileManager,menuManager,searchManager
             uploadManager.tagInputEventHandler();
 
             //显示上传文件的菜单
-            $("#zy_add_medias_button").hover(function(e){
-                $("#zy_add_media_menu").css("height","280px");
-            },function(e){
-                $("#zy_add_media_menu").css("height",0);
-            });
-            $("#zy_add_media_menu").hover(function(e){
-                $("#zy_add_media_menu").css("height","280px");
-            },function(e){
-                $("#zy_add_media_menu").css("height",0);
-            });
+            uploadManager.showUploadMenu();
+
 
             //控制网络视频,显示输入面板
             $("#zy_add_network_video").click(function () {

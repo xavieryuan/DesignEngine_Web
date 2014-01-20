@@ -36,7 +36,13 @@ DE.historyManager=(function(){
                 //请求点击标签的数据
                 value=decodeURI(value);
 
-                DE.entityManager.getEntityBySearch(value,DE.config.entityTypes.resource,true,true,callback);
+                DE.entityManager.getEntityBySearch({
+                    content:value,
+                    type:DE.config.entityTypes.resource,
+                    isTag:true,
+                    isFirst:true,
+                    callback:callback
+                });
 
                 break;
             case "project-tag":
@@ -44,7 +50,13 @@ DE.historyManager=(function(){
                 //请求点击标签的数据
                 value=decodeURI(value);
 
-                DE.entityManager.getEntityBySearch(value,DE.config.entityTypes.project,true,true,callback);
+                DE.entityManager.getEntityBySearch({
+                    content:value,
+                    type:DE.config.entityTypes.project,
+                    isTag:true,
+                    isFirst:true,
+                    callback:callback
+                });
 
                 break;
             case "project":
@@ -68,7 +80,13 @@ DE.historyManager=(function(){
             case "search":
 
                 //请求搜索数据
-                DE.entityManager.getEntityBySearch(decodeURI(value),"",false,true,callback);
+                DE.entityManager.getEntityBySearch({
+                    content:decodeURI(value),
+                    type:"",
+                    isTag:false,
+                    isFirst:true,
+                    callback:callback
+                });
 
                 break;
             case "upload":
@@ -140,17 +158,17 @@ DE.historyManager=(function(){
          * stateChange处理函数
          * @param {Object} event sate变化时的事件对象
          */
-        stateChange:function(event){
+        stateChange:function(state){
 
             var obj=null;
             if(supports_history_api()){
                 var baseURI=document.baseURI||$("#de_base_url").attr("href");
 
                 //回退到首页的时候是null,第一次进入非首页回退的时候浏览器默认会根据代码生成state
-                if(event.state){
+                if(state){
 
-                    var href=event.state.href;
-                    if(typeof event.state.oldHref!=="undefined"){
+                    var href=state.href;
+                    if(typeof state.oldHref!=="undefined"){
 
                         //前进或者后退到详情页,不管如何都需要重新处理数据
                         obj=handlerHref(href);
@@ -199,7 +217,7 @@ DE.historyManager=(function(){
 
             if(obj!=null){
 
-                handler(obj.type,obj.value,event.state.oldHref);
+                handler(obj.type,obj.value,state.oldHref);
             }
 
         },

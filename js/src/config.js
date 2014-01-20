@@ -52,6 +52,7 @@ DE.config={
         hotUser:"hotUser",
         project:"project",
         resource:"resource",
+        search:"search",
         userEntity:"userEntity" //用户页的用户作品,
     },
     validError:{

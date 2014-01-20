@@ -6,7 +6,8 @@
  *和作品资源相关的处理：首页获取，搜索文章，根据标签获取文章，查看文章详情
  */
 var DE=DE||{};
-DE.entityManager=(function(uiManager,menuManager){
+DE.entityManager=(function(config,uiManager,menuManager,
+   storeManager,uploadManager,loginManager){
 
     /**
      * 获取日期时间,用户评论
@@ -32,12 +33,12 @@ DE.entityManager=(function(uiManager,menuManager){
 
     /**
      *
-     * @param {String} date 需要格式化的时间字符串
+     * @param {String} dateString 需要格式化的时间字符串
      * @returns {string}
      */
-    function formatDate(date){
+    function formatDate(dateString){
 
-        var date=new Date(date);
+        var date=new Date(dateString);
 
         var year=date.getFullYear();
 
@@ -78,9 +79,9 @@ DE.entityManager=(function(uiManager,menuManager){
     }
 
     function toLogin(){
-        DE.loginManager.initLoginForm();
-        DE.uiManager.showLoginPopout();
-        DE.uiManager.hideProjectDetail();
+        loginManager.initLoginForm();
+        uiManager.showLoginPopout();
+        uiManager.hideProjectDetail();
     }
 
     return {
@@ -92,7 +93,7 @@ DE.entityManager=(function(uiManager,menuManager){
             var me=this;
 
             $.ajax({
-                url:DE.config.ajaxUrls.getEntityAttachments,
+                url:config.ajaxUrls.getEntityAttachments,
                 type:"get",
                 dataType:"json",
                 //async:false,
@@ -101,16 +102,16 @@ DE.entityManager=(function(uiManager,menuManager){
                 },
                 success:function(data){
                     if(data.success){
-                        if(DE.config.checkMobile()){
+                        if(config.checkMobile()){
                            data.attachments=me.formatAttachment(data.attachments);
                         }
                         me.showAttachment(data);
                     }else{
-                       DE.config.ajaxReturnErrorHandler(data);
+                       config.ajaxReturnErrorHandler(data);
                     }
                 },
                 error:function(){
-                    DE.config.ajaxErrorHandler();
+                    config.ajaxErrorHandler();
                 }
 
             });
@@ -122,7 +123,7 @@ DE.entityManager=(function(uiManager,menuManager){
                 return [];
             }else{
                 for(;i<length;i++){
-                    data[i]["attachmentPreviewLocation"]=getImageBySize(data[i]["attachmentPreviewLocation"],DE.config.imagesSize.mediaThumb);
+                    data[i]["attachmentPreviewLocation"]=getImageBySize(data[i]["attachmentPreviewLocation"],config.imagesSize.mediaThumb);
                 }
 
                 return data;
@@ -137,7 +138,7 @@ DE.entityManager=(function(uiManager,menuManager){
         getEntityDetail:function(id,showHome){
             var me=this;
             $.ajax({
-                url:DE.config.ajaxUrls.getEntityDetail,
+                url:config.ajaxUrls.getEntityDetail,
                 type:"get",
                 async:false,  //用同步，需要显示元素，以便后面的请求的数据进行渲染
                 dataType:"json",
@@ -147,10 +148,10 @@ DE.entityManager=(function(uiManager,menuManager){
                 success:function(data){
                     if(data.success){
                         //记录是否赞过
-                        DE.storeManager.initCurrentShowEntity({
+                        storeManager.initCurrentShowEntity({
                             id:data.entity.postId,
                             hasPraised:data.entity.userPraised,
-                            type:data.entity.postType=="work"?DE.config.entityTypes.project:DE.config.entityTypes.resource
+                            type:data.entity.postType=="work"?config.entityTypes.project:config.entityTypes.resource
                         });
 
                         data.showHome=!!showHome?true:false;
@@ -161,11 +162,11 @@ DE.entityManager=(function(uiManager,menuManager){
                         me.showEntityDetailTop(data);
 
                     }else{
-                        DE.config.ajaxReturnErrorHandler(data);
+                        config.ajaxReturnErrorHandler(data);
                     }
                 },
                 error:function(){
-                    DE.config.ajaxErrorHandler();
+                    config.ajaxErrorHandler();
                 }
 
             });
@@ -181,12 +182,12 @@ DE.entityManager=(function(uiManager,menuManager){
             var me=this;
             var url="";
             var postId=0;
-            if(type==DE.config.entityTypes.project){
-                url=DE.config.ajaxUrls.getAllProjects;
-                postId=DE.storeManager.projectLoadedId;
+            if(type==config.entityTypes.project){
+                url=config.ajaxUrls.getAllProjects;
+                postId=storeManager.projectLoadedId;
             }else{
-                url=DE.config.ajaxUrls.getAllResource;
-                postId=DE.storeManager.resourceLoadedId;
+                url=config.ajaxUrls.getAllResource;
+                postId=storeManager.resourceLoadedId;
             }
 
 
@@ -200,26 +201,26 @@ DE.entityManager=(function(uiManager,menuManager){
                 success:function(data){
                     if(data.success){
                         var length=0;
-                        if(type==DE.config.entityTypes.project){
+                        if(type==config.entityTypes.project){
                             length=data.projects.length;
-                            if(length==DE.config.perLoadCount){
-                                DE.storeManager.projectLoadedId=data.projects[length-1]["postId"];
+                            if(length==config.perLoadCount){
+                                storeManager.projectLoadedId=data.projects[length-1]["postId"];
                             }else{
-                                DE.storeManager.projectLoadedId=DE.config.hasNoMoreFlag;
+                                storeManager.projectLoadedId=config.hasNoMoreFlag;
                             }
-                            DE.storeManager.currentScrollScreenType=DE.config.scrollScreenType.project;
+                            storeManager.currentScrollScreenType=config.scrollScreenType.project;
                         }else{
                             length=data.resources.length;
-                            if(length==DE.config.perLoadCount){
-                                DE.storeManager.resourceLoadedId=data.resources[length-1]["postId"];
+                            if(length==config.perLoadCount){
+                                storeManager.resourceLoadedId=data.resources[length-1]["postId"];
                             }else{
-                                DE.storeManager.resourceLoadedId=DE.config.hasNoMoreFlag;
+                                storeManager.resourceLoadedId=config.hasNoMoreFlag;
                             }
-                            DE.storeManager.currentScrollScreenType=DE.config.scrollScreenType.resource;
+                            storeManager.currentScrollScreenType=config.scrollScreenType.resource;
                         }
 
                         //不管是否有数据，都需要执行函数，因为函数里有显示界面screen的操作
-                        if(DE.config.checkMobile()){
+                        if(config.checkMobile()){
                             if(data.projects){
                                 data.projects=me.formatThumb(data.projects);
                             }else{
@@ -228,12 +229,12 @@ DE.entityManager=(function(uiManager,menuManager){
                         }
                         me.showEntities(data,type,first,callback);
                     }else{
-                        DE.config.ajaxReturnErrorHandler(data);
+                        config.ajaxReturnErrorHandler(data);
                     }
 
                 },
                 error:function(){
-                    DE.config.ajaxErrorHandler();
+                    config.ajaxErrorHandler();
                 }
 
             });
@@ -245,7 +246,7 @@ DE.entityManager=(function(uiManager,menuManager){
                 return [];
             }else{
                 for(;i<length;i++){
-                    data[i]["postThumb"]=getImageBySize(data[i]["postThumb"],DE.config.imagesSize.thumb);
+                    data[i]["postThumb"]=getImageBySize(data[i]["postThumb"],config.imagesSize.thumb);
                 }
 
                 return data;
@@ -254,56 +255,57 @@ DE.entityManager=(function(uiManager,menuManager){
 
         /**
          * 根据搜索内容获取作品（资源）
-         * @param {String} content 搜索的内容
-         * @param {Boolean} first 是否第一次加载，第一次需要设置显示的screen
-         * @param {Boolean} isTag 是否是标签
-         * @param {String} type 搜索的类型
-         * @param {Function} callback 显示完，需要执行的操作,主要是显示作品详情
+         * @param {Object} params 参数对象
+         *  {String} params.content 搜索的内容
+         *  {Boolean} params.isFirst 是否第一次加载，第一次需要设置显示的screen
+         *  {Boolean} params.isTag 是否是标签
+         *  {String} params.type 搜索的类型
+         *  {Function} params.callback 显示完，需要执行的操作,主要是显示作品详情
          */
-        getEntityBySearch:function(content,type,isTag,first,callback){
+        getEntityBySearch:function(params){
             var me=this;
             $.ajax({
-                url:DE.config.ajaxUrls.getEntitiesBySearch,
+                url:config.ajaxUrls.getEntitiesBySearch,
                 type:"get",
                 dataType:"json",
                 data:{
-                    keyword:content,
-                    field:isTag?"term":"info",
-                    type:type===DE.config.entityTypes.project?"work":type,
-                    start:DE.storeManager.searchLoadedCount
+                    keyword:params.content,
+                    field:params.isTag?"term":"info",
+                    type:params.type===config.entityTypes.project?"work":params.type,
+                    start:storeManager.searchLoadedCount
                 },
                 success:function(data){
 
-                    if(first){
+                    if(params.isFirst){
 
-                        DE.storeManager.currentSearch.currentSearchValue=content; //记录下当前搜索的内容
+                        storeManager.currentSearch.currentSearchValue=params.content; //记录下当前搜索的内容
 
-                        DE.storeManager.currentSearch.currentSearchType=type;
-                        DE.storeManager.currentSearch.isTag=isTag;
-                        DE.storeManager.currentScrollScreenType=type?DE.config.scrollScreenType[type]:"searchAll";
+                        storeManager.currentSearch.currentSearchType=params.type;
+                        storeManager.currentSearch.isTag=params.isTag;
+                        storeManager.currentScrollScreenType=config.scrollScreenType.search;
                     }
 
 
                     //后台有可能返回response为null
                     if(data.response){
-                        if(data.response.docs.length<DE.config.perLoadCount){
-                            DE.storeManager.searchLoadedCount=DE.config.hasNoMoreFlag;
+                        if(data.response.docs.length<config.perLoadCount){
+                            storeManager.searchLoadedCount=config.hasNoMoreFlag;
                         }else{
-                            DE.storeManager.searchLoadedCount+=data.response.docs.length;
+                            storeManager.searchLoadedCount+=data.response.docs.length;
                         }
                     }else{
                         data={response:{docs:[]}};
-                        DE.storeManager.searchLoadedCount=DE.config.hasNoMoreFlag;
+                        storeManager.searchLoadedCount=config.hasNoMoreFlag;
                     }
 
-                    if(DE.config.checkMobile()){
+                    if(config.checkMobile()){
                         data.response.docs=me.formatThumb(data.response.docs);
                     }
-                    me.showSearchEntities(data,first,callback);
+                    me.showSearchEntities(data,params.isFirst,params.callback);
 
                 },
                 error:function(){
-                    DE.config.ajaxErrorHandler();
+                    config.ajaxErrorHandler();
                 }
 
             });
@@ -313,33 +315,33 @@ DE.entityManager=(function(uiManager,menuManager){
          * 查看作品（资源）详情页点击赞图标的操作（增加、删除)
          */
         handlerPraiseOrHonor:function(){
-            DE.uiManager.showLoading();
+            uiManager.showLoading();
             var url="";
-            if(DE.storeManager.currentShowEntity.hasPraised){
-                url=DE.config.ajaxUrls.deletePraise;
+            if(storeManager.currentShowEntity.hasPraised){
+                url=config.ajaxUrls.deletePraise;
             }else{
-                url=DE.config.ajaxUrls.addPraise;
+                url=config.ajaxUrls.addPraise;
             }
             $.ajax({
                 url:url,
                 type:"post",
                 data:{
-                    postId:DE.storeManager.currentShowEntity.id
+                    postId:storeManager.currentShowEntity.id
                 },
                 dataType:"json",
                 success:function(data){
 
                     //更新赞的数量
-                    if(data.success&&(data.resultCode==DE.config.resultCode.praise_add_succ||data.resultCode==DE.config.resultCode.praise_remove_succ)){
+                    if(data.success&&(data.resultCode==config.resultCode.praise_add_succ||data.resultCode==config.resultCode.praise_remove_succ)){
                         var praiseCountEl=$("#praiseCount");
                         var honorCountEl=$("#honorCount");
-                        var countEl=$(".de_entity_link[href='item/"+DE.storeManager.currentShowEntity.id+"']").parents("li").find(".likes");
+                        var countEl=$(".de_entity_link[href='item/"+storeManager.currentShowEntity.id+"']").parents("li").find(".likes");
                         var oldCount=parseInt(countEl.text());
-                        if(DE.storeManager.currentShowEntity.hasPraised){
-                            DE.storeManager.currentShowEntity.hasPraised=false;
-                            DE.uiManager.hideLoading();
+                        if(storeManager.currentShowEntity.hasPraised){
+                            storeManager.currentShowEntity.hasPraised=false;
+                            uiManager.hideLoading();
                             $("#de_entity_praise").addClass("de_flag_reg_zan").removeClass("de_flag_reg_zanned");
-                            if(DE.storeManager.currentUser.role==DE.config.roles.user){
+                            if(storeManager.currentUser.role==config.roles.user){
                                 praiseCountEl.text(parseInt(praiseCountEl.text())-1);
                             }else{
                                 honorCountEl.text(parseInt(honorCountEl.text())-1);
@@ -348,9 +350,9 @@ DE.entityManager=(function(uiManager,menuManager){
                             //更新聚合li中赞的显示数量
                             countEl.text(oldCount-1);
                         }else{
-                            DE.storeManager.currentShowEntity.hasPraised=true;
+                            storeManager.currentShowEntity.hasPraised=true;
                             $("#de_entity_praise").removeClass("de_flag_reg_zan").addClass("de_flag_reg_zanned");
-                            if(DE.storeManager.currentUser.role==DE.config.roles.user){
+                            if(storeManager.currentUser.role==config.roles.user){
                                 praiseCountEl.text(parseInt(praiseCountEl.text())+1);
                             }else{
                                 honorCountEl.text(parseInt(honorCountEl.text())+1);
@@ -359,13 +361,13 @@ DE.entityManager=(function(uiManager,menuManager){
                             countEl.text(oldCount+1);
                         }
 
-                        DE.uiManager.hideLoading();
+                        uiManager.hideLoading();
                     }else{
-                        DE.config.ajaxReturnErrorHandler(data);
+                        config.ajaxReturnErrorHandler(data);
                     }
                 },
                 error:function(){
-                    DE.config.ajaxErrorHandler();
+                    config.ajaxErrorHandler();
                 }
 
             });
@@ -377,7 +379,7 @@ DE.entityManager=(function(uiManager,menuManager){
         getSimilarEntities:function(id){
             var me=this;
             $.ajax({
-                url:DE.config.ajaxUrls.getSimilarEntities,
+                url:config.ajaxUrls.getSimilarEntities,
                 type:"get",
                 dataType:"json",
                 data:{
@@ -390,14 +392,14 @@ DE.entityManager=(function(uiManager,menuManager){
                         data={response:{docs:[]}};
                     }
 
-                    if(DE.config.checkMobile()){
+                    if(config.checkMobile()){
                         data.response.docs=me.formatThumb(data.response.docs);
                     }
                     me.showSimilarEntity(data);
 
                 },
                 error:function(){
-                     DE.config.ajaxErrorHandler();
+                     config.ajaxErrorHandler();
                 }
 
             });
@@ -417,7 +419,7 @@ DE.entityManager=(function(uiManager,menuManager){
                 //async:false,
                 data:{
                     postId:entityId,
-                    commentId:DE.storeManager.currentShowEntity.commentLoadedId
+                    commentId:storeManager.currentShowEntity.commentLoadedId
                 },
                 dataType:"json",
                 success:function(data){
@@ -425,13 +427,13 @@ DE.entityManager=(function(uiManager,menuManager){
                         var length=data.comments.length;
                         var moreBtn=$("#de_comment_more_btn");
                         if(length>0){
-                            if(length<DE.config.perLoadCount){
+                            if(length<config.perLoadCount){
 
                                 //不足每次加载的数据，没有更多
-                                DE.storeManager.currentShowEntity.commentLoadedId=DE.config.hasNoMoreFlag;
+                                storeManager.currentShowEntity.commentLoadedId=config.hasNoMoreFlag;
                                 moreBtn.remove();
                             }else{
-                                DE.storeManager.currentShowEntity.commentLoadedId=data.comments[length-1]["commentId"];
+                                storeManager.currentShowEntity.commentLoadedId=data.comments[length-1]["commentId"];
                                 moreBtn.removeClass("de_hidden");
                             }
 
@@ -440,16 +442,16 @@ DE.entityManager=(function(uiManager,menuManager){
                         }else{
 
                             //返回为0，没有更多
-                            DE.storeManager.currentShowEntity.commentLoadedId=DE.config.hasNoMoreFlag;
+                            storeManager.currentShowEntity.commentLoadedId=config.hasNoMoreFlag;
                             moreBtn.remove();
                         }
                     }else{
-                        DE.config.ajaxReturnErrorHandler(data);
+                        config.ajaxReturnErrorHandler(data);
                     }
 
                 },
                 error:function(){
-                     DE.config.ajaxErrorHandler();
+                     config.ajaxErrorHandler();
                 }
 
             });
@@ -460,30 +462,30 @@ DE.entityManager=(function(uiManager,menuManager){
          */
         deleteComment:function(target){
             $.ajax({
-                url:DE.config.ajaxUrls.deleteComment,
+                url:config.ajaxUrls.deleteComment,
                 type:"post",
                 data:{
                     commentId:target.attr("href"),
-                    postId:DE.storeManager.currentShowEntity.id
+                    postId:storeManager.currentShowEntity.id
                 },
                 dataType:"json",
                 success:function(data){
-                    if(data.success&&data.resultCode==DE.config.resultCode.comment_remove_succ){
+                    if(data.success&&data.resultCode==config.resultCode.comment_remove_succ){
                         target.parents("li").remove();
-                        DE.uiManager.hideLoading();
+                        uiManager.hideLoading();
 
                         //更新显示的数据
                         var commentCountEl=$("#commentsCount");
                         var count=parseInt(commentCountEl.text())-1;
                         commentCountEl.text(count);
-                        $(".de_entity_link[href='item/"+DE.storeManager.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
+                        $(".de_entity_link[href='item/"+storeManager.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
 
                     }else{
-                        DE.config.ajaxReturnErrorHandler(data);
+                        config.ajaxReturnErrorHandler(data);
                     }
                 },
                 error:function(){
-                    DE.config.ajaxErrorHandler();
+                    config.ajaxErrorHandler();
                 }
 
             });
@@ -497,7 +499,7 @@ DE.entityManager=(function(uiManager,menuManager){
         canCommentDelete:function(data){
 
             $.each(data.comments,function(index,m){
-                 if(m.userId==DE.storeManager.currentUser.userId||DE.config.roles.admin==DE.storeManager.currentUser.role){
+                 if(m.userId==storeManager.currentUser.userId||config.roles.admin==storeManager.currentUser.role){
                      m.deleteAble=true;
                  }
             });
@@ -511,7 +513,7 @@ DE.entityManager=(function(uiManager,menuManager){
          * @returns {boolean} true|false
          */
         canShowToolbar:function(entity){
-            if(entity.userId==DE.storeManager.currentUser.userId||DE.config.roles.admin==DE.storeManager.currentUser.role){
+            if(entity.userId==storeManager.currentUser.userId||config.roles.admin==storeManager.currentUser.role){
                 return true;
             }
 
@@ -524,28 +526,28 @@ DE.entityManager=(function(uiManager,menuManager){
          */
         deleteEntity:function(id){
             $.ajax({
-                url:DE.config.ajaxUrls.deleteEntity,
+                url:config.ajaxUrls.deleteEntity,
                 type:"post",
                 data:{
                     postId:id
                 },
                 dataType:"json",
                 success:function(data){
-                    if(data.success&&data.resultCode==DE.config.resultCode.post_remove_succ){
+                    if(data.success&&data.resultCode==config.resultCode.post_remove_succ){
                         //DE.uiManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
-                        DE.uiManager.hideLoading();
+                        uiManager.hideLoading();
 
                         //界面更新,有可能在详情页，也有可能在用户页
-                        DE.uiManager.hideProjectDetail();
+                        uiManager.hideProjectDetail();
                         $(".de_entity_link[href='item/"+id+"']").parents("li").remove();
                         var uploadCountEl=$(".uploads");
                         uploadCountEl.text(parseInt(uploadCountEl.text())-1);
                     }else{
-                        DE.config.ajaxReturnErrorHandler(data);
+                        config.ajaxReturnErrorHandler(data);
                     }
                 },
                 error:function(){
-                    DE.config.ajaxErrorHandler();
+                    config.ajaxErrorHandler();
                 }
 
             });
@@ -556,12 +558,12 @@ DE.entityManager=(function(uiManager,menuManager){
          * @param {String} href 按钮a的href,设置成url地址
          */
         editEntity:function(href){
-            DE.historyManager.push(href);
+            historyManager.push(href,false);
 
             //需要获取id不能使用DE.storeManager.currentShowEntity.id，因为在用户页面也有此工具栏
             var id=href.split("/")[1];
 
-            DE.uploadManager.editEntity(id);
+            uploadManager.editEntity(id);
         },
 
         /**
@@ -575,7 +577,7 @@ DE.entityManager=(function(uiManager,menuManager){
                 visible=false;
             }
             $.ajax({
-                url:DE.config.ajaxUrls.showOrHideEntity,
+                url:config.ajaxUrls.showOrHideEntity,
                 type:"post",
                 data:{
                     postId:id,
@@ -583,8 +585,8 @@ DE.entityManager=(function(uiManager,menuManager){
                 },
                 dataType:"json",
                 success:function(data){
-                     if(data.success&&data.resultCode==DE.config.resultCode.visible_set_succ){
-                         DE.uiManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
+                     if(data.success&&data.resultCode==config.resultCode.visible_set_succ){
+                         uiManager.showMsgPopout(config.messageCode.successTitle,config.messageCode.operationSuccess);
                          var li=$(".de_entity_link[href='item/"+id+"']").parents("li");
                          var toolbarA=li.find(".de_project_toolbar li:eq(2) a");
 
@@ -612,13 +614,13 @@ DE.entityManager=(function(uiManager,menuManager){
                              //toolbarLi.data("target-visible",false);
                          }
 
-                         DE.uiManager.hideLoading();
+                         uiManager.hideLoading();
                      }else{
-                         DE.config.ajaxReturnErrorHandler(data);
+                         config.ajaxReturnErrorHandler(data);
                      }
                 },
                 error:function(){
-                    DE.config.ajaxErrorHandler();
+                    config.ajaxErrorHandler();
                 }
 
             });
@@ -635,7 +637,7 @@ DE.entityManager=(function(uiManager,menuManager){
             var id=array[1];
 
             //先隐藏清空数据，然后再显示，因为点击相似作品在同一个页面，如果不清空数据会导致数据重复
-            DE.uiManager.hideProjectDetail();
+            uiManager.hideProjectDetail();
 
             //请求详细信息,同步的ajax,如果需要改用异步，需要修改html模板
             this.getEntityDetail(id,showHome);
@@ -645,18 +647,16 @@ DE.entityManager=(function(uiManager,menuManager){
             this.getEntityAttachment(id);
 
             //请求评论
-            this.getComments(DE.config.ajaxUrls.getComments,id);
+            this.getComments(config.ajaxUrls.getComments,id);
 
             //请求相似实体
             this.getSimilarEntities(id);
 
             //显示展现层
-            DE.uiManager.showProjectDetail();
+            uiManager.showProjectDetail();
 
             if(pushFlag){
-
-                //不能放到 entityClickHandler函数中，从浏览器向前进入详情页取数据也调用此函数，此时是不需要push的
-                DE.historyManager.push(href,true);
+                historyManager.push(href,true);
             }
         },
 
@@ -666,7 +666,7 @@ DE.entityManager=(function(uiManager,menuManager){
          */
         showEntityDetailTop:function(data){
             var tpl=$("#entityDetailTopTpl").html();
-            data.entity.user=DE.storeManager.currentUser;
+            data.entity.user=storeManager.currentUser;
             var html=juicer(tpl,data.entity);
             $("#de_screen_project_detail").append($(html));
         },
@@ -679,7 +679,7 @@ DE.entityManager=(function(uiManager,menuManager){
             var tpl=$("#entityToolTpl").html();
             var showFlag=this.canShowToolbar(data.entity);
             var html=juicer(tpl,{
-                id:DE.storeManager.currentShowEntity.id,
+                id:storeManager.currentShowEntity.id,
                 hasPraised:data.entity.userPraised,
                 canShowToolBar:showFlag,
                 postType:data.entity.postType,
@@ -729,7 +729,7 @@ DE.entityManager=(function(uiManager,menuManager){
         showEntities:function(data,type,first,callback){
             var tpl="",html="",index=0;
 
-            if(type==DE.config.entityTypes.project){
+            if(type==config.entityTypes.project){
                 tpl=$("#projectTpl").html();
                 html=juicer(tpl,{projects:data.projects});
 
@@ -741,7 +741,7 @@ DE.entityManager=(function(uiManager,menuManager){
 
                     }
                     $("#de_project_list").html(html);
-                    DE.uiManager.showScreen("#de_screen_project");
+                    uiManager.showScreen("#de_screen_project");
                 }else{
                     $("#de_project_list").append($(html));
                 }
@@ -758,7 +758,7 @@ DE.entityManager=(function(uiManager,menuManager){
 
                     }
                     $("#de_resource_list").html(html);
-                    DE.uiManager.showScreen("#de_screen_resource");
+                    uiManager.showScreen("#de_screen_resource");
                 }else{
                     $("#de_resource_list").append($(html));
                 }
@@ -774,15 +774,15 @@ DE.entityManager=(function(uiManager,menuManager){
         /**
          * 显示搜索出来的作品（资源）聚合
          * @param data
-         * @param {Boolean} first 是否第一次请求,第一次需要设置screen
+         * @param {Boolean} isFirst 是否第一次请求,第一次需要设置screen
          * @param {Function} callback 显示完，需要执行的操作,主要是显示作品详情
          */
-        showSearchEntities:function(data,first,callback){
+        showSearchEntities:function(data,isFirst,callback){
             var targetContain= $("#de_search_result");
             var tpl=$("#searchResultTpl").html();
             var html=juicer(tpl,formatSearchData(data));
 
-            if(first){
+            if(isFirst){
 
                 //清理工作在此处，tab公用了一个展示界面，点击tab的时候如果先清理那么数据突然消失，界面闪烁
                 if(!html.trim()){
@@ -792,7 +792,7 @@ DE.entityManager=(function(uiManager,menuManager){
 
                 }
                 targetContain.html(html);
-                DE.uiManager.showSearchScreen(DE.storeManager.currentSearch.currentSearchValue,DE.storeManager.currentSearch.currentSearchType);
+                uiManager.showSearchScreen(storeManager.currentSearch.currentSearchValue,storeManager.currentSearch.currentSearchType);
                 if(callback){
                     callback();
                 }
@@ -809,33 +809,33 @@ DE.entityManager=(function(uiManager,menuManager){
             var content=contentEle.val();
 
             if(content.trim()){
-                DE.uiManager.showLoading();
+                uiManager.showLoading();
                 var me=this;
                 $.ajax({
-                    url:DE.config.ajaxUrls.postComment,
+                    url:config.ajaxUrls.postComment,
                     type:"post",
                     data:{
-                        postId:DE.storeManager.currentShowEntity.id,
+                        postId:storeManager.currentShowEntity.id,
                         content:content
                     },
                     dataType:"json",
                     success:function(data){
-                        if(data.success&&data.resultCode==DE.config.resultCode.comment_add_succ){
+                        if(data.success&&data.resultCode==config.resultCode.comment_add_succ){
                             contentEle.val("");
                             me.showSingleComment(content,data);
 
-                            DE.uiManager.hideLoading();
+                            uiManager.hideLoading();
                             var commentCountEl=$("#commentsCount");
                             var count=parseInt(commentCountEl.text())+1;
 
                             commentCountEl.text(count);
-                            $(".de_entity_link[href='item/"+DE.storeManager.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
+                            $(".de_entity_link[href='item/"+storeManager.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
                         }else{
-                            DE.config.ajaxReturnErrorHandler(data);
+                            config.ajaxReturnErrorHandler(data);
                         }
                     },
                     error:function(){
-                        DE.config.ajaxErrorHandler();
+                        config.ajaxErrorHandler();
                     }
 
                 });
@@ -850,7 +850,7 @@ DE.entityManager=(function(uiManager,menuManager){
         showSingleComment:function(content,data){
             var tpl=$("#singleComment").html();
             var html=juicer(tpl,{
-                user:DE.storeManager.currentUser,
+                user:storeManager.currentUser,
                 content:content,
                 time:data.createTime,
                 commentId:data.commentId
@@ -872,30 +872,30 @@ DE.entityManager=(function(uiManager,menuManager){
             var ext="";//文件的后缀,视频文件有mp4和swf
 
             //如果上传uploadedMedias中有，那是在预览，用uploadedMedias中的
-            if(!$.isEmptyObject(DE.storeManager.uploadedMedias)){
-                if(mediaType===DE.config.uploadMediaTypes.ppt&&
-                    DE.storeManager.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath].match("<iframe")===null){
+            if(!$.isEmptyObject(storeManager.uploadedMedias)){
+                if(mediaType===config.uploadMediaTypes.ppt&&
+                    storeManager.uploadedMedias[mediaId][config.mediaObj.mediaFilepath].match("<iframe")===null){
 
-                    content=DE.config.messageCode.pptHasNotUploaded;
+                    content=config.messageCode.pptHasNotUploaded;
                 }else{
-                    content=DE.storeManager.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath];
+                    content=storeManager.uploadedMedias[mediaId][config.mediaObj.mediaFilepath];
                 }
 
             }else{
                 content=target.attr("href");
-                if(content==DE.config.resultCode.pptx_upload_error){
-                    content=DE.config.messageCode.pptUploadError;
-                }else if(content==DE.config.resultCode.pptx_upload_wait){
-                    content=DE.config.messageCode.pptHasNotUploaded;
+                if(content==config.resultCode.pptx_upload_error){
+                    content=config.messageCode.pptUploadError;
+                }else if(content==config.resultCode.pptx_upload_wait){
+                    content=config.messageCode.pptHasNotUploaded;
                 }
 
-                if(mediaType==DE.config.uploadMediaTypes.localVideo){
+                if(mediaType==config.uploadMediaTypes.localVideo){
                     ext=content.substr(content.lastIndexOf(".")+1);
                 }
             }
 
             //ios移动设备上视频(mp4)使用新窗口播放
-            if(ext==="mp4"&&mediaType===DE.config.uploadMediaTypes.localVideo&&navigator.userAgent.match(/(iPad|iPhone|iPod)/g)!==null){
+            if(ext==="mp4"&&mediaType===config.uploadMediaTypes.localVideo&&navigator.userAgent.match(/(iPad|iPhone|iPod)/g)!==null){
                  window.open(content);
             }else{
                 //显示元素界面
@@ -913,7 +913,7 @@ DE.entityManager=(function(uiManager,menuManager){
          * @param {Object} target 点击的工具栏的a
          */
         entityToolbarHandler:function(target){
-            DE.uiManager.showLoading();
+            uiManager.showLoading();
             var handler=target.data("handler");
             if(handler=="edit"){
                 this.editEntity(target.attr("href"));
@@ -921,7 +921,7 @@ DE.entityManager=(function(uiManager,menuManager){
                 if(confirm("确定删除吗？")){
                     this.deleteEntity(target.attr("href"));
                 }else{
-                    DE.uiManager.hideLoading();
+                    uiManager.hideLoading();
                 }
             }else{
                 this.showOrHideEntity(target);
@@ -932,15 +932,15 @@ DE.entityManager=(function(uiManager,menuManager){
 
                 history.go(-1);
 
-                DE.uiManager.hideProjectDetail();
+                uiManager.hideProjectDetail();
             }else{
 
-                DE.menuManager.logoClickHandler();
+                menuManager.logoClickHandler();
             }
 
         },
         praiseClickHandler:function(){
-            if(!DE.storeManager.currentUser.userId){
+            if(!storeManager.currentUser.userId){
                 toLogin();
             }else{
                 this.handlerPraiseOrHonor();
@@ -950,8 +950,8 @@ DE.entityManager=(function(uiManager,menuManager){
             toLogin();
         },
         commentDeleteHandler:function(target){
-            DE.uiManager.showLoading();
-            DE.entityManager.deleteComment(target);
+            uiManager.showLoading();
+            entityManager.deleteComment(target);
         }
     }
-})(DE.uiManager,DE.menuManager);
+})(DE.config,DE.uiManager,DE.menuManager,DE.storeManager,DE.uploadManager,DE.loginManager);

@@ -63,7 +63,7 @@ DE.searchManager=(function(){
          * @param {String} href 需要设置的地址
          */
         searchHandler:function(href){
-            DE.historyManager.push(href); //由于有清空store的操作，需要最先执行
+            DE.historyManager.push(href,false); //push历史记录并清空store
             var array=href.split("/");
             var value=array[1];
             var searchUrlType=array[0];
@@ -77,7 +77,12 @@ DE.searchManager=(function(){
                 searchType=DE.config.entityTypes.resource;
             }
             DE.uiManager.showLoading();
-            DE.entityManager.getEntityBySearch(value,searchType,isTag,true,null);
+            DE.entityManager.getEntityBySearch({
+                content:value,
+                type:searchType,
+                isTag:isTag,
+                isFirst:true,
+                callback:null});
             $("#de_search_input").val("");
         },
 
@@ -90,7 +95,13 @@ DE.searchManager=(function(){
             //如果当前显示的类型和点击的按钮不一致，则要置换
             if(type!=DE.storeManager.currentSearch.currentSearchType){
                 DE.storeManager.searchLoadedCount=0;
-                DE.entityManager.getEntityBySearch(DE.storeManager.currentSearch.currentSearchValue,type,DE.storeManager.currentSearch.isTag,true);
+                DE.entityManager.getEntityBySearch({
+                    content:DE.storeManager.currentSearch.currentSearchValue,
+                    type:type,
+                    isTag:DE.storeManager.currentSearch.isTag,
+                    isFirst:true,
+                    callback:null
+                });
             }
 
         },

@@ -321,7 +321,7 @@ DE.userManager=(function(){
          */
         userClickHandler:function(href,callback){
             DE.uiManager.showLoading();
-            DE.historyManager.push(href);  //由于有清空store的操作，需要最先执行
+            DE.historyManager.push(href,false);  //push历史记录并清空store
             var array=href.split("/");
             var id=array[1];
 

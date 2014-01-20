@@ -960,6 +960,18 @@ DE.uploadManager=(function(){
             //防止重复提交
             DE.uiManager.showLoading();
             DE.uploadManager.ajaxUploadForm();
+        },
+        showUploadMenu:function(){
+            $("#zy_add_medias_button").hover(function(e){
+                $("#zy_add_media_menu").css("height","280px");
+            },function(e){
+                $("#zy_add_media_menu").css("height",0);
+            });
+            $("#zy_add_media_menu").hover(function(e){
+                $("#zy_add_media_menu").css("height","280px");
+            },function(e){
+                $("#zy_add_media_menu").css("height",0);
+            });
         }
     }
 })();
