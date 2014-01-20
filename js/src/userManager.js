@@ -581,7 +581,7 @@ DE.user=(function(){
 
 $(document).ready(function(){
     $(document).on("click","a.de_user_link",function(){
-        DE.user.userClickHandler($(this).attr("href"));
+        DE.user.userClickHandler($(this).attr("href"),null);
 
         return false;
     });

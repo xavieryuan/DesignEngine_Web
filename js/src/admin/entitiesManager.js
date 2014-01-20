@@ -6,14 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 var DE=DE||{};
-DE.comments=(function(){
+DE.entities=(function(){
 
     var ownTable=null;
     function createTable(){
         if(ownTable==null){
             ownTable=$("#grid").dataTable({
                 "bServerSide": true,
-                "sAjaxSource": DE.config.ajaxUrls.getAllComments,
+                "sAjaxSource": DE.config.ajaxUrls.getAllProjects,
                 "bInfo":false,
                 "bLengthChange": false,
                 "bFilter": false,
@@ -25,43 +25,46 @@ DE.comments=(function(){
                     "sUrl":"../../de_DE.txt"
                 },
                 "aoColumns": [
-                    { "mDataProp": "commentContent"},
-                    { "mDataProp": "useInfo",
-                        "fnRender":function(oObj) {
-                            return "<img src='"+oObj.aData.userProfileImg+"'><a title='"+oObj.aData.username+"' class='de_user_link' href='user/+"+oObj.aData.userId+"'>"+oObj.aData.username+"</a>";
-                        }
-                    },
-                    { "mDataProp": "projectInfo",
+                    { "mDataProp": "projectTitle",/*"sClass":"title",*/
                         "fnRender":function(oObj) {
                             return "<img src='"+oObj.aData.projectThumb+"'><a title='"+oObj.aData.projectTitle+"' class='de_entity_link' href='item/"+oObj.aData.projectID+"'>"+oObj.aData.projectTitle+"</a>";
                         }
                     },
-                    { "mDataProp": "commentTime"},
-                    { "mDataProp":"status",
+                    { "mDataProp": "user",
+                        "fnRender":function(oObj) {
+                            return "<img src='"+oObj.aData.userProfileImg+"'><a title='"+oObj.aData.username+"' class='de_user_link' href='user/+"+oObj.aData.userId+"'>"+oObj.aData.username+"</a>";
+                        }
+                    },
+                    { "mDataProp": "uploadTime"},
+                    { "mDataProp": "commentCount"},
+                    { "mDataProp": "praiseCount"},
+                    { "mDataProp": "honorCount"},
+                    { "mDataProp":"visible",
                         "fnRender":function(oObj) {
                             if(oObj.aData.visible==false){
-                                return "<input type='radio' class='showOrHideComment' data-target-visible='false' data-comment-id='"+oObj.aData.commentId+"' checked><span>隐藏</span>"+
-                                    "<input type='radio' class='showOrHideComment' data-target-visible='true' data-comment-id='"+oObj.aData.commentId+"'><span>显示</span>";
+                                return "<input type='radio' class='showOrHideEntity' data-target-visible='false' data-entity-id='"+oObj.aData.projectId+"' checked><span>隐藏</span>"+
+                                    "<input type='radio' class='showOrHideEntity' data-target-visible='true' data-entity-id='"+oObj.aData.projectId+"'><span>显示</span>";
                             }else{
-                                return "<input type='radio' class='showOrHideComment' data-target-visible='false' data-comment-id='"+oObj.aData.commentId+"'><span>隐藏</span>"+
-                                    "<input type='radio' class='showOrHideComment' data-target-visible='true' checked data-comment-id='"+oObj.aData.commentId+"'><span>显示</span>";
+                                return "<input type='radio' class='showOrHideEntity' data-target-visible='false' data-entity-id='"+oObj.aData.projectId+"'><span>隐藏</span>"+
+                                    "<input type='radio' class='showOrHideEntity' data-target-visible='true' checked data-entity-id='"+oObj.aData.projectId+"'><span>显示</span>";
                             }
 
                         }
                     },
                     { "mDataProp":"opt",
                         "fnRender":function(oObj) {
-                            return "<a class='deleteComment' data-entity-id='"+oObj.aData.postId+"' data-comment-id='"+oObj.aData.commentId+"' href='javascript:void(0)'>删除</a>";
+                            return "<a class='editEntity' href='edit/"+oObj.aData.projectId+"'>修改</a>|"+
+                                "<a class='deleteEntity' data-entity-id='"+oObj.aData.projectId+"' href='javascript:void(0)'>删除</a>";
                         }
                     }
                 ] ,
                 "fnServerData": function(sSource, aoData, fnCallback) {//回调函数
                     aoData.push({
                         "name":"searchValue",
-                        "value":$("#de_comment_search_input").val()
+                        "value":$("#de_entity_search_input").val()
                     },{
                         "name":"type",
-                        "value":$("#de_comment_search_type").val()
+                        "value":$("#de_entity_search_type").val()
                     });
                     $.ajax({
                         "dataType":'json',
@@ -85,7 +88,7 @@ DE.comments=(function(){
                     });
                 },
                 "fnDrawCallback":function(oSettings ){
-                    DE.UIManager.showScreen("#de_screen_manager_panel",{type:DE.config.manageTypes.comment});
+                    DE.UIManager.showScreen("#de_screen_manager_panel",{type:DE.config.manageTypes.entity});
                 },
                 "fnFormatNumber":function(iIn){
                     return iIn;
@@ -105,52 +108,33 @@ DE.comments=(function(){
 
 $(document).ready(function(){
 
-    //DE.comments.createTable();
+    //DE.entities.createTable();
 
 
 
     //搜索事件
-    $("#de_comment_search_btn").click(function(){
+    $("#de_entity_search_btn").click(function(){
 
         //重绘表格
-        DE.comments.ownTable.fnSettings()._iDisplayStart=0;//从第一页开始
-        DE.comments.ownTable.fnDraw();
+        DE.entities.ownTable.fnSettings()._iDisplayStart=0;//从第一页开始
+        DE.entities.ownTable.fnDraw();
     });
 
     //ajax删除
-    $(document).on("click","a.showOrHideComment",function(){
-
-        var commentId=$(this).data("comment-id");
-        $.ajax({
-            url:DE.config.ajaxUrls.showOrHideComment,
-            dataType:"json",
-            type:"post",
-            data:{
-                commentId:commentId
-            },
-            success:function(data){
-                if(data.success){
-
-                    //重绘表格
-                    DE.comments.ownTable.fnDraw();
-
-                }else{
-
-                }
-            },
-            error:function(){
-                DE.config.ajaxErrorHandler();
-            }
-        })
+    $(document).on("click","a.showOrHideEntity",function(){
+        DE.entity.showOrHideEntity($(this));
     });
 
+    //ajax删除
+    $(document).on("click","a.editEntity",function(){
+        DE.entity.editEntity($(this).attr("href"));
+    });
 
     //ajax删除
-    $(document).on("click","a.deleteComment",function(){
+    $(document).on("click","a.deleteEntity",function(){
         if(confirm("确定删除吗？")){
-            var commentId=$(this).data("comment-id"),
-                postId=$(this).data("entity-id");
-            DE.entity.deleteComment(commentId,postId,null);
+            var entityId=$(this).data("entity-id");
+            DE.entity.deleteEntity(entityId);
         }
 
     });

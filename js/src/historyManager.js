@@ -106,6 +106,18 @@ DE.history=(function(){
                 }
 
                 break;
+            case "manage":
+                switch (value){
+                    case "user":
+
+                        break;
+                    case "project":
+
+                        break;
+                    case "comment":
+
+                        break;
+                }
             default :
 
                 //默认请求首页作品数据
@@ -152,13 +164,15 @@ DE.history=(function(){
                     var href=event.state.href;
                     if(typeof event.state.oldHref!=="undefined"){
 
-                        //前进或者后退到详情页,不管如何都需要重新处理数据
+                        //前进或者后退到详情页,带有oldHref,不管如何都需要重新处理数据
                         obj=handlerHref(href);
                     }else{
 
                         //由于存在详情页回退是不需要刷新数据的，这里应该要判断是否加载了数据
                         if(DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
-                            DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&DE.store.searchLoadedCount===0){
+                            DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&
+                            DE.store.searchLoadedCount===0&&DE.entities.ownTable===null&&
+                            DE.comments.ownTable===null){
 
                             if(href==baseURI){
                                 obj={type:null,value:null};

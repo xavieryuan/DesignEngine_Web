@@ -176,18 +176,40 @@ DE.menu=(function(){
 
         /**
          * 侧边栏菜单点击事件
-         * @param {String} id 点击的菜单id
+         * @param {String} type 点击的菜单类型
          */
-        extMenuClickHandler:function(id){
-            if(id=="de_btn_sign_out"){
-                DE.login.logout();
-            }else if(id=="de_btn_reset_pwd"){
-                DE.UIManager.showRestPwdPopout();
-            }else if(id=="de_btn_edit_profile"){
-                DE.user.accountHasBind();
-                DE.user.setProfile();
-                DE.UIManager.showEditProfilePopout();
+        extMenuClickHandler:function(type){
+            switch (type){
+                case "changePwd":
+                    DE.UIManager.showRestPwdPopout();
 
+                    break;
+                case "exit":
+                    DE.login.logout();
+
+                    break;
+                case "changeProfile":
+                    DE.user.accountHasBind();
+                    DE.user.setProfile();
+                    DE.UIManager.showEditProfilePopout();
+
+                    break;
+                case "userHome":
+                    DE.user.userClickHandler($(this).attr("href"),null);
+
+                    break;
+                case "userManage":
+                    DE.users.createTable();
+
+                    break;
+                case "entityManage":
+                    DE.entities.createTable();
+
+                    break;
+                case "commentManage":
+                    DE.comments.createTable();
+
+                    break;
             }
         },
 
@@ -338,7 +360,7 @@ $(document).ready(function(){
 
     //用户菜单（ext菜单项按钮点击事件）
     $(document).on("click","#de_ext_nav a:not('.de_user_link')",function(){
-        DE.menu.extMenuClickHandler($(this).attr("id"));
+        DE.menu.extMenuClickHandler($(this).data("type"));
 
         return false;
     });

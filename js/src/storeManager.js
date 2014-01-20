@@ -107,37 +107,107 @@ DE.store={
         var resourceList=$("#de_resource_list");
         var hotUserList=$("#de_hot_user_list");
         var userEntityList=$("#de_user_uploads");
-        if(notClear=="project"){
-            searchList.html("");
-            resourceList.html("");
-            hotUserList.html("");
-            userEntityList.html("");
-        }else if(notClear=="hotUser"){
-            searchList.html("");
-            projectList.html("");
-            resourceList.html("");
-            userEntityList.html("");
-        }else if(notClear=="resource"){
-            searchList.html("");
-            projectList.html("");
-            hotUserList.html("");
-            userEntityList.html("");
-        }else if(notClear=="search"){
-            projectList.html("");
-            resourceList.html("");
-            hotUserList.html("");
-            userEntityList.html("");
-        }else if(notClear=="user"){
-            projectList.html("");
-            resourceList.html("");
-            hotUserList.html("");
-            searchList.html("");
-        }else if(notClear=="upload"){
-            projectList.html("");
-            resourceList.html("");
-            hotUserList.html("");
-            searchList.html("");
-            userEntityList.html("");
+        var userTable=DE.users.ownTable;
+        var entityTable=DE.entities.ownTable;
+        var commentTable=DE.comments.ownTable;
+        switch (notClear){
+            case "project":
+                searchList.html("");
+                resourceList.html("");
+                hotUserList.html("");
+                userEntityList.html("");
+                userTable.destroyTable();
+                entityTable.destroyTable();
+                commentTable.destroyTable();
+
+                break;
+            case "hotUser":
+                searchList.html("");
+                projectList.html("");
+                resourceList.html("");
+                userEntityList.html("");
+                userTable.destroyTable();
+                entityTable.destroyTable();
+                commentTable.destroyTable();
+
+                break;
+            case "resource":
+                searchList.html("");
+                projectList.html("");
+                hotUserList.html("");
+                userEntityList.html("");
+                userTable.destroyTable();
+                entityTable.destroyTable();
+                commentTable.destroyTable();
+
+                break;
+            case "search":
+                projectList.html("");
+                resourceList.html("");
+                hotUserList.html("");
+                userEntityList.html("");
+                userTable.destroyTable();
+                entityTable.destroyTable();
+                commentTable.destroyTable();
+                userTable.destroyTable();
+                entityTable.destroyTable();
+                commentTable.destroyTable();
+
+                break;
+            case "user":
+                projectList.html("");
+                resourceList.html("");
+                hotUserList.html("");
+                searchList.html("");
+                userTable.destroyTable();
+                entityTable.destroyTable();
+                commentTable.destroyTable();
+                userTable.destroyTable();
+                entityTable.destroyTable();
+                commentTable.destroyTable();
+
+                break;
+            case "upload":
+                projectList.html("");
+                resourceList.html("");
+                hotUserList.html("");
+                searchList.html("");
+                userEntityList.html("");
+                userTable.destroyTable();
+                entityTable.destroyTable();
+                commentTable.destroyTable();
+
+                break;
+            case "userManage":
+                projectList.html("");
+                resourceList.html("");
+                hotUserList.html("");
+                searchList.html("");
+                userEntityList.html("");
+                entityTable.destroyTable();
+                commentTable.destroyTable();
+
+                break;
+            case "entityManage":
+                projectList.html("");
+                resourceList.html("");
+                hotUserList.html("");
+                searchList.html("");
+                userEntityList.html("");
+                userTable.destroyTable();
+                commentTable.destroyTable();
+
+                break;
+            case "commentManage":
+                projectList.html("");
+                resourceList.html("");
+                hotUserList.html("");
+                searchList.html("");
+                userEntityList.html("");
+                userTable.destroyTable();
+                entityTable.destroyTable();
+
+                break;
         }
 
         //判断是否是修改，如果不是清除上传界面的数据

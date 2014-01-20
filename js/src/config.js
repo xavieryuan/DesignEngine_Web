@@ -48,6 +48,9 @@ DE.config={
         enabled:"enabled",
         disabled:"disabled"
     },
+    entityStatus:{
+
+    },
     scrollScreenType:{ //当前在哪个页面滚动
         hotUser:"hotUser",
         project:"project",
@@ -169,7 +172,7 @@ DE.config={
         //getSimilarEntities:"data/similarEntities.json", //获取相似作品
         getComments:"post/comments", //获取评论
         postComment:"post/add-comment", //发表评论
-        changeCommentStatus:"#",
+        showOrHideComment:"#",
         deleteComment:"post/remove-comment", //删除评论
         getHotUsersOrder:"account/rank",
         getHotUsers:"account/hot", //获取人点用户
@@ -196,13 +199,17 @@ DE.config={
         getAllUsers:"#",
         getAllComments:"#",
         getAllEntities:"#",
-        changeUserStatus:"#",
-        deleteUser:"#"
+        changeUserStatus:"#"
 
     },
     entityTypes:{  //实体类型
         project:"project",
         resource:"resource"
+    },
+    manageTypes:{
+        user:"users",
+        entity:"entities",
+        comment:"comments"
     },
     searchUrlType:{
         search:"search",
@@ -219,7 +226,10 @@ DE.config={
         search:"search/searchContent", //搜索页
         uploadEntity:"upload/entity",  //上传页
         editEntity:"edit/entityId",  //修改页
-        entityDetail:"item/itemId"
+        entityDetail:"item/itemId",
+        manageUsers:"manage/user",
+        manageProjects:"manage/project",
+        manageComments:"manage/comment"
     },
     topMenus:{ //顶部菜单类型
         user:"user", //热门用户,不写为hotUser是为了配合url地址

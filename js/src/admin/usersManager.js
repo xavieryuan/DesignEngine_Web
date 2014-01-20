@@ -25,53 +25,46 @@ DE.users=(function(){
                     "sUrl":"../../de_DE.txt"
                 },
                 "aoColumns": [
-                    {"mDataProp": "check",
-                        "fnRender":function(oObj){
-                            return "<input type='checkbox' class='checkChild'> ";
-                        }
-                    },
-                    { "mDataProp": "title","sClass":"title",
+                    { "mDataProp": "username",/*"sClass":"title",*/
                         "fnRender":function(oObj) {
-                            return "<span><img src='"+oObj.aData.masterThumb+"'></span><span title='"+oObj.aData.title+"' class='titleSpan'>"+oObj.aData.title+"</span>";
+                            return "<img src='"+oObj.aData.userProfileImg+"'><a title='"+oObj.aData.username+"' class='de_user_link' href='user/+"+oObj.aData.userId+"'>"+oObj.aData.username+"</a>";
                         }
                     },
-                    { "mDataProp": "worksId"},
-                    { "mDataProp": "participantEmail",
-                        "fnRender":function(oObj){
-                            return "<span title='"+oObj.aData.participantEmail+"' class='emailSpan'>"+oObj.aData.participantEmail+"</span>";
-                        }
-                    },
-                    { "mDataProp": "totalScore",
-                        "fnRender":function(oObj){
-                            //这里scorebox的top值从290开始往上加90,要加载好后设置，在table的回调函数里面设置
-                            return '<div ><a class="score">'+oObj.aData.totalScore+'</a><div class="scorebox"><div class="scoreclose"><a></a></div>'+
-                                '<div class="scoretitle"><span>当前评阅总分</span><b>'+oObj.aData.totalScore+'</b></div>'+
-                                '<div class="scroll"><table cellpadding="0" cellspacing="0" class="smalltable"><tbody><tr class="title"><th>评阅人</th><th>评阅时间</th><th>评分</th></tr></tbody></table></div></div></div>';
-                        }
-                    },
-                    { "mDataProp": "status",
-                        "fnRender":function(oObj){
-                            return '<select class="changeStatus"><option value="PENDING">待审查</option><option value="UNQUALIFIED">资格审查未通过</option><option value="QUALIFIED">资格审查通过</option><option value="PRELIMINARY_QUALIFIED">初选入围</option><option value="PRELIMINARY_UNQUALIFIED">初选未入围</option><option value="QUARTER_QUALIFIED">复选入围</option><option value="QUARTER_UNQUALIFIED">复选未入围</option></select>';
-                        }
-                    },
-                    { "mDataProp":"opt",
+                    { "mDataProp": "projectCount"},
+                    { "mDataProp": "commentCount"},
+                    { "mDataProp": "honorCount"},
+                    { "mDataProp":"status",
                         "fnRender":function(oObj) {
-                            return "<a target='_blank' href='"+header+"/web/admin/"+adminId+"/works/"+lotusPrizeId+"/participant/"+oObj.aData.participantId+"/"+oObj.aData.worksId+"?_worksId="+oObj.aData.worksId+"'>预览</a>"+
-                                "<a target='_blank' href='"+header+"/web/admin/"+adminId+"/works/"+lotusPrizeId+"/edit?participantId="+oObj.aData.participantId+"&_worksId="+oObj.aData.worksId+"&categoryId="+oObj.aData.categoryId+"'>编辑</a>"+
-                                "<a href='"+header+"/web/admin/"+adminId+"/works/"+lotusPrizeId+"/participant/"+oObj.aData.participantId+"/"+oObj.aData.worksId+"/download?_worksId="+oObj.aData.worksId+"'>导出PDF</a><a class='delete' href='javascript:void(0)'>删除</a>";
+                            if(oObj.aData.status===DE.config.userStatus.disabled){
+                                return "<input type='radio' class='setUserStatus' data-user-id='"+oObj.aData.userId+"' checked><span>禁言</span>"+
+                                    "<input type='radio' class='setUserStatus' data-user-id='"+oObj.aData.userId+"'><span>激活</span>";
+                            }else{
+                                return "<input type='radio' class='setUserStatus' data-user-id='"+oObj.aData.userId+"'><span>禁言</span>"+
+                                    "<input type='radio' class='setUserStatus' data-user-id='"+oObj.aData.userId+"' checked><span>激活</span>";
+                            }
+
+                        }
+                    },
+                    { "mDataProp":"roles",
+                        "fnRender":function(oObj) {
+                            if(oObj.aData.roles[0]===DE.config.roles.vip){
+                                return "<input type='radio' data-user-id='"+oObj.aData.userId+"' class='setUserRole'><span>标准</span>"+
+                                    "<input type='radio' data-user-id='"+oObj.aData.userId+"' class='setUserRole' checked><span>VIP</span>";
+                            }else{
+                                return "<input type='radio' data-user-id='"+oObj.aData.userId+"' class='setUserRole' checked><span>标准</span>"+
+                                    "<input type='radio' data-user-id='"+oObj.aData.userId+"' class='setUserRole'><span>VIP</span>";
+                            }
+
                         }
                     }
                 ] ,
                 "fnServerData": function(sSource, aoData, fnCallback) {//回调函数
                     aoData.push({
-                        "name":"title",
-                        "value":$("#search").val()=="搜索作品（作品名称）"?"":$("#search").val()
+                        "name":"searchValue",
+                        "value":$("#de_user_search_input").val()
                     },{
-                        "name":"categoryId",
-                        "value":categoryId
-                    },{
-                        "name":"workStatus",
-                        "value":$("#state").val()
+                        "name":"type",
+                        "value":$("#de_user_search_type").val()
                     });
                     $.ajax({
                         "dataType":'json',
@@ -82,31 +75,20 @@ DE.users=(function(){
                             var json = {
                                 "sEcho" : response.sEcho
                             };
-                            statusList=[];
-                            for (var i = 0, iLen = response.aaData.length; i < iLen; i++) {
-                                response.aaData[i].check="check";
+                            /*for (var i = 0, iLen = response.aaData.length; i < iLen; i++) {
                                 response.aaData[i].opt="opt";
-                                //记录下所有的状态信息，表格画完后再显示
-                                statusList.push(response.aaData[i].status);
-                            }
+                            }*/
 
                             json.aaData=response.aaData;
                             json.iTotalRecords = response.iTotalRecords;
                             json.iTotalDisplayRecords = response.iTotalDisplayedRecords;
                             fnCallback(json);
-                            $("#checkAll").removeAttr("checked");//去掉全选按钮的选中状态
+
                         }
                     });
                 },
-                "fnDrawCallback": function(oSettings, json) {
-                    //在这里设置scorebox的top值
-                    $(".scorebox").each(function(index){
-                        $(this).css("top",50+index*120);
-                    });
-                    //显示目前状态
-                    $("table select").each(function(index){
-                        $(this).val(statusList[index]);
-                    });
+                "fnDrawCallback":function(oSettings ){
+                    DE.UIManager.showScreen("#de_screen_manager_panel",{type:DE.config.manageTypes.user});
                 },
                 "fnFormatNumber":function(iIn){
                     return iIn;
@@ -115,11 +97,11 @@ DE.users=(function(){
         }
     }
     return {
-        getTable:function(){
-            return ownTable;
-        },
-        initTable:function(){
-            createTable();
+        ownTable:ownTable,
+        createTable:createTable,
+        destroyTable:function(){
+            ownTable.fnDestroy();
+            ownTable=null;
         }
     }
 })();
@@ -128,63 +110,66 @@ $(document).ready(function(){
 
     //DE.users.createTable();
 
-    //更改状态
-    $(".changeStatus").live("change",function(){
-        var id=$(this).parents("tr").find("td:eq(2)").text();
-        var selectValue=$(this).val();
+    //搜索事件
+    $("#de_user_search_btn").click(function(){
+
+        //重绘表格
+        DE.users.ownTable.fnSettings()._iDisplayStart=0;//从第一页开始
+        DE.users.ownTable.fnDraw();
+    });
+
+    //ajax删除
+    $(document).on("click","a.setUserStatus",function(){
+
+        var userId=$(this).data("user-id");
         $.ajax({
             url:DE.config.ajaxUrls.changeUserStatus,
             dataType:"json",
             type:"post",
             data:{
-                worksIdString:id,
-                status:selectValue
+                userId:userId
             },
             success:function(data){
                 if(data.success){
-                    //$().toastmessage("showSuccessToast","标记成功");
-                    DE.users.getTable().fnDraw();
-                }else{
-                    //$().toastmessage("showErrorToast","标记失败");
-                }
 
+                    //重绘表格
+                    DE.users.ownTable.fnDraw();
+
+                }else{
+
+                }
+            },
+            error:function(){
+                DE.config.ajaxErrorHandler();
             }
         })
     });
 
-    //搜索事件
-    $("#search").click(function(){
-        $(this).val("");
-    }).keydown(function(e){
-        if(e.keyCode=="13"){
-            //重绘表格
-            DE.users.getTable().fnSettings()._iDisplayStart=0;//从第一页开始
-            DE.users.getTable().fnDraw();
-        }
-    });
-
     //ajax删除
-    $("a.delete").live("click",function(){
-        if(confirm("确定删除吗？")){
-            var id=$(this).parents("tr").find("td:eq(2)").text();
-            $.ajax({
-                url:header+"/web/admin/"+adminId+"/works/"+lotusPrizeId+"/remove",
-                dataType:"json",
-                type:"post",
-                data:{
-                    _worksId:id
-                },
-                success:function(data){
-                    if(data.success){
-                        //重绘表格
-                        DE.users.getTable().fnDraw();
-                        //$().toastmessage("showSuccessToast","删除成功");
-                    }else{
-                        //$().toastmessage("showErrorToast","删除失败");
-                    }
+    $(document).on("click","a.setUserRole",function(){
+
+        var userId=$(this).data("user-id");
+        $.ajax({
+            url:DE.config.ajaxUrls.setUserRole,
+            dataType:"json",
+            type:"post",
+            data:{
+                userId:userId
+            },
+            success:function(data){
+                if(data.success){
+
+                    //重绘表格
+                    DE.users.ownTable.fnDraw();
+
+                }else{
+
                 }
-            })
-        }
+            },
+            error:function(){
+                DE.config.ajaxErrorHandler();
+            }
+        })
 
     });
 

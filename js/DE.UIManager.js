@@ -75,6 +75,16 @@ DE.UIManager=function(){
             DE.store.clearScreenData("user");
         }else if(screenLink=="#de_screen_upload"){
             DE.store.clearScreenData("upload");
+        }else if(screenLink==="#de_screen_manager_panel"){
+
+            //管理界面
+            if(paraObj&&paraObj.type===DE.config.manageTypes.user){
+                DE.store.clearScreenData("userManage");
+            }else if(paraObj&&paraObj.type===DE.config.manageTypes.entity){
+                DE.store.clearScreenData("entityManage");
+            }else if(paraObj&&paraObj.type===DE.config.manageTypes.comment){
+                DE.store.clearScreenData("commentManage");
+            }
         }
         $(window).scrollTop(0);
 
@@ -101,7 +111,7 @@ DE.UIManager=function(){
 	return{ 
 		//公共属性及方法 开始
 		showScreen:function(screenLink,paraObj){		
-			gotoScreen(screenLink)
+			gotoScreen(screenLink,paraObj)
 		},
 		showSearchScreen:function(keyword,type){
 			gotoScreen("#de_screen_search_result",{keyword:keyword,type:type})

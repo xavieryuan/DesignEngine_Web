@@ -438,28 +438,36 @@ DE.entity=(function(){
         },
 
         /**
-         * 查看作品（资源）详情页删除评论
+         * 查看作品（资源）详情页删除评论,分两种情况，一种是在详情页，一种是在管理页
          */
-        deleteComment:function(target){
+        deleteComment:function(commentId,postId,target){
             $.ajax({
                 url:DE.config.ajaxUrls.deleteComment,
                 type:"post",
                 data:{
-                    commentId:target.attr("href"),
-                    postId:DE.store.currentShowEntity.id
+                    commentId:commentId,
+                    postId:postId
                 },
                 dataType:"json",
                 success:function(data){
                     if(data.success&&data.resultCode==DE.config.resultCode.comment_remove_succ){
-                        target.parents("li").remove();
-                        DE.UIManager.hideLoading();
 
-                        //更新显示的数据
-                        var commentCountEl=$("#commentsCount");
-                        var count=parseInt(commentCountEl.text())-1;
-                        commentCountEl.text(count);
-                        $(".de_entity_link[href='item/"+DE.store.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
+                        if(target){
+                            target.parents("li").remove();
+                            DE.UIManager.hideLoading();
 
+                            //更新显示的数据
+                            var commentCountEl=$("#commentsCount");
+                            var count=parseInt(commentCountEl.text())-1;
+                            commentCountEl.text(count);
+                            $(".de_entity_link[href='item/"+DE.store.currentShowEntity.id+"']").parents("li").find(".comments").text(count);
+
+                        }
+
+                        //更新管理界面
+                        if(DE.comments.ownTable){
+                            DE.comments.ownTable.fnDraw();
+                        }
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
                     }
@@ -522,6 +530,11 @@ DE.entity=(function(){
                         $(".de_entity_link[href='item/"+id+"']").parents("li").remove();
                         var uploadCountEl=$(".uploads");
                         uploadCountEl.text(parseInt(uploadCountEl.text())-1);
+
+                        //更新管理界面
+                        if(DE.entities.ownTable){
+                            DE.entities.ownTable.fnDraw();
+                        }
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
                     }
@@ -973,7 +986,7 @@ $(document).ready(function(){
     //删除评论
     $(document).on("click","a.de_delete_comment",function(){
         DE.UIManager.showLoading();
-        DE.entity.deleteComment($(this));
+        DE.entity.deleteComment($(this).attr("href"),DE.store.currentShowEntity.id,$(this));
 
         return false;
     });
