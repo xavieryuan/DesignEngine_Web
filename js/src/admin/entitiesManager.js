@@ -7,101 +7,109 @@
  */
 var DE=DE||{};
 DE.entities=(function(){
-
-    var ownTable=null;
     function createTable(){
-        if(ownTable==null){
-            ownTable=$("#grid").dataTable({
-                "bServerSide": true,
-                "sAjaxSource": DE.config.ajaxUrls.getAllProjects,
-                "bInfo":false,
-                "bLengthChange": false,
-                "bFilter": false,
-                "bSort":false,
-                "bAutoWidth": false,
-                "iDisplayLength":DE.config.perLoadCount,
-                "sPaginationType":"full_numbers",
-                "oLanguage": {
-                    "sUrl":"../../de_DE.txt"
-                },
-                "aoColumns": [
-                    { "mDataProp": "projectTitle",/*"sClass":"title",*/
-                        "fnRender":function(oObj) {
-                            return "<img src='"+oObj.aData.projectThumb+"'><a title='"+oObj.aData.projectTitle+"' class='de_entity_link' href='item/"+oObj.aData.projectID+"'>"+oObj.aData.projectTitle+"</a>";
-                        }
-                    },
-                    { "mDataProp": "user",
-                        "fnRender":function(oObj) {
-                            return "<img src='"+oObj.aData.userProfileImg+"'><a title='"+oObj.aData.username+"' class='de_user_link' href='user/+"+oObj.aData.userId+"'>"+oObj.aData.username+"</a>";
-                        }
-                    },
-                    { "mDataProp": "uploadTime"},
-                    { "mDataProp": "commentCount"},
-                    { "mDataProp": "praiseCount"},
-                    { "mDataProp": "honorCount"},
-                    { "mDataProp":"visible",
-                        "fnRender":function(oObj) {
-                            if(oObj.aData.visible==false){
-                                return "<input type='radio' class='showOrHideEntity' data-target-visible='false' data-entity-id='"+oObj.aData.projectId+"' checked><span>隐藏</span>"+
-                                    "<input type='radio' class='showOrHideEntity' data-target-visible='true' data-entity-id='"+oObj.aData.projectId+"'><span>显示</span>";
-                            }else{
-                                return "<input type='radio' class='showOrHideEntity' data-target-visible='false' data-entity-id='"+oObj.aData.projectId+"'><span>隐藏</span>"+
-                                    "<input type='radio' class='showOrHideEntity' data-target-visible='true' checked data-entity-id='"+oObj.aData.projectId+"'><span>显示</span>";
-                            }
-
-                        }
-                    },
-                    { "mDataProp":"opt",
-                        "fnRender":function(oObj) {
-                            return "<a class='editEntity' href='edit/"+oObj.aData.projectId+"'>修改</a>|"+
-                                "<a class='deleteEntity' data-entity-id='"+oObj.aData.projectId+"' href='javascript:void(0)'>删除</a>";
-                        }
+        var ownTable=$("#de_entities_grid").dataTable({
+            "bServerSide": true,
+            "sAjaxSource": DE.config.ajaxUrls.getAllEntities,
+            "bInfo":false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort":false,
+            "bAutoWidth": false,
+            "iDisplayLength":DE.config.perLoadCount,
+            "sPaginationType":"full_numbers",
+            "oLanguage": {
+                "sUrl":"js/de_DE.txt"
+            },
+            "aoColumns": [
+                { "mDataProp": "postTitle","sClass":"title",
+                    "fnRender":function(oObj) {
+                        return "<img src='"+oObj.aData.postThumb+"'><a title='"+oObj.aData.postTitle+
+                            "' class='de_entity_link' href='item/"+oObj.aData.postId+"'>"+oObj.aData.postTitle+"</a>";
                     }
-                ] ,
-                "fnServerData": function(sSource, aoData, fnCallback) {//回调函数
-                    aoData.push({
-                        "name":"searchValue",
-                        "value":$("#de_entity_search_input").val()
-                    },{
-                        "name":"type",
-                        "value":$("#de_entity_search_type").val()
-                    });
-                    $.ajax({
-                        "dataType":'json',
-                        "type":"POST",
-                        "url":sSource,
-                        "data":aoData,
-                        "success": function (response) {
-                            var json = {
-                                "sEcho" : response.sEcho
-                            };
-                            for (var i = 0, iLen = response.aaData.length; i < iLen; i++) {
-                                response.aaData[i].opt="opt";
-                            }
-
-                            json.aaData=response.aaData;
-                            json.iTotalRecords = response.iTotalRecords;
-                            json.iTotalDisplayRecords = response.iTotalDisplayedRecords;
-                            fnCallback(json);
-
+                },
+                { "mDataProp": "userName","sClass":"title",
+                    "fnRender":function(oObj) {
+                        return "<img src='"+oObj.aData.userProfileImg+"'><a title='"+oObj.aData.userName+
+                            "' class='de_user_link' href='user/"+oObj.aData.userId+"'>"+oObj.aData.userName+"</a>";
+                    }
+                },
+                { "mDataProp": "postDate"},
+                { "mDataProp": "postCommentCount"},
+                { "mDataProp": "postPraiseCount"},
+                { "mDataProp": "postHonorCount"},
+                { "mDataProp":"postVisible",
+                    "fnRender":function(oObj) {
+                        if(oObj.aData.postVisible===false){
+                            return "<input type='radio' name='visible"+oObj.aData.postId+"' data-visible='false' class='showOrHideEntity' value='false' data-entity-id='"+oObj.aData.postId+"' checked><span>隐藏</span>"+
+                                "<input type='radio' name='visible"+oObj.aData.postId+"' data-visible='false' class='showOrHideEntity' value='true' data-entity-id='"+oObj.aData.postId+"'><span>显示</span>";
+                        }else{
+                            return "<input type='radio' name='visible"+oObj.aData.postId+"' data-visible='true' class='showOrHideEntity' value='false' data-entity-id='"+oObj.aData.postId+"'><span>隐藏</span>"+
+                                "<input type='radio' name='visible"+oObj.aData.postId+"' data-visible='true' class='showOrHideEntity' value='true' checked data-entity-id='"+oObj.aData.postId+"'><span>显示</span>";
                         }
-                    });
+
+                    }
                 },
-                "fnDrawCallback":function(oSettings ){
-                    DE.UIManager.showScreen("#de_screen_manager_panel",{type:DE.config.manageTypes.entity});
-                },
-                "fnFormatNumber":function(iIn){
-                    return iIn;
+                { "mDataProp":"opt",
+                    "fnRender":function(oObj) {
+                        return "<a class='editEntity' href='edit/"+oObj.aData.postId+"'>修改</a>|"+
+                            "<a class='deleteEntity' data-entity-id='"+oObj.aData.postId+"' href='javascript:void(0)'>删除</a>";
+                    }
                 }
-            });
-        }
+            ] ,
+            "fnServerData": function(sSource, aoData, fnCallback) {
+                //回调函数
+                DE.UIManager.showLoading();
+                aoData.push({
+                    "name":"searchValue",
+                    "value":$("#de_entity_search_input").val()
+                },{
+                    "name":"searchType",
+                    "value":$("#de_entity_search_type").val()
+                });
+                $.ajax({
+                    "dataType":'json',
+                    "type":"POST",
+                    "url":sSource,
+                    "data":aoData,
+                    "success": function (response) {
+                        var json = {
+                            "sEcho" : response.sEcho
+                        };
+                        for (var i = 0, iLen = response.aaData.length; i < iLen; i++) {
+                            response.aaData[i].opt="opt";
+                        }
+
+                        json.aaData=response.aaData;
+                        json.iTotalRecords = response.iTotalRecords;
+                        json.iTotalDisplayRecords = response.iTotalDisplayedRecords;
+                        fnCallback(json);
+
+                    }
+                });
+            },
+            "fnDrawCallback":function(oSettings ){
+                DE.UIManager.showScreen("#de_screen_manager_panel",{type:DE.config.manageTypes.entity});
+            },
+            "fnFormatNumber":function(iIn){
+                return iIn;
+            }
+        });
+
+
+        return ownTable;
     }
     return {
-        ownTable:ownTable,
-        createTable:createTable,
+        ownTable:null,
+        createTable:function(){
+            this.ownTable=createTable();
+        },
         destroyTable:function(){
-            ownTable.fnDestroy();
-            ownTable=null;
+            if(this.ownTable){
+                this.ownTable.fnDestroy();
+                this.ownTable.find("tbody").html("");
+                this.ownTable=null;
+            }
         }
     }
 })();
@@ -121,19 +129,22 @@ $(document).ready(function(){
     });
 
     //ajax删除
-    $(document).on("click","a.showOrHideEntity",function(){
-        DE.entity.showOrHideEntity($(this));
+    $(document).on("click",".showOrHideEntity",function(){
+        DE.UIManager.showLoading();
+        DE.entity.showOrHideEntity($(this),true);
     });
 
     //ajax删除
     $(document).on("click","a.editEntity",function(){
         DE.entity.editEntity($(this).attr("href"));
+        return false;
     });
 
     //ajax删除
     $(document).on("click","a.deleteEntity",function(){
         if(confirm("确定删除吗？")){
             var entityId=$(this).data("entity-id");
+            DE.UIManager.showLoading();
             DE.entity.deleteEntity(entityId);
         }
 

@@ -26,8 +26,6 @@ DE.history=(function(){
     function handler(type,value,oldHref,callback){
 
         DE.store.clearStore();
-        DE.upload.clearEditData();
-        //DE.store.clearCurrentUser();
         DE.UIManager.showLoading();
 
         switch (type){
@@ -106,18 +104,23 @@ DE.history=(function(){
                 }
 
                 break;
-            case "manage":
+            case "adminhome":
                 switch (value){
-                    case "user":
+                    case "users":
+                        DE.users.createTable();
 
                         break;
-                    case "project":
+                    case "items":
+                        DE.entities.createTable();
 
                         break;
-                    case "comment":
+                    case "comments":
+                        DE.comments.createTable();
 
                         break;
                 }
+
+                break;
             default :
 
                 //默认请求首页作品数据
@@ -169,16 +172,20 @@ DE.history=(function(){
                     }else{
 
                         //由于存在详情页回退是不需要刷新数据的，这里应该要判断是否加载了数据
-                        if(DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
+                        if(!DE.store.currentShowEntity.id||(DE.store.currentShowEntity.id&&DE.store.userEntitiesShowCount===0&&DE.store.projectLoadedId===0&&
                             DE.store.resourceLoadedId===0&&DE.store.hotUserLoadedCount===0&&
                             DE.store.searchLoadedCount===0&&DE.entities.ownTable===null&&
-                            DE.comments.ownTable===null){
+                            DE.comments.ownTable===null)){
 
                             if(href==baseURI){
                                 obj={type:null,value:null};
                             }else{
                                 obj=handlerHref(href);
                             }
+                        }else{
+
+                            //如果不进入数据加载handler，那么需要清除掉显示的实体的状态
+                            DE.store.clearCurrentShowEntity();
                         }
                     }
 

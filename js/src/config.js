@@ -48,8 +48,10 @@ DE.config={
         enabled:"enabled",
         disabled:"disabled"
     },
-    entityStatus:{
-
+    emailStatus:{
+        pending:"pending",
+        invalid:"invalid",
+        actived:"actived"
     },
     scrollScreenType:{ //当前在哪个页面滚动
         hotUser:"hotUser",
@@ -121,18 +123,15 @@ DE.config={
         honor_remove_succ:"honor_remove_succ",
         comment_add_succ:"comment_add_succ",
         comment_remove_succ:"comment_remove_succ",
+        comment_visible_succ:"comment_visible_succ",
         password_change_succ:"password_change_succ",
         password_reset_succ:"password_reset_submit_succ",
         password_reset_invalid_email:"password_reset_invalid_email",
         account_update_succ:"account_update_succ",
         unauthorized_operation:"unauthorized_operation",
         pptx_upload_error:"pptx_upload_error",
-        pptx_upload_wait:"pptx_upload_wait",
-        email_status:{
-            pending:"pending",
-            invalid:"invalid",
-            actived:"actived"
-        }
+        pptx_upload_wait:"pptx_upload_wait"
+
     },
     errorCode:{
         captcha_unmatches:"captcha_unmatches",
@@ -172,7 +171,7 @@ DE.config={
         //getSimilarEntities:"data/similarEntities.json", //获取相似作品
         getComments:"post/comments", //获取评论
         postComment:"post/add-comment", //发表评论
-        showOrHideComment:"#",
+        showOrHideComment:"admin/toggle-post-comment",
         deleteComment:"post/remove-comment", //删除评论
         getHotUsersOrder:"account/rank",
         getHotUsers:"account/hot", //获取人点用户
@@ -196,10 +195,11 @@ DE.config={
         usernameValidate:"account-fullname-unique",
         termSuggest:"query/termSuggest",
         searchSuggest:"query/searchSuggest",
-        getAllUsers:"#",
-        getAllComments:"#",
-        getAllEntities:"#",
-        changeUserStatus:"#"
+        getAllUsers:"admin/list-account",
+        getAllComments:"admin/list-comment",
+        getAllEntities:"admin/list-post",
+        setUserRole:"admin/update-account-role",
+        setUserStatus:"admin/toggle-account-comment"
 
     },
     entityTypes:{  //实体类型
@@ -217,19 +217,19 @@ DE.config={
         resourceTag:"resource-tag"
     },
     urls:{  //history的url
-        indexProject:"project/all", //首页作品
-        indexResource:"resource/all", //首页资源
-        searchResourceEntities:"resource-tag/tagName", //点击标签
-        searchProjectEntities:"project-tag/tagName",
-        hotUsers:"user/hot", //热门用户
-        userDetail:"user/userId", //用户页
-        search:"search/searchContent", //搜索页
-        uploadEntity:"upload/entity",  //上传页
-        editEntity:"edit/entityId",  //修改页
-        entityDetail:"item/itemId",
-        manageUsers:"manage/user",
-        manageProjects:"manage/project",
-        manageComments:"manage/comment"
+        indexProject:"project/all", //首页作品,后台前置
+        indexResource:"resource/all", //首页资源,后台前置
+        searchResourceEntities:"resource-tag/tagName", //点击标签,后台前置
+        searchProjectEntities:"project-tag/tagName", //点击标签,后台前置
+        hotUsers:"user/hot", //热门用户,后台前置
+        userDetail:"user/userId", //用户页,后台前置
+        search:"search/searchContent", //搜索页,后台前置
+        uploadEntity:"upload/entity",  //上传页 ,后台跳转
+        editEntity:"edit/entityId",  //修改页,后台跳转
+        entityDetail:"item/itemId",//后台前置
+        manageUsers:"adminhome/user", //后台跳转
+        manageProjects:"adminhome/project",//后台跳转
+        manageComments:"adminhome/comment" //后台跳转
     },
     topMenus:{ //顶部菜单类型
         user:"user", //热门用户,不写为hotUser是为了配合url地址
@@ -243,17 +243,20 @@ DE.config={
         vip:"vip"
     },
     ajaxReturnErrorHandler:function(data){
-        if(data.errorCode==this.errorCode.notFound){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.notFound);
-            setTimeout(function(){
-                window.location.href=document.baseURI||$("#de_base_url").attr("href");
-            },2000);
-        }else if(data.errorCode==this.errorCode.timeout){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.timeout);
-        }else if(data.errorCode==this.errorCode.thumb_height_not_equals_width){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.imgSizeError);
-        }else if(data.errorCode||data.resultCode){
-            DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.operationError);
+        if(data.errorCode||data.resultCode){
+            if(data.errorCode==this.errorCode.notFound){
+                DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.notFound);
+                setTimeout(function(){
+                    window.location.href=document.baseURI||$("#de_base_url").attr("href");
+                },2000);
+            }else if(data.errorCode==this.errorCode.timeout){
+                DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.timeout);
+            }else if(data.errorCode==this.errorCode.thumb_height_not_equals_width){
+                DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.imgSizeError);
+            }else{
+                DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.operationError);
+            }
+
         }else{
             DE.UIManager.showMsgPopout(this.messageCode.errorTitle,this.messageCode.loadDataError);
         }

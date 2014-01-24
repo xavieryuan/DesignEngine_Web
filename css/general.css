@@ -2794,3 +2794,49 @@ background: url(../images/icon60_close_white.png) no-repeat;
           transform:rotateY(180deg);
      }
 }
+
+/**********************管理界面***************/
+.de_screen_manager_panel{
+    position: relative;
+    top:10px;
+}
+.de_screen_manager_panel .child_panel{
+    padding:10px 0px 50px 0px;
+}
+.de_screen_manager_panel .child_panel .de_manager_title{
+    float:left;
+    margin-left:20px;
+}
+.de_screen_manager_panel .child_panel .de_manager_search{
+    margin-left: auto;
+    width: 300px;
+}
+.de_manager_table thead{
+    background: #ccc;
+}
+.de_manager_table img{
+    width: 100px;
+    height: 100px;
+}
+.de_manager_table td{
+    text-align: center;
+}
+.de_manager_table td.title{
+    text-align: left;
+    padding-left: 20px;
+}
+.de_manager_table td.content{
+    width: 200px;
+}
+.de_manager_table td.title img,.de_manager_table td.title a{
+    display: inline-block;
+}
+.de_manager_table td.title a{
+    width: 200px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    line-height: 100px;
+    white-space: nowrap;
+}

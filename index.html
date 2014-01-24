@@ -13,10 +13,10 @@
     <title>图钉墙 - HNU Design</title>
     <base id="de_base_url" href="http://design.hnu.cn/pinwall/"/>
     <link href="css/general.css" rel="stylesheet" type="text/css"/>
-    <!--<link href="css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>-->
+    <link href="css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/lib/juicer-min.js"></script>
-    <!--<script type="text/javascript" src="js/lib/jquery.dataTables.min.js"></script>-->
+    <script type="text/javascript" src="js/lib/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.form.js"></script>
     <script type="text/javascript" src="js/lib/plupload.js"></script>
@@ -27,6 +27,9 @@
           data-redirecturi="http://design.hnu.cn/pinwall/redirect.html" data-appid="100564490"
           charset="utf-8"></script>
     <script src="js/src/googleAnalytics.js"></script>
+    <script src="js/src/admin/commentsManager.js"></script>
+    <script src="js/src/admin/entitiesManager.js"></script>
+    <script src="js/src/admin/usersManager.js"></script>
     <script src="js/DE.UIManager.js"></script>
     <script src="js/src/config.js"></script>
     <script src="js/src/storeManager.js"></script>
@@ -72,9 +75,9 @@
                      <!--<li class="de_reg_view "><a href="#" id="de_btn_bind_account">绑定账号</a></li>-->
                 {@else if user.role=='vip'}
                 {@else}
-                    <li class="de_admin_view "><a href="manage/user" data-type="userManage">用户管理</a></li>
-                    <li class="de_admin_view "><a href="manage/item" data-type="entityManage">作品管理</a></li>
-                    <li class="de_admin_view "><a href="manage/comment" data-type="commentManage">评论管理</a></li>
+                    <li class="de_admin_view "><a href="adminhome/users" data-type="userManage">用户管理</a></li>
+                    <li class="de_admin_view "><a href="adminhome/items" data-type="entityManage">作品管理</a></li>
+                    <li class="de_admin_view "><a href="adminhome/comments" data-type="commentManage">评论管理</a></li>
                 {@/if}
                 <li class="de_reg_view "><a href="#" data-type="exit">退出登录</a></li>
             </ul>
@@ -254,9 +257,11 @@
             <li><a class="de_toolbar_edit" data-handler="edit" href="edit/${id}" title="编辑">编辑</a></li>
             <li><a class="de_toolbar_delete" data-handler="delete" href="${id}" title="删除">删除</a></li>
             {@if postVisible}
-                 <li><a class="de_toolbar_invisible" data-handler="setVisible" data-target-visible="true" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
+                 <li><a class="de_toolbar_invisible" data-handler="setVisible" data-target-visible="false"
+                        data-entity-id="${id}" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
             {@else}
-                 <li><a class="de_toolbar_visible" data-handler="setVisible" data-target-visible="false" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
+                 <li><a class="de_toolbar_visible" data-handler="setVisible" data-target-visible="true"
+                        data-entity-id="${id}" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
             {@/if}
 
         </ul>
@@ -543,9 +548,11 @@
                     <li><a class="de_toolbar_edit" data-handler="edit" href="edit/${e.postId}" title="编辑">编辑</a></li>
                     <li><a class="de_toolbar_delete" data-handler="delete" href="${e.postId}" title="删除">删除</a></li>
                     {@if e.postVisible}
-                    <li><a class="de_toolbar_invisible" data-handler="setVisible" data-target-visible="true" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
+                    <li><a class="de_toolbar_invisible" data-handler="setVisible" data-target-visible="false"
+                           data-entity-id="${e.postId}" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
                     {@else}
-                    <li><a class="de_toolbar_visible" data-handler="setVisible" data-target-visible="false" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
+                    <li><a class="de_toolbar_visible" data-handler="setVisible" data-target-visible="true"
+                           data-entity-id="${e.postId}" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
                     {@/if}
 
                 </ul>
@@ -1216,34 +1223,40 @@
 <!--***************************************管理界面*******************************-->
 <!-------------------用户管理------>
 <setction class="de_screen_manager_panel de_hidden" id="de_screen_manager_panel">
-    <div id="de_users_manager" class="de_hidden">
-        <div class="de_manager_search">
-            <span>用户管理</span>
-            <input type="text" id="de_user_search_input">
-            <select disabled id="de_user_search_type">
-                <option value="userName">用户名</option>
-            </select>
-            <input type="button" value="刷选" id="de_user_search_btn">
-        </div>
+    <div id="de_users_manager" class="child_panel de_hidden">
+        <header>
+            <span class="de_manager_title">用户管理</span>
+            <div class="de_manager_search">
+                <input type="text" id="de_user_search_input">
+                <select disabled id="de_user_search_type">
+                    <option value="fullname">用户名</option>
+                </select>
+                <input type="button" value="刷选" id="de_user_search_btn">
+            </div>
+        </header>
+
         <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_users_grid">
             <thead>
-            <tr class="bar"><th>用户</th><th>上传作品</th><th>发表评论</th><th>获得奖章</th><th>状态</th><th>权限</th><th>操作</th></tr>
+            <tr class="bar"><th>用户</th><th>上传作品</th><th>发表评论</th><th>获得奖章</th><th>状态</th><th>权限</th></tr>
             </thead>
             <tbody>
             </tbody>
         </table>
     </div>
-    <div id="de_projects_manager" class="de_hidden">
-        <div class="de_manager_search">
-            <span>作品管理</span>
-            <input type="text" id="de_entity_search_input">
-            <select id="de_entity_search_type">
-                <option value="projectTag">作品标签</option>
-                <option value="userName">用户名</option>
-            </select>
-            <input type="button" value="刷选" id="de_entity_search_btn">
-        </div>
-        <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_projects_grid">
+    <div id="de_entities_manager" class="de_hidden child_panel">
+        <header>
+            <span class="de_manager_title">作品管理</span>
+            <div class="de_manager_search">
+                <input type="text" id="de_entity_search_input">
+                <select id="de_entity_search_type">
+                    <option value="term">作品标签</option>
+                    <option value="fullname">用户名</option>
+                </select>
+                <input type="button" value="刷选" id="de_entity_search_btn">
+            </div>
+        </header>
+
+        <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_entities_grid">
             <thead>
             <tr><th>作品</th><th>上传者</th><th>上传时间</th><th>评论</th><th>赞</th><th>奖章</th><th>状态</th><th>操作</th></tr>
             </thead>
@@ -1251,16 +1264,19 @@
             </tbody>
         </table>
     </div>
-    <div id="de_comments_manager" class="de_hidden">
-        <div class="de_manager_search">
-            <span>评论管理</span>
-            <input type="text" id="de_comment_search_input">
-            <select id="de_comment_search_type">
-                <option value="userName">用户名</option>
-                <option value="projectTag">作品标签</option>
-            </select>
-            <input type="button" value="刷选" id="de_comment_search_btn">
-        </div>
+    <div id="de_comments_manager" class="de_hidden child_panel">
+        <header>
+            <span class="de_manager_title">评论管理</span>
+            <div class="de_manager_search">
+                <input type="text" id="de_comment_search_input">
+                <select id="de_comment_search_type">
+                    <option value="fullname">用户名</option>
+                    <option value="term">作品标签</option>
+                </select>
+                <input type="button" value="刷选" id="de_comment_search_btn">
+            </div>
+        </header>
+
         <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_comments_grid">
             <thead>
             <tr><th>评论</th><th>评论者</th><th>评论作品</th><th>评论时间</th><th>状态</th><th>操作</th></tr>

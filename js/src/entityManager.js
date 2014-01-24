@@ -451,10 +451,11 @@ DE.entity=(function(){
                 dataType:"json",
                 success:function(data){
                     if(data.success&&data.resultCode==DE.config.resultCode.comment_remove_succ){
+                        DE.UIManager.hideLoading();
+                        DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
 
                         if(target){
                             target.parents("li").remove();
-                            DE.UIManager.hideLoading();
 
                             //更新显示的数据
                             var commentCountEl=$("#commentsCount");
@@ -522,7 +523,8 @@ DE.entity=(function(){
                 dataType:"json",
                 success:function(data){
                     if(data.success&&data.resultCode==DE.config.resultCode.post_remove_succ){
-                        //DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
+
+                        DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
                         DE.UIManager.hideLoading();
 
                         //界面更新,有可能在详情页，也有可能在用户页
@@ -534,6 +536,9 @@ DE.entity=(function(){
                         //更新管理界面
                         if(DE.entities.ownTable){
                             DE.entities.ownTable.fnDraw();
+                        }
+                        if(DE.comments.ownTable){
+                            DE.comments.ownTable.fnDraw();
                         }
                     }else{
                         DE.config.ajaxReturnErrorHandler(data);
@@ -562,12 +567,15 @@ DE.entity=(function(){
         /**
          * 详情页和用户页工具栏隐藏作品（资源）
          * @param {Object} el 点击的a标签
+         * @param {Boolean} isAdmin 是否是后台的事件
          */
-        showOrHideEntity:function(el){
-            var id=el.attr("href");
-            var visible=true;
-            if(el.data("target-visible")==true){
-                visible=false;
+        showOrHideEntity:function(el,isAdmin){
+            var id=el.data("entity-id");
+            var visible=el.data("target-visible")||el.val();
+
+            //val返回的是字符型，转成统一的boolean型
+            if(typeof visible ==="string"){
+                visible=visible==="true"?true:false;
             }
             $.ajax({
                 url:DE.config.ajaxUrls.showOrHideEntity,
@@ -581,38 +589,60 @@ DE.entity=(function(){
                      if(data.success&&data.resultCode==DE.config.resultCode.visible_set_succ){
                          DE.UIManager.showMsgPopout(DE.config.messageCode.successTitle,DE.config.messageCode.operationSuccess);
                          var li=$(".de_entity_link[href='item/"+id+"']").parents("li");
-                         var toolbarA=li.find(".de_project_toolbar li:eq(2) a");
 
-                         if(el[0]!=toolbarA[0]){
-                             $.merge(el,toolbarA);
+                         //需要判断是否存在这个toolbar（li），有可能是从管理页进入的，此时没有
+                         if(li.length!==0){
+
+                             var toolbarA=li.find(".de_project_toolbar li:eq(2) a");
+
+                             if(el[0]!=toolbarA[0]){
+                                 $.merge(el,toolbarA);
+                             }
                          }
 
-                         if(visible){
-                             el.removeClass("de_toolbar_visible").addClass("de_toolbar_invisible");
-                             el.data("target-visible",true);
+                         if(!isAdmin){
+                             if(visible){
+                                 el.removeClass("de_toolbar_visible").addClass("de_toolbar_invisible");
+                                 el.data("target-visible",false);
 
-                             //控制聚合页的
-                             //toolbarLi.addClass("de_toolbar_invisible").removeClass("de_toolbar_visible");
-                             //toolbarLi.data("target-visible",true);
-                         }else{
-                             el.removeClass("de_toolbar_invisible").addClass("de_toolbar_visible");
-                             el.data("target-visible",false);
+                             }else{
+                                 el.removeClass("de_toolbar_invisible").addClass("de_toolbar_visible");
+                                 el.data("target-visible",true);
 
-                             //如果不在用户页面需要删除聚合li
-                             /*if(location.href.match("user")==null){
-                                 li.remove();
-                             }*/
+                             }
+                         }
 
-                             //toolbarLi.removeClass("de_toolbar_invisible").addClass("de_toolbar_visible");
-                             //toolbarLi.data("target-visible",false);
+
+                         //更新管理界面
+                         if(DE.entities.ownTable){
+
+                             //DE.entities.ownTable.fnDraw();
+                             //记录下目前的visible值
+                             var inputRadio=$("input[data-entity-id='"+id+"']");
+                             inputRadio.data("visible",visible);
+
+                             //如果是在管理页点开详情，还需要设置表格中的数据
+                             inputRadio.parent("td").find("input[value='"+visible+"']").prop("checked",true);
                          }
 
                          DE.UIManager.hideLoading();
                      }else{
+
+                         if(DE.entities.ownTable){
+
+                             //设置失败后，需要重新设置选中状态
+                             el.parent("td").find("input[value='"+el.data("visible")+"']").prop("checked",true);
+                         }
                          DE.config.ajaxReturnErrorHandler(data);
                      }
                 },
                 error:function(){
+
+                    if(DE.entities.ownTable){
+
+                        //设置失败后，需要重新设置选中状态
+                        el.parent("td").find("input[value='"+el.data("visible")+"']").prop("checked",true);
+                    }
                     DE.config.ajaxErrorHandler();
                 }
 
@@ -913,7 +943,7 @@ DE.entity=(function(){
                     DE.UIManager.hideLoading();
                 }
             }else{
-                this.showOrHideEntity(target);
+                this.showOrHideEntity(target,false);
             }
         }
     }
@@ -924,7 +954,7 @@ $(document).ready(function(){
     //显示当个实体详情
     $(document).on("click","a.de_entity_link",function(){
         var href=$(this).attr("href");
-        DE.entity.entityClickHandler(href);
+        DE.entity.entityClickHandler(href,false);
 
         //不能放到 entityClickHandler函数中，从浏览器向前进入详情页取数据也调用此函数，此时是不需要push的
         DE.history.push(href,true);

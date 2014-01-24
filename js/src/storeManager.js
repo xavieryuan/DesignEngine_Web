@@ -66,6 +66,8 @@ DE.store={
         this.uploadedMedias={};
         this.currentEditEntityId=0;
         this.currentScrollScreenType="";
+        this.clearCurrentShowEntity();
+        DE.upload.clearEditData();
     },
 
     clearCurrentShowEntity:function(){
@@ -107,18 +109,18 @@ DE.store={
         var resourceList=$("#de_resource_list");
         var hotUserList=$("#de_hot_user_list");
         var userEntityList=$("#de_user_uploads");
-        var userTable=DE.users.ownTable;
-        var entityTable=DE.entities.ownTable;
-        var commentTable=DE.comments.ownTable;
+        var usersManager=DE.users;
+        var entitiesManager=DE.entities;
+        var commentsManager=DE.comments;
         switch (notClear){
             case "project":
                 searchList.html("");
                 resourceList.html("");
                 hotUserList.html("");
                 userEntityList.html("");
-                userTable.destroyTable();
-                entityTable.destroyTable();
-                commentTable.destroyTable();
+                usersManager.destroyTable();
+                entitiesManager.destroyTable();
+                commentsManager.destroyTable();
 
                 break;
             case "hotUser":
@@ -126,9 +128,9 @@ DE.store={
                 projectList.html("");
                 resourceList.html("");
                 userEntityList.html("");
-                userTable.destroyTable();
-                entityTable.destroyTable();
-                commentTable.destroyTable();
+                usersManager.destroyTable();
+                entitiesManager.destroyTable();
+                commentsManager.destroyTable();
 
                 break;
             case "resource":
@@ -136,9 +138,9 @@ DE.store={
                 projectList.html("");
                 hotUserList.html("");
                 userEntityList.html("");
-                userTable.destroyTable();
-                entityTable.destroyTable();
-                commentTable.destroyTable();
+                usersManager.destroyTable();
+                entitiesManager.destroyTable();
+                commentsManager.destroyTable();
 
                 break;
             case "search":
@@ -146,12 +148,9 @@ DE.store={
                 resourceList.html("");
                 hotUserList.html("");
                 userEntityList.html("");
-                userTable.destroyTable();
-                entityTable.destroyTable();
-                commentTable.destroyTable();
-                userTable.destroyTable();
-                entityTable.destroyTable();
-                commentTable.destroyTable();
+                usersManager.destroyTable();
+                entitiesManager.destroyTable();
+                commentsManager.destroyTable();
 
                 break;
             case "user":
@@ -159,12 +158,9 @@ DE.store={
                 resourceList.html("");
                 hotUserList.html("");
                 searchList.html("");
-                userTable.destroyTable();
-                entityTable.destroyTable();
-                commentTable.destroyTable();
-                userTable.destroyTable();
-                entityTable.destroyTable();
-                commentTable.destroyTable();
+                usersManager.destroyTable();
+                entitiesManager.destroyTable();
+                commentsManager.destroyTable();
 
                 break;
             case "upload":
@@ -173,9 +169,9 @@ DE.store={
                 hotUserList.html("");
                 searchList.html("");
                 userEntityList.html("");
-                userTable.destroyTable();
-                entityTable.destroyTable();
-                commentTable.destroyTable();
+                usersManager.destroyTable();
+                entitiesManager.destroyTable();
+                commentsManager.destroyTable();
 
                 break;
             case "userManage":
@@ -184,8 +180,9 @@ DE.store={
                 hotUserList.html("");
                 searchList.html("");
                 userEntityList.html("");
-                entityTable.destroyTable();
-                commentTable.destroyTable();
+                entitiesManager.destroyTable();
+                commentsManager.destroyTable();
+
 
                 break;
             case "entityManage":
@@ -194,8 +191,9 @@ DE.store={
                 hotUserList.html("");
                 searchList.html("");
                 userEntityList.html("");
-                userTable.destroyTable();
-                commentTable.destroyTable();
+                usersManager.destroyTable();
+                commentsManager.destroyTable();
+
 
                 break;
             case "commentManage":
@@ -204,8 +202,8 @@ DE.store={
                 hotUserList.html("");
                 searchList.html("");
                 userEntityList.html("");
-                userTable.destroyTable();
-                entityTable.destroyTable();
+                usersManager.destroyTable();
+                entitiesManager.destroyTable();
 
                 break;
         }

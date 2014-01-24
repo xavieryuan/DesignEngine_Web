@@ -149,8 +149,10 @@ DE.menu=(function(){
             //设置searchType和isTag的值，如果是search直接使用默认值
             if(searchUrlType===DE.config.searchUrlType.projectTag){
                 searchType=DE.config.entityTypes.project;
+                isTag=true;
             }else if(searchUrlType===DE.config.searchUrlType.resourceTag){
                 searchType=DE.config.entityTypes.resource;
+                isTag=true;
             }
 
             DE.UIManager.showLoading();
@@ -177,8 +179,9 @@ DE.menu=(function(){
         /**
          * 侧边栏菜单点击事件
          * @param {String} type 点击的菜单类型
+         * @param {String} href 需要push的路劲
          */
-        extMenuClickHandler:function(type){
+        extMenuClickHandler:function(type,href){
             switch (type){
                 case "changePwd":
                     DE.UIManager.showRestPwdPopout();
@@ -195,18 +198,24 @@ DE.menu=(function(){
 
                     break;
                 case "userHome":
-                    DE.user.userClickHandler($(this).attr("href"),null);
+                    DE.user.userClickHandler(href,null);
 
                     break;
                 case "userManage":
+                    DE.UIManager.showLoading();
+                    DE.history.push(href);
                     DE.users.createTable();
 
                     break;
                 case "entityManage":
+                    DE.UIManager.showLoading();
+                    DE.history.push(href);
                     DE.entities.createTable();
 
                     break;
                 case "commentManage":
+                    DE.UIManager.showLoading();
+                    DE.history.push(href);
                     DE.comments.createTable();
 
                     break;
@@ -360,7 +369,7 @@ $(document).ready(function(){
 
     //用户菜单（ext菜单项按钮点击事件）
     $(document).on("click","#de_ext_nav a:not('.de_user_link')",function(){
-        DE.menu.extMenuClickHandler($(this).data("type"));
+        DE.menu.extMenuClickHandler($(this).data("type"),$(this).attr("href"));
 
         return false;
     });

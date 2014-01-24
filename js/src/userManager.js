@@ -405,9 +405,9 @@ DE.user=(function(){
                     dataType:"json",
                     success:function (data) {
                         if(data.success){
-                            if(data.status==DE.config.resultCode.email_status.pending){
+                            if(data.status==DE.config.emailStatus.pending){
                                 $("#de_email_error").text(DE.config.messageCode.emailPending.replace("${email}",data.email));
-                            }else if(data.status==DE.config.resultCode.email_status.invalid){
+                            }else if(data.status==DE.config.emailStatus.invalid){
                                 $("#de_email_error").text(DE.config.messageCode.emailInvalid.replace("${email}",data.email));
                             }else{
                                 DE.store.initCurrentUser({

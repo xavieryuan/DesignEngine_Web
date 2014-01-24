@@ -79,10 +79,13 @@ DE.UIManager=function(){
 
             //管理界面
             if(paraObj&&paraObj.type===DE.config.manageTypes.user){
+                $("#de_users_manager").removeClass("de_hidden");
                 DE.store.clearScreenData("userManage");
             }else if(paraObj&&paraObj.type===DE.config.manageTypes.entity){
+                $("#de_entities_manager").removeClass("de_hidden");
                 DE.store.clearScreenData("entityManage");
             }else if(paraObj&&paraObj.type===DE.config.manageTypes.comment){
+                $("#de_comments_manager").removeClass("de_hidden");
                 DE.store.clearScreenData("commentManage");
             }
         }
@@ -100,6 +103,11 @@ DE.UIManager=function(){
 		
 			//恢复视图初始状态		
 			$("#de_screen_container>section").addClass("de_hidden");
+
+            //管理界面
+            $("#de_screen_manager_panel").addClass("de_hidden");
+            $("#de_screen_manager_panel .child_panel").addClass("de_hidden");
+
 			$("#de_btn_filter>a").html("发现...").removeClass("active");
 			$("#de_top_nav .active").removeClass("active");
 			$("#de_screen_search_result>.de_category_filter .active").removeClass("active");
@@ -153,7 +161,7 @@ DE.UIManager=function(){
 			$("#de_screen_project_detail").scrollTop(0).addClass("de_hidden").
                 html('');
 			$("body").removeClass("de_noscroll");
-            DE.store.clearCurrentShowEntity();
+            //DE.store.clearCurrentShowEntity();
 
 		},
 		showLoginPopout:function(){
