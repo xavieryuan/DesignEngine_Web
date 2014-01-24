@@ -81,7 +81,7 @@ background: #fff;
 	position:absolute;
 	left:0px;
 	bottom:-15px;
-	background:url(../images/header_shadow.png) no-repeat;
+	background:url(../../images/app/header_shadow.png) no-repeat;
 	z-index:99;	
 	}
 	
@@ -94,7 +94,7 @@ background: #fff;
 .de_logo>a{
 	height: 60px;
 	width: 146px;
-	background:url(../images/logo.png) no-repeat;
+	background:url(../../images/app/logo.png) no-repeat;
 	font-size: 0px;
 	text-indent:-9999px;
 	display:inline-block;
@@ -112,7 +112,7 @@ background: #fff;
 	width: 40px;
 	margin:0px;
 	padding:0 5px 0 40px;
-	background:url(../images/icon20_search_white.png) no-repeat #000 14px center;
+	background:url(../../images/app/icon20_search_white.png) no-repeat #000 14px center;
 	font-size: 14px;
 	color:#595757;
 	line-height: 40px;
@@ -160,7 +160,7 @@ background: #fff;
 	top:0;
 	left:50%;
 	margin-left:-15px;
-	background:url(../images/login.png) no-repeat center;
+	background:url(../../images/app/login.png) no-repeat center;
 	}
 .de_user_nav ul .de_btn_register:before{
 	content:"";
@@ -170,7 +170,7 @@ background: #fff;
 	top:0;
 	left:50%;
 	margin-left:-15px;
-	background:url(../images/register.png) no-repeat center;
+	background:url(../../images/app/register.png) no-repeat center;
 	}
 .de_user_nav ul .de_btn_upload:before{
 	content:"";
@@ -180,7 +180,7 @@ background: #fff;
 	top:0;
 	left:50%;
 	margin-left:-19px;
-	background:url(../images/upload.png) no-repeat center;
+	background:url(../../images/app/upload.png) no-repeat center;
 	}
 	
 .de_top_nav{
@@ -211,7 +211,7 @@ background: #fff;
 	display:inline-block;
 	line-height:40px;
 	text-decoration: none;
-	background:url(../images/top_nav_btn_active_bg.png) no-repeat;
+	background:url(../../images/app/top_nav_btn_active_bg.png) no-repeat;
 	position:relative;
 	text-align:center;
 	color:#333;
@@ -224,7 +224,7 @@ background: #fff;
 	content:"";
 	margin-left:4px;
 	display:inline-block;
-	background:url(../images/triangle.png) no-repeat;
+	background:url(../../images/app/triangle.png) no-repeat;
 	width:13px;
 	height:8px;
 	}
@@ -388,7 +388,7 @@ background: #fff;
 	display:inline-block;
 	width:30px;
 	height:30px;
-	background:url(../images/icon30_badge.png) no-repeat;
+	background:url(../../images/app/icon30_badge.png) no-repeat;
 	/*position:absolute;
 	left:0;
 	top:0;*/
@@ -447,7 +447,7 @@ background: #fff;
 	content:"";
 	width:20px;
 	height:20px;
-	background:url(../images/icon20_badge.png) no-repeat;
+	background:url(../../images/app/icon20_badge.png) no-repeat;
 	position:absolute;
 	top:0;
 	left:0;
@@ -555,7 +555,7 @@ background: #fff;
 	content:"";
 	width:20px;
 	height:20px;
-	background:url(../images/star.png) no-repeat;
+	background:url(../../images/app/star.png) no-repeat;
 	position:absolute;
 	top:50%;
 	left:50%;
@@ -566,7 +566,7 @@ background: #fff;
 	content:"";
 	width:20px;
 	height:20px;
-	background:url(../images/comment.png) no-repeat;
+	background:url(../../images/app/comment.png) no-repeat;
 	position:absolute;
 	top:50%;
 	left:50%;
@@ -616,7 +616,7 @@ background: #fff;
 	content:"";
 	width:7px;
 	height:13px;
-	background:url(../images/white_arrow_left.png) no-repeat;
+	background:url(../../images/app/white_arrow_left.png) no-repeat;
 	position:absolute;
 	top:40px;
 	right:0;
@@ -671,19 +671,19 @@ background: #fff;
 	margin:0;
 	}
 .de_resource_list li.tag_ppt{
-	background:url(../images/zy_media_ppt.png) no-repeat;
+	background:url(../../images/app/zy_media_ppt.png) no-repeat;
 	}
 .de_resource_list li.tag_web_video{
-	background:url(../images/zy_media_network_video.png) no-repeat;
+	background:url(../../images/app/zy_media_network_video.png) no-repeat;
 	}
 .de_resource_list li.tag_local_video{
-	background:url(../images/zy_media_local_video.png) no-repeat;
+	background:url(../../images/app/zy_media_local_video.png) no-repeat;
 	}
 .de_resource_list li.tag_3d{
-	background:url(../images/zy_media_3d.png) no-repeat;
+	background:url(../../images/app/zy_media_3d.png) no-repeat;
 	}
 .de_resource_list li.tag_file{
-	background:url(../images/zy_media_file.png) no-repeat;
+	background:url(../../images/app/zy_media_file.png) no-repeat;
 	}
 
 

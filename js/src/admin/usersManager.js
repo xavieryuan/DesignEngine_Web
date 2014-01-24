@@ -28,6 +28,7 @@ DE.users=(function(){
                             "' class='de_user_link' href='user/"+oObj.aData.userId+"'>"+oObj.aData.userName+"</a>";
                     }
                 },
+                { "mDataProp": "userEmail"},
                 { "mDataProp": "userUploadCount"},
                 { "mDataProp": "userCommentCount"},
                 { "mDataProp": "userPraiseCount"},
