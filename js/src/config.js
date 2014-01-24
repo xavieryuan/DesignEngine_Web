@@ -7,7 +7,7 @@
  */
 var DE=DE||{};
 DE.config={
-    defualtEntityThumb:"images/default_thumb_500.png",
+    defualtEntityThumb:"images/app/default_thumb_500.png",
     perLoadCount:10, //作品、评论、资源等每次加载的个数
     hasNoMoreFlag:-1, //作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
     imagesSize:{
