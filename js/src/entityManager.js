@@ -920,8 +920,8 @@ DE.entity=(function(){
                 //显示元素界面
                 var tpl=$("#showMediaContent").html();
                 var html=juicer(tpl,{type:mediaType,content:content,ext:ext});
-                $("#de_pop_window").removeClass("de_hidden de_pop_web_video_input").addClass("de_pop_show_media");
-                $("#de_pop_window_content").html(html);
+                $("#de_pop_show_media").removeClass("de_hidden");
+                $("#de_pop_show_media_content").html(html);
                 $("#de_blackout").removeClass("de_hidden");
             }
 

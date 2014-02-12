@@ -2450,26 +2450,16 @@ ol.mp_list li.mp_selectable {
 
 
 /*-----------------弹出窗口-------------------------*/
-.de_pop_window{
+.de_pop_show_media{
     position: fixed;
     z-index: 9999;
     background: #fff;
-    /*border:3px solid #EFEFEF;*/
-}
-.de_pop_web_video_input{
-    top:50%;
-    left:50%;
-    height: auto;
-    width: 400px;
-    margin-left: -200px;
-}
-.de_pop_show_media{
     top:0;
     left:0;
     bottom:0;
     width: 100%;
 }
-.de_close_pop_window{
+.de_pop_show_media .de_pop_show_media_close{
 	cursor: pointer;
     position: fixed;
     top: 0;
@@ -2481,10 +2471,10 @@ ol.mp_list li.mp_selectable {
     background: url(../../images/app/icon60_close_gray.png) no-repeat;
 	z-index:10001;
 	}
-.de_close_pop_window:hover {
-background: url(../../images/app/icon60_close_white.png) no-repeat;
+.de_pop_show_media  .de_pop_show_media_close:hover {
+    background: url(../../images/app/icon60_close_white.png) no-repeat;
 }
-.de_pop_window_content{
+.de_pop_show_media .de_pop_show_media_content{
 /*    height: 100%;*/
 	overflow-y:scroll;
     width: 100%;
@@ -2493,29 +2483,60 @@ background: url(../../images/app/icon60_close_white.png) no-repeat;
 	position:fixed;
     
 }
-.de_input_web_video{
-    width: 80%;
-    height: 25px;
-    font-size: 14px;
-}
-.de_input_web_video_ok{
-    height: 30px;
-    text-align: center;
-    width: 50px;
-    cursor: pointer;
-}
-.de_pop_window_content video,.de_pop_window_content iframe,.de_pop_window_content object{
+.de_pop_show_media .de_pop_show_media_content .de_pop_show_media_el,
+.de_pop_show_media .de_pop_show_media_content iframe{
     width: 100%;
     height: 100%;
     margin: auto;
 }
-.de_pop_window_content img{
+.de_pop_show_media .de_pop_show_media_content img{
     margin: auto;
     display: block;
 	width:100%;
 }
 
-
+/***********网络视频输入************/
+.de_web_video_panel{
+    width: 400px;
+    height: 100px;
+    position: fixed;
+    left:50%;
+    background: white;
+    top:50%;
+    margin:-100px 0px 0px -100px;
+    z-index: 9999;
+}
+.de_web_video_panel .de_web_video_panel_close{
+    height: 20px;
+    width: 20px;
+    display: block;
+    background:#cccccc;
+    margin-left: auto;
+    line-height: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+.de_web_video_panel .de_web_video_panel_close:hover{
+   cursor:pointer;
+    background:#666;
+}
+.de_web_video_panel .de_web_video_panel_content{
+    padding:10px;
+}
+.de_web_video_panel .de_input_web_video{
+    width: 80%;
+    height: 25px;
+    font-size: 14px;
+}
+.de_web_video_panel .de_input_web_video_ok{
+    height: 30px;
+    text-align: center;
+    width: 50px;
+    cursor: pointer;
+}
+.de_web_video_panel .de_web_video_panel_content .error{
+    display: block;
+}
 /*----------------------没有数据处理---------------------------*/
 .de_404_main{
     max-width: 720px;
@@ -2679,13 +2700,13 @@ background: url(../../images/app/icon60_close_white.png) no-repeat;
     .de_screen_project_detail h2 {
         width: auto;
     }
-	.de_close_pop_window{
+	.de_pop_show_media_close{
 		right:25px;
         text-indent: 80px;
         overflow: hidden;
         white-space: nowrap;
 	}
-    .de_pop_window_content video{
+    .de_pop_show_media_content video{
         margin: 70px auto 0px auto;
     }
 

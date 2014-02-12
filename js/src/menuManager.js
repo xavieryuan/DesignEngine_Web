@@ -309,7 +309,8 @@ DE.menu=(function(){
         },
         documentClickHandler:function(target){
             if(target.parents("#de_popout").length==0&&target.parents("#de_filter_menu").length==0&&
-                target.parents("#de_ext_nav").length==0&&target.parents("#de_pop_window").length==0){
+                target.parents("#de_ext_nav").length==0&&target.parents("#de_pop_show_media").length==0&&
+                $("#de_web_video_panel").hasClass("de_hidden")){
                 DE.UIManager.hideAllMenuAndPopouts();
             }
         }
@@ -418,9 +419,9 @@ $(document).ready(function(){
     });*/
 
     //关闭弹出的window
-    $("#de_close_pop_window").click(function(){
+    $("#de_pop_show_media_close").click(function(){
         $(this).parent().addClass("de_hidden");
-        $("#de_pop_window_content").html("");
+        $("#de_pop_show_media_content").html("");
         $("#de_blackout").addClass("de_hidden");
     });
 

@@ -705,10 +705,11 @@ DE.upload=(function(){
                 //重新绑定拖拽事件
                 this.drag();
 
-                $("#de_pop_window").addClass("de_hidden");
+                $("#de_web_video_panel").addClass("de_hidden");
                 $("#de_blackout").addClass("de_hidden");
+                $("#de_web_video_panel_content .error").remove();
             }else{
-                //$("#de_pop_window_content").append($("<label class='error'>请输入通用代码</label>"));
+                $("#de_web_video_panel_content").append($("<label class='error'>请输入通用代码</label>"));
             }
         },
 
@@ -991,16 +992,18 @@ $(document).ready(function(){
 
     //控制网络视频,显示输入面板
     $("#zy_add_network_video").click(function(){
-        var tpl=$("#webVideoInput").html();
-        $("#de_pop_window").removeClass("de_hidden de_pop_show_media").addClass("de_pop_web_video_input");
-        $("#de_pop_window_content").html(tpl);
+        $("#de_web_video_panel").removeClass("de_hidden");
         $("#de_blackout").removeClass("de_hidden");
 
         return false;
     });
+    $("#de_web_video_panel_close").click(function(){
+        $(this).parent().addClass("de_hidden");
+        $("#de_blackout").addClass("de_hidden");
+    });
 
     //网络视频输入确定
-    $(document).on("click","#de_input_web_video_ok",function(){
+    $("#de_input_web_video_ok").click(function(){
         var value=$("#de_input_web_video").val();
         DE.upload.webVideoInput(value);
     });
