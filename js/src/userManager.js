@@ -180,7 +180,7 @@ DE.user=(function(){
             $.ajax({
                 url:DE.config.ajaxUrls.getUserById,
                 type:"get",
-                async:false, //使用同步，因为在showUserEntity中需要用到此步中涉及的信息
+                async:false, //使用同步，因为在showUserEntity中需要用到此步中涉及的信息(优秀作品处)
                 dataType:"json",
                 data:{
                    userId:id

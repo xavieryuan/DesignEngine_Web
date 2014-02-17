@@ -116,6 +116,7 @@ DE.users=(function(){
     return {
         ownTable:null,
         createTable:function(){
+            this.destroyTable();
             this.ownTable=createTable();
         },
         destroyTable:function(){
