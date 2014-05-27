@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图钉墙 - HNU Design</title>
+<!--<base id="de_base_url" href="http://design.hnu.cn/pinwall/"/>-->
+<link href="css/wechat_template.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+
+
+<!--显示详细信息 section append-->
+<script type="text/template" id="entityDetailTopTpl">
+    <article id="de_project_detail" class="de_project_detail de_borderbox">
+		<h1 class="logo"><img src="images/logo_40.png" /></h1>
+		<h2>${postTitle}</h2>
+		<div class="user_info">
+          <p class="name">${userName}</p>
+        </div>
+        <ul class="de_stats_tags">
+            {@if postType=="work"}
+                <li class="badges" id="honorCount" title="勋章">${postHonorCount}</li>
+                <li class="likes" id="praiseCount" title="赞">${postPraiseCount}</li>
+            {@/if}
+            <li class="comments" id="commentsCount" title="评论">${postCommentCount}</li>
+        </ul>
+		
+        
+        <p class="publishtime">${postDate}</p>
+
+        <p class="abstract">
+            ${postDescribe}
+        </p>
+
+        <!--附件-->
+        <div id="main_content" class="main_content" ></div>
+		
+    </article>
+
+</body>
+</html>
