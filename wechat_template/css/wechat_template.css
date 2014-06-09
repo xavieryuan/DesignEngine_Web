@@ -159,9 +159,11 @@ li {
 	width: auto;
 	padding:20px;
 }
+.de_project_detail .logo{
+    margin-top: -10px;
+}
 .de_project_detail h2 {
     font-size: 1.5em;
-    width: 60%;
 	color:#390;
 }
 .de_project_detail h4 {
@@ -215,6 +217,34 @@ li {
     margin: 5px;
     text-align: left;
 }
+.de_stats_tags>.likes:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: url(../images/app/icon20_ding_gray.png) no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px;
+}
+.de_stats_tags li.badges:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    vertical-align: middle;
+    background: url(../images/app/icon20_badge_gray.png) no-repeat;
+}
+
+.de_stats_tags>.comments:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: url(../images/app/icon20_comments_gray.png) no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px;
+}
 
 .de_project_detail .publishtime {
     font-size: 12px;
@@ -241,4 +271,9 @@ li {
     color: #fff;
     text-align: center;
     margin-bottom: 40px;
+}
+.main_content a{
+    position: relative;
+    display: inline-block;
+	width:100%;
 }

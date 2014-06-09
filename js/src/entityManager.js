@@ -112,11 +112,17 @@ DE.entity=(function(){
 
         formatAttachment:function(data){
             var length=data.length,i=0;
+            var location="",ext="",pos= 0;
             if(length==0){
                 return [];
             }else{
                 for(;i<length;i++){
-                    data[i]["attachmentPreviewLocation"]=getImageBySize(data[i]["attachmentPreviewLocation"],DE.config.imagesSize.mediaThumb);
+                    location=data[i]["attachmentPreviewLocation"];
+                    pos=location.lastIndexOf(".");
+                    ext=location.substring(pos+1);
+                    if(ext!=="gif"||ext!=="GIF"){
+                        data[i]["attachmentPreviewLocation"]=getImageBySize(data[i]["attachmentPreviewLocation"],DE.config.imagesSize.mediaThumb);
+                    }
                 }
 
                 return data;
