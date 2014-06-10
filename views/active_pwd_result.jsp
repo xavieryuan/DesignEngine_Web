@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta http-equiv="refresh" content="5;url=http://design.hnu.cn/pinwall" /> 
+<meta http-equiv="refresh" content="5;url=http://design.hnu.edu.cn/pinwall" /> 
 <title>湖南大学设计艺术学院 - School of Design, Hunan University</title>
 <style>
 body{
@@ -111,7 +111,7 @@ footer p{
 5秒后跳转到图钉墙首页......
 
 <footer>
-<p>©2013 湖南大学设计艺术学院，<a href="http://design.hnu.cn" target="_blank">http://design.hnu.cn</a></p>
+<p>©2013 湖南大学设计艺术学院，<a href="http://design.hnu.edu.cn" target="_blank">http://design.hnu.edu.cn</a></p>
 <div class="hnusdlogo">湖南大学设计艺术学院 - School of Design, Hunan University</div>
 
 </footer>
