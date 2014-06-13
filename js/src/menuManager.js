@@ -420,7 +420,8 @@ $(document).ready(function(){
 
     //关闭弹出的window
     $("#de_pop_show_media_close").click(function(){
-        $(this).parent().addClass("de_hidden");
+        $("#de_pop_show_media").addClass("de_hidden");
+		$("#de_screen_project_detail").removeClass("de_hidden");
         $("#de_pop_show_media_content").html("");
         $("#de_blackout").addClass("de_hidden");
     });

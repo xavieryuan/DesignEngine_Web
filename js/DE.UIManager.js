@@ -152,7 +152,7 @@ DE.UIManager=function(){
             var detailEle=$("#de_screen_project_detail");
             detailEle.removeClass("de_hidden");
             detailEle.scrollTop(0);
-			$("body").addClass("de_noscroll");
+			$(".de_page_wrapper").addClass("de_hidden");
             this.hideLoading();
 		},
 		hideProjectDetail:function(){
@@ -160,7 +160,7 @@ DE.UIManager=function(){
             //隐藏的同时，重新设置de_screen_project_detail的html
 			$("#de_screen_project_detail").scrollTop(0).addClass("de_hidden").
                 html('');
-			$("body").removeClass("de_noscroll");
+			$(".de_page_wrapper").removeClass("de_hidden");
             //DE.store.clearCurrentShowEntity();
 
 		},

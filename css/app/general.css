@@ -2085,52 +2085,65 @@ ol.mp_list li.mp_selectable {
 
 /*************作品详情****************/
 .de_screen_project_detail {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+
+    width:100%;
     background: rgba(240, 240, 240, 0.95);
     z-index: 1000;
     overflow-y: scroll;
+	-webkit-overflow-scrolling:touch;
 }
 
 .de_btn_close_project_detail {
-    position: fixed;
+    position: absolute;
     top: 0;
-    right: 10%;
+    right: 20px;
     font-size: 0;
     display: inline-block;
-    width: 70px;
-    height: 70px;
-    background: url(../../images/app/icon60_close_gray.png) no-repeat;
+    width: 60px;
+    height: 60px;
+    background: url(../../images/app/icon60_close_black.png) no-repeat;
 	z-index: 9999;
 }
 
 .de_btn_close_project_detail:hover {
-    background: url(../../images/app/icon60_close_white.png) no-repeat;
+    background: url(../../images/app/icon60_close_black.png) no-repeat;
 }
 .de_btn_back_to_home{
-    background: url(../../images/app/icon60_backtohome_gray.png) no-repeat;
+    background: url(../../images/app/icon60_close_black.png) no-repeat;
 	}
 .de_btn_back_to_home:hover{
-	background: url(../../images/app/icon60_backtohome_white.png) no-repeat;
+	background: url(../../images/app/icon60_close_black.png) no-repeat;
 	}
 .de_screen_project_detail .de_project_header {
-    position: absolute;
+    position:fixed;	
+	-webkit-transform: translateZ(0);
     top: 0;
-    left: 10%;
-    width: 80px;
+    left: 0;
+    width: 100%;
+	height:60px;
     z-index: 9999;
     font-size: 0;
+	background:#fff;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.de_screen_project_detail .de_project_header:after {
+    content: "";
+    height: 15px;
+    width: 100%;
+    position: fixed;
+    left: 0px;
+    top: 60px;
+    background: url('../../images/app/header_shadow.png') no-repeat scroll center center transparent;
+    z-index: 9999;
 }
 
 .de_project_header .de_project_toolbar {
-    margin: auto;
+    margin-left: 100px;
 }
 
 .de_project_header .de_project_toolbar>li {
-    display: block;
+    display: inline-block;
     text-align: center;
 }
 
@@ -2138,37 +2151,40 @@ ol.mp_list li.mp_selectable {
     display: inline-block;
     width: 80px;
     height: 126px;
-    position: relative;
+    position: absolute;
+	top:0;
+	left:10px;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
     padding-top: 70px;
+	z-index:10000;
 }
 
 
 .de_flag_reg_zanned {
-    background: url(../../images/app/flag_reg_zan_white.png) no-repeat;
-    color: #390;
-}
-
-.de_flag_reg_zan {
     background: url(../../images/app/flag_reg_zan_green.png) no-repeat;
     color: #fff;
 }
 
-.de_flag_vip_zanned {
-    background: url(../../images/app/flag_vip_zan_white.png) no-repeat;
-    color: #390;
+.de_flag_reg_zan {
+    background: url(../../images/app/flag_reg_zan_gray.png) no-repeat;
+    color: #333;
 }
 
-.de_flag_vip_zan {
+.de_flag_vip_zanned {
     background: url(../../images/app/flag_vip_zan_green.png) no-repeat;
     color: #fff;
 }
 
+.de_flag_vip_zan {
+    background: url(../../images/app/flag_vip_zan_gray.png) no-repeat;
+    color: #333;
+}
+
 .de_screen_project_detail .de_project_detail {
-    margin: 40px auto;
+    margin: 80px auto 40px;
     background: #fff;
     padding: 160px 40px 40px;
     position: relative;
@@ -2463,20 +2479,21 @@ ol.mp_list li.mp_selectable {
 	cursor: pointer;
     position: fixed;
     top: 0;
-    right: 10%;
+    right: 20px;
     display: inline-block;
     font-size: 0;
-    width: 70px;
-    height: 70px;
-    background: url(../../images/app/icon60_close_gray.png) no-repeat;
+    width: 60px;
+    height: 60px;
+    background: url(../../images/app/icon60_close_black.png) no-repeat;
 	z-index:10001;
 	}
 .de_pop_show_media  .de_pop_show_media_close:hover {
-    background: url(../../images/app/icon60_close_white.png) no-repeat;
+    background: url(../../images/app/icon60_close_black.png) no-repeat;
 }
 .de_pop_show_media .de_pop_show_media_content{
 /*    height: 100%;*/
 	overflow-y:scroll;
+	-webkit-overflow-scrolling: touch;
     width: 100%;
 	top:0;
 	bottom:0;
@@ -2674,9 +2691,7 @@ ol.mp_list li.mp_selectable {
         border:none !important;
     }
 
-    .de_screen_project_detail .de_project_header {
-        left: 25px;
-    }
+
 	.de_project_detail .user_info{
 		left:20px;
 		}
