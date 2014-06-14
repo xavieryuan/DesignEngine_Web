@@ -231,27 +231,9 @@ li {
     top: 0;
     left: 0;
     font-size: 18px;
-    /*渐变色*/
-    background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top, #ffffff 0%, #efefef 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #efefef)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #ffffff 0%, #efefef 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #ffffff 0%, #efefef 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #ffffff 0%, #efefef 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #ffffff 0%, #efefef 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#efefef', GradientType=0); /* IE6-9 */
+    background:#eee;
 }
 
-.de_popout_title:after {
-    content: "";
-    display: block;
-    height: 15px;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    background: url(../../images/app/palette_header_shadow.png) no-repeat center;
-}
 .de_popout>.de_popout_x_btn{
 	width:60px;
 	height:60px;
@@ -747,29 +729,11 @@ li {
     width: 100%;
     z-index: 99;
     /*border-top:#000 12px solid;*/
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    /*渐变色*/
-    background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top, #ffffff 0%, #efefef 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #efefef)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #ffffff 0%, #efefef 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #ffffff 0%, #efefef 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #ffffff 0%, #efefef 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #ffffff 0%, #efefef 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#efefef', GradientType=0); /* IE6-9 */
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+	background:#fff;
 
 }
 
-.de_header:after {
-    content: "";
-    height: 15px;
-    width: 100%;
-    position: absolute;
-    left: 0px;
-    bottom: -15px;
-    background: url(../../images/app/header_shadow.png) no-repeat center;
-    z-index: 99;
-}
 
 .de_logo {
     position: absolute;
@@ -990,7 +954,7 @@ li {
 }
 
 .de_top_nav ul li a.active {
-    background: url(../../images/app/top_nav_btn_active_bg.png) top center no-repeat;
+    background: #eee;
 }
 
 /*.de_btn_project:before{
@@ -2089,8 +2053,10 @@ ol.mp_list li.mp_selectable {
     width:100%;
     background: rgba(240, 240, 240, 0.95);
     z-index: 1000;
+	/*
     overflow-y: scroll;
 	-webkit-overflow-scrolling:touch;
+	*/
 }
 
 .de_btn_close_project_detail {
@@ -2124,18 +2090,7 @@ ol.mp_list li.mp_selectable {
     z-index: 9999;
     font-size: 0;
 	background:#fff;
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-}
-
-.de_screen_project_detail .de_project_header:after {
-    content: "";
-    height: 15px;
-    width: 100%;
-    position: fixed;
-    left: 0px;
-    top: 60px;
-    background: url('../../images/app/header_shadow.png') no-repeat scroll center center transparent;
-    z-index: 9999;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
 
 .de_project_header .de_project_toolbar {
@@ -2169,8 +2124,8 @@ ol.mp_list li.mp_selectable {
 }
 
 .de_flag_reg_zan {
-    background: url(../../images/app/flag_reg_zan_gray.png) no-repeat;
-    color: #333;
+    background: url(../../images/app/flag_reg_zan_white.png) no-repeat;
+    color: #fff;
 }
 
 .de_flag_vip_zanned {
@@ -2179,8 +2134,8 @@ ol.mp_list li.mp_selectable {
 }
 
 .de_flag_vip_zan {
-    background: url(../../images/app/flag_vip_zan_gray.png) no-repeat;
-    color: #333;
+    background: url(../../images/app/flag_vip_zan_white.png) no-repeat;
+    color: #fff;
 }
 
 .de_screen_project_detail .de_project_detail {
