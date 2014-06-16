@@ -247,12 +247,18 @@ li {
 .de_popout>.de_popout_x_btn:hover{
 	opacity:1;
 	}
-.de_popout>.de_inner_wrapper {
+.de_popout>.de_wrapper {
     height: 400px;
     position: absolute;
     top: 60px;
     left: 0;
     width: 100%;
+	box-shadow:0px 0px 4px rgba(0, 0, 0, 0.3);
+}
+.de_popout .de_inner_wrapper {    
+    width: 100%;
+	position:absolute;
+	left:0;
 }
 
 .de_popout h4 {
@@ -260,6 +266,7 @@ li {
     font-size: 16px;
     color: #390;
     margin: 15px 0;
+	height: 30px;
 }
 
 .de_popout article {
@@ -327,12 +334,15 @@ li {
 }
 
 .de_link_openid_login {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
+    height:60px;
+	position:relative;
     border-bottom: #ccc 1px dotted;
 }
 
 .de_popout_login .de_qqlogin_btn {
+	position:absolute;
+	top:0;
+	left:4px;
     display: block;
     font-size: 12px;
     font-weight: bold;
@@ -381,7 +391,7 @@ li {
     width: 140px;
     display: block;
     position: absolute;
-    top: 40px;
+    top: 0;
 }
 
 .de_qqlogin_btn img {
@@ -2089,16 +2099,17 @@ ol.mp_list li.mp_selectable {
 	height:60px;
     z-index: 9999;
     font-size: 0;
-	background:#fff;
-	box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
 
 .de_project_header .de_project_toolbar {
-    margin-left: 100px;
+    width: 80px;
+	position: absolute;
+	top: 120px;
+	left: 15px;
 }
 
 .de_project_header .de_project_toolbar>li {
-    display: inline-block;
+    display: block;
     text-align: center;
 }
 
@@ -2108,7 +2119,7 @@ ol.mp_list li.mp_selectable {
     height: 126px;
     position: absolute;
 	top:0;
-	left:10px;
+	left:15px;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
@@ -2143,7 +2154,7 @@ ol.mp_list li.mp_selectable {
     background: #fff;
     padding: 160px 40px 40px;
     position: relative;
-    width: 60%;
+    width: 75%;
 	overflow-x: hidden;
 }
 
@@ -2199,7 +2210,7 @@ ol.mp_list li.mp_selectable {
 .de_project_detail .de_stats_tags {
     position: absolute;
     top: 40px;
-    right: 40px;
+    right: 20px;
 }
 
 .de_project_detail .de_stats_tags>li {

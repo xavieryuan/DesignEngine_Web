@@ -166,20 +166,20 @@ DE.UIManager=function(){
 		},
 		showLoginPopout:function(){
 			showPopout();
-			$("#de_popout>.de_inner_wrapper").css("left",0);
+			$("#de_popout .de_inner_wrapper").css("left",0);
 			$("#de_popout>.de_popout_title").html("登录");
 			$("#de_login_email").focus();
 		},
 		showRegPopout:function(){
 			showPopout();
-			$("#de_popout>.de_inner_wrapper").css("left","-100%");
+			$("#de_popout .de_inner_wrapper").css("left","-100%");
 			$("#de_popout>.de_popout_title").html("即将完成注册，请填写下列信息");
 			$("#de_reg_username").focus();
             $("#de_captcha_img").removeAttr("src").attr("src",DE.config.ajaxUrls.getValidCode);
 		},
 		showRecoverPwdPopout:function(){
 			showPopout();
-			$("#de_popout>.de_inner_wrapper").css("left","-200%");
+			$("#de_popout .de_inner_wrapper").css("left","-200%");
 			$("#de_popout>.de_popout_title").html("找回密码");
 			$("#de_recover_pwd_email").focus();		
 		},
@@ -187,22 +187,22 @@ DE.UIManager=function(){
 			showPopout();
 			$("#de_popout .de_popout_title").html(title);
 			$("#de_popout_msg p").html(msg);
-			$("#de_popout>.de_inner_wrapper").css("left","-300%")
+			$("#de_popout .de_inner_wrapper").css("left","-300%")
 		},
 		showRestPwdPopout:function(){
 			showPopout();
-			$("#de_popout>.de_inner_wrapper").css("left","-400%");
+			$("#de_popout .de_inner_wrapper").css("left","-400%");
 			$("#de_popout>.de_popout_title").html("修改密码");
 			$("#de_reset_pwd").focus();		
 		},
 		showEditProfilePopout:function(){
 			showPopout();
-			$("#de_popout>.de_inner_wrapper").css("left","-500%");
+			$("#de_popout .de_inner_wrapper").css("left","-500%");
 			$("#de_popout>.de_popout_title").html("编辑个人信息");
 		},
         showBindAccountPopout:function(){
             showPopout();
-            $("#de_popout>.de_inner_wrapper").css("left","-600%");
+            $("#de_popout .de_inner_wrapper").css("left","-600%");
             $("#de_popout>.de_popout_title").html("绑定账户");
         },
 		hidePopout:function(){
