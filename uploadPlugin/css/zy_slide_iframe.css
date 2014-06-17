@@ -38,10 +38,11 @@
 	box-sizing:border-box;
 }
 .zy_tooltips{
-	max-width:80%;
+	margin-right:110px;
 	font-size:12px;
 	color:#3399cc;
     position: relative;
+	white-space:normal;
 }
 span.zy_tooltips{
 	margin-left:10px;
@@ -100,7 +101,7 @@ span.zy_tooltips{
 	background:#ccc;
 	}
 .zy_file_info{
-    width: 80%;
+    width: 200px;
     display: inline-block;
     overflow:hidden;
     text-overflow: ellipsis;

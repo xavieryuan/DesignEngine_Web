@@ -1902,7 +1902,7 @@ ol.mp_list li.mp_selectable {
 .zy_uploaded_medias_ol li {
     width: 100%;
     white-space: nowrap;
-    height: 44px;
+    height: 60px;
     border: 1px solid #CECFCF;
     margin: -1px 0 0 0;
     padding: 0;
@@ -1912,14 +1912,15 @@ ol.mp_list li.mp_selectable {
     box-sizing: border-box;
     position: relative;
 }
-.zy_uploaded_medias_ol li>a {
-    height: 42px;
+.zy_uploaded_medias_ol a {
+    height: 60px;
     display: inline-block;
     vertical-align: middle;
     position: absolute;
     top: 0;
     left: 0;
-    width: 180px;
+    width: 100%;
+	color:#999;
 }
 .zy_uncomplete_li {
     background-color: #ddd !important;
@@ -1937,8 +1938,8 @@ ol.mp_list li.mp_selectable {
 	border-radius:15px;
     cursor: pointer;
     position: absolute;
-    right: 0;
-    top: 6px;
+    right: 10px;
+    top: 15px;
 }
 .zy_media_delete:hover, .zy_uncomplete_delete:hover{
 	background-color:#C00;
@@ -1947,41 +1948,46 @@ ol.mp_list li.mp_selectable {
     width: 42px;
     height: 42px;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 9px;
+    top: 9px;
 }
 .zy_media_filename {
-    width: 90px;
+    width: 80px;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 42px;
+    line-height: 60px;
     padding: 0 4px;
     white-space: nowrap;
     cursor: move;
     font-size: 12px;
     position: absolute;
-    left: 42px;
+    left: 60px;
     top: 0;
 }
 .zy_media_percent {
-    width: 104px;
+    width: 80px;
     display: inline-block;
     font-size: 12px;
-    line-height: 42px;
+    line-height: 60px;
     padding: 0 4px;
     position: absolute;
-    left: 42px;
+    left: 60px;
     top: 0;
+	color:#666;
 }
-.zy_uploaded_medias_ol span {
-    color: #999999;
-}
+
 .zy_media_list_active {
-    background-color: #F2F2F2;
+    background-color: #999;
+}
+.zy_media_list_active a{
+	color:#fff;
 }
 .zy_media_list_error {
-    background-color: #FEEDE4;
+    background-color: #FC0;
+}
+.zy_media_list_error a{
+	color:#fff;
 }
 .zy_uploaded_medias_ol li:hover, .zy_media_list_active {
     border-bottom: #ccc 1px solid;
@@ -2413,7 +2419,7 @@ ol.mp_list li.mp_selectable {
     height: 60px;
     position: absolute;
     left: 10px;
-    top:-6px;
+    top:-4px;
 }
 .de_has_video:before{
     background: url(../../images/app/zy_mediaflag_localvideo.png) no-repeat;
@@ -2484,45 +2490,61 @@ ol.mp_list li.mp_selectable {
 
 /***********网络视频输入************/
 .de_web_video_panel{
-    width: 400px;
-    height: 100px;
+    width: 100%;
+    height: 460px;
     position: fixed;
-    left:50%;
+    left:0;
     background: white;
     top:50%;
-    margin:-100px 0px 0px -100px;
+    margin-top:-230px;
     z-index: 9999;
 }
+.de_web_video_panel h3{
+	color: #390;
+	padding-left: 5%;
+	width: 100%;
+	height: 60px;
+	margin: 0;
+	line-height: 60px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 18px;
+	background: #eee;
+}
 .de_web_video_panel .de_web_video_panel_close{
-    height: 20px;
-    width: 20px;
-    display: block;
-    background:#cccccc;
-    margin-left: auto;
-    line-height: 20px;
-    font-size: 20px;
-    text-align: center;
+   width: 60px;
+	height: 60px;
+	background: url(../../images/app/icon60_close_transparent_bg.png) no-repeat;
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 0px;
+	opacity: 0.5;
 }
 .de_web_video_panel .de_web_video_panel_close:hover{
-   cursor:pointer;
-    background:#666;
+   opacity: 1;
 }
 .de_web_video_panel .de_web_video_panel_content{
-    padding:10px;
+    height: 400px;
+	position: absolute;
+	top: 60px;
+	left: 0;
+	width: 100%;
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+	padding:20px 5%;
 }
 .de_web_video_panel .de_input_web_video{
-    width: 80%;
-    height: 25px;
-    font-size: 14px;
+    width: 90%;
+	max-width:400px;
 }
 .de_web_video_panel .de_input_web_video_ok{
-    height: 30px;
-    text-align: center;
-    width: 50px;
-    cursor: pointer;
+    width: 100px;
+	margin-top:20px;
 }
 .de_web_video_panel .de_web_video_panel_content .error{
     display: block;
+	margin-top:10px;
 }
 /*----------------------没有数据处理---------------------------*/
 .de_404_main{

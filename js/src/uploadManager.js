@@ -711,7 +711,9 @@ DE.upload=(function(){
                 $("#de_blackout").addClass("de_hidden");
                 $("#de_web_video_panel_content .error").remove();
             }else{
-                $("#de_web_video_panel_content").append($("<label class='error'>请输入通用代码</label>"));
+                $("#de_web_video_panel_content").has(".error").length ? $("#de_web_video_panel_content .error").html("请输入通用代码") : $("#de_web_video_panel_content").append($("<label class='error'>请输入通用代码</label>"))
+				
+				
             }
         },
 
@@ -1002,6 +1004,8 @@ $(document).ready(function(){
     $("#de_web_video_panel_close").click(function(){
         $(this).parent().addClass("de_hidden");
         $("#de_blackout").addClass("de_hidden");
+		
+		return false;
     });
 
     //网络视频输入确定
