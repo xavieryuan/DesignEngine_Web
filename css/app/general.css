@@ -1596,7 +1596,7 @@ li {
 }
 
 .de_screen_upload .de_tab_upload li a.current {
-    background: url(../../images/app/top_nav_btn_active_bg.png) no-repeat;
+    background: #fff;
     color: #390;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
@@ -2237,16 +2237,20 @@ ol.mp_list li.mp_selectable {
 
 .de_project_detail figure img {
     width: 100%;
+	padding-top:2em;
+	border-top:1px #ccc dotted;
 }
 
 .de_project_detail figcaption {
-    font-size: 12px;
+    font-size: 0.8em;
+	font-weight:bold;
     line-height: 2em;
-    background: #ccc;
-    color: #fff;
-    text-align: center;
     margin-bottom: 40px;
 }
+.de_project_detail figcaption>.description{
+	font-weight:normal;
+	padding-left:2em;
+	}
 
 /***评论***/
 .de_comment_box {
