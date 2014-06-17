@@ -2154,7 +2154,7 @@ ol.mp_list li.mp_selectable {
     background: #fff;
     padding: 160px 40px 40px;
     position: relative;
-    width: 75%;
+    width: 80%;
 	overflow-x: hidden;
 }
 
@@ -2252,7 +2252,7 @@ ol.mp_list li.mp_selectable {
 .de_comment_box {
     margin: 40px auto;
     background: #fff;
-    width: 60%;
+    width: 80%;
 }
 
 .de_comment_list {
