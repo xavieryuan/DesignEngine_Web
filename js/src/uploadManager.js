@@ -186,6 +186,8 @@ DE.upload=(function(){
             DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaFilepath] = url;
         }
         DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaType] = type;
+        DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaTitle] = "";
+        DE.store.uploadedMedias[mediaId][DE.config.mediaObj.mediaMemo] = "";
     }
 
 
@@ -508,8 +510,8 @@ DE.upload=(function(){
         var i=0;
         for(;i<length;i++){
             DE.store.uploadedMedias[attachments[i]["attachmentId"]]={
-                "zy_media_memo":attachments[i]["attachmentDescribe"],
-                "zy_media_title":attachments[i]["attachmentTitle"],
+                "zy_media_memo":attachments[i]["attachmentDescribe"]?attachments[i]["attachmentDescribe"]:"",
+                "zy_media_title":attachments[i]["attachmentTitle"]?attachments[i]["attachmentTitle"]:"",
                 "zy_media_thumb_filename":attachments[i]["attachmentPreviewFilename"],
                 "zy_media_thumb_filepath":attachments[i]["attachmentPreviewLocation"],
                 "zy_media_filename":attachments[i]["attachmentMediaFilename"],
