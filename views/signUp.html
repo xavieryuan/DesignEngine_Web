@@ -1,0 +1,36 @@
+<h3 class="de_popout_title">注册</h3>
+	<a href="#" class="de_popout_x_btn" id="de_popout_x_btn">关闭</a>
+    <div class="de_wrapper de_transition">
+
+<!-- 1.注册弹窗开始 -->
+        <article class="de_borderbox de_popout_reg" id="de_popout_reg">
+            <div class="de_reg_col de_borderbox">
+               
+
+                <form id="de_register_form" method="post" novalidate="novalidate">
+                    <p class="de_username_field">
+                        <input type="text" autocomplete="default" value="" class="de_borderbox de_inputbox_gray" name="de_reg_username" id="de_reg_username" placeholder="用户名（无法修改）">
+                    </p>
+
+                    <p class="de_email_field">
+                        <input type="email" autocomplete="default" value="" class="de_borderbox de_inputbox_gray" name="de_reg_email" id="de_reg_email" placeholder="邮箱">
+                    </p>
+
+                    <p class="de_pwd_field">
+                        <input type="password" autocomplete="default" value="" class="de_borderbox de_inputbox_gray" name="de_reg_pwd" id="de_reg_pwd" placeholder="密码">
+                    </p>
+
+                    <p class="de_jcaptcha" id="de_jcaptcha">
+                        <a href="#refreshjcaptcha" id="de_refresh_captcha">
+                            <img class="de_jcaptcha_img de_borderbox" id="de_captcha_img">
+                            <span class="de_jcaptcha_refresh">看不清？换一张</span>
+                        </a>
+                        <input type="text" name="de_reg_code" autocomplete="off" class="de_borderbox de_jcaptcha_input" placeholder="请输入左侧字符">
+                    </p>
+                    <input type="submit" class="de_button de_submit_btn" name="de_sign_up" id="de_register" value="注册">
+                    <label class="de_error" id="de_reg_error"></label>
+                </form>
+            </div>
+        </article>
+        <!-- 注册弹窗结束 -->
+</div>
