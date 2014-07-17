@@ -230,42 +230,7 @@
 </script>
 
 <!--作品、资源详情模板-->
-<!--显示工具栏section prepend-->
-<script type="text/template" id="entityToolTpl">
-    <div class="de_project_header de_borderbox">
-        {@if postType=="work"}
-            {@if hasPraised}
-                <a href="#" id="de_entity_praise" class="de_flag_reg_zanned de_btn_zan de_borderbox">赞</a>
-            {@else}
-                <a href="#" id="de_entity_praise" class="de_btn_zan de_flag_reg_zan de_borderbox">赞</a>
-            {@/if}
-        {@/if}
 
-
-        {@if canShowToolBar}
-        <ul class="de_project_toolbar de_transition" id="de_entity_toolbar">
-            <li><a class="de_toolbar_edit" data-handler="edit" href="edit/${id}" title="编辑">编辑</a></li>
-            <li><a class="de_toolbar_delete" data-handler="delete" href="${id}" title="删除">删除</a></li>
-            {@if postVisible}
-                 <li><a class="de_toolbar_invisible" data-handler="setVisible" data-target-visible="false"
-                        data-entity-id="${id}" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
-            {@else}
-                 <li><a class="de_toolbar_visible" data-handler="setVisible" data-target-visible="true"
-                        data-entity-id="${id}" href="${id}" title="显示/隐藏">显示/隐藏</a></li>
-            {@/if}
-
-        </ul>
-        {@/if}
-		
-		{@if showHome}
-        <a href="#" data-behaiver="showHome" class="de_btn_close_project_detail de_btn_back_to_home" id="de_btn_close_project_detail">关闭</a>
-    {@else}
-        <a href="#" data-behaiver="close" class="de_btn_close_project_detail" id="de_btn_close_project_detail">关闭</a>
-    {@/if}
-
-    </div>
-
-</script>
 <!--显示详细信息 section append-->
 <script type="text/template" id="entityDetailTopTpl">
     <article id="de_project_detail" class="de_project_detail de_borderbox de_boxshadow">
@@ -368,23 +333,7 @@
 <!--显示评论de_comment_list ul append-->
 <script type="text/template" id="entityCommentsTpl">
     {@each comments as c}
-    <li>
-        <div class="user_info">
-            <a href="user/${c.userId}" class="de_borderbox de_user_link">
-                <img src="${c.userProfileImg}" class="photo">
-            </a>
-        </div>
-        <div class="comment_wrapper">
-            <a href="user/${c.userId}" class="name de_user_link">${c.userName}</a>
-            <span class="publishtime">${c.commentTime}</span>
 
-            {@if c.deleteAble}
-                <a href="${c.commentId}" class="de_delete_comment">X</a>
-            {@/if}
-
-            <p class="comment">${c.commentContent}</p>
-        </div>
-    </li>
     {@/each}
 </script>
 
@@ -407,50 +356,7 @@
 <script type="text/template" id="similarEntityTpl">
     {@each docs as e}
 
-    <li class="de_borderbox">
-        <div class="user_info">
-            <a href="user/${e.userId}" class="de_user_link">
-                <img class="photo" src="${e.userProfileImg}"/>
 
-                <p class="name">${e.userName}</p>
-            </a>
-        </div>
-        <div class="project_info">
-            <a href="item/${e.postId}" class="de_entity_link">
-                <img class="thumb" src="${e.postThumb}">
-                <h4>${e.postTitle}</h4>
-
-                <p class="date">${e.postDate}</p>
-            </a>
-        </div>
-        {@if e.postType=='work'}
-        <ul class="de_stats_tags">
-            <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
-            <li class="comments">${e.postCommentCount}</li>
-        </ul>
-        {@else}
-        <ul class="de_media_tags">
-            {@if e.postHasPpt}
-            <li class="tag_ppt">PPT</li>
-            {@/if}
-            {@if e.postHasWebVideo}
-            <li class="tag_web_video">网络视频</li>
-            {@/if}
-            {@if e.postHasLocalVideo}
-            <li class="tag_local_video">本地视频</li>
-            {@/if}
-            {@if e.postHas3d}
-            <li class="tag_3d">3D</li>
-            {@/if}
-            {@if e.postHasFile}
-            <li class="tag_file">文档</li>
-            {@/if}
-            {@if e.postHasFlash}
-            <li class="tag_flash">flash</li>
-            {@/if}
-        </ul>
-        {@/if}
-    </li>
 
     {@/each}
 </script>
@@ -650,28 +556,7 @@
         </object>
     {@/if}
 </script>
-<!--没有数据模板-->
-<script type="text/template" id="noDataTpl">
-    <div class="de_404_main de_borderbox">
-        <header class="de_404_header">
-            <p class="de_404_wrong">Oops! </p>
-            <p class="de_404_info"> 您访问的数据没有了，但我们可以一起寻找失踪宝贝！</p>
-        </header>
-        <article class="de_404_body">
-            <a class="de_child_img" href="${url}" target="_blank">
-                <img src="${child_pic}">
-            </a>
-            <div class="de_child_info">
-                <p class="name"> <span>姓 名：</span> ${name} </p>
-                <p class="sex"> <span>性 别：</span> ${sex} </p>
-                <p class="birthday"> <span>出生日期：</span> ${birth_time} </p>
-                <p class="losttime"> <span>失踪时间：</span> ${lost_time} </p>
-                <p class="lostadd"> <span>失踪地点：</span> ${lost_place} </p>
-                <p class="lostinfo"> <span>失踪人特征描述：</span> $${child_feature} </p>
-            </div>
-        </article>
-    </div>
-</script>
+
 <body>
 <div class="de_page_wrapper">
 <header class="de_header">
@@ -736,117 +621,6 @@
 </header>
 
 <div class="de_screen_container" id="de_screen_container">
-<!-----------设计作品----------->
-<section class="de_screen_project" id="de_screen_project">
-    <ul class="de_project_grid" id="de_project_list">
-       <!-- 模板内容加载区 -->
-    </ul>
-</section>
-
-<!-----------课程资源----------->
-<section class="de_screen_resource de_hidden" id="de_screen_resource">
-    <ul class="de_project_grid" id="de_resource_list">
-        <!-- 模板内容加载区 -->
-    </ul>
-</section>
-
-<!-----------荣誉榜----------->
-<section class="de_screen_designer de_hidden" id="de_screen_designer">
-    <ul class="de_designer_list" id="de_hot_user_list">
-        <!-- 模板内容加载区 -->
-    </ul>
-</section>
-
-<!-----------搜索结果----------->
-<section class="de_screen_search_result de_hidden" id="de_screen_search_result">
-    <!-- 模板内容加载区 -->
-
-    <ul class="de_project_grid" id="de_search_result">
-        <!-- 模板内容加载区 -->
-    </ul>
-</section>
-
-<!-----------用户首页----------->
-<section class="de_screen_user_profile de_hidden" id="de_screen_user_profile">
-    <!-- 模板内容加载区 -->
-</section>
-
-<!-----------上传作品----------->
-<section class="de_screen_upload de_hidden" id="de_screen_upload">
-    <nav class="de_tab_upload" id="de_upload_step_nav">
-        <ol>
-            <li><a href="#de_upload_step1" class="de_tab_step1 active current">1. 填写基本信息</a></li>
-            <li><a href="#de_upload_step2" class="de_tab_step2 active">2. 上传</a></li>
-            <li><a href="#de_upload_step3" class="de_tab_step3 active">3. 预览并提交</a></li>
-        </ol>
-    </nav>
-    <form class="de_form_upload de_borderbox de_boxshadow" id="de_upload_form">
-        <div class="de_upload_step de_upload_step1 de_borderbox" id="de_upload_step1">
-            <p class="de_field_project_title">
-                <label for="de_input_project_title">标题</label>
-                <input type="text" autocomplete="default" maxlength="80" value="" class="de_borderbox de_inputbox_gray"
-                       name="title" id="de_input_project_title" placeholder="">
-            </p>
-
-            <p class="de_field_project_tag">
-                <label for="de_input_project_tag">标签</label>
-            <ul class="de_borderbox de_category_tag_box" id="de_input_tag">
-            </ul>
-            <p class="de_form_tip">在下方输入标签，按回车确认。</p>
-            <input type="text" autocomplete="default" value=""
-                   class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20" name="de_input_project_tag"
-                   id="de_input_project_tag" placeholder="新标签...">
-            </p>
-            <p class="de_field_project_description">
-                <label for="de_project_description">内容说明</label>
-                <textarea class="de_borderbox de_inputbox_gray" name="description" id="de_project_description" placeholder=""></textarea></p>
-
-            <p class="de_field_project_thumb" id="de_upload_thumb_container">
-			<span class="de_form_tip">请上传高宽比为1:1的jpg或png图像。</span>
-                <a href="#" class="de_btn_upload_thumb de_button" id="de_upload_thumb_btn">上传缩略图</a>
-                
-                <img class="de_project_thumb" id="de_project_thumb" width="400" height="400" src="images/app/default_thumb_500.png"/>
-                <input type="hidden" name="previewFilename" id="de_thumb_name">
-                <input type="hidden" name="previewLocation" id="de_thumb_url">
-                <input type="hidden" name="id" id="de_entity_id">
-            </p>
-        </div>
-
-        <!-- step 2-->
-        <div class="de_upload_step de_upload_step2 de_hidden" id="de_upload_step2">
-            <div class="zy_uploader_column_left">
-                <span class="zy_section_left_header" id="zy_add_medias_button">添加文件</span>
-                <!--媒体文件类型的menu-->
-
-                <div id="zy_add_media_menu" class="zy_add_media_menu">
-                    <ul>
-                        <li><a id="zy_add_image" class="zy_types1">图片</a></li>
-                        <li><a id="zy_add_network_video" class="zy_types2">网络视频</a></li>
-                        <li><a id="zy_add_location_video" class="zy_types3">本地视频</a></li>
-                        <li><a id="zy_add_3d" class="zy_types4">3D文件</a></li>
-                        <li><a id="zy_add_ppt" class="zy_types5">ppt文件</a></li>
-                        <li><a id="zy_add_file" class="zy_types6">文件</a></li>
-                        <li><a id="zy_add_flash" class="zy_types7">flash</a></li>
-                    </ul>
-                </div>
-                <ol id="zy_uploaded_medias_ol" class="zy_uploaded_medias_ol"></ol>
-            </div>
-            <div class="zy_uploader_column_right" id="zy_uploader_column_right">
-                <header class="zy_section_right_header"><p><b id="zy_media_type">图片</b></p></header>
-
-            </div>
-        </div>
-
-        <!-- step 3-->
-        <div class="de_upload_step de_upload_step3 de_hidden" id="de_upload_step3">
-            <input type="submit" autocomplete="default" value="提交" class="de_borderbox de_submit_upload"
-                   name="de_submit_upload" id="de_submit_upload"/>
-            <article id="de_upload_preview" class="de_project_detail de_borderbox">
-               <!-- 模板内容加载区 -->
-            </article>
-        </div>
-    </form>
-</section>
 
 </div>
 
@@ -858,7 +632,8 @@
 
 <!-----------作品详情----------->
 <section class="de_screen_project_detail de_hidden" id="de_screen_project_detail">
-<!-- 模板内容加载区 -->
+
+
 </section>
 
 
