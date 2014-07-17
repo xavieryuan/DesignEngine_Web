@@ -1,6 +1,36 @@
 <!-----------显示选题----------->
-<section class="de_screen_designer de_hidden" id="de_screen_designer">
-    <ul class="de_designer_list" id="de_hot_user_list">
-        <!-- 模板内容加载区 -->
+<section class="de_topic_wrapper de_hidden">
+    <!-- 选题列表 -->
+    <ul class="de_topic_list">        
+        <li class="de_topic_box">
+            <!-- 选题发布者 -->
+            <div class="user_info">
+                <a href="#" class="de_borderbox de_user_link">
+                    <img src="#" class="photo">
+                    <p class="name">USER_NAME</p>
+                </a>
+            </div>
+            <div class="topic_info">
+                <p class="created_date">2014-08-20创建</p>
+                <p class="topic_title">投稿箱标题</p>
+                <p class="topic_description">投稿箱说明</p>
+                <ul class="de_stats_tags">
+                    <li class="uploads" title="上传">55</li>
+                    <li class="badges" title="勋章">98</li>         
+                </ul>                
+            </div>            
+            <ul class="topic_action">
+                <!-- 根据权限控制 -->
+                <li><a href="#" class="de_topic_action_submit">上传</a></li>
+                <li><a href="#" class="de_topic_action_lock">锁定</a></li>
+                <li><a href="#" class="de_topic_action_setting">设置</a></li>                
+            </ul>
+            <ul class="project_info">
+                <li><a href="#" class="de_entity_link">
+                    <img src="#">
+                    </a>
+                </li>
+            </ul>            
+        </li>
     </ul>
 </section>
