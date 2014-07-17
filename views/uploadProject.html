@@ -17,10 +17,11 @@
 
             <p class="de_field_project_tag">
                 <label for="de_input_project_tag">标签</label>
-            <ul class="de_borderbox de_category_tag_box" id="de_input_tag">
-            </ul>
-            <p class="de_form_tip">在下方输入标签，按回车确认。</p>
-            <input type="text" autocomplete="default" value=""
+                <ul class="de_borderbox de_category_tag_box" id="de_input_tag">
+                    <li><input type="hidden" name="terms[]" value="${text}"><a href="#">${text}</a></li>
+                </ul>
+                <p class="de_form_tip">在下方输入标签，按回车确认。</p>
+                <input type="text" autocomplete="default" value=""
                    class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20" name="de_input_project_tag"
                    id="de_input_project_tag" placeholder="新标签...">
             </p>
@@ -56,11 +57,22 @@
                         <li><a id="zy_add_flash" class="zy_types7">flash</a></li>
                     </ul>
                 </div>
-                <ol id="zy_uploaded_medias_ol" class="zy_uploaded_medias_ol"></ol>
+                <ol id="zy_uploaded_medias_ol" class="zy_uploaded_medias_ol">
+                    <li data-zy-filename="${filename}" class="zy_uncomplete_li" data-zy-media-id="${media_id}">
+                        <img class="zy_small_thumb" src="${thumb_src}">
+                        <span class="zy_media_percent">0%</span>
+                        <span class="zy_uncomplete_delete"></span>
+                    </li>
+                    <li>
+                        <img class="zy_small_thumb" src="${thumb_src}">
+                        <span title='${filename}' draggable="true" class="zy_media_filename">${filename}</span>
+                        <span class="zy_media_delete"></span>
+                    </li>
+                </ol>
             </div>
             <div class="zy_uploader_column_right" id="zy_uploader_column_right">
                 <header class="zy_section_right_header"><p><b id="zy_media_type">图片</b></p></header>
-
+                <iframe id="zy_media_iframe" name="zy_media_iframe" class="zy_iframe" src="${src}"></iframe>
             </div>
         </div>
 
@@ -69,7 +81,36 @@
             <input type="submit" autocomplete="default" value="提交" class="de_borderbox de_submit_upload"
                    name="de_submit_upload" id="de_submit_upload"/>
             <article id="de_upload_preview" class="de_project_detail de_borderbox">
-                <!-- 模板内容加载区 -->
+                <h2>${title}</h2>
+                <p class="publishtime">${date}</p>
+                <div class="user_info">
+                    <a href="user/${userId}" class="de_user_link">
+                        <img class="photo" src="${userFigure}">
+                        <p class="name">${username}</p>
+                    </a>
+                </div>
+                <p class="abstract">
+                    ${description}
+                </p>
+
+                <div class="main_content">
+
+                    {@each medias as m}
+                    <figure>
+                        <!--<img src="${m.thumb}"/>-->
+                        $${m.content}
+                        <figcaption>
+                            ${m.title}
+                            {@if m.memo}
+					<span class="description">
+						${m.memo}
+					</span>
+                            {@/if}
+                        </figcaption>
+                    </figure>
+                    {@/each}
+
+                </div>
             </article>
         </div>
     </form>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="pinWall">
 <head>
     <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,target-densityDpi=device-dpi">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -24,6 +24,7 @@
     <script type="text/javascript" src="js/lib/plupload.html5.js"></script>
     <script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
     <script src="js/src/baiduAnalytics.js"></script>
+    <script src="http://qzone.qq.com/gy/404/data.js"></script>
     <script src="js/src/admin/commentsManager.js"></script>
     <script src="js/src/admin/entitiesManager.js"></script>
     <script src="js/src/admin/usersManager.js"></script>
@@ -38,659 +39,91 @@
     <script src="js/src/loginManager.js"></script>
 </head>
 
-<!--模板文件-->
-<!--顶部栏中的标签-->
-<script type="text/template" id="projectTagTpl">
-    {@each projecttags as p}
-    <li><a href="tag/${p}">${p}</a></li>
-    {@/each}
-</script>
-<script type="text/template" id="resourceTagTpl">
-    {@each resourcetags as r}
-    <li><a href="tag/${r}">${r}</a></li>
-    {@/each}
-</script>
-<!--用户菜单-->
-<script type="text/template" id="userMenuTpl">
-    {@if user.userId}
-        <li class="de_reg_view">
-            <a class="de_btn_user_profile de_borderbox de_user_link" id="de_btn_user_profile"
-               href="user/${user.userId}">
-                <img class="photo" src="${user.figure}" title="USER_NAME">${user.name}
-            </a>
-        </li>
-        {@if user.role!='admin'}
-            <li class="de_reg_view"><a class="de_btn_upload de_borderbox" href="upload/entity" id="de_btn_upload">上传</a></li>
-        {@/if}
-        <li class="de_reg_view ">
-            <a class="de_btn_hotdogmenu de_borderbox" href="#" id="de_btn_ext_nav">更多</a>
-            <ul class="de_ext_nav de_transition" id="de_ext_nav">
-                <li class="de_reg_view "><a href="#" data-type="changePwd">修改密码</a></li>
-                <li class="de_reg_view "><a href="user/${user.userId}" data-type="userHome">个人主页</a></li>
-                <li class="de_reg_view "><a href="#" data-type="changeProfile">修改个人信息</a></li>
-                {@if user.role=='user'}
-                     <!--<li class="de_reg_view "><a href="#" id="de_btn_bind_account">绑定账号</a></li>-->
-                {@else if user.role=='vip'}
-                {@else}
-                    <li class="de_admin_view "><a href="adminhome/users" data-type="userManage">用户管理</a></li>
-                    <li class="de_admin_view "><a href="adminhome/items" data-type="entityManage">作品管理</a></li>
-                    <li class="de_admin_view "><a href="adminhome/comments" data-type="commentManage">评论管理</a></li>
-                {@/if}
-                <li class="de_reg_view "><a href="#" data-type="exit">退出登录</a></li>
-            </ul>
-        </li>
-    {@else}
-        <li class="de_guest_view"><a class="de_btn_login_reg de_borderbox" href="#" id="de_btn_login_reg">登录/注册</a></li>
-    {@/if}
-</script>
-<!-- 显示作品聚合-->
-<script type="text/template" id="projectTpl">
-    {@each projects as p,index}
-    <li class="de_borderbox">
-        <div class="user_info">
-            <a href="user/${p.userId}" class="de_user_link">
-                <img class="photo" src="${p.userProfileImg}"/>
+<body ng-controller="parentController">
+    <div class="de_page_wrapper">
+        <header class="de_header">
+            <h1 class="de_logo"><a href="" id="de_logo">图钉墙</a></h1>
 
-                <p class="name">${p.userName}</p>
-            </a>
-        </div>
-        <div class="project_info">
-            <a href="item/${p.postId}" class="de_entity_link">
-                <img class="thumb" src="${p.postThumb}">
-                <h4>${p.postTitle}</h4>
-
-                <p class="date">${p.postDate}</p>
-            </a>
-        </div>
-        <ul class="de_stats_tags">
-            <li class="likes">${p.postPraiseCount+p.postHonorCount}</li>
-            <li class="comments">${p.postCommentCount}</li>
-        </ul>
-    </li>
-    {@/each}
-</script>
-<!-- 显示资源聚合-->
-<script type="text/template" id="resourceTpl">
-    {@each resource as r,index}
-    <li class="de_borderbox">
-        <div class="user_info">
-            <a href="user/${r.userId}" class="de_user_link">
-                <img class="photo" src="${r.userProfileImg}"/>
-
-                <p class="name">${r.userName}</p>
-            </a>
-        </div>
-        <div class="project_info">
-            <a href="item/${r.postId}" class="de_entity_link">
-                <img class="thumb" src="${r.postThumb}"/>
-                <h4>${r.postTitle}</h4>
-
-                <p class="date">${r.postDate}</p>
-            </a>
-        </div>
-        <ul class="de_media_tags">
-            {@if r.postHasPpt}
-                <li class="tag_ppt">PPT</li>
-            {@/if}
-            {@if r.postHasWebVideo}
-                <li class="tag_web_video">网络视频</li>
-            {@/if}
-            {@if r.postHasLocalVideo}
-                <li class="tag_local_video">本地视频</li>
-            {@/if}
-            {@if r.postHas3d}
-                <li class="tag_3d">3D</li>
-            {@/if}
-            {@if r.postHasFile}
-                <li class="tag_file">文档</li>
-            {@/if}
-            {@if r.postHasFlash}
-                <li class="tag_flash">flash</li>
-            {@/if}
-        </ul>
-    </li>
-    {@/each}
-</script>
-<!-- 显示热点用户-->
-<script type="text/template" id="hotUserTpl">
-    {@each hotUsers as user,index}
-    <li class="de_user_info_card">
-        <div class="user_info">
-            <a href="user/${user.userId}" class="de_borderbox de_user_link">
-                <img src="${user.userProfileImg}" class="photo"/>
-
-                <p class="name">${user.userName}</p>
-            </a>
-            {@if user.userDescribe}
-            <p class="user_about">${user.userDescribe}</p>
-            {@else}
-            <p class="user_about">这个人很懒，什么也没留下</p>
-            {@/if}
-
-        </div>
-        <ul class="project_info">
-            {@each user.projects as project,index}
-            <li><a href="item/${project.postId}" class="de_entity_link"><img src="${project.postThumb}"></a></li>
-            {@/each}
-
-        </ul>
-        <ul class="de_stats_tags">
-            <li class="uploads" title="上传">${user.userUploadCount}</li>
-            <li class="badges" title="勋章">${user.userPraiseCount}</li>
-        </ul>
-    </li>
-    {@/each}
-</script>
-<!-- 显示搜索结果-->
-<script type="text/template" id="searchResultTpl">
-    {@each docs as e}
-    <li class="de_borderbox">
-        <div class="user_info">
-            <a href="user/${e.userId}" class="de_user_link">
-                <img class="photo" src="${e.userProfileImg}"/>
-                <p class="name">${e.userName}</p>
-            </a>
-        </div>
-        <div class="project_info">
-            <a href="item/${e.postId}" class="de_entity_link">
-                <img class="thumb" src="${e.postThumb}">
-                <h4>${e.postTitle}</h4>
-                <p class="date">${e.postDate}</p>
-            </a>
-        </div>
-        {@if e.postType=='work'}
-            <ul class="de_stats_tags">
-                <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
-                <li class="comments">${e.postCommentCount}</li>
-            </ul>
-        {@else}
-        <ul class="de_media_tags">
-            {@if e.postHasPpt}
-                <li class="tag_ppt">PPT</li>
-            {@/if}
-            {@if e.postHasWebVideo}
-                <li class="tag_web_video">网络视频</li>
-            {@/if}
-            {@if e.postHasLocalVideo}
-                <li class="tag_local_video">本地视频</li>
-            {@/if}
-            {@if e.postHas3d}
-                <li class="tag_3d">3D</li>
-            {@/if}
-            {@if e.postHasFile}
-                <li class="tag_file">文档</li>
-            {@/if}
-            {@if e.postHasFile}
-                <li class="tag_flash">flash</li>
-            {@/if}
-        </ul>
-        {@/if}
-    </li>
-    {@/each}
-</script>
-
-<!--作品、资源详情模板-->
-
-<!--显示详细信息 section append-->
-<script type="text/template" id="entityDetailTopTpl">
-    <article id="de_project_detail" class="de_project_detail de_borderbox de_boxshadow">
-        <h2>${postTitle}</h2>
-
-        <p class="publishtime">${postDate}</p>
-
-        <div class="user_info">
-            <a href="user/${userId}" class="de_user_link">
-                <img class="photo" src="${userProfileImg}">
-
-                <p class="name">${userName}</p>
-            </a>
-        </div>
-
-        <ul class="de_stats_tags">
-            {@if postType=="work"}
-                <li class="badges" id="honorCount" title="勋章">${postHonorCount}</li>
-                <li class="likes" id="praiseCount" title="赞">${postPraiseCount}</li>
-            {@/if}
-            <li class="comments" id="commentsCount" title="评论">${postCommentCount}</li>
-        </ul>
-
-
-        <p class="abstract">
-            ${postDescribe}
-        </p>
-
-        <!--附件-->
-        <div id="main_content" class="main_content" ></div>
-    </article>
-
-    <!--评论-->
-    <div id="de_comments" class="de_comment_box de_boxshadow de_borderbox">
-        <ul id="de_comment_list" class="de_comment_list"></ul>
-
-        <span id="de_comment_more_btn" class="de_comment_more_btn de_hidden">加载更多...</span>
-
-        {@if user.userId}
-        <div class="de_comment_form de_reg_view de_borderbox">
-            <div class="user_info">
-                <a href="user/${user.userId}" class="de_borderbox de_user_link">
-                    <img src="${user.figure}" class="photo">
-                </a>
-            </div>
-            <div class="comment_wrapper">
-                <a href="user/${user.userId}" class="name de_user_link">${user.name}</a>
-                <textarea id="de_comment_content" maxlength="200" class="comment de_borderbox de_inputbox_gray" placeholder="你的评论..."></textarea>
-                <input type="submit" class="de_button de_btn_add_comment" name="de_btn_add_comment"
-                       id="de_btn_add_comment" value="提交">
-            </div>
-        </div>
-        {@else}
-        <div class="de_comment_form de_borderbox">
-            <a href="#" id="de_btn_comment_login" class="de_button de_borderbox de_btn_login_reg">发表评论前请先登录</a>
-        </div>
-        {@/if}
-    </div>
-
-    <!--相关作品-->
-    <h4>其他相关作品</h4>
-    <ul id="de_similar_entities" class="de_project_grid"></ul>
-
-</script>
-
-<!-- 显示附件main_content div html-->
-<script type="text/template" id="entityMainContentTpl">
-    {@each attachments as at}
-    <figure>
-        <!--根据类型添加class-->
-        {@if at.attachmentType=='zy_image'}
-             <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_only_image"><img data-media-type="zy_image" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
-        {@else if at.attachmentType=='zy_location_video'}
-            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_video"><img data-media-type="zy_location_video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
-        {@else if at.attachmentType=='zy_network_video'}
-            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_web_video"><img data-media-type="zy_network_video" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
-        {@else if at.attachmentType=='zy_3d'}
-            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_3d"><img data-media-type="zy_3d" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
-        {@else if at.attachmentType=='zy_ppt'}
-            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_media de_has_ppt"><img data-media-type="zy_ppt" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
-        {@else if at.attachmentType=='zy_file'}
-            <a href="${at.attachmentMediaLocation}" class="de_has_file de_has_media"><img data-media-type="zy_file" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
-        {@else if at.attachmentType=='zy_flash'}
-            <a data-has-media="true" href="${at.attachmentMediaLocation}" class="de_has_flash de_has_media"><img data-media-type="zy_flash" data-media-id="${at.attachmentId}" src="${at.attachmentPreviewLocation}"/></a>
-        {@/if}
-
-        {@if at.attachmentTitle}
-            <figcaption>
-				${at.attachmentTitle}
-				{@if at.attachmentDescribe}
-					<span class="description">${at.attachmentDescribe}</span>
-				{@/if}
-			</figcaption>
-        {@/if}
-
-    </figure>
-    {@/each}
-</script>
-
-<!--显示评论de_comment_list ul append-->
-<script type="text/template" id="entityCommentsTpl">
-    {@each comments as c}
-
-    {@/each}
-</script>
-
-<script type="text/template" id="singleComment">
-    <li>
-        <div class="user_info">
-            <a href="user/${user.userId}" class="de_borderbox de_user_link">
-                <img src="${user.figure}" class="photo">
-            </a>
-        </div>
-        <div class="comment_wrapper">
-            <a href="user/${user.userId}" class="name de_user_link">${user.name}</a>
-            <span class="publishtime">${time}</span>
-            <a href="${commentId}" class="de_delete_comment">X</a>
-            <p class="comment">${content}</p>
-        </div>
-    </li>
-</script>
-<!--显示相似作品de_project_grid ul append-->
-<script type="text/template" id="similarEntityTpl">
-    {@each docs as e}
-
-
-
-    {@/each}
-</script>
-
-<!--个人页面-->
-<script type="text/template" id="userDetailTpl">
-    <div class="de_designer_list">
-        <article class="de_user_info_card" id="de_user_info_card">
-            <div class="user_info">
-                <a href="user/${userId}" class="de_borderbox de_user_link">
-                    <img src="${userProfileImg}" class="photo"/>
-
-                    <p class="name">${userName}</p>
-                </a>
-                {@if userDescribe}
-                    <p class="user_about">${userDescribe}</p>
-                {@else}
-                    <p class="user_about">这个人很懒，什么也没留下</p>
-                {@/if}
-            </div>
-            <ul class="project_info" id="de_user_honor_projects">
-                <!--预留给第二次的作品请求-->
-            </ul>
-            <ul class="de_stats_tags">
-                <li class="uploads" title="上传">${userUploadCount}</li>
-                <li class="badges" title="勋章">${userPraiseCount}</li>
-            </ul>
-        </article>
-    </div>
-    <article class="de_user_uploads">
-       <!-- <nav class="de_category_filter de_borderbox">
-            {@if role=="vip"}
-            <a href="#" class="de_category_filter_option_resource de_borderbox">学习资源</a>
-            {@else}
-            <a href="#" class="de_category_filter_option_project de_borderbox active">设计作品</a>
-            {@/if}
-        </nav>-->
-
-        <ul class="de_project_grid" id="de_user_uploads"></ul>
-    </article>
-</script>
-<!--优秀作品-->
-<script type="text/template" id="userHonorProjectTpl">
-    {@each projects as p}
-        <li><a href="item/${p.postId}" class="de_entity_link"><img src="${p.postThumb}"></a></li>
-    {@/each}
-</script>
-<!--作品、资源-->
-<script type="text/template" id="userEntitiesTpl">
-        {@each userEntities as e,index}
-            <li class="de_borderbox">
-                <div class="user_info">
-                    <a href="user/${userId}" class="de_user_link">
-                        <img class="photo" src="${userProfileImg}"/>
-
-                        <p class="name">${userName}</p>
-                    </a>
-                </div>
-                <div class="project_info">
-                    <a href="item/${e.postId}" class="de_entity_link">
-                        <img class="thumb" src="${e.postThumb}">
-                        <h4>${e.postTitle}</h4>
-
-                        <p class="date">${e.postDate}</p>
-                    </a>
-                </div>
-                {@if role=="user"}
-                <ul class="de_stats_tags">
-                    <li class="likes">${e.postPraiseCount+e.postHonorCount}</li>
-                    <li class="comments">${e.postCommentCount}</li>
+            <!-----用户菜单----->
+            <nav class="de_user_nav de_borderbox" id="de_user_nav">
+                <ul id="de_menu">
+                    <li class="de_reg_view">
+                        <a class="de_btn_user_profile de_borderbox de_user_link" id="de_btn_user_profile"
+                           href="user/${user.userId}">
+                            <img class="photo" src="${user.figure}" title="USER_NAME">${user.name}
+                        </a>
+                    </li>
+                    <li class="de_reg_view"><a class="de_btn_upload de_borderbox" href="upload/entity" id="de_btn_upload">上传</a></li>
+                    <li class="de_reg_view ">
+                        <a class="de_btn_hotdogmenu de_borderbox" href="#" id="de_btn_ext_nav">更多</a>
+                        <ul class="de_ext_nav de_transition" id="de_ext_nav">
+                            <li class="de_reg_view "><a href="#" data-type="changePwd">修改密码</a></li>
+                            <li class="de_reg_view "><a href="user/${user.userId}" data-type="userHome">个人主页</a></li>
+                            <li class="de_reg_view "><a href="#" data-type="changeProfile">修改个人信息</a></li>
+                            <li class="de_admin_view "><a href="adminhome/users" data-type="userManage">用户管理</a></li>
+                            <li class="de_admin_view "><a href="adminhome/items" data-type="entityManage">作品管理</a></li>
+                            <li class="de_admin_view "><a href="adminhome/comments" data-type="commentManage">评论管理</a></li>
+                            <li class="de_reg_view "><a href="#" data-type="exit">退出登录</a></li>
+                        </ul>
+                    </li>
+                    <li class="de_guest_view"><a class="de_btn_login_reg de_borderbox" href="#" id="de_btn_login_reg">登录/注册</a></li>
                 </ul>
-                {@else}
-                <ul class="de_media_tags">
-                    {@if e.postHasPpt}
-                    <li class="tag_ppt">PPT</li>
-                    {@/if}
-                    {@if e.postHasWebVideo}
-                    <li class="tag_web_video">网络视频</li>
-                    {@/if}
-                    {@if e.postHasLocalVideo}
-                    <li class="tag_local_video">本地视频</li>
-                    {@/if}
-                    {@if e.postHas3d}
-                    <li class="tag_3d">3D</li>
-                    {@/if}
-                    {@if e.postHasFile}
-                    <li class="tag_file">文档</li>
-                    {@/if}
-                    {@if e.postHasFlash}
-                    <li class="tag_flash">flash</li>
-                    {@/if}
+            </nav>
+
+            <!-----顶部菜单----->
+            <nav class="de_top_nav" id="de_top_nav">
+                <ul>
+                    <li><a href="project/all" class="de_btn_project de_borderbox active">设计作品</a></li>
+                    <li><a href="resource/all" class="de_btn_resource de_borderbox">学习资源</a></li>
+                    <li><a href="user/hot" class="de_btn_designer de_borderbox">人气榜</a></li>
+                    <li class="de_btn_filter" id="de_btn_filter"><a href="#" class="de_borderbox">发现...</a></li>
                 </ul>
-                {@/if}
-                {@if showToolBar}
-                <ul class="de_project_toolbar de_transition">
-                    <li><a class="de_toolbar_edit" data-handler="edit" href="edit/${e.postId}" title="编辑">编辑</a></li>
-                    <li><a class="de_toolbar_delete" data-handler="delete" href="${e.postId}" title="删除">删除</a></li>
-                    {@if e.postVisible}
-                    <li><a class="de_toolbar_invisible" data-handler="setVisible" data-target-visible="false"
-                           data-entity-id="${e.postId}" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
-                    {@else}
-                    <li><a class="de_toolbar_visible" data-handler="setVisible" data-target-visible="true"
-                           data-entity-id="${e.postId}" href="${e.postId}" title="显示/隐藏">显示/隐藏</a></li>
-                    {@/if}
-
-                </ul>
-                {@/if}
-            </li>
-        {@/each}
-</script>
-
-<!--    上传标签   -->
-<script type="text/template" id="uploadInputTag">
-    <li><input type="hidden" name="terms[]" value="${text}"><a href="#">${text}</a></li>
-</script>
-<script type="text/template" id="uploadInputTagMore">
-    {@each tags as t}
-         <li><input type="hidden" name="terms[]" value="${t}"><a href="#">${t}</a></li>
-    {@/each}
-</script>
-<!-- 上传未完成的html模版-->
-<script type="text/template" id="zy_uncomplete_tpl">
-    <li data-zy-filename="${filename}" class="zy_uncomplete_li" data-zy-media-id="${media_id}">
-        <img class="zy_small_thumb" src="${thumb_src}">
-        <span class="zy_media_percent">0%</span>
-        <span class="zy_uncomplete_delete"></span>
-    </li>
-</script>
-<!-- 上传完成的html模版-->
-<script type="text/template" id="zy_complete_tpl">
-    <li ${classString}>
-        <a class="zy_media_list" data-zy-media-type="${media_type}" data-zy-media-id='${media_id}' href="${iframe_src}" target="zy_media_iframe">
-            <img class="zy_small_thumb" src="${thumb_src}">
-            <span title='${filename}' draggable="true" class="zy_media_filename">${filename}</span>
-            <span class="zy_media_delete"></span>
-        </a>
-    </li>
-</script>
-<script type="text/template" id="zy_upload_iframe_tpl">
-    <iframe id="zy_media_iframe" name="zy_media_iframe" class="zy_iframe" src="${src}"></iframe>
-</script>
-<!--预览-->
-<script type="text/template" id="uploadPreview">
-    <h2>${title}</h2>
-    <p class="publishtime">${date}</p>
-    <div class="user_info">
-        <a href="user/${userId}" class="de_user_link">
-            <img class="photo" src="${userFigure}">
-            <p class="name">${username}</p>
-        </a>
-    </div>
-    <p class="abstract">
-        ${description}
-    </p>
-
-    <div class="main_content">
-
-        {@each medias as m}
-            <figure>
-                <!--<img src="${m.thumb}"/>-->
-                $${m.content}
-                <figcaption>
-				${m.title}
-					{@if m.memo}
-					<span class="description">
-						${m.memo}
-					</span>
-					{@/if}
-				</figcaption>
-            </figure>
-        {@/each}
-
-    </div>
-</script>
-
-<!--播放媒体文件-->
-<script type="text/template" id="showMediaContent">
-    {@if type=='zy_location_video'}
-        {@if ext=='mp4'}
-             <video class="de_pop_show_media_el" autoplay controls src="${content}"></video>
-        {@else}
-            <object class="de_pop_show_media_el" type="application/x-shockwave-flash" data="js/lib/dplayer.swf" height="100%" width="100%" id="9144" style="visibility: visible;">
-                <param name="menu" value="false"><param name="allowFullScreen" value="true">
-                <param name="allowscriptaccess" value="sameDomain">
-                <param name="flashvars" value="media_link=${content}">
-            </object>
-        {@/if}
-    {@else if type=='zy_network_video'}
-        $${content}
-    {@else if type=='zy_ppt'}
-        $${content}
-    {@else if type=='zy_3d'}
-    {@else if type=='zy_image'}
-        <img src="${content}">
-    {@else if type=='zy_flash'}
-        <object class="de_pop_show_media_el" type="application/x-shockwave-flash" data="${content}"height="100%" width="100%" id="9144" style="visibility: visible;">
-        </object>
-    {@/if}
-</script>
-
-<body>
-<div class="de_page_wrapper">
-<header class="de_header">
-
-    <h1 class="de_logo"><a href="" id="de_logo">图钉墙</a></h1>
-
-    <!-----用户菜单----->
-    <nav class="de_user_nav de_borderbox" id="de_user_nav">
-        <ul id="de_menu">
-            <!-- 模板内容加载区 -->
-        </ul>
-    </nav>
-
-    <!-----顶部菜单----->
-    <nav class="de_top_nav" id="de_top_nav">
-        <ul>
-            <li><a href="project/all" class="de_btn_project de_borderbox active">设计作品</a></li>
-            <li><a href="resource/all" class="de_btn_resource de_borderbox">学习资源</a></li>
-            <li><a href="user/hot" class="de_btn_designer de_borderbox">人气榜</a></li>
-            <li class="de_btn_filter" id="de_btn_filter"><a href="#" class="de_borderbox">发现...</a></li>
-        </ul>
-    </nav>
-
-    <!-----顶部分类筛选，现在通过popout调用----->
-    
-    
-
-</header>
-
-<div class="de_screen_container" id="de_screen_container">
-
-</div>
-
-<footer class="de_footer">
-    <p>© School of Design, Hunan University</p>
-</footer>
-</div>
-
-
-<!-----------作品详情----------->
-<section class="de_screen_project_detail de_hidden" id="de_screen_project_detail">
-
-
-</section>
-
-
-<!-----------弹窗小组件----------->
-<section class="de_popout de_boxshadow de_hidden de_borderbox" id="de_popout"> 
-    <!-- 模版内容区 -->
-</section>
-
-<!--***************************************管理界面*******************************-->
-<!-------------------用户管理------>
-<setction class="de_screen_manager_panel de_hidden" id="de_screen_manager_panel">
-    <div id="de_users_manager" class="child_panel de_hidden">
-        <header>
-            <span class="de_manager_title">用户管理</span>
-            <div class="de_manager_search">
-                <input type="text" id="de_user_search_input">
-                <select disabled id="de_user_search_type">
-                    <option value="fullname">用户名</option>
-                </select>
-                <input type="button" value="刷选" id="de_user_search_btn">
-            </div>
+            </nav>
         </header>
 
-        <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_users_grid">
-            <thead>
-            <tr class="bar"><th>用户</th><th>邮箱</th><th>上传作品</th><th>发表评论</th><th>获得奖章</th><th>状态</th><th>权限</th></tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-    <div id="de_entities_manager" class="de_hidden child_panel">
-        <header>
-            <span class="de_manager_title">作品管理</span>
-            <div class="de_manager_search">
-                <input type="text" id="de_entity_search_input">
-                <select id="de_entity_search_type">
-                    <option value="term">作品标签</option>
-                    <option value="fullname">用户名</option>
-                </select>
-                <input type="button" value="刷选" id="de_entity_search_btn">
-            </div>
-        </header>
+        <div class="de_screen_container" id="de_screen_container">
 
-        <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_entities_grid">
-            <thead>
-            <tr><th>作品</th><th>上传者</th><th>上传时间</th><th>评论</th><th>赞</th><th>奖章</th><th>状态</th><th>操作</th></tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-    <div id="de_comments_manager" class="de_hidden child_panel">
-        <header>
-            <span class="de_manager_title">评论管理</span>
-            <div class="de_manager_search">
-                <input type="text" id="de_comment_search_input">
-                <select id="de_comment_search_type">
-                    <option value="fullname">用户名</option>
-                    <option value="term">作品标签</option>
-                </select>
-                <input type="button" value="刷选" id="de_comment_search_btn">
-            </div>
-        </header>
+        </div>
 
-        <table class="de_manager_table" cellpadding="0" cellspacing="0" id="de_comments_grid">
-            <thead>
-            <tr><th>评论</th><th>评论者</th><th>评论作品</th><th>评论时间</th><th>状态</th><th>操作</th></tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <footer class="de_footer">
+            <p>© School of Design, Hunan University</p>
+        </footer>
     </div>
-</setction>
 
-<section class="de_hidden de_pop_show_media" id="de_pop_show_media">
-    <span id="de_pop_show_media_close" class="de_pop_show_media_close">关闭</span>
-    <div id="de_pop_show_media_content" class="de_pop_show_media_content"></div>
-</section>
-<section class="de_web_video_panel de_hidden" id="de_web_video_panel">
-	<h3>请输入网络视频通用（含iframe标签）地址:</h3>
-    <a href="#" class="de_web_video_panel_close" id="de_web_video_panel_close">关闭</a>
-    <div id="de_web_video_panel_content" class="de_web_video_panel_content de_borderbox">
-    <input type="text" id="de_input_web_video" class="de_input_web_video de_inputbox_gray">
-    <input type="button" id="de_input_web_video_ok" class="de_input_web_video_ok de_button" value="确定">
+
+    <!-----------作品详情----------->
+    <section class="de_screen_project_detail de_hidden" id="de_screen_project_detail">
+
+    </section>
+
+    <!-----------弹窗小组件----------->
+    <section class="de_popout de_boxshadow de_borderbox" ng-show="showPop" ng-controller="popControllerName" ng-include="popTemplateUrl">
+
+    </section>
+
+    <!-------------------用户管理------>
+    <setction class="de_screen_manager_panel de_hidden" id="de_screen_manager_panel">
+
+    </setction>
+
+    <section class="de_hidden de_pop_show_media" id="de_pop_show_media">
+        <span id="de_pop_show_media_close" class="de_pop_show_media_close">关闭</span>
+        <div id="de_pop_show_media_content" class="de_pop_show_media_content"></div>
+    </section>
+
+    <section class="de_web_video_panel de_hidden" id="de_web_video_panel">
+        <h3>请输入网络视频通用（含iframe标签）地址:</h3>
+        <a href="#" class="de_web_video_panel_close" id="de_web_video_panel_close">关闭</a>
+        <div id="de_web_video_panel_content" class="de_web_video_panel_content de_borderbox">
+        <input type="text" id="de_input_web_video" class="de_input_web_video de_inputbox_gray">
+        <input type="button" id="de_input_web_video_ok" class="de_input_web_video_ok de_button" value="确定">
+        </div>
+    </section>
+
+    <div id="de_blackout" class="de_hidden de_blackout"></div>
+    <div id="de_loading" class="de_loading de_hidden">
+        <div class="de_loading_spinner" id="de_loading_spinner"></div>
     </div>
-</section>
-<div id="de_blackout" class="de_hidden de_blackout"></div>
-<div id="de_loading" class="de_loading de_hidden">
-	<div class="de_loading_spinner" id="de_loading_spinner"></div>
-</div>
 
 </body>
 </html>
