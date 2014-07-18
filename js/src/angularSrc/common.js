@@ -14,15 +14,17 @@ common.service("Config",["$rootScope",function($rootScope){
     this.uploadDomain='http://qiniu-plupload.qiniudn.com/';
     this.popTitles={
         "signIn":"登陆",
-        "signUp":"注册"
-    };
-    this.popControllerNames={
-        signIn:"signIn",
-        signUp:"signUp"
+        "signUp":"注册",
+        "forgetPwd":"忘记密码",
+        "editPwd":"修改密码",
+        "editProfile":"修改资料"
     };
     this.popTemplateUrls={
-        signIn:"signIn.html",
-        signUp:"signUp.html"
+        "signIn":"views/signIn.html",
+        "signUp":"views/signUp.html",
+        "forgetPwd":"views/forgetPwd.html",
+        "editPwd":"views/changePwd.html",
+        "editProfile":"views/editProfile.html"
     };
     this.imageSize={
         ThumbSmall:"-200x200",
@@ -74,10 +76,12 @@ common.service("Config",["$rootScope",function($rootScope){
         userEntity:"userEntity" //用户页的用户作品,
     };
     this.validError={
-        emailRequired:"请输入邮箱！",
-        emailFormatError:"请输入正确的邮箱格式！",
+        required:"请输入此字段！",
+        email:"请输入正确的邮箱格式！",
         emailExistWithLogin:"此邮箱已注册，请<a id='de_direct_login' class='de_direct_login' href='#'>直接登录</a>或更换邮箱！",
         emailExist:"邮箱已经存在！",
+        maxLength:"此字段最多输入${value}个字！",
+        minLength:"此字段最少输入${value}个字！",
         pwdRequired:"请输入密码！",
         pwdLengthError:"请输入6-20位的密码！",
         oldPwdRequired:"请输入旧密码！",

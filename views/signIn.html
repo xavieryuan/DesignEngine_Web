@@ -3,20 +3,21 @@
 <div class="de_wrapper de_transition">
     <article class="de_borderbox de_popout_login">
         <div class="de_login_col de_borderbox">
-            <form class="de_form_email_login" name="loginForm" ng-submit="loginSubmit" novalidate>
+            <form class="de_form_email_login" name="loginForm" ng-submit="loginSubmit()" novalidate>
                 <p class="de_email_field">
                     <input type="email" class="de_borderbox de_inputbox_gray" required ng-model="login.email"
                         ng-maxlength="32" name="email"  placeholder="邮箱">
-                    <span ng-show="loginForm.name.$dirty && loginForm.name.$invalid" ng-messages="loginForm.email.$error">
+                    <span class="error" ng-show="loginForm.email.$dirty && loginForm.email.$invalid" ng-messages="loginForm.email.$error">
                         <label ng-message="required">{{validMessage.required}}</label>
+                        <label ng-message="email">{{validMessage.email}}</label>
                         <label ng-message="maxlength">{{validMessage.maxLength}}</label>
                     </span>
                 </p>
 
                 <p class="de_pwd_field">
                     <input type="password" class="de_borderbox de_inputbox_gray" required ng-model="login.password"
-                        ng-minlength="6" ng-maxlength="20" name="de_login_pwd" placeholder="密码">
-                    <span ng-show="loginForm.name.$dirty && loginForm.name.$invalid" ng-messages="loginForm.email.$error">
+                        ng-minlength="6" ng-maxlength="20" name="password" placeholder="密码">
+                    <span class="error" ng-show="loginForm.password.$dirty && loginForm.password.$invalid" ng-messages="loginForm.password.$error">
                         <label ng-message="required">{{validMessage.required}}</label>
                         <label ng-message="minlength">{{validMessage.minLength | setMinLength:6}}</label>
                         <label ng-message="maxlength">{{validMessage.maxLength | setMaxLength:20}}</label>
@@ -24,13 +25,13 @@
                 </p>
 
                 <div class="de_misc_field">
-                    <input type="checkbox" ng-checked="hasCookie" ng-click="rememberMe()" name="de_remember_me">
+                    <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="login.rememberMe" name="rememberMe">
                     <label>记住我</label>
 
-                    <p class="de_forgot_pwd"><a href="#" id="de_btn_forgot_pwd">忘记了密码？</a></p>
+                    <p class="de_forgot_pwd"><a href="" ng-click="forgetPwd()">忘记了密码？</a></p>
                 </div>
                 <input type="submit" class="de_button de_submit_btn" name="de_btn_sign_in" id="de_btn_sign_in" value="登录">
-                <label class="de_error" id="de_login_error"></label>
+                <label class="de_error" id="de_login_error">{{loginError}}</label>
             </form>
         </div>
         <div class="de_borderbox de_reg_col">

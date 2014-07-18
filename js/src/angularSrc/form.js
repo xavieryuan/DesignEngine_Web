@@ -34,7 +34,7 @@ formHandler.directive("integer",function(){
         }
     }
 });
-formHandler.directive("nameExist",function($http){
+formHandler.directive("emailExist",function($http){
     return {
         require:"ngModel",
         link:function(scope,elem,attrs,ctrl){

@@ -11,62 +11,67 @@
     <meta name="baidu-tc-cerfication" content="622f31c8e7be07f0ac794950d45efc53" />
     <meta name="keywords" content="图钉墙, 工业设计, 艺术设计, 设计教育, 设计作品, 设计资源, 湖南大学设计艺术学院" />
     <title>图钉墙 - HNU Design</title>
-    <base id="de_base_url" href="http://192.168.1.137:7080/pinwall/"/>
+    <base id="de_base_url" href="http://localhost/DesignEngine_Web/"/>
     <link href="css/app/general.css" rel="stylesheet" type="text/css"/>
-    <link href="css/lib/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="js/lib/juicer-min.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.form.js"></script>
-    <script type="text/javascript" src="js/lib/plupload.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.marcopolo.min.js"></script>
-    <script type="text/javascript" src="js/lib/plupload.html5.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
-    <script src="js/src/baiduAnalytics.js"></script>
-    <script src="http://qzone.qq.com/gy/404/data.js"></script>
-    <script src="js/src/admin/commentsManager.js"></script>
-    <script src="js/src/admin/entitiesManager.js"></script>
-    <script src="js/src/admin/usersManager.js"></script>
-    <script src="js/DE.UIManager.js"></script>
-    <script src="js/src/config.js"></script>
-    <script src="js/src/storeManager.js"></script>
-    <script src="js/src/historyManager.js"></script>
-    <script src="js/src/userManager.js"></script>
-    <script src="js/src/entityManager.js"></script>
-    <script src="js/src/menuManager.js"></script>
-    <script src="js/src/uploadManager.js"></script>
-    <script src="js/src/loginManager.js"></script>
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/angular-route.min.js"></script>
+    <script src="js/lib/angular-resource.min.js"></script>
+    <script src="js/lib/angular-animate.min.js"></script>
+   <!-- <script src="http://qzone.qq.com/gy/404/data.js"></script>
+    <script src="js/src/baiduAnalytics.js"></script>-->
+    <script src="js/src/angularSrc/common.js"></script>
+    <script src="js/src/angularSrc/form.js"></script>
+    <script src="js/src/angularSrc/popControllers.js"></script>
+    <script src="js/src/angularSrc/viewControllers.js"></script>
+    <script src="js/src/angularSrc/app.js"></script>
 </head>
+<body ng-controller="super">
 
-<body ng-controller="parentController">
     <div class="de_page_wrapper">
         <header class="de_header">
-            <h1 class="de_logo"><a href="" id="de_logo">图钉墙</a></h1>
+            <h1 class="de_logo"><a href="http://localhost/DesignEngine_Web/">图钉墙</a></h1>
 
             <!-----用户菜单----->
-            <nav class="de_user_nav de_borderbox" id="de_user_nav">
-                <ul id="de_menu">
-                    <li class="de_reg_view">
-                        <a class="de_btn_user_profile de_borderbox de_user_link" id="de_btn_user_profile"
-                           href="user/${user.userId}">
-                            <img class="photo" src="${user.figure}" title="USER_NAME">${user.name}
+            <nav class="de_user_nav de_borderbox">
+                <ul>
+                    <li class="de_reg_view" ng-show="currentUser.id">
+                        <a class="de_btn_user_profile de_borderbox de_user_link" href="user/{{currentUser.id}}">
+                            <img class="photo" ng-src="{{currentUser.figure}}" title="USER_NAME">
+                            {{currentUser.name}}
                         </a>
                     </li>
-                    <li class="de_reg_view"><a class="de_btn_upload de_borderbox" href="upload/entity" id="de_btn_upload">上传</a></li>
-                    <li class="de_reg_view ">
-                        <a class="de_btn_hotdogmenu de_borderbox" href="#" id="de_btn_ext_nav">更多</a>
-                        <ul class="de_ext_nav de_transition" id="de_ext_nav">
-                            <li class="de_reg_view "><a href="#" data-type="changePwd">修改密码</a></li>
-                            <li class="de_reg_view "><a href="user/${user.userId}" data-type="userHome">个人主页</a></li>
-                            <li class="de_reg_view "><a href="#" data-type="changeProfile">修改个人信息</a></li>
-                            <li class="de_admin_view "><a href="adminhome/users" data-type="userManage">用户管理</a></li>
-                            <li class="de_admin_view "><a href="adminhome/items" data-type="entityManage">作品管理</a></li>
-                            <li class="de_admin_view "><a href="adminhome/comments" data-type="commentManage">评论管理</a></li>
-                            <li class="de_reg_view "><a href="#" data-type="exit">退出登录</a></li>
+                    <li class="de_reg_view" ng-show="currentUser.id">
+                        <a class="de_btn_upload de_borderbox" href="upload/entity">上传</a>
+                    </li>
+                    <li class="de_reg_view " ng-show="currentUser.id">
+                        <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="showMoreMenu()">更多</a>
+                        <ul class="de_ext_nav de_transition" ng-show="showMoreMenuFlag">
+                            <li class="de_reg_view ">
+                                <a href="#" ng-click="editPwd()">修改密码</a>
+                            </li>
+                            <li class="de_reg_view ">
+                                <a href="user/{{currentUser.userId}}">个人主页</a>
+                            </li>
+                            <li class="de_reg_view ">
+                                <a href="" ng-click="editProfile()">修改个人信息</a>
+                            </li>
+                            <li class="de_admin_view " ng-show="currentUser.role=='admin'">
+                                <a href="adminhome/users">用户管理</a>
+                            </li>
+                            <li class="de_admin_view " ng-show="currentUser.role=='admin'">
+                                <a href="adminhome/items">作品管理</a>
+                            </li>
+                            <li class="de_admin_view " ng-show="currentUser.role=='admin'">
+                                <a href="adminhome/comments">评论管理</a>
+                            </li>
+                            <li class="de_reg_view ">
+                                <a href="#">退出登录</a>
+                            </li>
                         </ul>
                     </li>
-                    <li class="de_guest_view"><a class="de_btn_login_reg de_borderbox" href="#" id="de_btn_login_reg">登录/注册</a></li>
+                    <li class="de_guest_view">
+                        <a class="de_btn_login_reg de_borderbox" href="" ng-click="login()">登录/注册</a>
+                    </li>
                 </ul>
             </nav>
 
@@ -81,7 +86,7 @@
             </nav>
         </header>
 
-        <div class="de_screen_container" id="de_screen_container">
+        <div class="de_screen_container" ng-view>
 
         </div>
 
@@ -92,36 +97,32 @@
 
 
     <!-----------作品详情----------->
-    <section class="de_screen_project_detail de_hidden" id="de_screen_project_detail">
+    <section class="de_screen_project_detail" ng-show="showProjectDetail" ng-include="projectDetail.html">
 
     </section>
 
     <!-----------弹窗小组件----------->
-    <section class="de_popout de_boxshadow de_borderbox" ng-show="showPop" ng-controller="popControllerName" ng-include="popTemplateUrl">
+    <section class="de_popout de_boxshadow de_borderbox" ng-show="showPop" ng-controller="popController" ng-include="popTemplateUrl">
 
     </section>
 
-    <!-------------------用户管理------>
-    <setction class="de_screen_manager_panel de_hidden" id="de_screen_manager_panel">
 
-    </setction>
-
-    <section class="de_hidden de_pop_show_media" id="de_pop_show_media">
-        <span id="de_pop_show_media_close" class="de_pop_show_media_close">关闭</span>
+    <section class="de_pop_show_media" ng-show="showPlayMedialPanel">
+        <span class="de_pop_show_media_close" ng-click="closePlayMediaPanel()">关闭</span>
         <div id="de_pop_show_media_content" class="de_pop_show_media_content"></div>
     </section>
 
-    <section class="de_web_video_panel de_hidden" id="de_web_video_panel">
+    <section class="de_web_video_panel" ng-show="showWebVideoPanel">
         <h3>请输入网络视频通用（含iframe标签）地址:</h3>
-        <a href="#" class="de_web_video_panel_close" id="de_web_video_panel_close">关闭</a>
+        <span class="de_pop_show_media_close" ng-click="closeWebVideoPanel()">关闭</span>
         <div id="de_web_video_panel_content" class="de_web_video_panel_content de_borderbox">
         <input type="text" id="de_input_web_video" class="de_input_web_video de_inputbox_gray">
         <input type="button" id="de_input_web_video_ok" class="de_input_web_video_ok de_button" value="确定">
         </div>
     </section>
 
-    <div id="de_blackout" class="de_hidden de_blackout"></div>
-    <div id="de_loading" class="de_loading de_hidden">
+    <div class="de_blackout" ng-show="showBlackOut"></div>
+    <div class="de_loading" ng-show="showLoading">
         <div class="de_loading_spinner" id="de_loading_spinner"></div>
     </div>
 

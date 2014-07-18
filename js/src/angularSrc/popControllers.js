@@ -5,36 +5,69 @@
  * Time: 下午3:42
  * To change this template use File | Settings | File Templates.
  */
-var popControllers=angular.module("popControllers",["formHandler","common","ngCookies"]);
-popControllers.controller("login",["$scope,Form,Config",function($scope,Form,Config){
+var popControllers=angular.module("popControllers",["formHandler","common"]);
+popControllers.service("PopControllers",["$rootScope","Form","Config",function($rootScope,Form,Config){
+    this.signIn=function($scope){
+        $scope.title=Config.popTitles.signIn;
+        $scope.loginError="";
 
-    $scope.title=Config.popTitles.signIn;
-    $scope.toRegPanel=function(){
+        $scope.toRegPanel=function(){
 
-        //继承自body上的controller
-        $scope.popControllerName=Config.popControllerNames.signUp;
-        $scope.templateUrl=Config.popTemplateUrls.signUp;
-    };
-
-    $scope.rememberMe=function(){
-        var email= $scope.login.email;
-        var password=$scope.login.password;
-        var obj={
-            "email":email,
-            "password":password
+            //继承自body上的controller
+            $scope.popController=this.signUp;
+            $scope.popTemplateUrl=Config.popTemplateUrls.signUp;
         };
-        document.cookie = encodeURIComponent(JSON.stringify(obj))+"; max-age=7*24*60*60; path=/";
+
+        $scope.forgetPwd=function(){
+            $scope.popController=this.forgetPwd;
+            $scope.popTemplateUrl=Config.popTemplateUrls.forgetPwd;
+        };
+
+        if(document.cookie){
+            var obj=JSON.parse(decodeURIComponent(document.cookie));
+            $scope.login.email=obj.email;
+            $scope.login.password=obj.password;
+            $scope.login.rememberMe=true;
+        }
+
+        //记住我
+        function rememberMe(){
+            if($scope.login.rememberMe){
+                var email= $scope.login.email;
+                var password=$scope.login.password;
+                var obj={
+                    "email":email,
+                    "password":password
+                };
+                document.cookie = encodeURIComponent(JSON.stringify(obj))+"; max-age=7*24*60*60; path=/";
+            }else{
+                document.cookie="";
+            }
+        }
+        $scope.loginSubmit=function(){
+            rememberMe();
+        };
     };
 
-    if(document.cookie){
-        $scope.hasCookie=true;
+    this.signUp=function($scope){
+        $scope.title=Config.popTitles.signUp;
+        $scope.registerError="";
+        $scope.captcha="captcha.jpg";
 
-        var obj=JSON.parse(decodeURIComponent(document.cookie));
-        $scope.login.email=obj.email;
-        $scope.login.password=obj.password;
+        $scope.refreshCaptcha=function(){
+            $scope.captha=$scope.captha+"?"+Math.random();
+        };
+
+        $scope.registerSubmit=function(){
+
+        };
+    };
+
+    this.forgetPwd=function($scope){
+        $scope.title=Config.popTitles.forgetPwd;
+
+        $scope.forgetPwdSubmit=function(){
+
+        };
     }
-
-    $scope.loginSubmit=function(){
-
-    };
 }]);
