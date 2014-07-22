@@ -12,6 +12,13 @@ common.service("Config",["$rootScope",function($rootScope){
     this.perLoadCount=10;//作品、评论、资源等每次加载的个数
     this.hasNoMoreFlag=-1;//作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
     this.uploadDomain='http://qiniu-plupload.qiniudn.com/';
+    /*this.popControllerNames={
+        "signIn":"signIn",
+        "signUp":"signUp",
+        "forgetPwd":"forgetPwd",
+        "editPwd":"editPwd",
+        "editProfile":"editProfile"
+    };*/
     this.popTitles={
         "signIn":"登陆",
         "signUp":"注册",
@@ -26,13 +33,18 @@ common.service("Config",["$rootScope",function($rootScope){
         "editPwd":"views/changePwd.html",
         "editProfile":"views/editProfile.html"
     };
+    this.urls={  //用到的路径
+        "projects":"/projects",
+        "boxes":"/boxes",
+        "home":"/"
+    };
     this.imageSize={
         ThumbSmall:"-200x200",
         previewSmall:"-400x300"
     };
     this.uploadSize={
         maxMediaSize:"300m", //最大的媒体文件上传大小
-            maxImageSize:"2m"//最大的图片文件上传大小
+        maxImageSize:"2m"//最大的图片文件上传大小
     };
     this.uploadFilters={  //媒体类型格式刷选器
         imageFilter:"jpg,gif,png,jpeg",
@@ -78,7 +90,6 @@ common.service("Config",["$rootScope",function($rootScope){
     this.validError={
         required:"请输入此字段！",
         email:"请输入正确的邮箱格式！",
-        emailExistWithLogin:"此邮箱已注册，请<a id='de_direct_login' class='de_direct_login' href='#'>直接登录</a>或更换邮箱！",
         emailExist:"邮箱已经存在！",
         maxLength:"此字段最多输入${value}个字！",
         minLength:"此字段最少输入${value}个字！",
@@ -183,9 +194,6 @@ common.service("Config",["$rootScope",function($rootScope){
         setUserRole:"admin/update-account-role",
         setUserStatus:"admin/toggle-account-comment"
     };
-    this.urls={ //用到的路径
-
-    };
     this.roles={   //角色
         admin:"admin",
         user:"user",
@@ -214,7 +222,7 @@ common.service("Storage",function(){
     this.clearCurrentUser=function(){
         this.currentUser.userId=0;
         this.currentUser.name="";
-        this.currentUser.figure="";
+        this.currentUser.profile="";
         this.currentUser.role="";
         this.currentUser.email="";
         this.currentUser.description="";
@@ -223,7 +231,7 @@ common.service("Storage",function(){
     };
     this.initCurrentUser=function(data){
         this.currentUser.userId=data.userId?data.userId:this.currentUser.userId;
-        this.currentUser.figure=data.figure?data.figure:this.currentUser.figure;
+        this.currentUser.profile=data.profile?data.profile:this.currentUser.profile;
         this.currentUser.role=data.role?data.role:this.currentUser.role;
         this.currentUser.name=data.name?data.name:this.currentUser.name;
         this.currentUser.email=data.email?data.email:this.currentUser.email;
@@ -233,7 +241,39 @@ common.service("Storage",function(){
     };
 });
 
-common.service("CFunctions",["config",function(config){
+common.service("CFunctions",["Config",function(Config){
+    this.setMenuStatus=function(path){
+        var menuStatus={};
+
+        switch(path){
+            case Config.urls.home:
+                menuStatus={
+                    "projectsClass":"active",
+                    "boxesClass":""
+                };
+                break;
+            case Config.urls.projects:
+                menuStatus={
+                    "projectsClass":"active",
+                    "boxesClass":""
+                };
+                break;
+            case Config.urls.boxes:
+                menuStatus={
+                    "projectsClass":"",
+                    "boxesClass":"active"
+                };
+                break;
+            default:
+                menuStatus={
+                    "projectsClass":"",
+                    "boxesClass":""
+                };
+                break;
+        }
+
+        return menuStatus;
+    };
     this.ajaxReturnErrorHandler=function(data){
         if(data.errorCode||data.resultCode){
             if(data.errorCode==config.errorCode.notFound){
@@ -375,4 +415,36 @@ common.service("CFunctions",["config",function(config){
 
         return uploader;
     }
+}]);
+
+common.service('LocationChanger', ['$location', '$route', '$rootScope', function ($location, $route, $rootScope) {
+
+    this.rootScopeEvent=null;
+
+    //阻止ngView的刷新,返回this是方便链式调用
+    this.skipReload = function () {
+        var lastRoute = $route.current;
+
+        //这里绑定过后面会一直响应，关闭弹出层的时候要取消绑定，绑定的时候会返回取消绑定的函数
+        this.rootScopeEvent=$rootScope.$on('$locationChangeSuccess', function () {
+            $route.current = lastRoute;
+        });
+
+        return this;
+    };
+
+    this.canReload=function(){
+
+        //取消$rootScope.$on('$locationChangeSuccess'的绑定
+        this.rootScopeEvent();
+    };
+
+    this.withoutRefresh = function (url, doesReplace) {
+        if(doesReplace){
+            $location.path(url).replace();
+        }
+        else {
+            $location.path(url || '/');
+        }
+    };
 }]);

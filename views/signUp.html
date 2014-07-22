@@ -1,6 +1,6 @@
-<h3 class="de_popout_title">{{title}}</h3>
+<h3 class="de_popout_title">{{popFlags.title}}</h3>
 	<a href="" ng-click="closePop()" class="de_popout_x_btn">关闭</a>
-    <div class="de_wrapper de_transition">
+    <div class="de_wrapper de_transition" ng-controller="signUp">
 
 <!-- 1.注册弹窗开始 -->
         <article class="de_borderbox de_popout_reg">
@@ -10,30 +10,30 @@
                     <p class="de_username_field">
                         <input type="text" class="de_borderbox de_inputbox_gray" name="fullname" placeholder="姓名（无法修改）"
                                ng-maxlength="32" ng-model="register.fullname" required>
-                        <span class="error" ng-show="registerForm.fullname.$dirty && registerForm.fullname.$invalid" ng-messages="registerForm.fullname.$error">
-                            <label ng-message="required">{{validMessage.required}}</label>
-                            <label ng-message="maxlength">{{validMessage.maxLength | setMaxLength:32}}</label>
+                        <span class="error" ng-show="registerForm.fullname.$dirty && registerForm.fullname.$invalid">
+                            <label ng-show="registerForm.fullname.$error.required">{{validMessage.required}}</label>
+                            <label ng-show="registerForm.fullname.$error.maxlength">{{validMessage.maxLength | setMaxLength:32}}</label>
                         </span>
                     </p>
 
                     <p class="de_email_field">
-                        <input type="email" value="" class="de_borderbox de_inputbox_gray" name="email" placeholder="邮箱"
-                               ng-maxlength="32" required emailExist>
-                        <span class="error" ng-show="registerForm.email.$dirty && registerForm.email.$invalid" ng-messages="registerForm.email.$error">
-                            <label ng-message="required">{{validMessage.required}}</label>
-                            <label ng-message="email">{{validMessage.email}}</label>
-                            <label ng-message="emailExist">{{validMessage.emailExist}}</label>
-                            <label ng-message="maxlength">{{validMessage.maxLength}}</label>
+                        <input type="email" ng-model="register.email" class="de_borderbox de_inputbox_gray" name="email" placeholder="邮箱"
+                               ng-maxlength="32" required email-exist>
+                        <span class="error" ng-show="registerForm.email.$dirty && registerForm.email.$invalid">
+                            <label ng-show="registerForm.email.$error.required">{{validMessage.required}}</label>
+                            <label ng-show="registerForm.email.$error.email">{{validMessage.email}}</label>
+                            <label ng-show="registerForm.email.$error.emailExist">{{validMessage.emailExist}}</label>
+                            <label ng-show="registerForm.email.$error.maxlength">{{validMessage.maxLength}}</label>
                         </span>
                     </p>
 
                     <p class="de_pwd_field">
                         <input type="password" class="de_borderbox de_inputbox_gray" name="password" placeholder="密码"
                                ng-minlength="6" ng-maxlength="20" required>
-                        <span class="error" ng-show="registerForm.password.$dirty && registerForm.password.$invalid" ng-messages="registerForm.password.$error">
-                            <label ng-message="required">{{validMessage.required}}</label>
-                            <label ng-message="minlength">{{validMessage.minLength | setMinLength:6}}</label>
-                            <label ng-message="maxlength">{{validMessage.maxLength | setMaxLength:20}}</label>
+                        <span class="error" ng-show="registerForm.password.$dirty && registerForm.password.$invalid">
+                            <label ng-show="registerForm.password.$error.required">{{validMessage.required}}</label>
+                            <label ng-show="registerForm.password.$error.minlength">{{validMessage.minLength | setMinLength:6}}</label>
+                            <label ng-show="registerForm.password.$error.maxlength">{{validMessage.maxLength | setMaxLength:20}}</label>
                         </span>
                     </p>
 
@@ -43,11 +43,11 @@
                             <span class="de_jcaptcha_refresh" ng-click="refreshCaptcha()">看不清？换一张</span>
                         </a>
                         <input type="text" name="captcha" class="de_borderbox de_jcaptcha_input" placeholder="请输入左侧字符" required>
-                        <span class="error" ng-show="registerForm.captcha.$dirty && registerForm.captcha.$invalid" ng-messages="registerForm.captcha.$error">
-                            <label ng-message="required">{{validMessage.required}}</label>
+                        <span class="error" ng-show="registerForm.captcha.$dirty && registerForm.captcha.$invalid">
+                            <label ng-show="registerForm.captcha.$error.required">{{validMessage.required}}</label>
                         </span>
                     </p>
-                    <input type="submit" class="de_button de_submit_btn" value="注册">
+                    <input type="submit" class="de_button de_submit_btn" value="注册" ng-disabled="registerForm.$invalid">
                     <label class="de_error">{{registerError}}</label>
                 </form>
             </div>

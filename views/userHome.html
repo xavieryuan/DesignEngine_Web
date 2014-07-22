@@ -1,59 +1,76 @@
 <!-----------用户首页----------->
-<section class="de_screen_user_profile de_hidden" id="de_screen_user_profile">    
+<section class="de_screen_user_profile " ng-controller="userHome">
     <!-- 个人作品集就是一个特殊的 topic box -->
-    <ul class="de_topic_list">        
+    <ul class="de_topic_list">
         <li class="de_topic_box">
             <!-- 选题发布者 -->
             <div class="user_info">
-                <a href="#" class="de_borderbox de_user_link">
-                    <img src="#" class="photo">
-                    <p class="name">USER_NAME</p>
+                <a href="" class="de_borderbox" ng-click="showUserHome(user.id)">
+                    <img ng-src="{{user.profile}}" class="photo">
+                    <p class="name">{{user.name}}</p>
                 </a>
             </div>
             <div class="topic_info">
-                <p class="created_date">2014-08-20创建</p>
-                <p class="topic_title">USER_NAME的作品集</p>
-                <p class="topic_description">USER_NAME的个人简洁</p>
+                <p class="created_date">{{user.date}}创建</p>
+                <p class="topic_title">{{user.name}}的作品集</p>
+                <p class="topic_description">{{user.description}}</p>
                 <ul class="de_stats_tags">
-                    <li class="uploads" title="上传">55</li>
-                    <li class="badges" title="勋章">98</li>         
-                </ul>                
+                    <li class="uploads" title="上传">{{user.projectCount}}</li>
+                    <li class="badges" title="勋章">{{user.honorCount}}</li>
+                </ul>
             </div>
             <ul class="topic_action">
                 <!-- 根据权限控制 -->
-                <li><a href="#" class="de_topic_action_submit">上传</a></li>
+                <li><a href="#" class="de_topic_action_submit" ng-disabled="{{user.disabledUpload}}">上传</a></li>
             </ul>
             <ul class="project_info">
-                <li><a href="#" class="de_entity_link">
-                    <img src="#">
-                    </a>
+                <li class="de_borderbox" ng-repeat="project in box.projects">
+                    <div class="user_info">
+                        <a href="" ng-click="showUserHome(project.userId)">
+                            <img class="photo" ng-src="{{project.userProfile}}">
+                            <p class="name">{{project.userName}}</p>
+                        </a>
+                    </div>
+                    <div class="project_info">
+                        <a href="" class="de_entity_link" ng-click="showProjectDetail(project.id)">
+                            <img class="thumb" ng-src="{{project.thumb}}">
+                            <h4>{{project.title}}</h4>
+                            <p class="date">{{project.date}}</p>
+                        </a>
+                    </div>
+                    <ul class="de_stats_tags">
+                        <!-- badges是荣誉勋章的数量 -->
+                        <li class="badges" title="勋章">{{project.honorCount}}</li>
+                        <li class="likes" title="赞">{{project.praiseCount}}</li>
+                        <li class="comments" title="评价">{{project.commentsCount}}</li>
+                    </ul>
                 </li>
-            </ul>                 
+            </ul>
         </li>
     </ul>
-    
+
     <!-- 个人作品列表 -->
-    <ul class="de_project_grid" id="de_project_list">        
-        <li class="de_borderbox">
+    <ul class="de_project_grid" >
+        <li class="de_borderbox" ng-repeat="project in projects">
             <div class="user_info">
-                <a href="user/3599" class="de_user_link">
-                    <img class="photo" src="#">
-                    <p class="name">USER_NAME</p>
+                <a href="" ng-click="showUserHome(project.userId)">
+                    <img class="photo" ng-src="{{project.userProfile}}">
+                    <p class="name">{{project.userName}}</p>
                 </a>
             </div>
             <div class="project_info">
-                <a href="item/5496" class="de_entity_link">
-                    <img class="thumb" src="#">
-                    <h4>PROJECT_TITLE</h4>
-                    <p class="date">UPLOAD_DATE</p>
+                <a href="" class="de_entity_link" ng-click="showProjectDetail(project.id)">
+                    <img class="thumb" ng-src="{{project.thumb}}">
+                    <h4>{{project.title}}</h4>
+                    <p class="date">{{project.date}}</p>
                 </a>
             </div>
             <ul class="de_stats_tags">
                 <!-- badges是荣誉勋章的数量 -->
-                <li class="badges" title="勋章">0</li>
-                <li class="likes" title="赞">0</li>
-                <li class="comments" title="评价">0</li>
+                <li class="badges" title="勋章">{{project.honorCount}}</li>
+                <li class="likes" title="赞">{{project.praiseCount}}</li>
+                <li class="comments" title="评价">{{project.commentsCount}}</li>
             </ul>
         </li>
-    </ul>    
+    </ul>
 </section>

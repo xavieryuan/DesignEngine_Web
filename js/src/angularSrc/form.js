@@ -45,18 +45,18 @@ formHandler.directive("emailExist",function($http){
                     $http({
                         method:"get",
                         url:"php/nameExist.php",
-                        params:{name:ctrl.$viewValue}
+                        params:{email:ctrl.$viewValue}
                     }).success(function(data,status,headers,config){
                             if(data.exist){
-                                ctrl.$setValidity("nameExist",false);
+                                ctrl.$setValidity("emailExist",false);
                             }else{
-                                ctrl.$setValidity("nameExist",true);
+                                ctrl.$setValidity("emailExist",true);
                             }
                         }).error(function(data,status,headers,config){
-                            ctrl.$setValidity('nameExist', true);
+                            ctrl.$setValidity('emailExist', true);
                         });
                 }else{
-                    ctrl.$setValidity("nameExist",true);
+                    ctrl.$setValidity("emailExist",true);
                 }
             });
         }

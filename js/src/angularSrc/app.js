@@ -11,78 +11,115 @@ pinWall.config(["$routeProvider","$locationProvider",function($routeProvider,$lo
 
     //默认使用的时候hash模式，如果要使用rest风格，需要设置下面这一句，注意$locationProvider需要注入
     $locationProvider.html5Mode(true);
-    $locationProvider.hashPrefix("!");
+    //$locationProvider.hashPrefix("!");
     $routeProvider.when("/",{templateUrl: 'views/showProjects.html',controller:"showProjects"}).
-        otherwise({redirectTo: '/'});
+        when("/projects",{templateUrl: 'views/showProjects.html',controller:"showProjects",resolve: {
+            // I will cause a 1 second delay
+            delay: function($q, $timeout) {
+                console.log("project");
+            }
+        }}).
+        /*when("/project/:projectId",{templateUrl: 'views/showProjects.html',controller:"showProjects"}).*/
+        when("/boxes",{templateUrl: 'views/showBoxes.html',controller:"showBoxes",resolve: {
+            // I will cause a 1 second delay
+            delay: function($q, $timeout) {
+                console.log("boxes");
+            }
+        }}).
+        when("/user/:userId",{templateUrl: 'views/userHome.html',controller:"userHome"}).
+        when("/login",{templateUrl: 'views/showProjects.html',controller:"showProjects"}).
+        when("/register",{templateUrl: 'views/showProjects.html',controller:"showProjects"}).
+        when("/forgetPassword",{templateUrl: 'views/showProjects.html',controller:"showProjects"})/*.
+        otherwise({redirectTo: '/'});*/
 }]);
 
-pinWall.controller("super",["$scope","Config","Storage","PopControllers",function($scope,Config,Storage,PopControllers){
+pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage","LocationChanger",
+    function($scope,$location,Config,CFunctions,Storage,LocationChanger){
+
 
     //弹出层使用的变量，绑定在body的controller上，在其下的controller会继承这些变量
-    $scope.popController=PopControllers.signIn; //弹窗的控制器名称
-    $scope.popTemplateUrl=Config.popTemplateUrls.signIn; //弹窗需要加载的页面url
-    $scope.showPop=false; //是否显示弹窗
-    $scope.showMoreMenuFlag=false; //是否显示个人菜单
-    $scope.showProjectDetail=false; //是否显示作品详情
-    $scope.showPlayMedialPanel=false; //是否显示视频播放界面
-    $scope.showWebVideoPanel=false; //控制显示网络视频输入界面
-    $scope.showBlackOut=false; //控制显示遮盖层
-    $scope.showLoading=false; //控制显示loading
+    var path=$location.path();
+    $scope.menuStatus=CFunctions.setMenuStatus(path);
+
+    //使用对象，子scope可以直接覆盖（对象地址）
+    $scope.mainFlags={
+        "showMainWrapper":true,
+        "showMoreMenuFlag":false, //是否显示个人菜单
+        "showProjectDetailFlag":false,  //是否显示作品详情
+        "projectDetailTemplate":"",
+        "showPlayMedialPanel":false,   //是否显示视频播放界面
+        "showWebVideoPanel":false,   //控制显示网络视频输入界面
+        "showBlackOut":false,   //控制显示遮盖层
+        "showLoading":false    //控制显示loading
+    };
+    $scope.popFlags={
+        "title":"",
+        "popTemplateUrl":"", //弹窗需要加载的页面url
+        "showPop":false  //是否显示弹窗
+    };
 
     $scope.currentUser=Storage.currentUser;
 
     $scope.closePop=function(){
-        $scope.showPop=false;
+        $scope.popFlags.showPop=false;
+        $scope.mainFlags.showBlackOut=false;
+        LocationChanger.canReload();
+        window.history.go(-1);
     };
 
-    $scope.validateMessages={
-        "required":Config.messages.required,
-        "email":Config.messages.email,
-        "emailExist":Config.messages.emailExist,
-        "maxLength":Config.messages.maxLength,
-        "minLength":Config.messages.minLength
+    $scope.validMessage={
+        "required":Config.validError.required,
+        "email":Config.validError.email,
+        "emailExist":Config.validError.emailExist,
+        "maxLength":Config.validError.maxLength,
+        "minLength":Config.validError.minLength
     };
 
     /**
      *点击登陆菜单
      */
     $scope.login=function(){
-        $scope.showPop=true;
-        $scope.popController=PopControllers.signIn;
-        $scope.popTemplateUrl=Config.popTemplateUrls.signIn;
+        $scope.popFlags.popTemplateUrl=Config.popTemplateUrls.signIn;
+        LocationChanger.skipReload().withoutRefresh("/login",false);
+    };
+
+    $scope.showProjectDetail=function(id){
+        $scope.mainFlags.showMainWrapper=false;
+        $scope.mainFlags.showProjectDetailFlag=true;
+        $scope.mainFlags.projectDetailTemplate="views/projectDetail.html";
+        LocationChanger.skipReload().withoutRefresh("/project/"+id,false);
     };
 
     /**
      *显示更多菜单
      */
     $scope.showMoreMenu=function(){
-        $scope.showMoreMenuFlag=!$scope.showMoreMenuFlag;
+        $scope.mainFlags.showMoreMenuFlag=!$scope.mainFlags.showMoreMenuFlag;
     };
 
     /**
      *点击修改密码菜单
      */
     $scope.editPwd=function(){
-        $scope.popController=PopControllers.editPwd;
-        $scope.popTemplateUrl=Config.popTemplateUrls.editPwd;
-        $scope.showPop=true;
+        $scope.popFlags.popTemplateUrl=Config.popTemplateUrls.editPwd;
+        LocationChanger.skipReload().withoutRefresh("/change/pwd",false);
     };
 
     /**
      *点击修改资料菜单
      */
     $scope.editProfile=function(){
-        $scope.popController=PopControllers.editProfile;
-        $scope.popTemplateUrl=Config.popTemplateUrls.editProfile;
-        $scope.showPop=true;
+        $scope.popFlags.popTemplateUrl=Config.popTemplateUrls.editProfile;
+        LocationChanger.skipReload().withoutRefresh("/change/profile",false);
     };
 
+    //播放媒体文件界面
     $scope.closePlayMediaPanel=function(){
-        $scope.showPlayMedialPanel=false;
-        $scope.showBlackOut=false;
+        $scope.mainFlags.showPlayMedialPanel=false;
+        $scope.mainFlags.showBlackOut=false;
     };
     $scope.closeWebVideoPanel=function(){
-        $scope.showWebVideoPanel=false;
-        $scope.showBlackOut=false;
+        $scope.mainFlags.showWebVideoPanel=false;
+        $scope.mainFlags.showBlackOut=false;
     }
 }]);

@@ -1,26 +1,26 @@
 <!-----------显示作品聚合----------->
-<section class="de_screen_project" id="de_screen_project">
+<section class="de_screen_project" ng-controller="showProjects">
     <!-- 作品列表 -->
-    <ul class="de_project_grid" id="de_project_list">        
-        <li class="de_borderbox">
+    <ul class="de_project_grid" >
+        <li class="de_borderbox" ng-repeat="project in projects">
             <div class="user_info">
-                <a href="user/3599" class="de_user_link">
-                    <img class="photo" src="#">
-                    <p class="name">USER_NAME</p>
+                <a ng-href="user/{{project.userId}}">
+                    <img class="photo" ng-src="{{project.userProfile}}">
+                    <p class="name">{{project.userName}}</p>
                 </a>
             </div>
             <div class="project_info">
-                <a href="item/5496" class="de_entity_link">
-                    <img class="thumb" src="#">
-                    <h4>PROJECT_TITLE</h4>
-                    <p class="date">UPLOAD_DATE</p>
+                <a href="" ng-click="showProjectDetail(project.id)">
+                    <img class="thumb" ng-src="{{project.thumb}}">
+                    <h4>{{project.title}}</h4>
+                    <p class="date">{{project.date}}</p>
                 </a>
             </div>
             <ul class="de_stats_tags">
                 <!-- badges是荣誉勋章的数量 -->
-                <li class="badges" title="勋章">0</li>
-                <li class="likes" title="赞">0</li>
-                <li class="comments" title="评价">0</li>
+                <li class="badges" title="勋章">{{project.honorCount}}</li>
+                <li class="likes" title="赞">{{project.praiseCount}}</li>
+                <li class="comments" title="评价">{{project.commentsCount}}</li>
             </ul>
         </li>
     </ul>

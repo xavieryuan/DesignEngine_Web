@@ -17,6 +17,7 @@ a{
 li {
     list-style: none;
 }
+
 .de_overflow_visible{
     overflow: visible !important;
 }
@@ -99,9 +100,13 @@ li {
     background: linear-gradient(to bottom, #efefef 0%, #cccccc 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#efefef', endColorstr='#cccccc', GradientType=0); /* IE6-9 */
 }
-
 .de_button:hover {
     background: #ccc;
+}
+.de_button:disabled{
+    background: #eee;
+    color: #ccc;
+    cursor: default !important;
 }
 
 .de_category_filter {

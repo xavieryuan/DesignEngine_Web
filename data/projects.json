@@ -1,11 +1,11 @@
 {
     "projects":[
         {
-            "id":0,
-            "thumb":"/design/data/pic2.png",
+            "id":1,
+            "thumb":"data/pic2.png",
             "praiseCount":34,
             "commentCount":45,
-            "userProfile":"/design/data/people1.jpg",
+            "userProfile":"data/people1.jpg",
             "userName":"涛涛",
             "userId":1,
             "date":"2013-07-08 23:23:23",
@@ -13,11 +13,11 @@
             "describe":"这个还一个很友好的作品"
         },
         {
-            "id":0,
-            "thumb":"/design/data/pic2.png",
+            "id":2,
+            "thumb":"data/pic2.png",
             "praiseCount":34,
             "commentsCount":45,
-            "userProfile":"/design/data/people1.jpg",
+            "userProfile":"data/people1.jpg",
             "userName":"涛涛",
             "userId":1,
             "date":"2013-07-08 23:23:23",
@@ -25,85 +25,13 @@
             "describe":"这个还一个很友好的作品"
         },
         {
-            "id":0,
-            "thumb":"/design/data/pic2.png",
+            "id":3,
+            "thumb":"data/pic2.png",
             "praiseCount":34,
             "commentCount":45,
-            "userProfile":"/design/data/people1.jpg",
+            "userProfile":"data/people1.jpg",
             "userName":"涛涛",
             "userId":1,
-            "date":"2013-07-08 23:23:23",
-            "title":"书香文化",
-            "describe":"这个还一个很友好的作品"
-        },
-        {
-            "id":0,
-            "thumb":"/design/data/pic2.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"/design/data/people1.jpg",
-            "userName":"涛涛",
-            "userId":"0",
-            "date":"2013-07-08 23:23:23",
-            "title":"书香文化",
-            "describe":"这个还一个很友好的作品"
-        },
-        {
-            "id":0,
-            "thumb":"/design/data/pic2.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"/design/data/people1.jpg",
-            "userName":"涛涛",
-            "userId":"0",
-            "date":"2013-07-08 23:23:23",
-            "title":"书香文化",
-            "describe":"这个还一个很友好的作品"
-        },
-        {
-            "id":0,
-            "thumb":"/design/data/pic2.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"/design/data/people1.jpg",
-            "userName":"涛涛",
-            "userId":"0",
-            "date":"2013-07-08 23:23:23",
-            "title":"书香文化",
-            "describe":"这个还一个很友好的作品"
-        },
-        {
-            "id":0,
-            "thumb":"/design/data/pic2.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"/design/data/people1.jpg",
-            "userName":"涛涛",
-            "userId":"0",
-            "date":"2013-07-08 23:23:23",
-            "title":"书香文化",
-            "describe":"这个还一个很友好的作品"
-        },
-        {
-            "id":0,
-            "thumb":"/design/data/pic2.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"/design/data/people1.jpg",
-            "userName":"涛涛",
-            "userId":"0",
-            "date":"2013-07-08 23:23:23",
-            "title":"书香文化",
-            "describe":"这个还一个很友好的作品"
-        },
-        {
-            "id":0,
-            "thumb":"/design/data/pic2.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"/design/data/people1.jpg",
-            "userName":"涛涛",
-            "userId":"0",
             "date":"2013-07-08 23:23:23",
             "title":"书香文化",
             "describe":"这个还一个很友好的作品"

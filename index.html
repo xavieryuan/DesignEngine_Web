@@ -16,7 +16,7 @@
     <script src="js/lib/angular.min.js"></script>
     <script src="js/lib/angular-route.min.js"></script>
     <script src="js/lib/angular-resource.min.js"></script>
-    <script src="js/lib/angular-animate.min.js"></script>
+    <!--<script src="js/lib/angular-animate.min.js"></script>-->
    <!-- <script src="http://qzone.qq.com/gy/404/data.js"></script>
     <script src="js/src/baiduAnalytics.js"></script>-->
     <script src="js/src/angularSrc/common.js"></script>
@@ -27,7 +27,7 @@
 </head>
 <body ng-controller="super">
 
-    <div class="de_page_wrapper">
+    <div class="de_page_wrapper" ng-show="mainFlags.showMainWrapper">
         <header class="de_header">
             <h1 class="de_logo"><a href="http://localhost/DesignEngine_Web/">图钉墙</a></h1>
 
@@ -45,7 +45,7 @@
                     </li>
                     <li class="de_reg_view " ng-show="currentUser.id">
                         <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="showMoreMenu()">更多</a>
-                        <ul class="de_ext_nav de_transition" ng-show="showMoreMenuFlag">
+                        <ul class="de_ext_nav de_transition" ng-show="mainFlags.showMoreMenuFlag">
                             <li class="de_reg_view ">
                                 <a href="#" ng-click="editPwd()">修改密码</a>
                             </li>
@@ -78,10 +78,9 @@
             <!-----顶部菜单----->
             <nav class="de_top_nav" id="de_top_nav">
                 <ul>
-                    <li><a href="project/all" class="de_btn_project de_borderbox active">设计作品</a></li>
-                    <li><a href="resource/all" class="de_btn_resource de_borderbox">学习资源</a></li>
-                    <li><a href="user/hot" class="de_btn_designer de_borderbox">人气榜</a></li>
-                    <li class="de_btn_filter" id="de_btn_filter"><a href="#" class="de_borderbox">发现...</a></li>
+                    <li><a href="projects" class="de_borderbox {{menuStatus.projectsClass}}">设计作品</a></li>
+                    <li><a href="boxes" class="de_borderbox {{menuStatus.boxesClass}}">投稿箱</a></li>
+                    <li class="de_btn_filter"><a href="" class="de_borderbox">发现...</a></li>
                 </ul>
             </nav>
         </header>
@@ -97,22 +96,22 @@
 
 
     <!-----------作品详情----------->
-    <section class="de_screen_project_detail" ng-show="showProjectDetail" ng-include="projectDetail.html">
+    <section class="de_screen_project_detail" ng-controller="projectDetail" ng-show="mainFlags.showProjectDetailFlag" ng-include="mainFlags.projectDetailTemplate">
 
     </section>
 
     <!-----------弹窗小组件----------->
-    <section class="de_popout de_boxshadow de_borderbox" ng-show="showPop" ng-controller="popController" ng-include="popTemplateUrl">
+    <section class="de_popout de_boxshadow de_borderbox" ng-show="popFlags.showPop" ng-include="popFlags.popTemplateUrl">
 
     </section>
 
 
-    <section class="de_pop_show_media" ng-show="showPlayMedialPanel">
+    <section class="de_pop_show_media" ng-show="mainFlags.showPlayMedialPanel">
         <span class="de_pop_show_media_close" ng-click="closePlayMediaPanel()">关闭</span>
         <div id="de_pop_show_media_content" class="de_pop_show_media_content"></div>
     </section>
 
-    <section class="de_web_video_panel" ng-show="showWebVideoPanel">
+    <section class="de_web_video_panel" ng-show="mainFlags.showWebVideoPanel">
         <h3>请输入网络视频通用（含iframe标签）地址:</h3>
         <span class="de_pop_show_media_close" ng-click="closeWebVideoPanel()">关闭</span>
         <div id="de_web_video_panel_content" class="de_web_video_panel_content de_borderbox">
@@ -121,8 +120,8 @@
         </div>
     </section>
 
-    <div class="de_blackout" ng-show="showBlackOut"></div>
-    <div class="de_loading" ng-show="showLoading">
+    <div class="de_blackout" ng-show="mainFlags.showBlackOut"></div>
+    <div class="de_loading" ng-show="mainFlags.showLoading">
         <div class="de_loading_spinner" id="de_loading_spinner"></div>
     </div>
 
