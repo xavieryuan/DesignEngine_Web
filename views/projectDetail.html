@@ -24,7 +24,7 @@
     <p class="publishtime">{{project.date}}</p>
 
     <div class="user_info">
-        <a href="" ng-click="showUserHome(project.userId)">
+        <a ng-href="user/{{project.userId}}">
             <img class="photo" ng-src="{{project.userProfile}}">
 
             <p class="name">{{project.userName}}</p>
@@ -92,12 +92,12 @@
     <ul class="de_comment_list">
         <li ng-repeat="c in comments">
             <div class="user_info">
-                <a href="" class="de_borderbox" ng-click="showUserHome(c.userId)">
+                <a ng-href="user/{{c.userId}}" class="de_borderbox">
                     <img ng-src="{{c.userProfile}}" class="photo">
                 </a>
             </div>
             <div class="comment_wrapper">
-                <a href="" class="name" ng-click="showUserHome(c.userId)">{{c.userName}}</a>
+                <a ng-href="user/{{c.userId}}" class="name">{{c.userName}}</a>
                 <span class="publishtime">{{c.commentTime}}</span>
 
                 <a ng-show="c.deleteAble" href="" ng-click="deleteComment(c.id)" class="de_delete_comment">X</a>
@@ -112,12 +112,12 @@
 
     <div ng-show="currentUser.id" class="de_comment_form de_reg_view de_borderbox">
         <div class="user_info">
-            <a href="" class="de_borderbox" ng-click="showUserHome(currentUser.id)">
+            <a ng-href="user/{{currentUser.userId}}" class="de_borderbox" >
                 <img ng-src="{{currentUser.profile}}" class="photo">
             </a>
         </div>
         <div class="comment_wrapper">
-            <a href="" ng-click="showUserHome(currentUser.id)" class="name">{{currentUser.name}}</a>
+            <a ng-href="user/{{currentUser.userId}}" class="name">{{currentUser.name}}</a>
             <textarea ng-model="commentContent" maxlength="200" class="comment de_borderbox de_inputbox_gray"
                       placeholder="你的评论..."></textarea>
             <input type="button" class="de_button de_btn_add_comment"
@@ -135,7 +135,7 @@
 <ul class="de_project_grid">
     <li class="de_borderbox" ng-repeat="sp in similarProjects">
         <div class="user_info">
-            <a href="" ng-click="showUserHome(sp.userId)">
+            <a ng-href="user/{{sp.userId}}">
                 <img class="photo" ng-src="{{sp.userProfile}}"/>
 
                 <p class="name">{{sp.userName}}</p>

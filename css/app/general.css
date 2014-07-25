@@ -900,6 +900,9 @@ li {
     z-index: 8;
     background: #333;
 }
+.de_ext_nav_active {
+    right:0px;
+}
 
 .de_ext_nav>li>a {
     display: inline-block;
@@ -1807,6 +1810,9 @@ ol.mp_list li.mp_selectable {
     background: #fff;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
     transition: height 0.5s ease-out;
+}
+.zy_add_media_menu_active{
+    height: 280px;
 }
 .zy_add_media_menu ul {
     margin: 0;

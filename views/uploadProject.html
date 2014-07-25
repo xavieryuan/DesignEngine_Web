@@ -1,60 +1,66 @@
 <!-----------上传作品----------->
-<section class="de_screen_upload de_hidden" id="de_screen_upload">
-    <nav class="de_tab_upload" id="de_upload_step_nav">
+<section class="de_screen_upload">
+    <nav class="de_tab_upload">
         <ol>
-            <li><a href="#de_upload_step1" class="de_tab_step1 active current">1. 填写基本信息</a></li>
-            <li><a href="#de_upload_step2" class="de_tab_step2 active">2. 上传</a></li>
-            <li><a href="#de_upload_step3" class="de_tab_step3 active">3. 预览并提交</a></li>
+            <li><a href="" class="de_tab_step1 active {{stepClass[0]}}" ng-click="setStepActive(0)">1. 填写基本信息</a></li>
+            <li><a href="" class="de_tab_step2 active {{stepClass[1]}}" ng-click="setStepActive(1)">2. 上传</a></li>
+            <li><a href="" class="de_tab_step3 active {{stepClass[2]}}" ng-click="setStepActive(2)">3. 预览并提交</a></li>
         </ol>
     </nav>
-    <form class="de_form_upload de_borderbox de_boxshadow" id="de_upload_form">
-        <div class="de_upload_step de_upload_step1 de_borderbox" id="de_upload_step1">
+    <form class="de_form_upload de_borderbox de_boxshadow">
+        <div class="de_upload_step1 {{stepPanelClass[0]}}">
             <p class="de_field_project_title">
-                <label for="de_input_project_title">标题</label>
-                <input type="text" autocomplete="default" maxlength="80" value="" class="de_borderbox de_inputbox_gray"
-                       name="title" id="de_input_project_title" placeholder="">
+                <label>标题</label>
+                <input type="text" maxlength="80" class="de_borderbox de_inputbox_gray"
+                       name="title" ng-model="uploadProject.title">
             </p>
 
             <p class="de_field_project_tag">
-                <label for="de_input_project_tag">标签</label>
-                <ul class="de_borderbox de_category_tag_box" id="de_input_tag">
-                    <li><input type="hidden" name="terms[]" value="${text}"><a href="#">${text}</a></li>
+                <label>标签</label>
+                <ul class="de_borderbox de_category_tag_box">
+                    <li ng-repeat="tag in uploadProject.tags">
+                        <input type="hidden" name="tags[]" value="{{tag}}">
+                        <a href="" ng-click="deleteTag($index)">{{tag}}</a>
+                    </li>
                 </ul>
                 <p class="de_form_tip">在下方输入标签，按回车确认。</p>
-                <input type="text" autocomplete="default" value=""
-                   class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20" name="de_input_project_tag"
-                   id="de_input_project_tag" placeholder="新标签...">
+                <input type="text" class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20"
+                   placeholder="新标签..." ng-keydown="addTag($event,uploadProject.newTag)" ng-model="uploadProject.newTag">
             </p>
             <p class="de_field_project_description">
-                <label for="de_project_description">内容说明</label>
-                <textarea class="de_borderbox de_inputbox_gray" name="description" id="de_project_description" placeholder=""></textarea></p>
+                <label>内容说明</label>
+                <textarea class="de_borderbox de_inputbox_gray" name="description" ng-model="uploadProject.description"></textarea></p>
 
-            <p class="de_field_project_thumb" id="de_upload_thumb_container">
+            <p class="de_field_project_thumb" id="uploadThumbContainer">
                 <span class="de_form_tip">请上传高宽比为1:1的jpg或png图像。</span>
-                <a href="#" class="de_btn_upload_thumb de_button" id="de_upload_thumb_btn">上传缩略图</a>
+                <a href="" class="de_btn_upload_thumb de_button" id="uploadThumb"
+                   ng-init="createThumbUploader('uploadThumb','uploadThumbContainer')">上传缩略图</a>
 
-                <img class="de_project_thumb" id="de_project_thumb" width="400" height="400" src="images/app/default_thumb_500.png"/>
-                <input type="hidden" name="previewFilename" id="de_thumb_name">
-                <input type="hidden" name="previewLocation" id="de_thumb_url">
-                <input type="hidden" name="id" id="de_entity_id">
+                <img class="de_project_thumb" width="400" height="400" ng-src="{{uploadProject.thumb}}"/>
+
             </p>
         </div>
 
         <!-- step 2-->
-        <div class="de_upload_step de_upload_step2 de_hidden" id="de_upload_step2">
+        <div class="de_upload_step2 {{stepPanelClass[1]}}" >
             <div class="zy_uploader_column_left">
-                <span class="zy_section_left_header" id="zy_add_medias_button">添加文件</span>
+                <span class="zy_section_left_header">添加文件</span>
                 <!--媒体文件类型的menu-->
 
-                <div id="zy_add_media_menu" class="zy_add_media_menu">
+                <div id="uploadContainer" class="zy_add_media_menu zy_add_media_menu_active">
                     <ul>
-                        <li><a id="zy_add_image" class="zy_types1">图片</a></li>
+                        <li><a id="uploadImage" class="zy_types1"
+                               ng-init="createImageUploader('uploadImage','uploadContainer')">图片</a></li>
                         <li><a id="zy_add_network_video" class="zy_types2">网络视频</a></li>
-                        <li><a id="zy_add_location_video" class="zy_types3">本地视频</a></li>
-                        <li><a id="zy_add_3d" class="zy_types4">3D文件</a></li>
-                        <li><a id="zy_add_ppt" class="zy_types5">ppt文件</a></li>
-                        <li><a id="zy_add_file" class="zy_types6">文件</a></li>
-                        <li><a id="zy_add_flash" class="zy_types7">flash</a></li>
+                        <li><a id="uploadVideo" class="zy_types3"
+                               ng-init="createVideoUploader('uploadVideo','uploadContainer')">mp4文件</a></li>
+                        <!--<li><a id="zy_add_3d" class="zy_types4">3D文件</a></li>-->
+                        <li><a id="uploadPpt" class="zy_types5"
+                               ng-init="createPptUploader('uploadPPt','uploadContainer')">ppt文件</a></li>
+                        <li><a id="uploadFile" class="zy_types6"
+                               ng-init="createFileUploader('uploadFile','uploadContainer')">zip文件</a></li>
+                        <li><a id="uploadFlash" class="zy_types7"
+                               ng-init="createFlashUploader('uploadFlash','uploadContainer')">flash</a></li>
                     </ul>
                 </div>
                 <ol id="zy_uploaded_medias_ol" class="zy_uploaded_medias_ol">
@@ -77,7 +83,7 @@
         </div>
 
         <!-- step 3-->
-        <div class="de_upload_step de_upload_step3 de_hidden" id="de_upload_step3">
+        <div class="de_upload_step3 {{stepPanelClass[2]}}">
             <input type="submit" autocomplete="default" value="提交" class="de_borderbox de_submit_upload"
                    name="de_submit_upload" id="de_submit_upload"/>
             <article id="de_upload_preview" class="de_project_detail de_borderbox">

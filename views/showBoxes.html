@@ -1,11 +1,11 @@
 <!-----------显示选题----------->
-<section class="de_topic_wrapper" ng-controller="showBoxes">
+<section class="de_topic_wrapper">
     <!-- 选题列表 -->
     <ul class="de_topic_list">        
         <li class="de_topic_box" ng-repeat="box in boxes">
             <!-- 选题发布者 -->
             <div class="user_info">
-                <a href="" class="de_borderbox" ng-click="showUserHome(box.userId)">
+                <a ng-href="user/{{box.userId}}" class="de_borderbox">
                     <img ng-src="{{box.userProfile}}" class="photo">
                     <p class="name">{{box.userName}}</p>
                 </a>
@@ -28,7 +28,7 @@
             <ul class="project_info">
                 <li class="de_borderbox" ng-repeat="project in box.projects">
                     <div class="user_info">
-                        <a href="" ng-click="showUserHome(project.userId)">
+                        <a ng-href="user/{{project.userId}}">
                             <img class="photo" ng-src="{{project.userProfile}}">
                             <p class="name">{{project.userName}}</p>
                         </a>

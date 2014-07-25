@@ -1,42 +1,53 @@
 /**
  * Created with JetBrains WebStorm.
  * User: ty
- * Date: 14-7-17
- * Time: 下午2:08
+ * Date: 14-7-23
+ * Time: 下午3:38
  * To change this template use File | Settings | File Templates.
  */
-var common=angular.module("common",[]);
+var classes=angular.module("classes",["ngResource","toaster"]);
 
-common.service("Config",["$rootScope",function($rootScope){
-    this.defualtEntityThumb="images/app/default_thumb_500.png";
+classes.service("Config",["$rootScope",function($rootScope){
+    this.defualtProjectThumb="images/app/default_thumb_500.png";
     this.perLoadCount=10;//作品、评论、资源等每次加载的个数
     this.hasNoMoreFlag=-1;//作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
     this.uploadDomain='http://qiniu-plupload.qiniudn.com/';
-    /*this.popControllerNames={
-        "signIn":"signIn",
-        "signUp":"signUp",
-        "forgetPwd":"forgetPwd",
-        "editPwd":"editPwd",
-        "editProfile":"editProfile"
-    };*/
-    this.popTitles={
+    this.classNames={
+        mainMenuActive:"active",
+        extMenuActive:"de_ext_nav_active",
+        hidden:"de_hidden",
+        uploadStepActive:"current"
+    };
+    this.titles={
         "signIn":"登陆",
         "signUp":"注册",
         "forgetPwd":"忘记密码",
         "editPwd":"修改密码",
-        "editProfile":"修改资料"
+        "editInfo":"修改资料",
+        "search":"探索"
     };
-    this.popTemplateUrls={
+    this.templateUrls={
         "signIn":"views/signIn.html",
         "signUp":"views/signUp.html",
         "forgetPwd":"views/forgetPwd.html",
         "editPwd":"views/changePwd.html",
-        "editProfile":"views/editProfile.html"
+        "editInfo":"views/editInfo.html",
+        "search":"views/searchPanel.html",
+        "projectDetail":"views/projectDetail.html"
     };
     this.urls={  //用到的路径
         "projects":"/projects",
         "boxes":"/boxes",
-        "home":"/"
+        "home":"/",
+        "projectDetail":"/project/{projectId}",
+        "login":"/login",
+        "register":"/register",
+        "editPwd":"change/password",
+        "editInfo":"change/info",
+        "userHome":"/user/{userId}",
+        "search":"/search",
+        "searchDetail":"/search/{content}",
+        "forgetPwd":"/forgetPassword"
     };
     this.imageSize={
         ThumbSmall:"-200x200",
@@ -93,10 +104,6 @@ common.service("Config",["$rootScope",function($rootScope){
         emailExist:"邮箱已经存在！",
         maxLength:"此字段最多输入${value}个字！",
         minLength:"此字段最少输入${value}个字！",
-        pwdRequired:"请输入密码！",
-        pwdLengthError:"请输入6-20位的密码！",
-        oldPwdRequired:"请输入旧密码！",
-        newPwdRequired:"请输入新密码！",
         pwdEqualError:"两次输入的密码不一致，请重新输入！",
         usernameRequired:"请输入用户名！",
         usernameExist:"用户名已经被注册，请填写其他用户名！",
@@ -129,7 +136,7 @@ common.service("Config",["$rootScope",function($rootScope){
         pptUploadError:"此资源上传到资源服务器出错，无法查看！",
         uploadSizeError:"最大文件大小",
         uploadExtensionError:"只允许上传",
-        uploadIOError:"服务器端异常，请刷新后重试！",
+        uploadIOError:"上传插件异常，请刷新后重试！",
         emailPending:"你的新邮箱${email}没有激活，请进入邮箱激活！",
         emailInvalid:"你提交的新邮箱${email},已被其他人激活，如需修改邮箱，请提交另外一个邮箱！"
     };
@@ -146,53 +153,11 @@ common.service("Config",["$rootScope",function($rootScope){
         notFound:"not_found"
     };
     this.ajaxUrls={
-        uploadFileUrl:"/pinwall/upload", //文件上传,如果不加design，有时候会出错和flash有关
-        uploadAction:"post/create-by-form", //作品（资源）提交
-        editUploadAction:"post/edit-by-form", //作品（资源）提交
-        getAllProjects:"post/work/firstpage", //获取首页作品
-        getAllResource:"post/resource/firstpage", //获取首页资源
-        getEntityMedias:"data/medias.json",  //修改的时候获取作品（资源）已经上传的媒体文件
-        deleteEntity:"post/remove", //删除作品（资源）
-        showOrHideEntity:"post/visible", //隐藏作品（资源）
-        getEntityAttachments:"post/attachments", //获取作品（资源）附件（媒体文件)
-        getEntityDetail:"post/info", //获取作品（资源）详情
-        getEntitiesBySearch:"query/search", //根据搜索内容获取作品（资源)
-        getTags:"term/frequence", //获取系统标签
-        addPraise:"post/add-score", //添加赞（勋章）
-        deletePraise:"post/remove-score", //删除赞（勋章）
-        getSimilarEntities:"query/moreLikeThis", //获取相似作品
-        //getSimilarEntities:"data/similarEntities.json", //获取相似作品
-        getComments:"post/comments", //获取评论
-        postComment:"post/add-comment", //发表评论
-        showOrHideComment:"admin/toggle-post-comment",
-        deleteComment:"post/remove-comment", //删除评论
-        getHotUsersOrder:"account/rank",
-        getHotUsers:"account/hot", //获取人点用户
-        getUserById:"account/info", //根据id获取用户
-        getUserEntities:"account/posts", //获取用户的作品（资源）
-        login:"login", //登录
-        logOut:"logout",
-        checkHasBind:"associate/is-bind",
-        checkLogin:"account/current", //判断是否登录
-        sendOpenId:"login", //发送openId
-        bindOldAccount:"associate/bind", //绑定旧账户
-        unBindAccount:"associate/unbind",
-        getValidCode:"captcha.jpg", //获取验证码
-        register:"register", //注册
-        changePassword:"account/change-password", //修改密码
-        forgetPassword:"resetpwd/send-email", //忘记密码
-        changeProfile:"account/change-profile", //修改资料
-        changeEmail:"account/change-email",
-        getNewEmail:"account/pending-email",
-        emailValidate:"account-email-unique",
-        usernameValidate:"account-fullname-unique",
-        termSuggest:"query/termSuggest",
-        searchSuggest:"query/searchSuggest",
-        getAllUsers:"admin/list-account",
-        getAllComments:"admin/list-comment",
-        getAllEntities:"admin/list-post",
-        setUserRole:"admin/update-account-role",
-        setUserStatus:"admin/toggle-account-comment"
+        upload:"#",
+        getAllProjects:"data/projects.json", //获取首页作品媒体文件)
+        getProjectDetail:"post/info/:id", //获取作品（资源）详情
+        deleteProject:"post/remove/:id",
+        getSimilarProjects:"post/similar"
     };
     this.roles={   //角色
         admin:"admin",
@@ -201,7 +166,7 @@ common.service("Config",["$rootScope",function($rootScope){
     };
 }]);
 
-common.service("Storage",function(){
+classes.service("Storage",function(){
     this.projectLoadedId=0; //分页加载，最后一个作品的时间，-1代表没有更多
     this.searchLoadedCount=0;
     this.currentEditEntityId=0; //当前编辑的作品、资源的id
@@ -210,58 +175,123 @@ common.service("Storage",function(){
     this.uploadedMedias={}; //上传作品、资源时已经上传的媒体文件
 
     this.currentUser={  //当前登录的用户信息
-        userId:0,
+        id:0,
         name:"",
         figure:"",
         role:"",
         description:"",
         email:"",
-        status:"",
-        regLocked:true
+        status:""
     };
     this.clearCurrentUser=function(){
-        this.currentUser.userId=0;
+        this.currentUser.id=0;
         this.currentUser.name="";
         this.currentUser.profile="";
         this.currentUser.role="";
         this.currentUser.email="";
         this.currentUser.description="";
         this.currentUser.status="";
-        this.currentUser.regLocked=true;
     };
     this.initCurrentUser=function(data){
-        this.currentUser.userId=data.userId?data.userId:this.currentUser.userId;
+        this.currentUser.id=data.userId?data.userId:this.currentUser.userId;
         this.currentUser.profile=data.profile?data.profile:this.currentUser.profile;
         this.currentUser.role=data.role?data.role:this.currentUser.role;
         this.currentUser.name=data.name?data.name:this.currentUser.name;
         this.currentUser.email=data.email?data.email:this.currentUser.email;
         this.currentUser.description=typeof data.description!=="undefined"?data.description:this.currentUser.description;
         this.currentUser.status=data.status?data.status:this.currentUser.status;
-        this.currentUser.regLocked=typeof data.regLocked!=="undefined"?data.regLocked:this.currentUser.regLocked;
     };
 });
 
-common.service("CFunctions",["Config",function(Config){
+classes.service("CFunctions",["$http","toaster","Config",function($http,toaster,Config){
+
+    var postCfg={
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+        transformRequest:this.transform
+    };
+
+    /**
+     * 序列化参数
+     * @param obj
+     * @returns {string}
+     */
+    function param(obj){
+        var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
+
+        for(name in obj) {
+            value = obj[name];
+
+            if(value instanceof Array) {
+                for(i=0; i<value.length; ++i) {
+                    subValue = value[i];
+                    fullSubName = name + '[' + i + ']';
+                    innerObj = {};
+                    innerObj[fullSubName] = subValue;
+                    query += param(innerObj) + '&';
+                }
+            }
+            else if(value instanceof Object) {
+                for(subName in value) {
+                    subValue = value[subName];
+                    fullSubName = name + '[' + subName + ']';
+                    innerObj = {};
+                    innerObj[fullSubName] = subValue;
+                    query += param(innerObj) + '&';
+                }
+            }
+            else if(value !== undefined && value !== null)
+                query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+        }
+
+        return query.length ? query.substr(0, query.length - 1) : query;
+    }
+
+    /**
+     * 发送post请求时的数据处理操作
+     * @param data
+     * @returns {string}
+     */
+    function transform(data){
+        return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
+    }
+
+    /**
+     * 提交表单
+     * @param {Object} params 对象属性formUrl:"表单提交地址",formParam:"表单数据对象",successCb:"提交成功后回调函数"
+     */
+    this.ajaxSubmit=function(params){
+        var me=this;
+        $http.post(params.formUrl,params.formParam).
+            success(params.successCb).error(function(data, status, headers, config){
+                me.ajaxReturnErrorHandler(data);
+            });
+
+        /*$http.post(param.formUrl,param.formParam,postCfg). success(param.successCb).
+             error(function(data, status, headers, config){
+                console.log(data);
+             });*/
+    };
+
     this.setMenuStatus=function(path){
         var menuStatus={};
 
         switch(path){
             case Config.urls.home:
                 menuStatus={
-                    "projectsClass":"active",
+                    "projectsClass":Config.classNames.mainMenuActive,
                     "boxesClass":""
                 };
                 break;
             case Config.urls.projects:
                 menuStatus={
-                    "projectsClass":"active",
+                    "projectsClass":Config.classNames.mainMenuActive,
                     "boxesClass":""
                 };
                 break;
             case Config.urls.boxes:
                 menuStatus={
                     "projectsClass":"",
-                    "boxesClass":"active"
+                    "boxesClass":Config.classNames.mainMenuActive
                 };
                 break;
             default:
@@ -274,6 +304,7 @@ common.service("CFunctions",["Config",function(Config){
 
         return menuStatus;
     };
+
     this.ajaxReturnErrorHandler=function(data){
         if(data.errorCode||data.resultCode){
             if(data.errorCode==config.errorCode.notFound){
@@ -295,10 +326,11 @@ common.service("CFunctions",["Config",function(Config){
 
         DE.UIManager.hideLoading();
     };
+
     this.ajaxErrorHandler=function(){
-        DE.UIManager.showMsgPopout(config.messageCode.errorTitle,config.messageCode.networkError);
-        DE.UIManager.hideLoading();
+        toaster.pop('error',Config.messages.errorTitle,Config.messages.networkError,null,null);
     };
+
     this.checkMobile=function(){
         var userAgentList = new Array("2.0 MMP", "240320", "AvantGo","BlackBerry", "Blazer",
             "Cellphone", "Danger", "DoCoMo", "Elaine/3.0", "EudoraWeb", "hiptop", "IEMobile", "KYOCERA/WX310K", "LG/U990",
@@ -328,13 +360,14 @@ common.service("CFunctions",["Config",function(Config){
 
         return false;
     };
+
     this.createUploader=function(param){
         var uploader = Qiniu.uploader({
             runtimes: 'html5,flash,html4',    //上传模式,依次退化
             browse_button: param.browseButton,       //上传选择的点选按钮，**必需**
-            uptoken_url: ajaxurl+"?action=getUploadToken",
-            multi_selection:false,
-            domain: config.uploadDomain,
+            uptoken_url:  Config.ajaxUrls.upload,
+            multi_selection:param.multi,
+            domain: Config.uploadDomain,
             container: param.container,           //上传区域DOM ID，默认是browser_button的父元素，
             filters: {
                 mime_types : [
@@ -342,7 +375,7 @@ common.service("CFunctions",["Config",function(Config){
                 ]
                 //max_file_size:'1m'
             },
-            multipart_params:params.multipartParams,
+            multipart_params:param.multipartParams,
             max_file_size: param.maxSize,           //最大文件体积限制,qiniu中需要写在这里，而不是卸载filters中
             flash_swf_url: '../lib/Moxie.swf',  //引入flash,相对路径
             max_retries: 3,                   //上传失败最大重试次数
@@ -353,58 +386,37 @@ common.service("CFunctions",["Config",function(Config){
                     //console.log(up.getOption("max_file_size"));
                 },
                 'FilesAdded': function(up, files) {
-                    var type=up.getOption("videoType");
-
-                    //如果是Flash需要填写文件夹名称
-                    if(type==2&&$("#FlashName").val()==""){
-                        alert(config.message.flashHasNoDir);
-                        up.stop();
-                    }
+                    param.fileAddCb(up,files);
                 },
                 'UploadProgress': function(up, file) {
-                    // 每个文件上传时,处理相关的事情
-                    $("#uploadProgress").html(file.name+"----"+file.percent+"%");
+                    param.progressCb(up,file);
                 },
                 'FileUploaded': function(up, file, info) {
-
-                    $("#uploadProgress").html(config.message.inHand);
-
-                    var res = JSON.parse(info);
-                    var sourceLink = config.srcDomain + res.key; //获取上传成功后的文件的Url
-                    var type=up.getOption("videoType");
-
-                    var param={
-                        name:file.name,
-                        key_name:res.key,
-                        url:sourceLink,
-                        type:type,
-                        status:0,
-                        action:"addVideo"
-                    };
-
-                    if(type==1){
-                        param.status=2;
-                    }
-
-                    addVideoToBackend(param);
-
-
+                    param.uplodedCb(file);
                 },
                 'Error': function(up, err, errTip) {
-                    alert(errTip);
+                    var message="";
+                    switch(err.message){
+                        case "size":
+                            message=Config.messages.uploadSizeError;
+                            break;
+                        case "extension":
+                            message=Config.messages.uploadExtensionError;
+                            break;
+                        default:
+                            message=Config.messages.uploadIOError;
+                            break;
+                    }
+                    toaster.pop('error',Config.messages.errorTitle,message,null,null);
+
+                    up.refresh();
                 },
                 'Key': function(up, file) {
 
                     // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
                     // 该配置必须要在 unique_names: false , save_key: false 时才生效
                     var random=Math.floor(Math.random()*10+1)*(new Date().getTime());
-                    var type=up.getOption("videoType");
                     var key=random+"-"+file.name;
-
-                    if(type==2){
-                        //如果是Flash需要加上路径
-                        key=$("#FlashName").val()+"/"+key;
-                    }
 
 
                     // do something with key here
@@ -417,7 +429,7 @@ common.service("CFunctions",["Config",function(Config){
     }
 }]);
 
-common.service('LocationChanger', ['$location', '$route', '$rootScope', function ($location, $route, $rootScope) {
+classes.service('LocationChanger', ['$location', '$route', '$rootScope', function ($location, $route, $rootScope) {
 
     this.rootScopeEvent=null;
 
@@ -428,6 +440,7 @@ common.service('LocationChanger', ['$location', '$route', '$rootScope', function
         //这里绑定过后面会一直响应，关闭弹出层的时候要取消绑定，绑定的时候会返回取消绑定的函数
         this.rootScopeEvent=$rootScope.$on('$locationChangeSuccess', function () {
             $route.current = lastRoute;
+            //console.log("location");
         });
 
         return this;
@@ -437,6 +450,8 @@ common.service('LocationChanger', ['$location', '$route', '$rootScope', function
 
         //取消$rootScope.$on('$locationChangeSuccess'的绑定
         this.rootScopeEvent();
+
+        return this;
     };
 
     this.withoutRefresh = function (url, doesReplace) {
@@ -447,4 +462,50 @@ common.service('LocationChanger', ['$location', '$route', '$rootScope', function
             $location.path(url || '/');
         }
     };
+}]);
+
+
+
+/* $resource default actions
+{ 'get':    {method:'GET'},
+    'save':   {method:'POST'},
+    'query':  {method:'GET', isArray:true},
+    'remove': {method:'DELETE'},
+    'delete': {method:'DELETE'} };
+    */
+classes.factory("Project",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
+    return $resource(Config.ajaxUrls.getAllProjects,{},{
+        query:{params:{"length":10}},
+        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+        remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+        add:{method:"put"},
+        getSimilar:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+    })
+}]);
+classes.factory("User",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
+    return $resource(Config.ajaxUrls.getAllProjects,{},{
+        query:{params:{"length":10}},
+        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+        remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+        add:{method:"put"},
+        getProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+    });
+}]);
+classes.factory("Box",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
+    return $resource(Config.ajaxUrls.getAllProjects,{},{
+        query:{params:{"length":10}},
+        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+        remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+        add:{method:"put"},
+        getProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+    });
+}]);
+classes.factory("Box",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
+    return $resource(Config.ajaxUrls.getAllProjects,{},{
+        query:{params:{"length":10}},
+        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+        remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+        add:{method:"put"},
+        getProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+    });
 }]);
