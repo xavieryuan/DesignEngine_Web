@@ -1550,15 +1550,14 @@ li {
 	position: relative;
 	height:140px;
 	box-sizing: border-box;
-	overflow: hidden;
 	background:#fff;
-	box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-	margin:20px 30px 20px 60px;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+	margin:20px 80px 20px 30px;
 }
 .de_topic_box .user_info{
 	width:100px;
 	height:140px;
-	background: #ddd;
+	background: #f8f8f8;
 	position: absolute;
 	top:0;
 	left: 0;
@@ -1591,8 +1590,11 @@ li {
 .de_topic_box .topic_info{
 	position: absolute;
 	top:0;
-	left: 120px;
+	left: 100px;
 	bottom:0;
+	padding-left:20px;
+	background:#fff;
+	min-width: 240px;
 }
 .topic_info .created_date{
 	font-size: 12px;
@@ -1617,7 +1619,7 @@ li {
 }
 .topic_info .de_stats_tags{
 	position:absolute;
-	left:0;
+	left:20px;
 	bottom:0;
 	white-space:nowrap;
 }
@@ -1631,15 +1633,80 @@ li {
 .de_topic_box .topic_action{
 	position: absolute;
 	top:10px;
-	left:-50px;
-	width:50px;
+	right:-50px;
+	width:40px;		
+	font-size: 0;
+}
+.topic_action li{
+	width:40px;
+	height:40px;
+	margin-bottom:10px;
+}
+.topic_action li a{
+	width:40px;
+	height:40px;
+	display: inline-block;	
+	text-indent: 9999px;
+}
+.topic_action li:first-child{
+	position: absolute;
+	left:-140px;
+	top:0;
+}
+.topic_action li a.de_topic_action_submit{	
+	width:120px;
+	height:120px;
+	box-sizing: border-box;
+	background-color:#07af69;
+	background-image:url(/images/app/icon40_upload_transparent.png);
+	background-repeat: no-repeat;
+	background-position:  center 30px;	
+	font-size:18px;
+	color:#fff;
+	font-weight: bold;
+	text-align:center;
+	line-height: 120px;
+	padding-top:24px;
+	text-indent:0;
+}
+.topic_action li a.de_topic_action_submit.disable{
+	background-color:#ccc;
+}
+.de_topic_action_lock{
+	background:url(/images/app/icon40_lock_white.png) no-repeat center;
+}
+.de_topic_action_unlock{
+	background:url(/images/app/icon40_unlock_white.png) no-repeat center;
+}
+.de_topic_action_setting{
+	background:url(/images/app/icon40_setting_white.png) no-repeat center;
+}
+.de_topic_action_lock:hover{
+	background:url(/images/app/icon40_lock_green.png) no-repeat center;
+}
+.de_topic_action_unlock:hover{
+	background:url(/images/app/icon40_unlock_green.png) no-repeat center;
+}
+.de_topic_action_setting:hover{
+	background:url(/images/app/icon40_setting_green.png) no-repeat center;
 }
 .de_topic_box .project_info{
 	position: absolute;
 	top:0;
-	right: 0;
+	right: 130px;
+	font-size:0;
+	overflow: hidden;
+	white-space: nowrap;
 }
-
+.project_info li{
+	display: inline-block;	
+	margin:10px 10px 0 0;
+	
+}
+.project_info li img{
+	height:120px;
+	width:120px;
+}
 /*************作品上传****************/
 .de_screen_upload {
 
