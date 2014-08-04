@@ -5,17 +5,14 @@
 <!-- 1.注册弹窗开始 -->
         <article class="de_borderbox de_popout_reg">
             <div class="de_reg_col de_borderbox">
-
                 <form name="registerForm" class="" ng-submit="registerSubmit()" novalidate>
                     <p class="de_username_field">
-                        <input type="text" class="de_borderbox de_inputbox_gray" name="fullname" placeholder="姓名（无法修改）"
-                               ng-maxlength="32" ng-model="register.fullname" required>
+                        <input type="text" class="de_borderbox de_inputbox_gray" name="fullname" placeholder="姓名（无法修改）" ng-maxlength="32" ng-model="register.fullname" required>
                         <span class="error" ng-show="registerForm.fullname.$dirty && registerForm.fullname.$invalid">
                             <label ng-show="registerForm.fullname.$error.required">{{validMessage.required}}</label>
                             <label ng-show="registerForm.fullname.$error.maxlength">{{validMessage.maxLength | setMaxLength:32}}</label>
                         </span>
                     </p>
-
                     <p class="de_email_field">
                         <input type="email" ng-model="register.email" class="de_borderbox de_inputbox_gray" name="email" placeholder="邮箱"
                                ng-maxlength="32" required email-exist>
@@ -47,7 +44,7 @@
                             <label ng-show="registerForm.captcha.$error.required">{{validMessage.required}}</label>
                         </span>
                     </p>
-                    <input type="submit" class="de_button de_submit_btn" value="注册" ng-disabled="registerForm.$invalid">
+                    <input type="submit" class="de_green_btn de_submit_btn" value="注册" ng-disabled="registerForm.$invalid">
                     <label class="de_error">{{registerError}}</label>
                 </form>
             </div>

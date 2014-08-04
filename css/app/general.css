@@ -53,14 +53,14 @@ li {
     vertical-align: middle;
     display: block;
     padding: 0 10px;
-    background: #efefef;
-    border: none;
+    border: #ddd 1px solid;
+	background:#efefef;
     font-size: 14px;
 }
 
 .de_inputbox_gray:focus {
     outline: none;
-    background: #ddd;
+    background-color: #ddd;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -86,29 +86,45 @@ li {
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
-    color: #333;
+    color: #666;
     font-weight: bold;
-    border: #bbb 1px solid;
+    border: #ddd 1px solid;
+	background:#efefef;	
     padding: 0 10px;
-    /*渐变色*/
-    background: #efefef; /* Old browsers */
-    background: -moz-linear-gradient(top, #efefef 0%, #cccccc 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #efefef), color-stop(100%, #cccccc)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #efefef 0%, #cccccc 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #efefef 0%, #cccccc 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #efefef 0%, #cccccc 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #efefef 0%, #cccccc 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#efefef', endColorstr='#cccccc', GradientType=0); /* IE6-9 */
+	
 }
 .de_button:hover {
+	color:#333;
     background: #ccc;
 }
 .de_button:disabled{
-    background: #eee;
-    color: #ccc;
+    opacity:0.5;
     cursor: default !important;
 }
-
+.de_green_btn{
+	display: inline-block;
+    font-size: 12px;
+    text-decoration: none;
+    height: 40px;
+    line-height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    border: #07af69 1px solid;
+    padding: 0 10px;
+    background: #09bc72; 
+}
+.de_green_btn:hover{
+	background:#07af69;	
+}
+.de_green_btn:disabled{
+	background: #09bc72;
+	opacity:0.5;
+	cursor: default !important;
+}
 .de_category_filter {
     margin: 20px 10px;
     display: block;
@@ -206,28 +222,25 @@ li {
     box-sizing: border-box;
 }
 
-/*****************弹出窗口小组件******************/
+/*****************弹出窗口小组件(通用)******************/
 .de_popout {
     background: #fff;
-    width: 100%;
+    width: 950px;
+	min-width:760px;
     height: 460px;
     position: fixed;
     top: 50%;
+	left:50%;
     margin-top: -230px;
-    left: 0;
+	margin-left:-475px;
     z-index: 9999;
     white-space: nowrap;
     font-size: 0;
 }
 
-.de_popout a {
-    color: #333;
-    text-decoration: none;
-}
-
 .de_popout_title {
-	color:#390;
-    padding-left: 5%;
+	color:#09bc72;
+    padding: 0 30px;
     width: 100%;
     height: 60px;
     margin: 0;
@@ -237,69 +250,153 @@ li {
     left: 0;
     font-size: 18px;
     background:#eee;
+	box-sizing: border-box;
 }
-
-.de_popout>.de_popout_x_btn{
+.de_popout_x_btn{
 	width:60px;
 	height:60px;
-	background:url(../../images/app/icon60_close_transparent_bg.png) no-repeat;
+	background:url(../../images/app/icon60_close_transparent_bg.png) no-repeat;	
 	position:absolute;
 	top:0;
-	right:0;
+	right:10px;
     font-size: 0px;
 	opacity:0.5;
 	}
-.de_popout>.de_popout_x_btn:hover{
+.de_popout_x_btn:hover{
 	opacity:1;
 	}
 .de_popout>.de_wrapper {
-    height: 400px;
     position: absolute;
     top: 60px;
     left: 0;
+	bottom:0;
     width: 100%;
 	box-shadow:0px 0px 4px rgba(0, 0, 0, 0.3);
 }
-.de_popout .de_inner_wrapper {    
+.de_inner_wrapper {    
     width: 100%;
 	position:absolute;
 	left:0;
 }
-
 .de_popout h4 {
     font-weight: normal;
     font-size: 16px;
-    color: #390;
+    color: #09bc72;
     margin: 15px 0;
-	height: 30px;
 }
-
 .de_popout article {
     display: inline-block;
     vertical-align: top;
     position: relative;
-    border-left: #ccc 1px dotted;
     height: 400px;
+	width: 100%;
+    font-size: 14px;
+    overflow: hidden;
 }
+/******弹出面板搜索*******/
+
+.de_search_panel .de_top_search{
+	position: absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	box-sizing: border-box;
+	width:50%;
+	padding:20px 20px 0 30px;
+	border-right:#ccc 1px dotted;
+}
+
+/*搜索框*/
+.de_top_search>input {
+    height: 40px;
+    line-height: 40px;
+    width: 70%;
+    margin: 0px;
+    padding: 0 10px 0 36px;
+    font-size: 14px;
+    border: none;
+    color: #666;
+    background-image: url(../../images/app/icon20_search_gray.png);
+	background-repeat: no-repeat;
+	background-position: 10px center;
+    font-size: 12px;
+    font-family: "微软雅黑";
+    font-weight: bold;
+    vertical-align: bottom;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.de_top_search>input:focus {
+    width: 90%;
+    outline: none;
+    z-index: 102;
+}
+.de_popout .de_top_directory{
+	position: absolute;
+	top:0;
+	right:0;
+	width:50%;
+	box-sizing: border-box;	
+	padding:0 30px 0 20px;
+}
+/*分类搜索*/
+.de_top_directory h3{
+	font-size:1em;
+	margin: 30px 0;
+}
+.de_top_directory .de_directory_list{
+	font-size: 1em;
+	white-space:normal;
+}
+.de_directory_list> li{
+	display: inline-block;
+}
+.de_directory_list> li > a{
+	display: inline-block;
+	width:190px;
+	color:#09bc72;
+	padding:8px 10px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;	
+}
+.de_directory_list> li > a:hover{
+	background:#09bc72;
+	color:#fff;
+}
+
 
 /******登录弹窗样式*******/
 .de_popout_login {
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-	padding:0 5%;
 }
-
-.de_popout_login .de_login_col,.de_popout_edit_profile .de_edit_col{
+.de_popout_login .de_login_col{
     width: 50%;
-    padding: 20px 30px 20px 0;
-    display: inline-block;
+	position: absolute;
+	top:0;
+	left:0;
+	bottom:0;
+    padding:20px 20px 0 30px;
     vertical-align: top;
     height: 400px;
     border-right: #ccc 1px dotted;
 	overflow:hidden;
 }
-
+.de_popout_login .de_reg_col{
+    width: 50%;
+	position: absolute;
+	top:0;
+	right:0;
+	bottom:0;
+    padding:20px 30px 0 20px;
+    vertical-align: top;
+    height: 400px;
+    border-right: #ccc 1px dotted;
+	overflow:hidden;
+}
+.de_popout_login .de_forgot_pwd a{
+	color:#666;
+}
 .de_popout_login .de_email_field, .de_popout_login .de_pwd_field {
     margin-bottom: 25px;
     position: relative;
@@ -307,7 +404,7 @@ li {
 
 .de_popout_login .de_email_field label, .de_popout_login .de_pwd_field label {
     font-size: 14px;
-    margin: 5px 0;
+    margin: 8px 0;
     display: block;
 }
 
@@ -335,77 +432,12 @@ li {
 }
 
 .de_popout_login .de_forgot_pwd a:hover {
-    color: #390;
-}
-
-.de_link_openid_login {
-    height:60px;
-	position:relative;
-    border-bottom: #ccc 1px dotted;
-}
-
-.de_popout_login .de_qqlogin_btn {
-	position:absolute;
-	top:0;
-	left:4px;
-    display: block;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 0 10px;
-    max-width: 160px;
-    color: #333;
-    text-decoration: none;
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
-    background: #efefef;
-    border-radius: 20px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-    /*渐变色*/
-    background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top, #ffffff 0%, #efefef 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #efefef)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #ffffff 0%, #efefef 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #ffffff 0%, #efefef 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #ffffff 0%, #efefef 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #ffffff 0%, #efefef 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#efefef', GradientType=0); /* IE6-9 */
-}
-
-.de_popout_login .de_qqlogin_btn:hover {
-    background: #ddd;
-}
-
-.de_popout_login .de_qqlogin_btn:before {
-    content: "使用QQ账号登录";
-    display: inline-block;
-    width: 140px;
-    height: 40px;
-    vertical-align: middle;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    padding-left: 10px;
-    line-height: 40px;
-    margin: 0 10px 0 0;
-    background: url(../../images/app/icon30_qq.png) no-repeat left center;
-}
-
-.de_qqlogin_btn a {
-    width: 140px;
-    display: block;
-    position: absolute;
-    top: 0;
-}
-
-.de_qqlogin_btn img {
-    width: 0px;
+    color: #09bc72;
 }
 
 .de_popout_login .de_reg_col,.de_popout_edit_profile .de_bind_account {
     width: 50%;
-    padding: 20px 0 20px 30px;
+    padding: 20px 30px 0 20px;
     display: inline-block;
     vertical-align: top;
     height: 400px;
@@ -413,6 +445,7 @@ li {
 
 .de_popout_login .de_reg_btn {
     display: block;
+	width:100px;
 }
 
 .error{
@@ -435,11 +468,12 @@ li {
 }
 .de_popout_reg .de_reg_col {
     width: 50%;
-    padding: 0 5%;
-    display: inline-block;
-    vertical-align: top;
-    height: 400px;
-    border-right: #ccc 1px dotted;
+    padding: 20px 20px 0 30px;
+    vertical-align: top;    
+	position: absolute;
+	top:0;
+	left: 0;
+	bottom: 0;
 }
 .de_popout_reg .de_band_col {
     width: 30%;
@@ -472,6 +506,7 @@ li {
 
 .de_popout_reg .de_jcaptcha_refresh {
     display: block;
+	color: #333;
 }
 
 .de_popout_reg .de_jcaptcha_img {
@@ -506,7 +541,7 @@ li {
 .de_popout_recover_pwd {
     width: 100%;
     font-size: 14px;
-    padding: 0 5%;
+    padding: 0 30px;
     overflow: hidden;
 }
 
@@ -531,7 +566,7 @@ li {
 .de_popout_msg {
     width: 100%;
     font-size: 14px;
-    padding: 20px 5%;
+    padding: 20px 30px;
     overflow: hidden;
 }
 
@@ -547,10 +582,14 @@ li {
 
 /******重置密码弹窗样式*******/
 .de_popout_reset_pwd {
-    width: 100%;
+    width: 50%;
     font-size: 14px;
-    padding: 0 5%;
+    padding: 20px 20px 0 30px;
     overflow: hidden;
+	position: absolute;
+	top:0;
+	left: 0;
+	bottom: 0;
 }
 
 .de_popout_reset_pwd .de_pwd_field {
@@ -573,17 +612,20 @@ li {
 }
 
 /******编辑个人信息弹窗样式*******/
-.de_popout_edit_profile {
+.de_popout_edit_profile .de_edit_col {
     width: 100%;
     font-size: 14px;
-    padding: 0 5%;
+    padding: 20px 30px;
     overflow: hidden;
+	position: absolute;
+	top:0;
+	left: 0;
+	bottom: 0;
 }
-
 .de_form_edit_profile {
-    margin: 20px 0;
-    padding: 0 0 0 100px;
-    position: relative;
+    margin-left:100px;
+	padding-left:20px;
+	border-left:#ccc 1px dotted;
 }
 
 .de_form_edit_profile p em {
@@ -603,9 +645,12 @@ li {
     width: 100px;
     font-size: 12px;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 20px;
+    left: 20px;
     margin: 0;
+}
+.de_photo_field a{
+	color:#333;
 }
 
 .de_photo_field a:hover {
@@ -728,7 +773,7 @@ li {
 	display: inline-block;
 	margin-left: 40px;
 	padding: 4px 10px;
-	background: #390;
+	background: #09bc72;
 }
 .de_remove_bind:hover{
 	background:#333;
@@ -781,7 +826,6 @@ li {
     right: 0;
     top: 0;
     z-index: 101;
-    background: url(../../images/app/user_nav_bg.png) no-repeat;
 }
 
 .de_user_nav>ul {
@@ -894,33 +938,41 @@ li {
     font-size: 12px;
     position: fixed;
     top: 80px;
-    right: -150px;
+    right: -220px;
     bottom: 0;
-    width: 150px;
+    width: 220px;
     z-index: 8;
-    background: #333;
+	background:#fff;
+	box-shadow: 0 0 30px rgba(0,0,0,0.1);
 }
 .de_ext_nav_active {
     right:0px;
 }
-
+.de_ext_nav>li{
+	font-size: 0;
+}
 .de_ext_nav>li>a {
+	font-size:14px;
     display: inline-block;
     width: 100%;
-    height: 60px;
-    line-height: 60px;
-    padding: 0 20px;
+    height: 80px;
+    line-height: 80px;
+    padding: 0 20px 0 40px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
     text-decoration: none;
-    color: #ccc;
+    color: #333;
     border-bottom: #ccc 1px dotted;
 }
 
 .de_ext_nav>li>a:hover {
     color: #fff;
+	background: #09bc72;
 }
 
 .de_ext_nav>li:last-child>a {
@@ -1107,7 +1159,7 @@ li {
 }
 
 .de_filter_group > .de_menu_list li:hover {
-    background-color: #390;
+    background-color: #09bc72;
     color: #fff;
 }
 
@@ -1115,39 +1167,7 @@ li {
     color: #FFF;
 }
 
-/*************搜索框****************/
-.de_top_search {
-    padding: 10px;
-    float: left;
-    width: 100%;
-    position: relative;
-}
 
-.de_top_search>input {
-    height: 40px;
-    line-height: 40px;
-    width: 60%;
-    margin: 0px;
-    padding: 0 10px 0 36px;
-    font-size: 14px;
-    color: #595757;
-    border: none;
-    color: #666;
-    background: url(../../images/app/icon20_search_gray.png) no-repeat 10px center #ccc;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-    font-size: 12px;
-    font-family: "微软雅黑";
-    font-weight: bold;
-    vertical-align: bottom;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.de_top_search>input:focus {
-    width: 80%;
-    outline: none;
-    z-index: 102;
-}
 
 /*************作品网格****************/
 .de_project_grid {
@@ -1193,7 +1213,7 @@ li {
     margin-left: -80px;
     height: 44px;
     overflow: hidden;
-	color:#390;
+	color:#09bc72;
 }
 
 .de_project_grid .project_info .date {
@@ -1457,7 +1477,7 @@ li {
     text-align: left;
     height: 80px;
     overflow: hidden;
-    color: #390;
+    color: #09bc72;
     font-weight: bold;
 }
 
@@ -1520,28 +1540,104 @@ li {
     background: url(../../images/app/icon20_upload_gray.png) no-repeat;
 }
 
-/*****************首页作品列表******************/
-.de_screen_project {
+/*****************选题列表******************/
+.de_topic_wrapper{
+	
 }
-
-/*********首页学习资源******************/
-.de_screen_resource {
-
+.de_topic_list{	
 }
-
-/*************首页荣誉榜****************/
-.de_screen_designer {
-
+.de_topic_box{
+	position: relative;
+	height:140px;
+	box-sizing: border-box;
+	overflow: hidden;
+	background:#fff;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+	margin:20px 30px 20px 60px;
 }
-
-/*************搜索结果****************/
-.de_screen_search_result {
-
+.de_topic_box .user_info{
+	width:100px;
+	height:140px;
+	background: #ddd;
+	position: absolute;
+	top:0;
+	left: 0;
 }
-
-/*************个人主页****************/
-.de_screen_user_profile {
-
+.de_topic_box .user_info a{
+	display: inline-block;
+	width:100%;
+	height:100%;
+	text-align: center;
+	font-size: 14px;
+	color:#333;
+}
+.de_topic_box .user_info img{
+	width: 60px;
+	height: 60px;
+	overflow: hidden;
+	border-radius: 60px;
+	border: #fff 3px solid;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+	margin: 20px auto 10px auto;
+	display: block;
+}
+.de_topic_box .user_info .name{
+	width:100px;
+	margin: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.de_topic_box .topic_info{
+	position: absolute;
+	top:0;
+	left: 120px;
+	bottom:0;
+}
+.topic_info .created_date{
+	font-size: 12px;
+	margin:8px 0;
+	color:#999;
+}
+.topic_info .topic_title{
+	font-size:16px;
+	font-weight: bold;
+	color:#07af69;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin:14px 0;
+}
+.topic_info .topic_description{
+	font-size: 12px;
+	margin:8px 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.topic_info .de_stats_tags{
+	position:absolute;
+	left:0;
+	bottom:0;
+	white-space:nowrap;
+}
+.topic_info .de_stats_tags li{
+	display: inline-block;
+	width:80px;
+	height: 40px;
+	vertical-align: middle;
+	line-height: 40px;
+}
+.de_topic_box .topic_action{
+	position: absolute;
+	top:10px;
+	left:-50px;
+	width:50px;
+}
+.de_topic_box .project_info{
+	position: absolute;
+	top:0;
+	right: 0;
 }
 
 /*************作品上传****************/
@@ -1600,12 +1696,12 @@ li {
 }
 
 .de_screen_upload .de_tab_upload li a.active:hover {
-    color: #390;
+    color: #09bc72;
 }
 
 .de_screen_upload .de_tab_upload li a.current {
     background: #fff;
-    color: #390;
+    color: #09bc72;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
@@ -1659,7 +1755,7 @@ li {
     color: #fff;
     display: inline-block;
     position: relative;
-    background: #390;
+    background: #09bc72;
     border-radius: 4px;
     margin: 0 10px 10px 0;
 }
@@ -2178,7 +2274,7 @@ ol.mp_list li.mp_selectable {
 .de_screen_project_detail h2 {
     font-size: 1.5em;
     width: 60%;
-	color:#390;
+	color:#09bc72;
 }
 
 .de_screen_project_detail h4 {
@@ -2294,7 +2390,7 @@ ol.mp_list li.mp_selectable {
 }
 .de_comment_more_btn:hover{
     cursor: pointer;
-    background: #390;
+    background: #09bc72;
 	color:#fff;
 }
 .de_comment_box .user_info {
@@ -2318,7 +2414,7 @@ ol.mp_list li.mp_selectable {
 
 .de_comment_box .name {
     text-decoration: none;
-    color: #390;
+    color: #09bc72;
     font-size: 16px;
     font-weight: bold;
 }
@@ -2511,7 +2607,7 @@ ol.mp_list li.mp_selectable {
     z-index: 9999;
 }
 .de_web_video_panel h3{
-	color: #390;
+	color: #09bc72;
 	padding-left: 5%;
 	width: 100%;
 	height: 60px;
@@ -2582,7 +2678,7 @@ ol.mp_list li.mp_selectable {
 .de_404_wrong{
     top: 22px;
     font-size: 38px;
-    color: #390;
+    color: #09bc72;
 }
 .de_404_info{
     top: 30px;

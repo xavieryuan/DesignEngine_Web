@@ -11,7 +11,8 @@
     <meta name="baidu-tc-cerfication" content="622f31c8e7be07f0ac794950d45efc53" />
     <meta name="keywords" content="图钉墙, 工业设计, 艺术设计, 设计教育, 设计作品, 设计资源, 湖南大学设计艺术学院" />
     <title>图钉墙 - HNU Design</title>
-    <base id="de_base_url" href="http://localhost/DesignEngine_Web/"/>
+    <!--<base id="de_base_url" href="http://localhost/DesignEngine_Web/"/>-->
+    <base id="de_base_url" href="http://127.0.0.1:50252/"/>
     <link href="css/lib/toaster.css" rel="stylesheet" type="text/css"/>
     <link href="css/app/general.css" rel="stylesheet" type="text/css"/>
     <script src="js/lib/angular.min.js"></script>
@@ -34,7 +35,7 @@
 <toaster-container></toaster-container>
     <div class="de_page_wrapper" ng-show="mainFlags.showMainWrapper">
         <header class="de_header">
-            <h1 class="de_logo"><a href="http://localhost/DesignEngine_Web/" target="_self">图钉墙</a></h1>
+            <h1 class="de_logo"><a href="http://127.0.0.1:50252/" target="_self">图钉墙</a></h1>
 
             <!-----用户菜单----->
             <nav class="de_user_nav de_borderbox">
@@ -70,7 +71,7 @@
                                 <a href="adminhome/comments">评论管理</a>
                             </li>
                             <li class="de_reg_view ">
-                                <a href="http://localhost/DesignEngine_Web/" target="_self">退出登录</a>
+                                <a href="http://127.0.0.1:50252/" target="_self">退出登录</a>
                             </li>
                         </ul>
                     </li>
@@ -104,18 +105,15 @@
     <section class="de_screen_project_detail" ng-controller="projectDetail" ng-show="mainFlags.showProjectDetailFlag" ng-include="mainFlags.projectDetailTemplate">
 
     </section>
-
     <!-----------弹窗小组件----------->
     <section class="de_popout de_boxshadow de_borderbox" ng-show="popFlags.showPop" ng-include="popFlags.popTemplateUrl">
-
     </section>
-
-
+    <!-----------媒体详情----------->
     <section class="de_pop_show_media" ng-show="mainFlags.showPlayMedialPanel">
         <span class="de_pop_show_media_close" ng-click="closePlayMediaPanel()">关闭</span>
         <div id="de_pop_show_media_content" class="de_pop_show_media_content"></div>
     </section>
-
+	<!-----------    ----------->
     <section class="de_web_video_panel" ng-show="mainFlags.showWebVideoPanel">
         <h3>请输入网络视频通用（含iframe标签）地址:</h3>
         <span class="de_pop_show_media_close" ng-click="closeWebVideoPanel()">关闭</span>
@@ -124,8 +122,9 @@
         <input type="button" id="de_input_web_video_ok" class="de_input_web_video_ok de_button" value="确定">
         </div>
     </section>
-
+	<!-----------blackout----------->
     <div class="de_blackout" ng-show="mainFlags.showBlackOut"></div>
+    <!-----------load spinner----------->
     <div class="de_loading" ng-show="mainFlags.showLoading">
         <div class="de_loading_spinner" id="de_loading_spinner"></div>
     </div>

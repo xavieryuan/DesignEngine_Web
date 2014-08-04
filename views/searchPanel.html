@@ -4,17 +4,15 @@
 
     <!-- 搜索弹窗开始 -->
 
-    <article class="de_borderbox de_popout_msg">
-        <div class="de_left_col de_borderbox">
-            <div class="de_top_search" id="de_top_search">
-                <input type="text" class="de_borderbox de_transition mp_input">
-                <ol class="autoCompleteList"></ol>
-            </div>
+    <article class="de_borderbox de_search_panel">
+        <div class="de_top_search  de_borderbox" id="de_top_search">            
+                <input type="text" class="de_borderbox de_transition mp_input de_inputbox_gray" placeholder="作品关键词...">
+                <ol class="autoCompleteList"></ol>            
         </div>
 
-        <div class="de_right_col de_borderbox">
-            <h3>设计作品</h3>
-            <ul class="de_menu_list">
+        <div class="de_top_directory de_borderbox">
+            <h3>其他分类...</h3>
+            <ul class="de_directory_list">
                 <li><a href="" ng-click="toSearch('search/产品设计')">产品设计</a></li>
                 <li><a href="" ng-click="toSearch('search/交互设计')">交互设计</a></li>
                 <li><a href="search/界面设计" ng-click="toSearch('search/界面设计')">界面设计</a></li>
@@ -22,9 +20,7 @@
                 <li><a href="search/服务设计" ng-click="toSearch('search/服务设计')">服务设计</a></li>
                 <li><a href="search/平面设计" ng-click="toSearch('search/平面设计')">平面设计</a></li>
                 <li><a href="search/影像设计" ng-click="toSearch('search/影像设计')">影像设计</a></li>
-            </ul>
-            <ul class="de_menu_list">
-                 <li><a href="search/工业设计史" ng-click="toSearch('search/工业设计史')">工业设计史</a></li>
+            	<li><a href="search/工业设计史" ng-click="toSearch('search/工业设计史')">工业设计史</a></li>
                  <li><a href="search/汽车造型设计理论与研究" ng-click="toSearch('search/汽车造型设计理论与研究')">汽车造型设计理论与研究</a></li>
                  <li><a href="search/设计概论" ng-click="toSearch('search/设计概论')">设计概论</a></li>
                  <li><a href="search/计算机辅助设计3" ng-click="toSearch('search/计算机辅助设计3')">计算机辅助设计3</a></li>
