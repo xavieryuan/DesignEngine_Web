@@ -69,7 +69,7 @@ controllers.controller("signIn",["$scope","Config","LocationChanger","Storage","
     }]);
 
 controllers.controller("signUp",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
-    $scope.popFlags.title=Config.popTitles.signUp;
+    $scope.popFlags.title=Config.titles.signUp;
     $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
     $scope.registerError="";
@@ -552,9 +552,29 @@ controllers.controller("searchResult",["$scope","LocationChanger",function($scop
 }]);
 
 controllers.controller("uploadProject",["$scope","$route","Config","CFunctions",function($scope,$route,Config,CFunctions){
+
+    CFunctions.drag();
+    var fileIdToMediaIdHash={};
+
+    function addTag(tag){
+        if($scope.uploadProject.tags.indexOf(tag)===-1){
+            $scope.uploadProject.tags.push(tag);
+        }
+
+        $scope.uploadProject.newTag="";
+    }
+
+
+    function mediaUploaded(){
+
+    }
+
+
     $scope.uploadProject={
-        thumb:Config.defualtProjectThumb,
-        tags:[]
+        currentEditMediaId:"",
+        thumb:Config.thumbs.defaultThumb,
+        tags:[],
+        medias:{}
     };
 
     $scope.stepClass=[Config.classNames.uploadStepActive,"",""];
@@ -576,87 +596,133 @@ controllers.controller("uploadProject",["$scope","$route","Config","CFunctions",
         $scope.uploadProject.tags.splice(index,1);
     };
 
-    $scope.addTag=function($event,tag){
+
+    $scope.keyDownAddTag=function($event,tag){
         if($event.which==13){
-            if($scope.uploadProject.tags.indexOf(tag)===-1){
-                $scope.uploadProject.tags.push(tag);
-                $scope.uploadProject.newTag="";
-            }
+            addTag(tag);
         }
+    };
+    $scope.blurAddTag=function(tag){
+        addTag(tag);
     };
 
     $scope.createThumbUploader=function(id,containerId){
         CFunctions.createUploader({
             browseButton:id,
-            multi:false,
+            multiSelection:false,
             container:containerId,
             multipartParams:null,
             maxSize:Config.uploadSize.maxImageSize,
             fileAddCb:null,
-            progress:null,
-            filter:Config.uploadFilters.imageFilter
+            progressCb:null,
+            filter:Config.mediaFilters.imageFilter,
+            uploadedCb:function(file,info){
+                var res = JSON.parse(info);
+                $scope.uploadProject.thumb = Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
+                //console.log($scope.uploadProject.thumb);
+                $scope.$apply();
+            }
         });
+    };
+
+    $scope.deleteMedia=function(mediaId){
+        if(confirm()){
+
+        }
     };
 
     $scope.createImageUploader=function(id,containerId){
         CFunctions.createUploader({
             browseButton:id,
-            multi:true,
+            multiSelection:true,
             container:containerId,
             multipartParams:null,
             maxSize:Config.uploadSize.maxImageSize,
-            fileAddCb:null,
-            progress:null,
-            filter:Config.uploadFilters.imageFilter
+            fileAddCb:function(up,files){
+                var fileLength=files.length;
+                var random="";
+                for (var i = 0; i < fileLength; i++) {
+                    random=CFunctions.getRandom(Config.mediaIdPrefixes.image);
+                    $scope.uploadProject.medias[random][Config.mediaObj.mediaThumbFilepath]=Config.thumbs.smallThumb;
+                    $scope.uploadProject.medias[random]["unComplete"]=true;
+                    $scope.uploadProject.medias[random][Config.mediaObj.mediaFilename]="0%";
+                    $scope.uploadProject.medias[random][Config.mediaObj.mediaType]=Config.mediaTypes.image;
+
+                    fileIdToMediaIdHash[files[i]["id"]]=random;
+
+                    $scope.$apply();
+                }
+
+
+            },
+            progressCb:function(up,file){
+                $scope.uploadProject.medias[fileIdToMediaIdHash[file.id]][Config.mediaObj.mediaFilename]=file.percent+"%";
+                $scope.$apply();
+            },
+            filter:Config.mediaFilters.imageFilter,
+            uploadedCb:function(file,info){
+                var res = JSON.parse(info);
+                var thumbPath = Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
+                var mediaId=fileIdToMediaIdHash[file.id];
+
+                $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaThumbFilepath]=thumbPath;
+                $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaThumbFilename]=file.name;
+                $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaFilename]=file.name;
+                $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaFilepath]=thumbPath;
+                $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaMemo]="";
+                $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaTitle]="";
+
+                $scope.$apply();
+            }
         });
     };
 
     $scope.createFileUploader=function(id,containerId){
         CFunctions.createUploader({
             browseButton:id,
-            multi:false,
+            multiSelection:false,
             container:containerId,
             multipartParams:null,
             maxSize:Config.uploadSize.maxMediaSize,
             fileAddCb:null,
-            progress:null,
-            filter:Config.uploadFilters.zipFiler
+            progressCb:null,
+            filter:Config.mediaFilters.zipFiler
         });
     };
     $scope.createPptUploader=function(id,containerId){
         CFunctions.createUploader({
             browseButton:id,
-            multi:false,
+            multiSelection:false,
             container:containerId,
             multipartParams:null,
             maxSize:Config.uploadSize.maxMediaSize,
             fileAddCb:null,
-            progress:null,
-            filter:Config.uploadFilters.pptFilter
+            progressCb:null,
+            filter:Config.mediaFilters.pptFilter
         });
     };
     $scope.createVideoUploader=function(id,containerId){
         CFunctions.createUploader({
             browseButton:id,
-            multi:true,
+            multiSelection:true,
             container:containerId,
             multipartParams:null,
             maxSize:Config.uploadSize.maxMediaSize,
             fileAddCb:null,
-            progress:null,
-            filter:Config.uploadFilters.mp4Filter
+            progressCb:null,
+            filter:Config.mediaFilters.mp4Filter
         });
     };
     $scope.createFlashUploader=function(id,containerId){
         CFunctions.createUploader({
             browseButton:id,
-            multi:true,
+            multiSelection:true,
             container:containerId,
             multipartParams:null,
             maxSize:Config.uploadSize.maxMediaSize,
             fileAddCb:null,
-            progress:null,
-            filter:Config.uploadFilters.swfFilter
+            progressCb:null,
+            filter:Config.mediaFilters.swfFilter
         });
     }
 

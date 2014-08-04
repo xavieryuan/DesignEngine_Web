@@ -8,10 +8,14 @@
 var classes=angular.module("classes",["ngResource","toaster"]);
 
 classes.service("Config",["$rootScope",function($rootScope){
-    this.defualtProjectThumb="images/app/default_thumb_500.png";
+    this.thumbs={
+        defaultThumb:"images/app/zyupDefaultThumb.png",
+        smallThumb:"images/app/zyupDefaultSmallThumb.png"
+    };
     this.perLoadCount=10;//作品、评论、资源等每次加载的个数
     this.hasNoMoreFlag=-1;//作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
-    this.uploadDomain='http://qiniu-plupload.qiniudn.com/';
+    this.qNUploadDomain='http://qiniu-plupload.qiniudn.com/';
+    this.qNBucketDomain="http://id-channel-1.qiniudn.com/";
     this.classNames={
         mainMenuActive:"active",
         extMenuActive:"de_ext_nav_active",
@@ -49,7 +53,7 @@ classes.service("Config",["$rootScope",function($rootScope){
         "searchDetail":"/search/{content}",
         "forgetPwd":"/forgetPassword"
     };
-    this.imageSize={
+    this.imageScale={
         ThumbSmall:"-200x200",
         previewSmall:"-400x300"
     };
@@ -57,7 +61,7 @@ classes.service("Config",["$rootScope",function($rootScope){
         maxMediaSize:"300m", //最大的媒体文件上传大小
         maxImageSize:"2m"//最大的图片文件上传大小
     };
-    this.uploadFilters={  //媒体类型格式刷选器
+    this.mediaFilters={  //媒体类型格式刷选器
         imageFilter:"jpg,gif,png,jpeg",
         pptFilter:"pptx",
         mp4Filter:"mp4",
@@ -66,7 +70,7 @@ classes.service("Config",["$rootScope",function($rootScope){
         zipFiler:"zip",
         swfFilter:"swf"
     };
-    this.uploadMediaTypes={  //媒体类型
+    this.mediaTypes={  //媒体类型
         image:"img",
         ppt:"ppt",
         _3d:"3d",
@@ -74,6 +78,24 @@ classes.service("Config",["$rootScope",function($rootScope){
         zip:"zip",
         networkVideo:"networkVideo",
         swf:"swf"
+    };
+    this.mediaTitles={
+        image:"图片",
+        ppt:"ppt文件",
+        _3d:"3d文件",
+        mp4:"视频",
+        zip:"压缩文件",
+        networkVideo:"网络视频",
+        swf:"swf动画"
+    };
+    this.mediaIdPrefixes={
+        image:"img_",
+        ppt:"ppt_",
+        _3d:"3d_",
+        mp4:"mp4_",
+        zip:"zip_",
+        networkVideo:"networkVideo_",
+        swf:"swf_"
     };
     this.mediaObj={  //媒体对象
         mediaTitle:"title",
@@ -153,7 +175,7 @@ classes.service("Config",["$rootScope",function($rootScope){
         notFound:"not_found"
     };
     this.ajaxUrls={
-        upload:"#",
+        upload:"http://localhost/idchannel/chinese/wp-admin/admin-ajax.php?action=getUploadToken",
         getAllProjects:"data/projects.json", //获取首页作品媒体文件)
         getProjectDetail:"post/info/:id", //获取作品（资源）详情
         deleteProject:"post/remove/:id",
@@ -361,13 +383,91 @@ classes.service("CFunctions",["$http","toaster","Config",function($http,toaster,
         return false;
     };
 
+    this.getRandom=function(){
+        var date = new Date();
+        var mo = (date.getMonth() + 1) < 10 ? ('0' + '' + (date.getMonth() + 1)) : date.getMonth() + 1;
+        var dd = date.getDate() < 10 ? ('0' + '' + date.getDate()) : date.getDate();
+        var hh = date.getHours() < 10 ? ('0' + '' + date.getHours()) : date.getHours();
+        var mi = date.getMinutes() < 10 ? ('0' + '' + date.getMinutes()) : date.getMinutes();
+        var ss = date.getSeconds() < 10 ? ('0' + '' + date.getSeconds()) : date.getSeconds();
+        var retValue = date.getFullYear() + '' + mo + '' + dd + '' + hh + '' + mi + '' + ss + '';
+        for (var j = 0; j < 4; j++) {
+            retValue += '' + parseInt(10 * Math.random()) + '';
+        }
+        if (arguments.length == 1) {
+            return arguments[0] + '' + retValue;
+        }else{
+            return retValue;
+        }
+    };
+
+    this.drag=function(){
+        var targetOl = document.getElementById("mediaList");//容器元素
+        var eleDrag = null;//被拖动的元素
+
+        targetOl.onselectstart=function(event){
+            if(event.target.className.match("mediaItem")!==null){
+
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        };
+        targetOl.ondragstart=function(event){
+            if(event.target.className.match("mediaItem")!==null){
+                event.dataTransfer.effectAllowed = "move";
+                event.dataTransfer.setData("text","移动中");
+                eleDrag = event.target||event.srcElement;
+
+                return true;
+            }
+        };
+        targetOl.ondragend=function(event){
+            if(event.target.className.match("mediaItem")!==null){
+                eleDrag=null;
+
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        };
+
+        //在元素中滑过
+        targetOl.ondragover = function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        };
+
+        targetOl.ondrop=function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+        };
+
+        //ol作为最大的容器也要处理拖拽事件，当在li上滑动的时候放到li的前面，当在ol上滑动的时候放到ol的最后面
+        targetOl.ondragenter = function (event) {
+            var target=event.toElement||event.target;
+            var targetParent=target.parentNode;
+            if (target == targetOl) {
+                targetOl.appendChild(eleDrag);
+            }else{
+                if(target.tagName=="LI"){
+                    targetOl.insertBefore(eleDrag, target);
+                }else{
+                    targetOl.insertBefore(eleDrag, targetParent);
+                }
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+        };
+    };
+
     this.createUploader=function(param){
         var uploader = Qiniu.uploader({
             runtimes: 'html5,flash,html4',    //上传模式,依次退化
             browse_button: param.browseButton,       //上传选择的点选按钮，**必需**
             uptoken_url:  Config.ajaxUrls.upload,
-            multi_selection:param.multi,
-            domain: Config.uploadDomain,
+            multi_selection:param.multiSelection,
+            domain: Config.qNUploadDomain,
             container: param.container,           //上传区域DOM ID，默认是browser_button的父元素，
             filters: {
                 mime_types : [
@@ -386,13 +486,19 @@ classes.service("CFunctions",["$http","toaster","Config",function($http,toaster,
                     //console.log(up.getOption("max_file_size"));
                 },
                 'FilesAdded': function(up, files) {
-                    param.fileAddCb(up,files);
+                    if(typeof param.fileAddCb==="function"){
+                        param.fileAddCb(up,files);
+                    }
                 },
                 'UploadProgress': function(up, file) {
-                    param.progressCb(up,file);
+                    if(typeof param.progressCb==="function"){
+                        param.progressCb(up,file);
+                    }
                 },
                 'FileUploaded': function(up, file, info) {
-                    param.uplodedCb(file);
+                    if(typeof param.uploadedCb==="function"){
+                        param.uploadedCb(file,info);
+                    }
                 },
                 'Error': function(up, err, errTip) {
                     var message="";
@@ -416,7 +522,7 @@ classes.service("CFunctions",["$http","toaster","Config",function($http,toaster,
                     // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
                     // 该配置必须要在 unique_names: false , save_key: false 时才生效
                     var random=Math.floor(Math.random()*10+1)*(new Date().getTime());
-                    var key=random+"-"+file.name;
+                    var key=file.name+"-"+random;
 
 
                     // do something with key here

@@ -27,25 +27,9 @@
             </ul>
             <ul class="project_info">
                 <li class="de_borderbox" ng-repeat="project in box.projects">
-                    <div class="user_info">
-                        <a ng-href="user/{{project.userId}}">
-                            <img class="photo" ng-src="{{project.userProfile}}">
-                            <p class="name">{{project.userName}}</p>
-                        </a>
-                    </div>
-                    <div class="project_info">
-                        <a href="" class="de_entity_link" ng-click="showProjectDetail(project.id)">
-                            <img class="thumb" ng-src="{{project.thumb}}">
-                            <h4>{{project.title}}</h4>
-                            <p class="date">{{project.date}}</p>
-                        </a>
-                    </div>
-                    <ul class="de_stats_tags">
-                        <!-- badges是荣誉勋章的数量 -->
-                        <li class="badges" title="勋章">{{project.honorCount}}</li>
-                        <li class="likes" title="赞">{{project.praiseCount}}</li>
-                        <li class="comments" title="评价">{{project.commentsCount}}</li>
-                    </ul>
+                    <a href="" class="de_entity_link" ng-click="showProjectDetail(project.id)">
+                        <img ng-src="{{project.thumb}}">
+                    </a>
                 </li>
             </ul>            
         </li>

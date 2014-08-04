@@ -19,13 +19,13 @@
                 <label>标签</label>
                 <ul class="de_borderbox de_category_tag_box">
                     <li ng-repeat="tag in uploadProject.tags">
-                        <input type="hidden" name="tags[]" value="{{tag}}">
                         <a href="" ng-click="deleteTag($index)">{{tag}}</a>
                     </li>
                 </ul>
                 <p class="de_form_tip">在下方输入标签，按回车确认。</p>
                 <input type="text" class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20"
-                   placeholder="新标签..." ng-keydown="addTag($event,uploadProject.newTag)" ng-model="uploadProject.newTag">
+                   placeholder="新标签..." ng-keydown="keyDownAddTag($event,uploadProject.newTag)"
+                   ng-blur="blurAddTag(uploadProject.newTag)" ng-model="uploadProject.newTag">
             </p>
             <p class="de_field_project_description">
                 <label>内容说明</label>
@@ -64,21 +64,21 @@
                     </ul>
                 </div>
                 <ol id="zy_uploaded_medias_ol" class="zy_uploaded_medias_ol">
-                    <li data-zy-filename="${filename}" class="zy_uncomplete_li" data-zy-media-id="${media_id}">
-                        <img class="zy_small_thumb" src="${thumb_src}">
-                        <span class="zy_media_percent">0%</span>
-                        <span class="zy_uncomplete_delete"></span>
-                    </li>
-                    <li>
-                        <img class="zy_small_thumb" src="${thumb_src}">
-                        <span title='${filename}' draggable="true" class="zy_media_filename">${filename}</span>
-                        <span class="zy_media_delete"></span>
+                    <li ng-click="" ng-repeat="(mediaId,value) in uploadProject.medias" draggable="true"
+                        ng-class="{zy_uncomplete_li:value.unComplete,zy_media_list_error:value.noThumb}">
+                        <img class="zy_small_thumb" ng-src="{{value.thumbFilePath}}">
+                        <span title='{{value.filename}}' class="zy_media_filename">
+                            {{value.filename}}
+                        </span>
+                        <span class="zy_media_delete" ng-click="deleteMedia(mediaId)"></span>
                     </li>
                 </ol>
             </div>
             <div class="zy_uploader_column_right" id="zy_uploader_column_right">
-                <header class="zy_section_right_header"><p><b id="zy_media_type">图片</b></p></header>
-                <iframe id="zy_media_iframe" name="zy_media_iframe" class="zy_iframe" src="${src}"></iframe>
+                <header class="zy_section_right_header"><p><b>{{mediaTitle}}</b></p></header>
+                <section ng-include="">
+
+                </section>
             </div>
         </div>
 
