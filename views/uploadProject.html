@@ -44,14 +44,14 @@
         <!-- step 2-->
         <div class="de_upload_step2 {{stepPanelClass[1]}}" >
             <div class="zy_uploader_column_left">
-                <span class="zy_section_left_header">添加文件</span>
+                <span class="zy_section_left_header" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()">添加文件</span>
                 <!--媒体文件类型的menu-->
 
-                <div id="uploadContainer" class="zy_add_media_menu zy_add_media_menu_active">
+                <div id="uploadContainer" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()" class="zy_add_media_menu {{mediaMenuActive}}">
                     <ul>
                         <li><a id="uploadImage" class="zy_types1"
                                ng-init="createImageUploader('uploadImage','uploadContainer')">图片</a></li>
-                        <li><a id="zy_add_network_video" class="zy_types2">网络视频</a></li>
+                        <li><a href="" class="zy_types2" ng-click="addWebVideo()">网络视频</a></li>
                         <li><a id="uploadVideo" class="zy_types3"
                                ng-init="createVideoUploader('uploadVideo','uploadContainer')">mp4文件</a></li>
                         <!--<li><a id="zy_add_3d" class="zy_types4">3D文件</a></li>-->
@@ -63,9 +63,9 @@
                                ng-init="createFlashUploader('uploadFlash','uploadContainer')">flash</a></li>
                     </ul>
                 </div>
-                <ol id="zy_uploaded_medias_ol" class="zy_uploaded_medias_ol">
+                <ol id="mediaList" class="zy_uploaded_medias_ol">
                     <li ng-click="" ng-repeat="(mediaId,value) in uploadProject.medias" draggable="true"
-                        ng-class="{zy_uncomplete_li:value.unComplete,zy_media_list_error:value.noThumb}">
+                        ng-class="{zy_media_list_error:value.noThumb}">
                         <img class="zy_small_thumb" ng-src="{{value.thumbFilePath}}">
                         <span title='{{value.filename}}' class="zy_media_filename">
                             {{value.filename}}

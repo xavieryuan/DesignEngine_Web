@@ -9,8 +9,8 @@ var classes=angular.module("classes",["ngResource","toaster"]);
 
 classes.service("Config",["$rootScope",function($rootScope){
     this.thumbs={
-        defaultThumb:"images/app/zyupDefaultThumb.png",
-        smallThumb:"images/app/zyupDefaultSmallThumb.png"
+        defaultThumb:"images/app/default_thumb_500.png",
+        smallThumb:"images/app/default_small_thumb.png"
     };
     this.perLoadCount=10;//作品、评论、资源等每次加载的个数
     this.hasNoMoreFlag=-1;//作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
@@ -20,7 +20,8 @@ classes.service("Config",["$rootScope",function($rootScope){
         mainMenuActive:"active",
         extMenuActive:"de_ext_nav_active",
         hidden:"de_hidden",
-        uploadStepActive:"current"
+        uploadStepActive:"current",
+        mediaMenuActive:"zy_add_media_menu_active"
     };
     this.titles={
         "signIn":"登陆",
@@ -76,7 +77,7 @@ classes.service("Config",["$rootScope",function($rootScope){
         _3d:"3d",
         mp4:"mp4",
         zip:"zip",
-        networkVideo:"networkVideo",
+        webVideo:"webVideo",
         swf:"swf"
     };
     this.mediaTitles={
@@ -85,7 +86,7 @@ classes.service("Config",["$rootScope",function($rootScope){
         _3d:"3d文件",
         mp4:"视频",
         zip:"压缩文件",
-        networkVideo:"网络视频",
+        webVideo:"网络视频",
         swf:"swf动画"
     };
     this.mediaIdPrefixes={
@@ -94,7 +95,7 @@ classes.service("Config",["$rootScope",function($rootScope){
         _3d:"3d_",
         mp4:"mp4_",
         zip:"zip_",
-        networkVideo:"networkVideo_",
+        webVideo:"networkVideo_",
         swf:"swf_"
     };
     this.mediaObj={  //媒体对象
@@ -522,7 +523,7 @@ classes.service("CFunctions",["$http","toaster","Config",function($http,toaster,
                     // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
                     // 该配置必须要在 unique_names: false , save_key: false 时才生效
                     var random=Math.floor(Math.random()*10+1)*(new Date().getTime());
-                    var key=file.name+"-"+random;
+                    var key=random+"-"+file.name;
 
 
                     // do something with key here
