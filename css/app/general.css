@@ -1265,7 +1265,7 @@ li {
     color: #999;
     display: inline-block;
     height: 50px;
-    width: 50%;
+    width: 33.33%;
     font-size: 12px;
     border-top: #eee 1px solid;
     border-left: #eee 1px solid;
@@ -1550,15 +1550,14 @@ li {
 	position: relative;
 	height:140px;
 	box-sizing: border-box;
-	overflow: hidden;
 	background:#fff;
-	box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-	margin:20px 30px 20px 60px;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+	margin:20px 80px 20px 30px;
 }
 .de_topic_box .user_info{
 	width:100px;
 	height:140px;
-	background: #ddd;
+	background: #f8f8f8;
 	position: absolute;
 	top:0;
 	left: 0;
@@ -1591,8 +1590,11 @@ li {
 .de_topic_box .topic_info{
 	position: absolute;
 	top:0;
-	left: 120px;
+	left: 100px;
 	bottom:0;
+	padding-left:20px;
+	background:#fff;
+	min-width: 240px;
 }
 .topic_info .created_date{
 	font-size: 12px;
@@ -1607,6 +1609,7 @@ li {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	margin:14px 0;
+	width:240px;
 }
 .topic_info .topic_description{
 	font-size: 12px;
@@ -1614,11 +1617,12 @@ li {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	color:#999;
 }
 .topic_info .de_stats_tags{
 	position:absolute;
-	left:0;
-	bottom:0;
+	left:20px;
+	bottom:5px;
 	white-space:nowrap;
 }
 .topic_info .de_stats_tags li{
@@ -1627,19 +1631,86 @@ li {
 	height: 40px;
 	vertical-align: middle;
 	line-height: 40px;
+	font-size:12px;
+	color:#999;
 }
 .de_topic_box .topic_action{
 	position: absolute;
 	top:10px;
-	left:-50px;
-	width:50px;
+	right:-50px;
+	width:40px;		
+	font-size: 0;
+}
+.topic_action li{
+	width:40px;
+	height:40px;
+	margin-bottom:10px;
+}
+.topic_action li a{
+	width:40px;
+	height:40px;
+	display: inline-block;	
+	text-indent: 9999px;
+}
+.topic_action li:first-child{
+	position: absolute;
+	left:-140px;
+	top:0;
+}
+.topic_action li a.de_topic_action_submit{	
+	width:120px;
+	height:120px;
+	box-sizing: border-box;
+	background-color:#07af69;
+	background-image:url(/images/app/icon40_upload_transparent.png);
+	background-repeat: no-repeat;
+	background-position:  center 30px;	
+	font-size:18px;
+	color:#fff;
+	font-weight: bold;
+	text-align:center;
+	line-height: 120px;
+	padding-top:24px;
+	text-indent:0;
+}
+.topic_action li a.de_topic_action_submit.disable{
+	background-color:#ccc;
+}
+.de_topic_action_lock{
+	background:url(/images/app/icon40_lock_white.png) no-repeat center;
+}
+.de_topic_action_unlock{
+	background:url(/images/app/icon40_unlock_white.png) no-repeat center;
+}
+.de_topic_action_setting{
+	background:url(/images/app/icon40_setting_white.png) no-repeat center;
+}
+.de_topic_action_lock:hover{
+	background:url(/images/app/icon40_lock_green.png) no-repeat center;
+}
+.de_topic_action_unlock:hover{
+	background:url(/images/app/icon40_unlock_green.png) no-repeat center;
+}
+.de_topic_action_setting:hover{
+	background:url(/images/app/icon40_setting_green.png) no-repeat center;
 }
 .de_topic_box .project_info{
 	position: absolute;
 	top:0;
-	right: 0;
+	right: 130px;
+	font-size:0;
+	overflow: hidden;
+	white-space: nowrap;
 }
-
+.project_info li{
+	display: inline-block;	
+	margin:10px 10px 0 0;
+	
+}
+.project_info li img{
+	height:120px;
+	width:120px;
+}
 /*************作品上传****************/
 .de_screen_upload {
 
@@ -2190,18 +2261,18 @@ ol.mp_list li.mp_selectable {
     display: inline-block;
     width: 60px;
     height: 60px;
-    background: url(../../images/app/icon60_close_black.png) no-repeat;
+    background: url(../../images/app/icon40_close_white.png) no-repeat center;
 	z-index: 9999;
 }
 
 .de_btn_close_project_detail:hover {
-    background: url(../../images/app/icon60_close_black.png) no-repeat;
+    background: url(../../images/app/icon40_close_green.png) no-repeat center;
 }
 .de_btn_back_to_home{
-    background: url(../../images/app/icon60_close_black.png) no-repeat;
+    background: url(../../images/app/icon40_close_white.png) no-repeat center;
 	}
 .de_btn_back_to_home:hover{
-	background: url(../../images/app/icon60_close_black.png) no-repeat;
+	background: url(../../images/app/icon40_close_green.png) no-repeat center;
 	}
 .de_screen_project_detail .de_project_header {
     position:fixed;	
@@ -2265,7 +2336,7 @@ ol.mp_list li.mp_selectable {
 .de_screen_project_detail .de_project_detail {
     margin: 80px auto 40px;
     background: #fff;
-    padding: 160px 40px 40px;
+    padding: 160px 0 40px;
     position: relative;
     width: 80%;
 	overflow-x: hidden;
@@ -2275,6 +2346,7 @@ ol.mp_list li.mp_selectable {
     font-size: 1.5em;
     width: 60%;
 	color:#09bc72;
+	margin-left:30px;
 }
 
 .de_screen_project_detail h4 {
@@ -2332,16 +2404,19 @@ ol.mp_list li.mp_selectable {
     display: inline-block;
     margin: 5px;
     text-align: left;
+	color:#999;
 }
 
 .de_project_detail .publishtime {
     font-size: 12px;
+	margin-left:30px;
 }
 
 .de_project_detail .abstract {
     font-size: 14px;
     line-height: 2em;
     letter-spacing: 2px;
+	margin:20px 30px;
 }
 
 .de_project_detail figure {
@@ -2358,11 +2433,11 @@ ol.mp_list li.mp_selectable {
     font-size: 0.8em;
 	font-weight:bold;
     line-height: 2em;
-    margin-bottom: 40px;
+    margin: 20px 30px 40px;
+	text-align: center;
 }
 .de_project_detail figcaption>.description{
 	font-weight:normal;
-	padding-left:2em;
 	}
 
 /***评论***/
@@ -2523,28 +2598,28 @@ ol.mp_list li.mp_selectable {
 .de_has_media:before{
     content:"";
     width: 50px;
-    height: 60px;
+    height: 50px;
     position: absolute;
     left: 10px;
-    top:-4px;
+    top:10px;
 }
 .de_has_video:before{
-    background: url(../../images/app/zy_mediaflag_localvideo.png) no-repeat;
+    background: url(../../images/app/icon50_interactive_content.png) no-repeat;
 }
 .de_has_ppt:before{
-    background: url(../../images/app/zy_mediaflag_ppt.png) no-repeat;
+    background: url(../../images/app/icon50_interactive_content.png) no-repeat;
 }
 .de_has_3d:before{
-    background: url(../../images/app/zy_mediaflag_3d.png) no-repeat;
+    background: url(../../images/app/icon50_interactive_content.png) no-repeat;
 }
 .de_has_file:before{
-    background: url(../../images/app/zy_mediaflag_file.png) no-repeat;
+    background: url(../../images/app/icon50_interactive_content.png) no-repeat;
 }
 .de_has_web_video:before{
-    background: url(../../images/app/zy_mediaflag_webvideo.png) no-repeat;
+    background: url(../../images/app/icon50_interactive_content.png) no-repeat;
 }
 .de_has_flash:before{
-    background: url(../../images/app/zy_mediaflag_flash.png) no-repeat;
+    background: url(../../images/app/icon50_interactive_content.png) no-repeat;
 }
 
 
