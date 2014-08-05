@@ -5,7 +5,7 @@
  * Time: 下午4:12
  * To change this template use File | Settings | File Templates.
  */
-var pinWall=angular.module("pinWall",["ngRoute","classes","controllers","filters","directives"]);
+var pinWall=angular.module("pinWall",["ngRoute","classes","controllers","filters","directives","animations"]);
 
 pinWall.config(["$routeProvider","$locationProvider",function($routeProvider,$locationProvider){
 

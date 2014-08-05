@@ -21,7 +21,7 @@
     <script src="js/lib/angular-resource.min.js"></script>
     <script src="js/lib/angular-animate.min.js"></script>
     <script src="js/lib/toaster.js"></script>
-
+	<script src="js/lib/TweenMax.min.js"></script>
     <script src="js/lib/plupload.full.min.js"></script>
     <script src="js/lib/qiniu.js"></script>
    <!-- <script src="http://qzone.qq.com/gy/404/data.js"></script>
@@ -30,6 +30,7 @@
     <script src="js/src/angularSrc/filters.js"></script>
     <script src="js/src/angularSrc/directives.js"></script>
     <script src="js/src/angularSrc/controllers.js"></script>
+    <script src="js/src/angularSrc/animations.js"></script>
     <script src="js/src/angularSrc/app.js"></script>
 </head>
 <body ng-controller="super">
@@ -52,7 +53,7 @@
                     </li>
                     <li class="de_reg_view " ng-show="currentUser.id">
                         <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="showMoreMenu()">更多</a>
-                        <ul class="de_ext_nav {{mainFlags.extMenuClass}} de_transition">
+                        <ul class="de_ext_nav {{mainFlags.extMenuClass}}">
                             <li class="de_reg_view ">
                                 <a href="" ng-click="editPwd()">修改密码</a>
                             </li>

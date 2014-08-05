@@ -225,14 +225,13 @@ li {
 /*****************弹出窗口小组件(通用)******************/
 .de_popout {
     background: #fff;
-    width: 950px;
-	min-width:760px;
+    width: 768px;
     height: 460px;
     position: fixed;
     top: 50%;
 	left:50%;
     margin-top: -230px;
-	margin-left:-475px;
+	margin-left:-384px;
     z-index: 9999;
     white-space: nowrap;
     font-size: 0;
@@ -293,24 +292,37 @@ li {
     font-size: 14px;
     overflow: hidden;
 }
-/******弹出面板搜索*******/
-
-.de_search_panel .de_top_search{
+.de_popout .de_left_col{
+	width:50%;
 	position: absolute;
 	top:0;
 	left:0;
 	bottom:0;
 	box-sizing: border-box;
-	width:50%;
-	padding:20px 20px 0 30px;
+	padding:0 20px 0 30px;
 	border-right:#ccc 1px dotted;
+}
+.de_popout .de_right_col{
+	width:50%;
+	position: absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	box-sizing: border-box;
+	padding:0 30px 0 20px;
+	
+}
+/******弹出面板搜索*******/
+
+.de_search_panel .de_top_search{	
+	padding-top:20px;
 }
 
 /*搜索框*/
 .de_top_search>input {
     height: 40px;
     line-height: 40px;
-    width: 70%;
+    width: 90%;
     margin: 0px;
     padding: 0 10px 0 36px;
     font-size: 14px;
@@ -328,17 +340,11 @@ li {
 }
 
 .de_top_search>input:focus {
-    width: 90%;
+    width: 100%;
     outline: none;
     z-index: 102;
 }
-.de_popout .de_top_directory{
-	position: absolute;
-	top:0;
-	right:0;
-	width:50%;
-	box-sizing: border-box;	
-	padding:0 30px 0 20px;
+.de_popout .de_top_directory{	
 }
 /*分类搜索*/
 .de_top_directory h3{
@@ -354,9 +360,9 @@ li {
 }
 .de_directory_list> li > a{
 	display: inline-block;
-	width:190px;
 	color:#09bc72;
-	padding:8px 10px;
+	padding:10px 12px;
+	max-width: 190px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;	
@@ -370,28 +376,14 @@ li {
 /******登录弹窗样式*******/
 .de_popout_login {
 }
-.de_popout_login .de_login_col{
-    width: 50%;
-	position: absolute;
-	top:0;
-	left:0;
-	bottom:0;
-    padding:20px 20px 0 30px;
+.de_popout_login .de_login_col{    
+    padding-top:20px;
     vertical-align: top;
-    height: 400px;
-    border-right: #ccc 1px dotted;
 	overflow:hidden;
 }
 .de_popout_login .de_reg_col{
-    width: 50%;
-	position: absolute;
-	top:0;
-	right:0;
-	bottom:0;
-    padding:20px 30px 0 20px;
+    padding-top:20px;
     vertical-align: top;
-    height: 400px;
-    border-right: #ccc 1px dotted;
 	overflow:hidden;
 }
 .de_popout_login .de_forgot_pwd a{
@@ -435,14 +427,6 @@ li {
     color: #09bc72;
 }
 
-.de_popout_login .de_reg_col,.de_popout_edit_profile .de_bind_account {
-    width: 50%;
-    padding: 20px 30px 0 20px;
-    display: inline-block;
-    vertical-align: top;
-    height: 400px;
-}
-
 .de_popout_login .de_reg_btn {
     display: block;
 	width:100px;
@@ -467,13 +451,8 @@ li {
     overflow: hidden;
 }
 .de_popout_reg .de_reg_col {
-    width: 50%;
-    padding: 20px 20px 0 30px;
-    vertical-align: top;    
-	position: absolute;
-	top:0;
-	left: 0;
-	bottom: 0;
+    padding-top: 20px;
+    vertical-align: top;
 }
 .de_popout_reg .de_band_col {
     width: 30%;
@@ -524,6 +503,7 @@ li {
     height: 40px;
     border: #ccc 1px solid;
     color: #666;
+	width:112px;
 }
 
 .de_popout_reg .de_submit_btn {
@@ -582,14 +562,9 @@ li {
 
 /******重置密码弹窗样式*******/
 .de_popout_reset_pwd {
-    width: 50%;
     font-size: 14px;
-    padding: 20px 20px 0 30px;
+    padding-top: 20px;
     overflow: hidden;
-	position: absolute;
-	top:0;
-	left: 0;
-	bottom: 0;
 }
 
 .de_popout_reset_pwd .de_pwd_field {
@@ -670,7 +645,7 @@ li {
 .de_photo_field .de_change_figure{
 	display: inline-block;
 	width: 100%;
-	padding-top: 70px;
+	padding-top: 60px;
 	position: absolute;
 	top: 0;
 	left: 0;	
@@ -689,95 +664,8 @@ li {
     width: 100px;
 }
 /********绑定其他网站账号弹窗********************/
-.de_bind_email{
-	padding:0 120px 20px 0;
-	margin-bottom:20px;
-	position:relative;
-	border-bottom:#ccc 1px dotted;
-	}
-.de_btn_save_email{
-	width:100px;
-	position:absolute;
-	top:0;
-	right:0;
-	}
-.de_bind_account p em {
-    font-style: normal;
-    font-size: 16px;
-    font-weight: bold;
-}
-.de_bind_account .de_bind_account_btn {
-	position:relative;
-    display: inline-block;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 0 10px;
-    margin-left: 40px;
-    max-width: 160px;
-    color: #333;
-    text-decoration: none;
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
-    background: #efefef;
-    border-radius: 20px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-    /*渐变色*/
-    background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top, #ffffff 0%, #efefef 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #efefef)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #ffffff 0%, #efefef 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #ffffff 0%, #efefef 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #ffffff 0%, #efefef 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #ffffff 0%, #efefef 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#efefef', GradientType=0); /* IE6-9 */
-}
 
-.de_bind_account .de_bind_account_btn:hover {
-    background: #ddd;
-}
 
-.de_bind_account .de_bind_account_btn:before {
-    content: "使用QQ账号登录";
-    display: inline-block;
-    width: 140px;
-    height: 40px;
-    vertical-align: middle;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    padding-left: 10px;
-    line-height: 40px;
-    margin: 0 10px 0 0;
-    background: url(../../images/app/icon30_qq.png) no-repeat left center;
-}
-.de_bind_account .de_has_bind{
-    display: inline-block;
-    font-size: 12px;
-    margin-left: 20px;
-}
-
-.de_bind_account a {
-    width: 160px;
-    display: block;
-    position: absolute;
-    top: 0;
-}
-.de_bind_account img {
-    width: 0px;
-}
-.de_remove_bind{
-	cursor: pointer;
-	color: #fff;
-	display: inline-block;
-	margin-left: 40px;
-	padding: 4px 10px;
-	background: #09bc72;
-}
-.de_remove_bind:hover{
-	background:#333;
-	}
 /*****************header 部分******************/
 .de_header {
     position: fixed;
@@ -821,7 +709,6 @@ li {
 /********用户菜单**********/
 .de_user_nav {
     height: 80px;
-    padding: 0 0 0 25px;
     position: absolute;
     right: 0;
     top: 0;
@@ -839,8 +726,7 @@ li {
 }
 
 .de_user_nav>ul>li>a {
-    display: block;
-    width: 70px;
+    width: 80px;
     height: 80px;
     padding-top: 50px;
     text-decoration: none;
@@ -912,7 +798,7 @@ li {
 }
 
 .de_user_nav>ul>li>.de_btn_user_profile {
-    padding: 0;
+    padding: 0 0 0 6px;
     width: 120px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -946,7 +832,7 @@ li {
 	box-shadow: 0 0 30px rgba(0,0,0,0.1);
 }
 .de_ext_nav_active {
-    right:0px;
+    transform: translateX(-220px);
 }
 .de_ext_nav>li{
 	font-size: 0;
@@ -2241,7 +2127,7 @@ ol.mp_list li.mp_selectable {
 .de_btn_close_project_detail {
     position: absolute;
     top: 0;
-    right: 20px;
+    right: 10px;
     font-size: 0;
     display: inline-block;
     width: 60px;
@@ -2779,12 +2665,9 @@ ol.mp_list li.mp_selectable {
     color: #545454;
 }
 
-/*************Media Query****************/
-@media screen and (max-width: 990px) and (min-width: 720px) {
 
-}
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 768px) {
 	/*顶部导航*/
 	.de_logo>a{
 		width: 70px;
@@ -2798,16 +2681,7 @@ ol.mp_list li.mp_selectable {
 	}
 	.de_filter_menu>.de_filter_group{
 		padding: 10px;
-		}
-	.de_user_nav>ul>li>a{
-		width:48px;
-		
-	}
-
-	.de_user_nav .de_btn_login_reg{
-		font-size:0;
-		text-indent:-9999px;
-	}
+		}	
     .de_btn_user_profile{
         display:none !important;
     }
@@ -2818,38 +2692,26 @@ ol.mp_list li.mp_selectable {
         display: none;
     }
 	
-	/*筛选面板*/
-	.de_filter_group> h3{
-		padding: 0 5px;
-		font-size:12px;
-		margin-bottom:5px;
-		color: #999;
+	/*详情展示页面*/
+	.de_btn_zan{
+		left:15px;
 	}
-	.de_filter_group > .de_menu_list li a{
-		padding: 0 5px;
-		height:40px;
-		line-height:40px;
+	.de_project_header .de_project_toolbar{
+		top:0;
+		left:100px;
+		width:auto;
 	}
-	.de_top_search{
-		padding:5px;
+	.de_project_header .de_project_toolbar>li{
+		display: inline-block;
 	}
-	
-	/*人气榜*/
-	.de_user_info_card .user_info a{
-		width: 80px;
-	}
-	.de_user_info_card .user_about{
-		left: 100px;	
-	}
-	.de_user_info_card .de_stats_tags{
-		left:90px;
+	.de_btn_close_project_detail{
+		right:0;
 	}
 	
     /*和前面定义的权重不一样，要加important*/
     .photo{
         border:none !important;
     }
-
 
 	.de_project_detail .user_info{
 		left:20px;
@@ -2863,7 +2725,7 @@ ol.mp_list li.mp_selectable {
 
     .de_screen_project_detail .de_project_detail {
         width: auto;
-        margin: 40px 10px;
+        margin: 60px 10px;
 		padding: 160px 20px 20px;
     }
 
@@ -2885,24 +2747,46 @@ ol.mp_list li.mp_selectable {
     }
 
 	/*弹出窗口*/
-	.de_popout_login .de_login_col, .de_popout_edit_profile .de_edit_col 
-	{
-		padding-right:10px;
-        border-right: none;
-        width: 95%;
+	.de_popout {
+		position: fixed;
+		top: 10px;
+		left: 10px;
+		right: 10px;
+		bottom: 10px;
+		font-size: 0;
+		width: auto;
+		height: auto;
+		margin: 0;
 	}
-	.de_popout_login .de_reg_col, .de_popout_edit_profile .de_bind_account
-	{
-		padding-left:10px;
-        display: none;
+	.de_popout .de_left_col {
+		width: 100%;
+		position:static;
+		box-sizing: border-box;
+		padding: 20px;
+		border-right: none;
 	}
-	.de_project_toolbar{
-		display:none;
+	.de_popout .de_right_col {
+		width: 100%;
+		position:static;
+		box-sizing: border-box;
+		padding: 20px;
+		border-right: none;
+		border-top:#ccc 1px dotted;
 	}
-    .de_popout_x_btn{
-        white-space: nowrap;
-        text-indent: 80px;
-    }
+	
+	.de_top_search>input, .de_top_search>input:focus{
+		width:100%;
+	}
+	.de_top_directory h3{
+		margin:10px 0;
+		text-align: center;
+	}
+	.de_directory_list{
+		text-align: center;
+	}
+	.de_directory_list> li > a{
+		width:auto;
+	}
 	
 	/*404*/
 	.de_404_header{
@@ -2931,9 +2815,28 @@ ol.mp_list li.mp_selectable {
 
 }
 @media screen and (max-width: 480px) {
-
+	/*顶部导航*/
+	.de_header{
+		height:60px;
+	}
+	.de_user_nav{
+		height:60px;		
+	}
+	.de_user_nav>ul>li>a{
+		height:60px;
+	}
+	.de_user_nav .de_btn_login_reg{
+		font-size:0;
+		text-indent:-9999px;
+	}
+	.de_user_nav .de_btn_login_reg:before{
+		bottom:15px;
+	}
+	.de_ext_nav{
+		top:60px;
+	}
 	.de_top_nav{
-		width:30%;
+		width:100px;
 	}
 	.de_top_nav ul{
 		text-align:center;
@@ -2941,28 +2844,59 @@ ol.mp_list li.mp_selectable {
     .de_top_nav ul li{
 		display:none;
 	}
+	.de_top_nav ul li a{
+		line-height: 60px;
+	}
 	.de_btn_filter{
         display: inline-block!important;
 		width:100%!important;
     }
 	
-	.de_filter_menu>.de_filter_group{
-		width: auto;
-		float:none;
-		height:auto;
-		padding-bottom: 0;
+	
+	
+	/*详情展示页面*/
+	.de_screen_project_detail .de_project_detail{
+		padding:120px 20px 20px;
 	}
-	.de_filter_menu>.de_filter_group_search h3{
-		display:none;
-		}
-	.de_filter_group > .de_menu_list li a{
-		height:30px;
-		line-height:30px;
-		font-size:12px;
+	.de_project_header .de_project_toolbar{
+		display: none;
+	}
+	
+	.de_screen_project_detail h2{
+		margin: 20px 0px 10px;
+	}
+	.de_project_detail .publishtime{
+		margin: 10px 0;
+	}
+	
+	.de_project_detail .de_stats_tags{
+		top:20px;
+	}
+	.de_project_detail .user_info{
+		top:70px;
 	}
 }
 
-
+@media screen and (max-width: 360px) {
+	/*详情展示页面*/
+	.de_btn_zan{
+		left:0;
+	}
+	
+	/*弹窗*/
+	.de_form_edit_profile {
+		margin-left: 0;
+		padding-left: 0;
+		border-left: none;
+	}
+	.de_photo_field {
+		position: relative;
+		left: -20px;
+		top: 0px;
+		margin-bottom: 60px;
+	}
+	
+}
 
 /*动画定义*/
 @-webkit-keyframes spin{
