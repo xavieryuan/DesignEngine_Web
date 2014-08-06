@@ -13,7 +13,7 @@
             <div class="topic_info">
                 <p class="created_date">{{user.date}} 注册</p>
                 <p class="topic_title">{{user.name}}的作品集</p>
-                <p class="topic_description">{{user.description}}</p>
+                                
                 <ul class="de_stats_tags">
                     <li class="uploads" title="上传">{{user.projectCount}}</li>
                     <li class="badges" title="勋章">{{user.honorCount}}</li>
@@ -32,7 +32,8 @@
             </ul>
         </li>
     </ul>
-
+	<p class="topic_description">{{user.description}}</p>
+   
     <!-- 个人作品列表 -->
     <ul class="de_project_grid" >
         <li class="de_borderbox" ng-repeat="project in projects">
