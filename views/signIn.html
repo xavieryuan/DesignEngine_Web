@@ -2,7 +2,7 @@
 <a href="" class="de_popout_x_btn" ng-click="closePop()">关闭</a>
 <div class="de_wrapper de_transition" ng-controller="signIn">
     <article class="de_borderbox de_popout_login">
-        <div class="de_login_col de_borderbox">
+        <div class="de_login_col de_left_col de_borderbox">
             <form class="de_form_email_login" name="loginForm" ng-submit="loginSubmit()" novalidate>
                 <p class="de_email_field">
                     <input type="email" class="de_borderbox de_inputbox_gray" required ng-model="login.email"
@@ -34,7 +34,7 @@
                 <label class="de_error" id="de_login_error">{{loginError}}</label>
             </form>
         </div>
-        <div class="de_borderbox de_reg_col">
+        <div class="de_borderbox de_reg_col de_right_col">
             <h4>第一次来？请创建一个帐号。</h4>
             <a href="" class="de_button de_borderbox de_reg_btn" ng-click="toRegPanel()">注册</a>
         </div>
