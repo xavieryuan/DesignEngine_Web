@@ -52,7 +52,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
         };
 
         $scope.currentUser=Storage.currentUser;
-        $scope.currentUser.id=1;
+        //$scope.currentUser.id=1;
 
         $scope.closePop=function(){
             $scope.popFlags.showPop=false;

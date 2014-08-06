@@ -744,6 +744,11 @@ li {
 	line-height: 30px;
 	width: 80px;
 }
+.de_user_nav .de_btn_login_reg{
+	padding-top: 30px;
+	line-height: 30px;
+	width: 80px;
+}
 .de_user_nav .de_btn_login_reg:before {
     content: "";
     width: 30px;

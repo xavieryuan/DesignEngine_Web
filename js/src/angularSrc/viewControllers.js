@@ -289,9 +289,9 @@ viewControllers.controller("projectDetail",["$scope","LocationChanger",function(
     $scope.closeProjectDetail=function(){
         $scope.mainFlags.showMainWrapper=true;
         $scope.mainFlags.showProjectDetailFlag=false;
-        $scope.mainFlags.projectDetailTemplate="";
+       	$scope.mainFlags.projectDetailTemplate="";
         LocationChanger.canReload();
-        history.go(-1);
+       	history.go(-1);
     };
 
     $scope.attachments=[
