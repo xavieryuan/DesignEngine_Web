@@ -740,13 +740,17 @@ li {
     letter-spacing: 2px;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
 }
-
+.de_user_nav .de_btn_login{
+	padding-top: 30px;
+	line-height: 30px;
+	width: 80px;
+}
 .de_user_nav .de_btn_login_reg:before {
     content: "";
     width: 30px;
     height: 30px;
     position: absolute;
-    bottom: 30px;
+    bottom: 25px;
     left: 50%;
     margin-left: -15px;
     background: url(../../images/app/icon30_login_gray.png) no-repeat center;
