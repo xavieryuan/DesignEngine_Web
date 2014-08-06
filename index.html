@@ -13,7 +13,7 @@
     <title>图钉墙 - HNU Design</title>
 
     <!--<base id="de_base_url" href="http://localhost/DesignEngine_Web/"/>-->
-    <base id="de_base_url" href="http://127.0.0.1:52656/"/>
+    <base id="de_base_url" href="http://127.0.0.1:65221/"/>
     <link href="css/lib/toaster.css" rel="stylesheet" type="text/css"/>
     <link href="css/app/general.css" rel="stylesheet" type="text/css"/>
     <script src="js/lib/angular.min.js"></script>
@@ -48,18 +48,21 @@
                             {{currentUser.name}}
                         </a>
                     </li>
-                    <li class="de_reg_view" ng-show="currentUser.id">
+                    <!--<li class="de_reg_view" ng-show="currentUser.id">
                         <a class="de_btn_upload de_borderbox" href="upload">上传</a>
-                    </li>
+                    </li>-->
                     <li class="de_reg_view " ng-show="currentUser.id">
                         <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="showMoreMenu()">更多</a>
                         <ul class="de_ext_nav {{mainFlags.extMenuClass}}">
+                           	<li class="de_reg_view" ng-show="currentUser.id">
+                        		<a class="de_btn_upload de_borderbox" href="upload">上传作品</a>
+                    		</li>
+                           	<li class="de_reg_view ">
+                                <a href="user/{{currentUser.id}}">我的作品集</a>
+                            </li>
                             <li class="de_reg_view ">
                                 <a href="" ng-click="editPwd()">修改密码</a>
-                            </li>
-                            <li class="de_reg_view ">
-                                <a href="user/{{currentUser.id}}">个人主页</a>
-                            </li>
+                            </li>                            
                             <li class="de_reg_view ">
                                 <a href="" ng-click="editInfo()">修改个人信息</a>
                             </li>

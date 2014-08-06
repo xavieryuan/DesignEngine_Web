@@ -673,7 +673,7 @@ li {
     top: 0px;
     margin-top: 0px;
     margin-left: 0px;
-    height: 80px;
+    height: 60px;
     width: 100%;
     z-index: 99;
     /*border-top:#000 12px solid;*/
@@ -694,7 +694,7 @@ li {
 
 .de_logo>a {
     height:100%;
-	line-height:80px;
+	line-height:60px;
     width: 140px;
     background: url(../../images/app/logo_40.png) no-repeat 10px center;
     text-indent: 60px;
@@ -708,7 +708,7 @@ li {
 
 /********用户菜单**********/
 .de_user_nav {
-    height: 80px;
+    height: 60px;
     position: absolute;
     right: 0;
     top: 0;
@@ -726,14 +726,15 @@ li {
 }
 
 .de_user_nav>ul>li>a {
-    width: 80px;
-    height: 80px;
+	box-sizing:border-box;
+    width: 60px;
+    height: 100%;
     padding-top: 50px;
     text-decoration: none;
     text-align: center;
     font-size: 12px;
     color: #333;
-    line-height: 20px;
+    line-height: 60px;
     position: relative;
     display: block;
     letter-spacing: 2px;
@@ -762,27 +763,13 @@ li {
     margin-left: -15px;
     background: url(../../images/app/icon30_register_gray.png) no-repeat center;
 }
-.de_user_nav .de_btn_upload{
-    border-left: #333 1px dotted;	
-    border-right: #333 1px dotted;
-}
-.de_user_nav .de_btn_upload:before {
-    content: "";
-    width: 38px;
-    height: 30px;
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    margin-left: -19px;
-    background: url(../../images/app/icon30_upload_gray.png) no-repeat center;
-
-}
 
 .de_user_nav>ul>li>.de_btn_hotdogmenu {
     font-size: 0;
     padding: 0;
     text-indent: -9999px;
     margin: 0;
+	border-left:#ccc 1px dotted;
 }
 
 .de_user_nav>ul>li>.de_btn_hotdogmenu:before {
@@ -798,32 +785,31 @@ li {
 }
 
 .de_user_nav>ul>li>.de_btn_user_profile {
-    padding: 0 0 0 6px;
-    width: 120px;
+    padding: 0 6px;
+    width: 160px;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
-    line-height: 80px;
+    line-height: 60px;
     letter-spacing: 0;
     text-align: left;
 }
 
 .de_btn_user_profile .photo {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     overflow: hidden;
-    border-radius: 60px;
-    border: #fff 3px solid;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    border-radius: 30px;
     margin-right: 10px;
     display: inline-block;
     vertical-align: middle;
+	background: #ccc;
 }
 
 .de_ext_nav {
     font-size: 12px;
     position: fixed;
-    top: 80px;
+    top: 60px;
     right: -220px;
     bottom: 0;
     width: 220px;
@@ -836,6 +822,7 @@ li {
 }
 .de_ext_nav>li{
 	font-size: 0;
+	position: relative;
 }
 .de_ext_nav>li>a {
 	font-size:14px;
@@ -843,7 +830,7 @@ li {
     width: 100%;
     height: 80px;
     line-height: 80px;
-    padding: 0 20px 0 40px;
+    padding: 0 20px 0 60px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -863,6 +850,17 @@ li {
 
 .de_ext_nav>li:last-child>a {
     border-bottom: none;
+}
+.de_ext_nav .de_btn_upload:before {
+    content: "";
+    width: 38px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    margin-top: -15px;
+    background: url(../../images/app/icon30_upload_gray.png) no-repeat center;
+
 }
 
 /****顶部菜单****/
@@ -895,7 +893,7 @@ li {
     display: inline-block;
     width: 100%;
     height:100%;
-    line-height: 80px;
+    line-height: 60px;
     padding: 0 5px;
     color: #333;
     text-decoration: none;
@@ -1067,12 +1065,11 @@ li {
     list-style: none;
     width: 220px;
     min-width: 175px;
-    height: 380px;
-    padding: 10px;
+    height: 330px;
     position: relative;
     background: #fff;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-    margin: 5px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    margin: 10px;
     overflow: hidden;
 }
 
@@ -1091,13 +1088,13 @@ li {
 }
 
 .de_project_grid .project_info h4 {
-    text-align: center;
+    text-align: left;
     position: absolute;
-    left: 50%;
-    bottom: 50px;
-    width: 160px;
-    margin-left: -80px;
-    height: 44px;
+    left: 50px;
+    top: 230px;
+    right:10px;
+    white-space: nowrap;
+	text-overflow:ellipsis;
     overflow: hidden;
 	color:#09bc72;
 }
@@ -1107,26 +1104,26 @@ li {
 }
 
 .de_project_grid .user_info {
-    text-align: center;
     position: absolute;
-    top: 175px;
-    left: 50%;
-    margin-left: -90px;
-    width: 180px;
+    top: 230px;
+    left: 10px;
+	right:10px;
 }
 
 .de_project_grid .user_info .photo {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     overflow: hidden;
     border-radius: 60px;
-    border: #fff 3px solid;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-    margin: 5px auto;
     display: block;
 }
 
 .de_project_grid .user_info .name {
+	position: absolute;
+	top: 0;
+	left: 40px;
+	right: 0;
+	text-align: left;
     margin: 0;
     font-size: 12px;
     letter-spacing: 2px;
@@ -1138,7 +1135,7 @@ li {
 
 .de_project_grid .de_stats_tags {
     width: 100%;
-    height: 50px;
+    height: 40px;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -1150,12 +1147,12 @@ li {
 .de_project_grid .de_stats_tags>li {
     color: #999;
     display: inline-block;
-    height: 50px;
+    height: 40px;
     width: 33.33%;
     font-size: 12px;
     border-top: #eee 1px solid;
     border-left: #eee 1px solid;
-    line-height: 50px;
+    line-height: 40px;
     text-align: center;
 }
 
@@ -1438,15 +1435,13 @@ li {
 	box-sizing: border-box;
 	background:#fff;
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-	margin:20px 80px 20px 30px;
+	margin:20px 70px 20px 30px;
 }
 .de_topic_box .user_info{
-	width:100px;
-	height:140px;
-	background: #f8f8f8;
 	position: absolute;
-	top:0;
-	left: 0;
+	top:10px;
+	left: 20px;
+	z-index: 1;
 }
 .de_topic_box .user_info a{
 	display: inline-block;
@@ -1457,29 +1452,30 @@ li {
 	color:#333;
 }
 .de_topic_box .user_info img{
-	width: 60px;
-	height: 60px;
+	width: 40px;
+	height: 40px;
 	overflow: hidden;
-	border-radius: 60px;
-	border: #fff 3px solid;
-	box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-	margin: 20px auto 10px auto;
+	border-radius: 40px;
 	display: block;
 }
 .de_topic_box .user_info .name{
-	width:100px;
+	position: absolute;
+	top:5px;
+	left:55px;
 	margin: auto;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	font-size:12px;
+	width:200px;
+	text-align: left;
 }
 .de_topic_box .topic_info{
 	position: absolute;
-	top:0;
-	left: 100px;
+	top:26px;
+	left:55px;
 	bottom:0;
 	padding-left:20px;
-	background:#fff;
 	min-width: 240px;
 }
 .topic_info .created_date{
@@ -1504,16 +1500,17 @@ li {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	color:#999;
+	display: none;
 }
 .topic_info .de_stats_tags{
 	position:absolute;
 	left:20px;
-	bottom:5px;
+	bottom:0;
 	white-space:nowrap;
 }
 .topic_info .de_stats_tags li{
 	display: inline-block;
-	width:80px;
+	width:60px;
 	height: 40px;
 	vertical-align: middle;
 	line-height: 40px;
@@ -1540,12 +1537,12 @@ li {
 }
 .topic_action li:first-child{
 	position: absolute;
-	left:-140px;
-	top:0;
+	left:-110px;
+	top:-10px;
 }
 .topic_action li a.de_topic_action_submit{	
-	width:120px;
-	height:120px;
+	width:100px;
+	height:140px;
 	box-sizing: border-box;
 	background-color:#07af69;
 	background-image:url(/images/app/icon40_upload_transparent.png);
@@ -1555,7 +1552,7 @@ li {
 	color:#fff;
 	font-weight: bold;
 	text-align:center;
-	line-height: 120px;
+	line-height: 140px;
 	padding-top:24px;
 	text-indent:0;
 }
@@ -1583,19 +1580,20 @@ li {
 .de_topic_box .project_info{
 	position: absolute;
 	top:0;
-	right: 130px;
+	right: 100px;
+	left:330px;
 	font-size:0;
 	overflow: hidden;
 	white-space: nowrap;
+	text-align: right;
 }
 .project_info li{
 	display: inline-block;	
-	margin:10px 10px 0 0;
 	
 }
 .project_info li img{
-	height:120px;
-	width:120px;
+	height:140px;
+	width:140px;
 }
 /*************作品上传****************/
 .de_screen_upload {
@@ -2216,11 +2214,11 @@ ol.mp_list li.mp_selectable {
 .de_screen_project_detail h2 {
     font-size: 1.5em;
     width: 60%;
-	color:#09bc72;
+	color:#666;
 	margin-left:30px;
 }
 
-.de_screen_project_detail h4 {
+.de_screen_project_detail>h4 {
     text-align: center;
     font-size: 14px;
     color: #666;
@@ -2240,19 +2238,17 @@ ol.mp_list li.mp_selectable {
 }
 
 .de_project_detail .user_info .photo {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     overflow: hidden;
-    border-radius: 60px;
-    border: #fff 3px solid;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    border-radius: 40px;
     display: block;
 }
 
 .de_project_detail .user_info .name {
     position: absolute;
-    top: 10px;
-    left: 70px;
+    top: 0;
+    left: 60px;
     font-size: 12px;
     letter-spacing: 2px;
     text-align: left;
@@ -2261,6 +2257,8 @@ ol.mp_list li.mp_selectable {
     overflow: hidden;
     display: inline-block;
     width: 200px;
+	font-weight: bold;
+	color:#07af69;
 }
 
 .de_project_detail .de_stats_tags {
@@ -2306,6 +2304,7 @@ ol.mp_list li.mp_selectable {
     line-height: 2em;
     margin: 20px 30px 40px;
 	text-align: center;
+	color:#999;
 }
 .de_project_detail figcaption>.description{
 	font-weight:normal;
@@ -2344,18 +2343,17 @@ ol.mp_list li.mp_selectable {
 }
 
 .de_comment_box .user_info .photo {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     overflow: hidden;
-    border-radius: 60px;
-    border: #fff 3px solid;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    border-radius: 40px;
     margin: 5px auto;
     display: block;
+	background:#999;
 }
 
 .de_comment_box .comment_wrapper {
-    margin-left: 70px;
+    margin-left: 60px;
 }
 
 .de_comment_box .name {
@@ -2387,6 +2385,7 @@ ol.mp_list li.mp_selectable {
     line-height: 1.5em;
     color: #666;
     display: block;
+	margin:8px 0;
 }
 
 .de_comment_form {
