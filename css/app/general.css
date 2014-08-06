@@ -1862,8 +1862,8 @@ ol.mp_list li.mp_selectable {
     width: 100%;
     cursor: pointer;
     height: 60px;
-    padding: 0 0 0 70px;
-    font-size: 16px;
+    padding: 0 0 0 65px;
+    font-size: 12px;
     line-height: 60px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -1910,7 +1910,9 @@ ol.mp_list li.mp_selectable {
 .zy_section_right_header p b {
     margin: 10px 0 0 10px;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
+	font-weight: normal;
+	color:#666;
 }
 
 /* 设置滚动条的样式 */

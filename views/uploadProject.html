@@ -32,7 +32,7 @@
                 <textarea class="de_borderbox de_inputbox_gray" name="description" ng-model="uploadProject.description"></textarea></p>
 
             <p class="de_field_project_thumb" id="uploadThumbContainer">
-                <span class="de_form_tip">请上传高宽比为1:1的jpg或png图像。</span>
+                <span class="de_form_tip">请上传正方形的jpg或png图像。</span>
                 <a href="" class="de_btn_upload_thumb de_button" id="uploadThumb"
                    ng-init="createThumbUploader('uploadThumb','uploadThumbContainer')">上传缩略图</a>
 
@@ -50,17 +50,19 @@
                 <div id="uploadContainer" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()" class="zy_add_media_menu {{mediaMenuActive}}">
                     <ul>
                         <li><a id="uploadImage" class="zy_types1"
-                               ng-init="createImageUploader('uploadImage','uploadContainer')">图片</a></li>
-                        <li><a href="" class="zy_types2" ng-click="addWebVideo()">网络视频</a></li>
-                        <li><a id="uploadVideo" class="zy_types3"
-                               ng-init="createVideoUploader('uploadVideo','uploadContainer')">mp4文件</a></li>
-                        <!--<li><a id="zy_add_3d" class="zy_types4">3D文件</a></li>-->
-                        <li><a id="uploadPpt" class="zy_types5"
-                               ng-init="createPptUploader('uploadPPt','uploadContainer')">ppt文件</a></li>
-                        <li><a id="uploadFile" class="zy_types6"
-                               ng-init="createFileUploader('uploadFile','uploadContainer')">zip文件</a></li>
-                        <li><a id="uploadFlash" class="zy_types7"
-                               ng-init="createFlashUploader('uploadFlash','uploadContainer')">flash</a></li>
+                               ng-init="createImageUploader('uploadImage','uploadContainer')">图片（JPG, PNG）</a></li>
+                        <li><a id="uploadVideo" class="zy_types2"
+                               ng-init="createVideoUploader('uploadVideo','uploadContainer')">视频（MP4）</a></li>
+                        <li><a id="uploadPpt" class="zy_types3"
+                               ng-init="createPptUploader('uploadPPt','uploadContainer')">幻灯片（PPT）</a></li>
+                        <li><a href="" class="zy_types4" ng-click="addWebVideo()">文档（PDF）</a></li>                      
+                       
+                        <li><a id="uploadFlash" class="zy_types5"
+                               ng-init="createFlashUploader('uploadFlash','uploadContainer')">FLASH动画（SWF）</a></li>
+                                <li><a id="uploadFile" class="zy_types6"
+                               ng-init="createFileUploader('uploadFile','uploadContainer')">附件（ZIP）</a></li>
+                         <!--<li><a id="upload3d" class="zy_types7"
+                               ng-init="createFileUploader('uploadFile','uploadContainer')">3D文件</a></li>-->
                     </ul>
                 </div>
                 <ol id="mediaList" class="zy_uploaded_medias_ol">
