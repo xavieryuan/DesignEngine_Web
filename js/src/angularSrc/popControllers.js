@@ -45,14 +45,22 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
             }
         }
         $scope.loginSubmit=function(){
-            //rememberMe();
-            Storage.initCurrentUser({
-                userId:2,
-                profile:"data/people1.jpg",
-                role:"admin",
-                name:"测试用户",
-                email:"csboyty@163.com",
-                description:"测试用户的说明"
+            rememberMe();
+
+            //登陆
+            CFunctions.ajaxSubmit({
+                formUrl:Config.ajaxUrls.signIn,
+                formParam:$scope.login,
+                successCb:function(data){
+                    Storage.initCurrentUser({
+                        userId:2,
+                        profile:"data/people1.jpg",
+                        role:"admin",
+                        name:"测试用户",
+                        email:"csboyty@163.com",
+                        description:"测试用户的说明"
+                    });
+                }
             });
 
             $scope.closePop();
@@ -92,7 +100,6 @@ popControllers.controller("search",["$scope","Config","LocationChanger",function
     $scope.popFlags.title=Config.titles.search;
     $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
-    $scope.mainFlags.extMenuClass="";
 
     $scope.toSearch=function(href){
         LocationChanger.canReload().withoutRefresh(href,false);

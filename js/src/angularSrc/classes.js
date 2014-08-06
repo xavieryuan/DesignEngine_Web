@@ -19,7 +19,6 @@ classes.service("Config",["$rootScope",function($rootScope){
     this.classNames={
         mainMenuActive:"active",
         extMenuActive:"de_ext_nav_active",
-        hidden:"de_hidden",
         uploadStepActive:"current",
         mediaMenuActive:"zy_add_media_menu_active"
     };
@@ -43,6 +42,7 @@ classes.service("Config",["$rootScope",function($rootScope){
     this.urls={  //用到的路径
         "projects":"/projects",
         "boxes":"/boxes",
+        "boxDetail":"/box/:boxId",
         "home":"/",
         "projectDetail":"/project/{projectId}",
         "login":"/login",
@@ -51,7 +51,7 @@ classes.service("Config",["$rootScope",function($rootScope){
         "editInfo":"change/info",
         "userHome":"/user/{userId}",
         "search":"/search",
-        "searchDetail":"/search/{content}",
+        "searchResult":"/search/{content}",
         "forgetPwd":"/forgetPassword"
     };
     this.imageScale={
@@ -65,41 +65,37 @@ classes.service("Config",["$rootScope",function($rootScope){
     this.mediaFilters={  //媒体类型格式刷选器
         image:"jpg,gif,png,jpeg",
         ppt:"pptx",
+        pdf:"pdf",
         mp4:"mp4",
         _3d:"3d",
         zip:"zip",
-        swf:"swf"
+        flash:"swf"
     };
     this.mediaTypes={  //媒体类型
         image:"image",
         ppt:"ppt",
+        pdf:"pdf",
         _3d:"_3d",
         mp4:"mp4",
         zip:"zip",
         webVideo:"webVideo",
-        swf:"swf"
+        flash:"swf"
     };
     this.mediaTitles={
         image:"图片",
         ppt:"ppt文件",
+        pdf:"pdf文件",
         _3d:"3d文件",
         mp4:"视频",
         zip:"压缩文件",
         webVideo:"网络视频",
-        swf:"swf动画"
+        flash:"swf动画"
     };
-    this.mediaSetPanelUrls={
-        image:"views/mediaSet/imageSet.html",
-        ppt:"views/mediaSet/pptSet.html",
-        _3d:"views/mediaSet/_3dSet.html",
-        mp4:"views/mediaSet/videoSet.html",
-        zip:"views/mediaSet/fileSet.html",
-        webVideo:"views/mediaSet/webVideoSet.html",
-        swf:"views/mediaSet/flashSet.html"
-    };
+    this.mediaSetPanelUrl="views/mediaSet.html";
     this.mediaIdPrefixes={
         image:"img_",
         ppt:"ppt_",
+        pdf:"pdf_",
         _3d:"3d_",
         mp4:"mp4_",
         zip:"zip_",
@@ -185,6 +181,7 @@ classes.service("Config",["$rootScope",function($rootScope){
         notFound:"not_found"
     };
     this.ajaxUrls={
+        signIn:"#",
         upload:"http://localhost/idchannel/chinese/wp-admin/admin-ajax.php?action=getUploadToken",
         getAllProjects:"data/projects.json", //获取首页作品媒体文件)
         getProjectDetail:"post/info/:id", //获取作品（资源）详情

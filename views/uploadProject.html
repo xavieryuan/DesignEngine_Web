@@ -4,11 +4,12 @@
         <ol>
             <li><a href="" class="de_tab_step1 active {{stepClass[0]}}" ng-click="setStepActive(0)">1. 填写基本信息</a></li>
             <li><a href="" class="de_tab_step2 active {{stepClass[1]}}" ng-click="setStepActive(1)">2. 上传</a></li>
-            <li><a href="" class="de_tab_step3 active {{stepClass[2]}}" ng-click="setStepActive(2)">3. 预览并提交</a></li>
+            <li><a href="" class="de_tab_step3 active {{stepClass[2]}}"
+                   ng-click="setStepActive(2);getPreviewMedias('mediaItem','data-media-id')">3. 预览并提交</a></li>
         </ol>
     </nav>
     <form class="de_form_upload de_borderbox de_boxshadow">
-        <div class="de_upload_step1 {{stepPanelClass[0]}}">
+        <div class="de_upload_step1" ng-show="stepPanelIndex==0">
             <p class="de_field_project_title">
                 <label>标题</label>
                 <input type="text" maxlength="80" class="de_borderbox de_inputbox_gray"
@@ -42,7 +43,7 @@
         </div>
 
         <!-- step 2-->
-        <div class="de_upload_step2 {{stepPanelClass[1]}}" >
+        <div class="de_upload_step2" ng-show="stepPanelIndex==1">
             <div class="zy_uploader_column_left">
                 <span class="zy_section_left_header" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()">添加文件</span>
                 <!--媒体文件类型的menu-->
@@ -51,21 +52,21 @@
                     <ul>
                         <li><a id="uploadImage" class="zy_types1"
                                ng-init="createImageUploader('uploadImage','uploadContainer')">图片（JPG, PNG）</a></li>
-                        <li><a id="uploadVideo" class="zy_types2"
-                               ng-init="createVideoUploader('uploadVideo','uploadContainer')">视频（MP4）</a></li>
+                        <li><a id="uploadMp4" class="zy_types2"
+                               ng-init="createMp4Uploader('uploadMp4','uploadContainer')">视频（MP4）</a></li>
                         <li><a id="uploadPpt" class="zy_types3"
                                ng-init="createPptUploader('uploadPPt','uploadContainer')">幻灯片（PPT）</a></li>
-                        <li><a href="" class="zy_types4" ng-click="addWebVideo()">文档（PDF）</a></li>                      
-                       
+                        <li><a id="uploadPdf" class="zy_types4"
+                                ng-init="createPdfUploader('uploadPdf','uploadContainer')" >文档（PDF）</a></li>
                         <li><a id="uploadFlash" class="zy_types5"
                                ng-init="createFlashUploader('uploadFlash','uploadContainer')">FLASH动画（SWF）</a></li>
-                                <li><a id="uploadFile" class="zy_types6"
-                               ng-init="createFileUploader('uploadFile','uploadContainer')">附件（ZIP）</a></li>
+                        <li><a id="uploadZip" class="zy_types6"
+                               ng-init="createZipUploader('uploadZip','uploadContainer')">附件（ZIP）</a></li>
                          <!--<li><a id="upload3d" class="zy_types7"
                                ng-init="createFileUploader('uploadFile','uploadContainer')">3D文件</a></li>-->
                     </ul>
                 </div>
-                <ol id="mediaList" class="zy_uploaded_medias_ol">
+                <ol id="mediaList" class="zy_uploaded_medias_ol" drag="mediaItem">
                     <li ng-click="showSetPanel(mediaId,value.mediaType)" data-media-id="{{mediaId}}"
                         ng-repeat="(mediaId,value) in uploadProject.medias" draggable="true"
                         ng-class="{zy_media_list_error:value.noThumb,zy_media_list_active:value.active}" class="mediaItem">
@@ -86,7 +87,7 @@
         </div>
 
         <!-- step 3-->
-        <div class="de_upload_step3 {{stepPanelClass[2]}}">
+        <div class="de_upload_step3" ng-show="stepPanelIndex==2">
             <input type="submit" autocomplete="default" value="提交" class="de_borderbox de_submit_upload"
                    name="de_submit_upload" id="de_submit_upload"/>
             <article id="de_upload_preview" class="de_project_detail de_borderbox">
@@ -103,8 +104,8 @@
                 </p>
 
                 <div class="main_content">
-                    <figure ng-repeat="media in medias">
-                        <a ng-class="{de_has_ppt:media.type='image'}" class="de_has_media"  href="" ng-click="">
+                    <figure ng-repeat="media in previewMedias">
+                        <a ng-class="{de_has_ppt:media.type=='image'}" class="de_has_media"  href="" ng-click="">
                             <img ng-src="{{media.mediaThumbFilePath}}"/>
                         </a>
                         <figcaption>

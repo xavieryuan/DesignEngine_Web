@@ -12,17 +12,19 @@ pinWall.config(["$routeProvider","$locationProvider",function($routeProvider,$lo
     //默认使用的时候hash模式，如果要使用rest风格，需要设置下面这一句，注意$locationProvider需要注入
     $locationProvider.html5Mode(true);
     //$locationProvider.hashPrefix("!");
-    $routeProvider.when("/",{templateUrl: 'views/showProjects.html',controller:"showProjects"}).
-        when("/projects",{templateUrl: 'views/showProjects.html',controller:"showProjects"}).
-        when("/project/:projectId",{templateUrl: 'views/showProjects.html',controller:"showProjects"}).
-        when("/boxes",{templateUrl: 'views/showBoxes.html',controller:"showBoxes"}).
-        when("/upload",{templateUrl: 'views/uploadProject.html',controller:"uploadProject"}).
-        when("/search",{templateUrl: 'views/showProjects.html',controller:"showProjects"}).
+    $routeProvider.when("/",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+        when("/projects",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+        when("/project/:projectId",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+        when("/boxes",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
+        when("/box/create",{templateUrl: 'views/boxCreate.html',controller:"boxCreate"}).
+        when("/box/:id",{templateUrl: 'views/showBoxDetail.html',controller:"boxDetail"}).
+        when("/upload/:boxId",{templateUrl: 'views/uploadProject.html',controller:"uploadProject"}).
+        when("/search",{templateUrl: 'views/showProjects.html',controller:"projects"}).
         when("/search/:content",{templateUrl: 'views/searchResult.html',controller:"searchResult"}).
         when("/user/:userId",{templateUrl: 'views/userHome.html',controller:"userHome"}).
-        when("/login",{templateUrl: 'views/showProjects.html',controller:"showProjects"}).
-        when("/register",{templateUrl: 'views/showProjects.html',controller:"showProjects"}).
-        when("/forgetPassword",{templateUrl: 'views/showProjects.html',controller:"showProjects"})/*.
+        when("/login",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+        when("/register",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+        when("/forgetPassword",{templateUrl: 'views/showProjects.html',controller:"projects"})/*.
         otherwise({redirectTo: '/'});*/
 }]);
 
@@ -37,7 +39,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
         //使用对象，子scope可以直接覆盖（对象地址）
         $scope.mainFlags={
             "showMainWrapper":true,
-            "extMenuClass":"", //是否显示个人菜单
+            "extMenuActive":"", //是否显示个人菜单
             "showProjectDetailFlag":false,  //是否显示作品详情
             "projectDetailTemplate":"",
             "showPlayMedialPanel":false,   //是否显示视频播放界面
@@ -57,7 +59,6 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
         $scope.closePop=function(){
             $scope.popFlags.showPop=false;
             $scope.mainFlags.showBlackOut=false;
-            $scope.mainFlags.extMenuClass=="";
             $scope.popFlags.popTemplateUrl="";
             LocationChanger.canReload();
             window.history.go(-1);
@@ -94,9 +95,17 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
         /**
          *显示更多菜单
          */
-        $scope.showMoreMenu=function(){
-            $scope.mainFlags.extMenuClass==""?
-                $scope.mainFlags.extMenuClass=Config.classNames.extMenuActive:$scope.mainFlags.extMenuClass="";
+        $scope.showExtMenu=function(event){
+            $scope.mainFlags.extMenuActive==""?
+                $scope.mainFlags.extMenuActive=Config.classNames.extMenuActive:$scope.mainFlags.extMenuActive="";
+            event.stopPropagation();
+        };
+        $scope.hideExtMenu=function(event,extMenuId){
+            var target=event.target||event.srcElement;
+            var extMenuEl=document.getElementById(extMenuId);
+            if(target!=extMenuEl){
+                $scope.mainFlags.extMenuActive="";
+            }
         };
 
         /**
