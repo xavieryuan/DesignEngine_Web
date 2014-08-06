@@ -26,23 +26,6 @@ directives.directive('pwdCheck', function(){
         }
     }
 });
-directives.directive("integer",function(){
-    return {
-        require:"ngModel",
-        link:function(scope,elem,attrs,ctrl){
-            ctrl.$parsers.unshift(function(viewValue){
-                var INTER_REGEXP=/^\-?\d+$/;
-                if(INTER_REGEXP.test(viewValue)){
-                    ctrl.$setValidity("integer",true);
-                    return viewValue;
-                }else{
-                    ctrl.$setValidity("integer",false);
-                    return undefined;
-                }
-            });
-        }
-    }
-});
 directives.directive("emailExist",function($http){
     return {
         require:"ngModel",
@@ -68,6 +51,73 @@ directives.directive("emailExist",function($http){
                     ctrl.$setValidity("emailExist",true);
                 }
             });
+        }
+    }
+});
+directives.directive("drag",function(){
+    return {
+        link:function(scope,elem,attrs,ctrl){
+            var targetOl=elem[0];
+            var item=attrs.drag;
+            var eleDrag = null;//被拖动的元素
+
+            //console.log(elem[0]);
+            //console.log(document.getElementById("mediaList"));
+
+            targetOl.onselectstart=function(event){
+                if(event.target.className.match(item)!==null){
+
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            };
+            targetOl.ondragstart=function(event){
+                if(event.target.className.match(item)!==null){
+                    event.dataTransfer.effectAllowed = "move";
+                    event.dataTransfer.setData("text","移动中");
+                    eleDrag = event.target||event.srcElement;
+
+                    return true;
+                }
+            };
+            targetOl.ondragend=function(event){
+                if(event.target.className.match(item)!==null){
+                    eleDrag=null;
+
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            };
+
+            //在元素中滑过
+            targetOl.ondragover = function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            };
+
+            targetOl.ondrop=function(event){
+
+                event.preventDefault();
+                event.stopPropagation();
+            };
+
+            //ol作为最大的容器也要处理拖拽事件，当在li上滑动的时候放到li的前面，当在ol上滑动的时候放到ol的最后面
+            targetOl.ondragenter = function (event) {
+                var target=event.toElement||event.target;
+                var targetParent=target.parentNode;
+                if (target == targetOl) {
+                    targetOl.appendChild(eleDrag);
+                }else{
+                    if(target.tagName=="LI"){
+                        targetOl.insertBefore(eleDrag, target);
+                    }else{
+                        targetOl.insertBefore(eleDrag, targetParent);
+                    }
+                }
+
+                event.preventDefault();
+                event.stopPropagation();
+            };
         }
     }
 });

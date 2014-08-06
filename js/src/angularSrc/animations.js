@@ -3,6 +3,7 @@ CSSPlugin.defaultTransformPerspective=1200;
 
 /*定义动效*/
 var animations=angular.module("animations",["ngAnimate"]);
+
 animations.animation(".de_animation_ext_nav",function(){
 	return{
 		beforeAddClass: function(element, className, done) {
@@ -16,7 +17,7 @@ animations.animation(".de_animation_ext_nav",function(){
 			}
 		}
 	}
-})
+});
 
 animations.animation(".de_animation_popout",function(){
 	return{
@@ -28,7 +29,7 @@ animations.animation(".de_animation_popout",function(){
 			TweenMax.to(element,0.5,{z:90,opacity:0, ease:Circ.easeOut, onComplete:done})
 		}
 	}
-})
+});
 animations.animation(".de_animation_blackout",function(){
 	return{
 		beforeAddClass: function(element, className, done) {
@@ -43,7 +44,7 @@ animations.animation(".de_animation_blackout",function(){
 			}
 		}
 	}
-})
+});
 animations.animation(".de_animation_project_detail",function(){
 	return{
 		enter:function(element,done){			
@@ -63,4 +64,5 @@ animations.animation(".de_animation_project_detail",function(){
 			TweenMax.to(element,0.4,{opacity:0,onComplete:done});
 		}
 	}
-})
+});
+

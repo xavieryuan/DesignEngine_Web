@@ -13,8 +13,8 @@
     <title>图钉墙 - HNU Design</title>
 
 
-    <!--<base id="de_base_url" href="http://localhost/DesignEngine_Web/"/>-->
-    <base id="de_base_url" href="http://127.0.0.1:65221/"/>
+    <base id="de_base_url" href="http://localhost/DesignEngine_Web/"/>
+    <!--<base id="de_base_url" href="http://127.0.0.1:65221/"/>-->
     <link href="css/lib/toaster.css" rel="stylesheet" type="text/css"/>
     <link href="css/app/general.css" rel="stylesheet" type="text/css"/>
     <script src="js/lib/jquery-2.1.1.min.js"></script>
@@ -37,7 +37,7 @@
     <script src="js/src/angularSrc/animations.js"></script>
     <script src="js/src/angularSrc/app.js"></script>
 </head>
-<body ng-controller="super">
+<body ng-controller="super" ng-click="hideExtMenu($event,'de_ext_nav');">
 <toaster-container></toaster-container>
     <div class="de_page_wrapper" ng-show="mainFlags.showMainWrapper">
         <header class="de_header">
@@ -47,7 +47,7 @@
             <nav class="de_user_nav de_borderbox">
                 <ul>
                     <li class="de_reg_view" ng-show="currentUser.id">
-                        <a class="de_btn_user_profile de_borderbox" href="user/{{currentUser.id}}">
+                        <a class="de_btn_user_profile de_borderbox" ng-href="user/{{currentUser.id}}">
                             <img class="photo" ng-src="{{currentUser.profile}}" title="{{currentUser.name}}">
                             {{currentUser.name}}
                         </a>
@@ -56,19 +56,22 @@
                         <a class="de_btn_upload de_borderbox" href="upload">上传</a>
                     </li>-->
                     <li class="de_reg_view " ng-show="currentUser.id">
-                        <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="showMoreMenu()">更多</a>
-                        <ul class="de_ext_nav de_animation_ext_nav {{mainFlags.extMenuClass}}">
+                        <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="showExtMenu($event)">更多</a>
+                        <ul class="de_ext_nav de_animation_ext_nav {{mainFlags.extMenuActive}}">
                            	<li class="de_reg_view" ng-show="currentUser.id">
                         		<a class="de_btn_upload de_borderbox" href="upload">上传作品</a>
                     		</li>
                            	<li class="de_reg_view ">
-                                <a href="user/{{currentUser.id}}">我的作品集</a>
+                                <a ng-href="user/{{currentUser.id}}">我的作品集</a>
                             </li>
                             <li class="de_reg_view ">
                                 <a href="" ng-click="editPwd()">修改密码</a>
                             </li>                            
-                            <li class="de_reg_view ">
+                            <li class="de_reg_view">
                                 <a href="" ng-click="editInfo()">修改个人信息</a>
+                            </li>
+                            <li class="de_reg_view">
+                                <a ng-href="box/create">创建选题</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.role=='admin'">
                                 <a href="adminhome/users">用户管理</a>

@@ -3,7 +3,6 @@
     <!-- 选题列表 -->
     <ul class="de_topic_list">        
         <li class="de_topic_box" ng-repeat="box in boxes">
-            <!-- 选题发布者 -->
             <div class="user_info">
                 <a ng-href="user/{{box.userId}}" class="de_borderbox">
                     <img ng-src="{{box.userProfile}}" class="photo">
@@ -11,17 +10,23 @@
                 </a>
             </div>
             <div class="topic_info">
-                <p class="created_date">{{box.date}} 发起征集</p>
-                <p class="topic_title">{{box.title}}</p>
-                <!--<p class="topic_description">{{box.description}}</p>-->
+                <p class="created_date">{{box.date}} 创建</p>
+                <a ng-href="box/{{box.id}}">
+                    <p class="topic_title">
+                        征集：{{box.title}}
+                    </p>
+                </a>
+                <p class="topic_description">{{box.description}}</p>
+
                 <ul class="de_stats_tags">
                     <li class="uploads" title="上传">{{box.projectCount}}</li>
                     <li class="badges" title="勋章">{{box.honorCount}}</li>
-                </ul>                
-            </div>            
+                </ul>
+            </div>
             <ul class="topic_action">
                 <!-- 根据权限控制 -->
-                <li><a href="" class="de_topic_action_submit" ng-disabled="box.disabledUpload">投稿</a></li>
+                <li><a ng-href="upload/{{box.id}}" class="de_topic_action_submit" ng-hide="box.disabledUpload">投稿</a></li>
+                <li><a ng-href="box/{{box.id}}" class="de_topic_action_submit" ng-show="box.disabledUpload">查看详情</a></li>
                 <li><a href="" class="de_topic_action_lock">锁定</a></li>
                 <li><a href="" class="de_topic_action_setting">设置</a></li>
             </ul>
@@ -31,7 +36,7 @@
                         <img ng-src="{{project.thumb}}">
                     </a>
                 </li>
-            </ul>            
+            </ul>
         </li>
     </ul>
 </section>

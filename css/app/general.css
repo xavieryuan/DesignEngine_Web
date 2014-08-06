@@ -825,9 +825,9 @@ li {
 	background:#fff;
 	box-shadow: 0 0 30px rgba(0,0,0,0.1);
 }
-.de_ext_nav_active {
+/*.de_ext_nav_active {
     transform: translateX(-220px);
-}
+}*/
 .de_ext_nav>li{
 	font-size: 0;
 	position: relative;
