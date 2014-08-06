@@ -47,9 +47,9 @@ animations.animation(".de_animation_blackout",function(){
 });
 animations.animation(".de_animation_project_detail",function(){
 	return{
-		enter:function(element,done){			
-			var target=$;
-			console.log(target);
+		enter:function(element,done){
+
+			console.log($);
 			done();
 			//TweenMax.set(target,{opacity:0});
 			//TweenMax.to(target,0.5,{opacity:1,onComplete:done})
