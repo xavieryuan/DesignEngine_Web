@@ -583,9 +583,9 @@ classes.service('LocationChanger', ['$location', '$route', '$rootScope', functio
 classes.factory("Project",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
     return $resource(Config.ajaxUrls.getAllProjects,{},{
         query:{params:{"length":10}},
-        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+        get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
         remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
-        add:{method:"put"},
+        save:{url:Config.ajaxUrls.deleteProject},
         getSimilar:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
     })
 }]);

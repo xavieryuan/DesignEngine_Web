@@ -12,7 +12,7 @@
  * Time: 下午3:42
  * To change this template use File | Settings | File Templates.
  */
-var viewControllers=angular.module("viewControllers",["classes"]);
+var viewControllers=angular.module("viewControllers",["classes","toaster"]);
 
 viewControllers.controller("showProjects",['$scope',"Config","Project","CFunctions",function($scope,Config,Project,CFunctions){
 
@@ -432,7 +432,8 @@ viewControllers.controller("searchResult",["$scope","LocationChanger",function($
     ];
 }]);
 
-viewControllers.controller("uploadProject",["$scope","$route","Config","CFunctions",function($scope,$route,Config,CFunctions){
+viewControllers.controller("uploadProject",["$scope","$http","$route","toaster","Config","CFunctions",
+    function($scope,$http,$route,toaster,Config,CFunctions){
 
     function addTag(tag){
         if($scope.uploadProject.tags.indexOf(tag)===-1){
@@ -548,13 +549,45 @@ viewControllers.controller("uploadProject",["$scope","$route","Config","CFunctio
     $scope.stepPanelClass=["",Config.classNames.hidden,Config.classNames.hidden];
 
     $scope.setStepActive=function(index){
-        for(var i =0;i<3;i++){
-            if(index==i){
-                $scope.stepClass[i]=Config.classNames.uploadStepActive;
-                $scope.stepPanelClass[i]="";
+
+        //判断是否数据都填写完整,才能执行界面转换
+        if(index==1){
+            if(!$scope.uploadProject.title||$scope.uploadProject.tags.length==0||
+                $scope.uploadProject.thumb==Config.thumbs.defaultThumb||!$scope.uploadProject.description){
+
+                toaster.pop('error',Config.messages.errorTitle,Config.messages.stepOneUnComplete,null,null);
+                return false;
+            }
+        }else if(index==2){
+            var noMedia=false,someMediaHasNoThumb=false,hasUnCompleteMedia=false;
+
+            if(angular.equals({},$scope.uploadProject.medias)){
+                noMedia=true;
             }else{
-                $scope.stepClass[i]="";
-                $scope.stepPanelClass[i]=Config.classNames.hidden;
+                for(var obj in $scope.uploadProject.medias){
+                    if(obj.noThumb){
+                        someMediaHasNoThumb=true;
+                        break;
+                    }else if(obj[Config.mediaObj.mediaFilename].indexOf("%")!==-1){
+                        hasUnCompleteMedia=true;
+                        break;
+                    }
+                }
+            }
+
+            if(noMedia||hasUnCompleteMedia){
+                toaster.pop('error',Config.messages.errorTitle,Config.messages.hasNoMedia,null,null);
+                return false;
+            }else if(someMediaHasNoThumb){
+                toaster.pop('error',Config.messages.errorTitle,Config.messages.mediaHasNoThumb,null,null);
+                return false;
+            }else{
+                var mediaItems=document.getElementsByClassName("mediaItem");
+                var length=mediaItems.length;
+                for(var i=0;i<length;i++){
+                    //console.log(mediaItems[i].getAttribute('data-media-id'));
+                    $scope.medias.push($scope.uploadProject.medias[mediaItems[i].getAttribute('data-media-id')]);
+                }
             }
         }
 
@@ -567,15 +600,17 @@ viewControllers.controller("uploadProject",["$scope","$route","Config","CFunctio
             $scope.mediaSetPanelUrl="";
         }
 
-
-        if(index==2){
-            var mediaItems=document.getElementsByClassName("mediaItem");
-            var length=mediaItems.length;
-            for(var i=0;i<length;i++){
-                //console.log(mediaItems[i].getAttribute('data-media-id'));
-                $scope.medias.push($scope.uploadProject.medias[mediaItems[i].getAttribute('data-media-id')]);
+        //设置状态
+        for(var i =0;i<3;i++){
+            if(index==i){
+                $scope.stepClass[i]=Config.classNames.uploadStepActive;
+                $scope.stepPanelClass[i]="";
+            }else{
+                $scope.stepClass[i]="";
+                $scope.stepPanelClass[i]=Config.classNames.hidden;
             }
         }
+
     };
 
     $scope.deleteTag=function(index){
@@ -604,9 +639,21 @@ viewControllers.controller("uploadProject",["$scope","$route","Config","CFunctio
             filter:Config.mediaFilters.image,
             uploadedCb:function(file,info){
                 var res = JSON.parse(info);
-                $scope.uploadProject.thumb = Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
-                //console.log($scope.uploadProject.thumb);
-                $scope.$apply();
+                var src= Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
+
+                //判断是否是1：1
+                $http.get(src+"?imageInfo").success(function(data,status,headers,config,statusText ){
+                    //console.log(data);
+                    if(data.width===data.height){
+                        $scope.uploadProject.thumb = src;
+                        //$scope.$apply();
+                    }else{
+                        toaster.pop('error',Config.messages.errorTitle,Config.messages.imgSizeError,null,null);
+                    }
+
+                }).error(function(data,status,headers,config,statusText){
+                        CFunctions.ajaxErrorHandler();
+                    });
             }
         });
     };
@@ -636,9 +683,12 @@ viewControllers.controller("uploadProject",["$scope","$route","Config","CFunctio
         if(confirm("确定删除此媒体文件吗？")){
             $scope.uploadProject.medias[mediaId]=undefined;
             delete $scope.uploadProject.medias[mediaId];
-            $scope.currentEditMediaId=0;
-            $scope.mediaSetPanelUrl="";
-            $scope.mediaSetTitle=Config.messages.clickToSet;
+
+            if($scope.currentEditMediaId===mediaId){
+                $scope.currentEditMediaId=0;
+                $scope.mediaSetPanelUrl="";
+                $scope.mediaSetTitle=Config.messages.clickToSet;
+            }
         }
     };
 
@@ -710,20 +760,20 @@ viewControllers.controller("uploadProject",["$scope","$route","Config","CFunctio
             multipartParams:null,
             filter:filter,
             maxSize:Config.uploadSize.maxMediaSize,
-            fileAddCb:function(up,file){
-                $scope.uploadProject.medias[$scope.currentEditMediaId][Config.mediaObj.mediaThumbFilename]=
-                    file.name+"----0%";
+            fileAddCb:function(up,files){
+                $scope.currentFilename=files[0].name+"----0%";
                 $scope.$apply();
             },
             progressCb:function(up,file){
-                $scope.uploadProject.medias[$scope.currentEditMediaId][Config.mediaObj.mediaThumbFilename]=
-                    file.name+file.percent+"%";
+                $scope.currentFilename=file.name+file.percent+"%";
                 $scope.$apply();
             },
             uploadedCb:function(file,info){
                 var res = JSON.parse(info);
                 var path=Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
-                $scope.uploadProject.medias[$scope.currentEditMediaId][Config.mediaObj.mediaThumbFilename] =file.name;
+
+                $scope.currentFilename =file.name;
+                $scope.uploadProject.medias[$scope.currentEditMediaId][Config.mediaObj.mediaFilename] =file.name;
                 $scope.uploadProject.medias[$scope.currentEditMediaId][Config.mediaObj.mediaFilePath] =path;
 
                 $scope.$apply();
