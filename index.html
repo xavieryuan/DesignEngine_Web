@@ -17,6 +17,7 @@
     <base id="de_base_url" href="http://127.0.0.1:65221/"/>
     <link href="css/lib/toaster.css" rel="stylesheet" type="text/css"/>
     <link href="css/app/general.css" rel="stylesheet" type="text/css"/>
+    <script href="/js/lib/jquery-2.1.1.min.js"></script>
     <script src="js/lib/angular.min.js"></script>
     <script src="js/lib/angular-route.min.js"></script>
     <script src="js/lib/angular-resource.min.js"></script>
@@ -56,7 +57,7 @@
                     </li>-->
                     <li class="de_reg_view " ng-show="currentUser.id">
                         <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="showMoreMenu()">更多</a>
-                        <ul class="de_ext_nav {{mainFlags.extMenuClass}}">
+                        <ul class="de_ext_nav de_animation_ext_nav {{mainFlags.extMenuClass}}">
                            	<li class="de_reg_view" ng-show="currentUser.id">
                         		<a class="de_btn_upload de_borderbox" href="upload">上传作品</a>
                     		</li>
@@ -110,11 +111,11 @@
 
 
     <!-----------作品详情----------->
-    <section class="de_screen_project_detail" ng-controller="projectDetail" ng-show="mainFlags.showProjectDetailFlag" ng-include="mainFlags.projectDetailTemplate">
+    <section class="de_screen_project_detail de_animation_project_detail" ng-controller="projectDetail" ng-show="mainFlags.showProjectDetailFlag" ng-include="mainFlags.projectDetailTemplate">
 
     </section>
     <!-----------弹窗小组件----------->
-    <section class="de_popout de_boxshadow de_borderbox" ng-show="popFlags.showPop" ng-include="popFlags.popTemplateUrl">
+    <section class="de_popout de_boxshadow de_borderbox de_animation_popout" ng-show="popFlags.showPop" ng-include="popFlags.popTemplateUrl">
     </section>
     <!-----------媒体详情----------->
     <section class="de_pop_show_media" ng-show="mainFlags.showPlayMedialPanel">
@@ -131,7 +132,7 @@
         </div>
     </section>
 	<!-----------blackout----------->
-    <div class="de_blackout" ng-show="mainFlags.showBlackOut"></div>
+    <div class="de_blackout de_animation_blackout" ng-show="mainFlags.showBlackOut"></div>
     <!-----------load spinner----------->
     <div class="de_loading" ng-show="mainFlags.showLoading">
         <div class="de_loading_spinner" id="de_loading_spinner"></div>

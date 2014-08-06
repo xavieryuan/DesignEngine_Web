@@ -633,19 +633,18 @@ li {
 }
 
 .de_photo_field .photo {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     overflow: hidden;
-    border-radius: 60px;
-    border: #fff 3px solid;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    border-radius: 40px;
     margin: 5px auto;
     display: block;
+	background: #999;
 }
 .de_photo_field .de_change_figure{
 	display: inline-block;
 	width: 100%;
-	padding-top: 60px;
+	padding-top: 55px;
 	position: absolute;
 	top: 0;
 	left: 0;	
@@ -832,8 +831,8 @@ li {
 	font-size:14px;
     display: inline-block;
     width: 100%;
-    height: 80px;
-    line-height: 80px;
+    height: 60px;
+    line-height: 60px;
     padding: 0 20px 0 60px;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -2307,10 +2306,7 @@ span.zy_tooltips{
     width:100%;
     background: rgba(240, 240, 240, 0.95);
     z-index: 1000;
-	/*
-    overflow-y: scroll;
-	-webkit-overflow-scrolling:touch;
-	*/
+	padding:80px 0 40px;
 }
 
 .de_btn_close_project_detail {
@@ -2394,7 +2390,7 @@ span.zy_tooltips{
 }
 
 .de_screen_project_detail .de_project_detail {
-    margin: 80px auto 40px;
+    margin:auto;
     background: #fff;
     padding: 160px 0 40px;
     position: relative;
@@ -2883,6 +2879,22 @@ span.zy_tooltips{
     }
 	
 	/*详情展示页面*/
+	.de_screen_project_detail{
+		padding: 60px 0;
+	}
+	.de_screen_project_detail .de_project_detail {
+        width: auto;
+        margin: 0 10px;
+		padding: 160px 20px 20px;
+    }
+    .de_screen_project_detail .de_comment_box {
+        width: auto;
+        margin: 40px 10px;
+    }
+    .de_screen_project_detail h2 {
+        width: auto;
+    }
+	
 	.de_btn_zan{
 		left:15px;
 	}
@@ -2896,13 +2908,7 @@ span.zy_tooltips{
 	}
 	.de_btn_close_project_detail{
 		right:0;
-	}
-	
-    /*和前面定义的权重不一样，要加important*/
-    .photo{
-        border:none !important;
-    }
-
+	}	
 	.de_project_detail .user_info{
 		left:20px;
 		}
@@ -2911,21 +2917,9 @@ span.zy_tooltips{
         text-indent: 80px;
         overflow: hidden;
         white-space: nowrap;
-		}	
-
-    .de_screen_project_detail .de_project_detail {
-        width: auto;
-        margin: 60px 10px;
-		padding: 160px 20px 20px;
-    }
-
-    .de_screen_project_detail .de_comment_box {
-        width: auto;
-        margin: 40px 10px;
-    }
-    .de_screen_project_detail h2 {
-        width: auto;
-    }
+		}
+	
+	/**媒体内容详情**/
 	.de_pop_show_media_close{
 		right:25px;
         text-indent: 80px;
@@ -3006,15 +3000,7 @@ span.zy_tooltips{
 }
 @media screen and (max-width: 480px) {
 	/*顶部导航*/
-	.de_header{
-		height:60px;
-	}
-	.de_user_nav{
-		height:60px;		
-	}
-	.de_user_nav>ul>li>a{
-		height:60px;
-	}
+	
 	.de_user_nav .de_btn_login_reg{
 		font-size:0;
 		text-indent:-9999px;
@@ -3023,7 +3009,7 @@ span.zy_tooltips{
 		bottom:15px;
 	}
 	.de_ext_nav{
-		top:60px;
+		top:0;
 	}
 	.de_top_nav{
 		width:100px;
