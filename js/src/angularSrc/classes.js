@@ -63,18 +63,17 @@ classes.service("Config",["$rootScope",function($rootScope){
         maxImageSize:"2m"//最大的图片文件上传大小
     };
     this.mediaFilters={  //媒体类型格式刷选器
-        imageFilter:"jpg,gif,png,jpeg",
-        pptFilter:"pptx",
-        mp4Filter:"mp4",
-        _3dFilter:"3d",
-        pdfFiler:"pdf",
-        zipFiler:"zip",
-        swfFilter:"swf"
+        image:"jpg,gif,png,jpeg",
+        ppt:"pptx",
+        mp4:"mp4",
+        _3d:"3d",
+        zip:"zip",
+        swf:"swf"
     };
     this.mediaTypes={  //媒体类型
-        image:"img",
+        image:"image",
         ppt:"ppt",
-        _3d:"3d",
+        _3d:"_3d",
         mp4:"mp4",
         zip:"zip",
         webVideo:"webVideo",
@@ -89,6 +88,15 @@ classes.service("Config",["$rootScope",function($rootScope){
         webVideo:"网络视频",
         swf:"swf动画"
     };
+    this.mediaSetPanelUrls={
+        image:"views/mediaSet/imageSet.html",
+        ppt:"views/mediaSet/pptSet.html",
+        _3d:"views/mediaSet/_3dSet.html",
+        mp4:"views/mediaSet/videoSet.html",
+        zip:"views/mediaSet/fileSet.html",
+        webVideo:"views/mediaSet/webVideoSet.html",
+        swf:"views/mediaSet/flashSet.html"
+    };
     this.mediaIdPrefixes={
         image:"img_",
         ppt:"ppt_",
@@ -99,13 +107,13 @@ classes.service("Config",["$rootScope",function($rootScope){
         swf:"swf_"
     };
     this.mediaObj={  //媒体对象
-        mediaTitle:"title",
-        mediaMemo:"memo",
-        mediaType:"type",
-        mediaThumbFilename:"thumbFilename",
-        mediaThumbFilePath:"thumbFilePath",
-        mediaFilename:"filename",
-        mediaFilePath:"filePath"
+        mediaTitle:"mediaTitle",
+        mediaMemo:"mediaMemo",
+        mediaType:"mediaType",
+        mediaThumbFilename:"mediaThumbFilename",
+        mediaThumbFilePath:"mediaThumbFilePath",
+        mediaFilename:"mediaFilename",
+        mediaFilePath:"mediaFilePath"
     };
     this.userStatus={   //用户状态（禁言、激活）
         enabled:"enabled",
@@ -135,6 +143,7 @@ classes.service("Config",["$rootScope",function($rootScope){
     };
     this.messages={  //错误提示
         errorTitle:"错误提示",
+        clickToSet:"点击上传完成的媒体文件进行设置！",
         successTitle:"成功提示",
         operationSuccess:"操作成功，请关闭后选择其他操作！",
         registerSuccess:"注册成功，如果您是非QQ登录用户，请进入邮箱激活账户，否则无法登录！",
@@ -226,7 +235,7 @@ classes.service("Storage",function(){
     };
 });
 
-classes.service("CFunctions",["$http","toaster","Config",function($http,toaster,Config){
+classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($rootScope,$http,toaster,Config){
 
     var postCfg={
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
@@ -502,19 +511,10 @@ classes.service("CFunctions",["$http","toaster","Config",function($http,toaster,
                     }
                 },
                 'Error': function(up, err, errTip) {
-                    var message="";
-                    switch(err.message){
-                        case "size":
-                            message=Config.messages.uploadSizeError;
-                            break;
-                        case "extension":
-                            message=Config.messages.uploadExtensionError;
-                            break;
-                        default:
-                            message=Config.messages.uploadIOError;
-                            break;
-                    }
-                    toaster.pop('error',Config.messages.errorTitle,message,null,null);
+                    toaster.pop('error',Config.messages.errorTitle,errTip,null,null);
+
+                    //由于qiniu处理了错误信息，在这里要调用$apply来通知view改变状态
+                    $rootScope.$apply();
 
                     up.refresh();
                 },

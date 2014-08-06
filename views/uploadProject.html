@@ -64,19 +64,20 @@
                     </ul>
                 </div>
                 <ol id="mediaList" class="zy_uploaded_medias_ol">
-                    <li ng-click="" ng-repeat="(mediaId,value) in uploadProject.medias" draggable="true"
-                        ng-class="{zy_media_list_error:value.noThumb}">
-                        <img class="zy_small_thumb" ng-src="{{value.thumbFilePath}}">
-                        <span title='{{value.filename}}' class="zy_media_filename">
-                            {{value.filename}}
+                    <li ng-click="showSetPanel(mediaId,value.mediaType)" data-media-id="{{mediaId}}"
+                        ng-repeat="(mediaId,value) in uploadProject.medias" draggable="true"
+                        ng-class="{zy_media_list_error:value.noThumb,zy_media_list_active:value.active}" class="mediaItem">
+                        <img class="zy_small_thumb" ng-src="{{value.mediaThumbFilePath}}">
+                        <span title='{{value.mediaFilename}}' class="zy_media_filename">
+                            {{value.mediaFilename}}
                         </span>
                         <span class="zy_media_delete" ng-click="deleteMedia(mediaId)"></span>
                     </li>
                 </ol>
             </div>
             <div class="zy_uploader_column_right" id="zy_uploader_column_right">
-                <header class="zy_section_right_header"><p><b>{{mediaTitle}}</b></p></header>
-                <section ng-include="">
+                <header class="zy_section_right_header"><p><b>{{mediaSetTitle}}</b></p></header>
+                <section ng-include="mediaSetPanelUrl">
 
                 </section>
             </div>
@@ -87,35 +88,30 @@
             <input type="submit" autocomplete="default" value="提交" class="de_borderbox de_submit_upload"
                    name="de_submit_upload" id="de_submit_upload"/>
             <article id="de_upload_preview" class="de_project_detail de_borderbox">
-                <h2>${title}</h2>
-                <p class="publishtime">${date}</p>
+                <h2>{{uploadProject.title}}</h2>
+                <p class="publishtime"></p>
                 <div class="user_info">
-                    <a href="user/${userId}" class="de_user_link">
-                        <img class="photo" src="${userFigure}">
-                        <p class="name">${username}</p>
+                    <a href="user/{{currentUser.id}}">
+                        <img class="photo" src="{{currentUser.profile}}">
+                        <p class="name">{{currentUser.name}}</p>
                     </a>
                 </div>
                 <p class="abstract">
-                    ${description}
+                    {{uploadProject.description}}
                 </p>
 
                 <div class="main_content">
-
-                    {@each medias as m}
-                    <figure>
-                        <!--<img src="${m.thumb}"/>-->
-                        $${m.content}
+                    <figure ng-repeat="media in medias">
+                        <a ng-class="{de_has_ppt:media.type='image'}" class="de_has_media"  href="" ng-click="">
+                            <img ng-src="{{media.mediaThumbFilePath}}"/>
+                        </a>
                         <figcaption>
-                            ${m.title}
-                            {@if m.memo}
-					<span class="description">
-						${m.memo}
-					</span>
-                            {@/if}
+                            {{media.mediaTitle}}
+                            <span class="description">
+                                {{media.mediaMemo}}
+                            </span>
                         </figcaption>
                     </figure>
-                    {@/each}
-
                 </div>
             </article>
         </div>
