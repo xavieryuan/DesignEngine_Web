@@ -1817,7 +1817,7 @@ display: block;
 .de_screen_upload {
 
 }
-.de_screen_upload>de_upload_title{
+.de_screen_upload>.de_upload_title{
 	margin:20px auto;
 	text-align: center;
 	font-size:1.5em;
