@@ -125,14 +125,13 @@ directives.directive("drag",function(){
 directives.directive('animateHide', function(LocationChanger){
     return {
         link: function (scope, element, attrs, ctrl) {
-
             element.on('click', function () {
                 var parent=$(element).parents(".de_animation_project_detail");
                 var header=parent.find(".de_project_header");
                 var detail=parent.find(".de_project_detail");
                 TweenMax.to(header,0.3,{y:-100});
                 TweenMax.to(detail,0.3,{y:100});
-                TweenMax.to(element,0.4,{opacity:0,onComplete:function(){
+                TweenMax.to(parent,0.4,{opacity:0,onComplete:function(){
                     scope.mainFlags.showProjectDetailFlag=false;
                     scope.mainFlags.projectDetailTemplate="";
                     scope.mainFlags.showMainWrapper=true;
@@ -145,20 +144,17 @@ directives.directive('animateHide', function(LocationChanger){
         }
     }
 });
-directives.directive('hideSomePanel', function(){
+directives.directive('hideModalPanel', function(){
     return {
-        link: function (scope, element, attrs, ctrl) {
-            function hideExtMenu(target){
-                var extMenuEl=document.getElementsByClassName("de_ext_nav")[0];
-                if(target!=extMenuEl){
-                    scope.$apply(function(){
+        link: function (scope, element, attrs, ctrl) {            
+            element.on('click', function (event) {
+				var target=event.target||event.srcElement;
+				//判断是否隐藏侧边菜单
+                if($(target).parents("#de_ext_nav").length==0 && !$(target).is("#de_ext_nav")){
+					scope.$apply(function(){
                         scope.mainFlags.extMenuActive="";
                     });
-                }
-            }
-
-            element.on('click', function (event) {
-                hideExtMenu(event.target||event.srcElement);
+				}
             });
         }
     }
