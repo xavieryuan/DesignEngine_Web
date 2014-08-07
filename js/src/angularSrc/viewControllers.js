@@ -390,7 +390,7 @@ viewControllers.controller("userHome",['$scope',function($scope){
 }]);
 
 
-viewControllers.controller("projectDetail",["$scope","LocationChanger",function($scope,LocationChanger){
+viewControllers.controller("projectDetail",["$scope","$q","LocationChanger",function($scope,$q,LocationChanger){
 
     $scope.project={
         "praised":true,
@@ -408,10 +408,19 @@ viewControllers.controller("projectDetail",["$scope","LocationChanger",function(
     };
 
     $scope.closeProjectDetail=function(){
-        $scope.mainFlags.showMainWrapper=true;
-        $scope.mainFlags.showProjectDetailFlag=false;
-       	$scope.mainFlags.projectDetailTemplate="";
+        return $q(function(resolve, reject) {
+            $scope.mainFlags.showProjectDetailFlag=false;
+            $scope.mainFlags.projectDetailTemplate="";
+
+            resolve();
+        }).then(function(value) {
+                $scope.mainFlags.showMainWrapper=true;
+            }, function(reason) {
+                $scope.mainFlags.showMainWrapper=true;
+            });
+
         LocationChanger.canReload();
+
        	history.go(-1);
     };
 

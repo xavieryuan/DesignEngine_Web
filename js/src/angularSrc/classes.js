@@ -530,6 +530,11 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
         });
 
         return uploader;
+    };
+
+    this.initPage=function($scope){
+        var path=window.location.href;
+        popFlag.showPop=true;
     }
 }]);
 
@@ -566,6 +571,8 @@ classes.service('LocationChanger', ['$location', '$route', '$rootScope', functio
             $location.path(url || '/');
         }
     };
+
+
 }]);
 
 

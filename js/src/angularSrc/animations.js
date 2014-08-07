@@ -48,17 +48,17 @@ animations.animation(".de_animation_blackout",function(){
 animations.animation(".de_animation_project_detail",function(){
 	return{
 		enter:function(element,done){			
-			var header=$(element).find(".de_project_header")
-			var detail=$(element).find(".de_project_detail")
+			var header=$(element).find(".de_project_header");
+			var detail=$(element).find(".de_project_detail");
 			TweenMax.set(element,{opacity:0});
 			TweenMax.set(header,{y:-100});
 			TweenMax.set(detail,{y:100});
-			TweenMax.to([header,detail],0.3,{y:0})			
+			TweenMax.to([header,detail],0.3,{y:0});
 			TweenMax.to(element,0.4,{opacity:1,onComplete:done});
 		},
 		leave:function(element,done){
-			var header=$(element).find(".de_project_header")
-			var detail=$(element).find(".de_project_detail")
+			var header=$(element).find(".de_project_header");
+			var detail=$(element).find(".de_project_detail");
 			TweenMax.to(header,0.3,{y:-100});
 			TweenMax.to(detail,0.3,{y:100});
 			TweenMax.to(element,0.4,{opacity:0,onComplete:done});
