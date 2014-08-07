@@ -102,13 +102,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
                 $scope.mainFlags.extMenuActive=Config.classNames.extMenuActive:$scope.mainFlags.extMenuActive="";
             event.stopPropagation();
         };
-        $scope.hideExtMenu=function(event,extMenuId){
-            var target=event.target||event.srcElement;
-            var extMenuEl=document.getElementById(extMenuId);
-            if(target!=extMenuEl){
-                $scope.mainFlags.extMenuActive="";
-            }
-        };
+
 
         /**
          *点击修改密码菜单

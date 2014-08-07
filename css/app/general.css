@@ -1528,10 +1528,9 @@ li {
 	right:-50px;
 	width:40px;		
 	font-size: 0;
+	z-index: 1;
 }
 .topic_action li{
-	width:40px;
-	height:40px;
 	margin-bottom:10px;
 }
 .topic_action li a{
@@ -1540,19 +1539,16 @@ li {
 	display: inline-block;	
 	text-indent: 9999px;
 }
-.topic_action li:first-child{
+.topic_action li.de_topic_action_submit,.topic_action li.de_topic_action_view{
 	position: absolute;
-	left:-110px;
+	left:-90px;
 	top:-10px;
 }
-.topic_action li a.de_topic_action_submit{	
-	width:100px;
+.topic_action li.de_topic_action_submit a{	
+	width:80px;
 	height:140px;
 	box-sizing: border-box;
-	background-color:#07af69;
-	background-image:url(/images/app/icon40_upload_transparent.png);
-	background-repeat: no-repeat;
-	background-position:  center 30px;	
+	background:url(/images/app/icon40_upload_white.png) #29abe2 no-repeat center 40px;	
 	font-size:18px;
 	color:#fff;
 	font-weight: bold;
@@ -1561,31 +1557,44 @@ li {
 	padding-top:24px;
 	text-indent:0;
 }
-.topic_action li a.de_topic_action_submit.disable{
-	background-color:#ccc;
+
+.topic_action li.de_topic_action_view a{
+	width:80px;
+	height:140px;
+	box-sizing: border-box;
+	background:url(/images/app/icon40_visible_white.png) #07af69 no-repeat center 40px;	
+	font-size:18px;
+	color:#fff;
+	font-weight: bold;
+	text-align:center;
+	line-height: 140px;
+	padding-top:24px;
+	text-indent:0;
 }
-.de_topic_action_lock{
+
+.de_topic_action_lock a{
 	background:url(/images/app/icon40_lock_white.png) no-repeat center;
 }
-.de_topic_action_unlock{
+.de_topic_action_unlock a{
 	background:url(/images/app/icon40_unlock_white.png) no-repeat center;
 }
-.de_topic_action_setting{
+.de_topic_action_setting a{
 	background:url(/images/app/icon40_setting_white.png) no-repeat center;
 }
-.de_topic_action_lock:hover{
+.de_topic_action_lock a:hover {
 	background:url(/images/app/icon40_lock_green.png) no-repeat center;
 }
-.de_topic_action_unlock:hover{
+.de_topic_action_unlock a:hover{
 	background:url(/images/app/icon40_unlock_green.png) no-repeat center;
 }
-.de_topic_action_setting:hover{
+.de_topic_action_setting a:hover{
 	background:url(/images/app/icon40_setting_green.png) no-repeat center;
 }
+
 .de_topic_box .project_info{
 	position: absolute;
 	top:0;
-	right: 100px;
+	right: 0;
 	left:330px;
 	font-size:0;
 	overflow: hidden;
