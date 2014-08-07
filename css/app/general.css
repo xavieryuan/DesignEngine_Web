@@ -162,7 +162,7 @@ li {
 }
 
 .de_screen_container>section {
-    padding-top: 80px;
+    padding-top: 60px;
 
 }
 
@@ -842,7 +842,7 @@ li {
     width: 100%;
     height: 60px;
     line-height: 60px;
-    padding: 0 20px 0 60px;
+    padding: 0 20px 0 80px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -853,28 +853,46 @@ li {
     text-decoration: none;
     color: #333;
     border-bottom: #ccc 1px dotted;
+	position: relative;
 }
 
 .de_ext_nav>li>a:hover {
-    color: #fff;
-	background: #09bc72;
+	background: #eee;
 }
 
 .de_ext_nav>li:last-child>a {
     border-bottom: none;
 }
-.de_ext_nav .de_btn_upload:before {
-    content: "";
-    width: 38px;
-    height: 30px;
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    margin-top: -15px;
-    background: url(../../images/app/icon30_upload_gray.png) no-repeat center;
-
+.de_ext_nav .de_btn_upload{
+	width:60px;
+	height:60px;
+	background: url(../../images/app/icon40_upload_white.png) #fff no-repeat center;
+	position: absolute;
+	top:0;
+	left:0;
+	border-right:#ccc 1px dotted;
+	font-size: 0;
+	text-indent: 9999px;
+	padding: 0;
 }
-
+.de_ext_nav>li>a.de_btn_upload:hover{
+	background: url(../../images/app/icon40_upload_white.png) #eee no-repeat center;
+}
+.de_ext_nav .de_btn_create_box{
+	width:60px;
+	height:60px;
+	background: url(../../images/app/icon40_box_white.png) #fff no-repeat center;
+	position: absolute;
+	top:0;
+	left:0;
+	border-right:#ccc 1px dotted;
+	font-size: 0;
+	text-indent: 9999px;
+	padding: 0;
+}
+.de_ext_nav>li>a.de_btn_create_box:hover{
+	background: url(../../images/app/icon40_box_white.png) #eee no-repeat center;
+}
 /****顶部菜单****/
 .de_top_nav {
     position: absolute;
@@ -1644,13 +1662,21 @@ li {
 .de_screen_upload {
 
 }
+.de_screen_upload>h4{
+	margin:20px auto;
+	text-align: center;
+	font-size:1.5em;
+	color: #bbb;
+	text-shadow: 0 1px 0 #fff;
+	font-weight: normal;
+}
 .de_screen_upload .de_form_tip{
 	font-size:12px;
 	color:#666;
 	
 }
 .de_screen_upload .de_tab_upload {
-    padding: 40px 0 0 0;
+    padding:0;
     width: 600px;
     margin: auto;
     font-size: 0;

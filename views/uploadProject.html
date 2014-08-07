@@ -1,5 +1,6 @@
 <!-----------上传作品----------->
 <section class="de_screen_upload">
+   <h4 class="de_upload_title">上传至“{box.name}”</h4>
     <nav class="de_tab_upload">
         <ol>
             <li><a href="" class="de_tab_step1 active {{stepClass[0]}}" ng-click="setStepActive(0)">1. 填写基本信息</a></li>
@@ -9,7 +10,7 @@
         </ol>
     </nav>
     <form class="de_form_upload de_borderbox de_boxshadow">
-        <div class="de_upload_step1" ng-show="stepPanelIndex==0">
+        <div class="de_upload_step1" ng-show="stepPanelIndex==0">           
             <p class="de_field_project_title">
                 <label>标题</label>
                 <input type="text" maxlength="80" class="de_borderbox de_inputbox_gray"

@@ -58,20 +58,25 @@
                     <li class="de_reg_view " ng-show="currentUser.id">
                         <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="showExtMenu($event)">更多</a>
                         <ul class="de_ext_nav de_animation_ext_nav {{mainFlags.extMenuActive}}" id="de_ext_nav">
-                           	<li class="de_reg_view" ng-show="currentUser.id">
+                           	<!--<li class="de_reg_view" ng-show="currentUser.id">
                         		<a class="de_btn_upload de_borderbox" href="upload">上传作品</a>
-                    		</li>
-                           	<li class="de_reg_view ">
+                    		</li>-->
+                           	<li class="de_reg_view " ng-show="currentUser.id">
                                 <a ng-href="user/{{currentUser.id}}">我的作品集</a>
+                                <a class="de_btn_upload de_borderbox" href="upload">上传作品</a>
                             </li>
-                            <li class="de_reg_view ">
-                                <a href="" ng-click="editPwd()">修改密码</a>
-                            </li>                            
+                            <li class="de_reg_view">
+                                <a ng-href="box/create">我的投稿箱</a>
+                                <a class="de_btn_create_box de_borderbox" ng-href="box/create">创建投稿箱</a>
+                            </li>                                                       
                             <li class="de_reg_view">
                                 <a href="" ng-click="editInfo()">修改个人信息</a>
                             </li>
+                            <li class="de_reg_view ">
+                                <a href="" ng-click="editPwd()">修改密码</a>
+                            </li>
                             <li class="de_reg_view">
-                                <a ng-href="box/create">创建选题</a>
+                                <a ng-href="box/create">创建投稿箱</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.role=='admin'">
                                 <a href="adminhome/users">用户管理</a>
@@ -96,8 +101,8 @@
             <!-----顶部菜单----->
             <nav class="de_top_nav" id="de_top_nav">
                 <ul>
-                    <li><a href="projects" class="de_borderbox {{menuStatus.projectsClass}}">设计作品</a></li>
-                    <li><a href="boxes" class="de_borderbox {{menuStatus.boxesClass}}">投稿征集</a></li>
+                    <li><a href="projects" class="de_borderbox {{menuStatus.projectsClass}}">作品酷</a></li>
+                    <li><a href="boxes" class="de_borderbox {{menuStatus.boxesClass}}">投稿箱</a></li>
                     <li class="de_btn_filter"><a href="" class="de_borderbox" ng-click="toSearch()">探索...</a></li>
                 </ul>
             </nav>
