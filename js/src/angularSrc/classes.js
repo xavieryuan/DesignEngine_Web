@@ -141,6 +141,7 @@ classes.service("Config",["$rootScope",function($rootScope){
     this.messages={  //错误提示
         errorTitle:"错误提示",
         clickToSet:"点击上传完成的媒体文件进行设置！",
+        deleteConfirm:"确定删除吗？",
         successTitle:"成功提示",
         operationSuccess:"操作成功，请关闭后选择其他操作！",
         registerSuccess:"注册成功，如果您是非QQ登录用户，请进入邮箱激活账户，否则无法登录！",
@@ -160,6 +161,7 @@ classes.service("Config",["$rootScope",function($rootScope){
         emailChangeSuccess:"绑定成功，请进入邮箱确认！",
         mediaHasNoThumb:"有媒体文件没有上传缩略图，请上传后再预览！",
         hasNoMedia:"没有上传媒体文件或者有上传错误的媒体文件，请上传或者删除后再预览！",
+        boxUnComplete:"标题、标签、描述等没有填写完整",
         stepOneUnComplete:"标题、标签、描述、缩略图等没有填写完整！",
         pptHasNotUploaded:"此资源还没有被上传到资源服务器，暂时不能查看！",
         pptUploadError:"此资源上传到资源服务器出错，无法查看！",
@@ -287,12 +289,18 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
 
     /**
      * 提交表单
+     * @param {Object} $scope
      * @param {Object} params 对象属性formUrl:"表单提交地址",formParam:"表单数据对象",successCb:"提交成功后回调函数"
      */
-    this.ajaxSubmit=function(params){
+    this.ajaxSubmit=function($scope,params){
         var me=this;
+        $scope.mainFlags.showBlackOut=true;
         $http.post(params.formUrl,params.formParam).
-            success(params.successCb).error(function(data, status, headers, config){
+            success(function(data, status, headers, config){
+                $scope.mainFlags.showBlackOut=false;
+                params.successCb(data);
+            }).error(function(data, status, headers, config){
+                $scope.mainFlags.showBlackOut=false;
                 me.ajaxReturnErrorHandler(data);
             });
 

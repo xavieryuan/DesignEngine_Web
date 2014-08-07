@@ -17,6 +17,7 @@ pinWall.config(["$routeProvider","$locationProvider",function($routeProvider,$lo
         when("/project/:projectId",{templateUrl: 'views/showProjects.html',controller:"projects"}).
         when("/boxes",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
         when("/box/create",{templateUrl: 'views/boxCreate.html',controller:"boxCreate"}).
+        when("/box/edit/:boxId",{templateUrl: 'views/boxCreate.html',controller:"boxCreate"}).
         when("/box/:id",{templateUrl: 'views/showBoxDetail.html',controller:"boxDetail"}).
         when("/upload/:boxId",{templateUrl: 'views/uploadProject.html',controller:"uploadProject"}).
         when("/search",{templateUrl: 'views/showProjects.html',controller:"projects"}).
@@ -54,11 +55,12 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
 
         $scope.currentUser=Storage.currentUser;
         $scope.currentUser.id=1;
+        $scope.currentUser.boxId=2;
 
         //LocationChanger.initPage($scope);
         LocationChanger.windowHistoryChange($scope);
 
-        $scope.closePop=function(){
+        $scope.goBack=function(){
             history.back();
         };
 
@@ -76,7 +78,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
          */
         $scope.login=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.signIn;
-            LocationChanger.skipReload().withReplace(Config.urls.login,false);
+            LocationChanger.skipReload().withReplace(Config.urls.signIn,false);
         };
         $scope.toSearch=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.search;

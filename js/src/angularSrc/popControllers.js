@@ -10,6 +10,7 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
     function($scope,Config,LocationChanger,Storage,CFunctions){
 
         $scope.loginError="";
+        $scope.mainFlags.extMenuActive="";
         $scope.popFlags.title=Config.titles.signIn;
         $scope.popFlags.showPop=true;
         $scope.mainFlags.showBlackOut=true;
@@ -48,7 +49,7 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
             rememberMe();
 
             //登陆
-            CFunctions.ajaxSubmit({
+            CFunctions.ajaxSubmit($scope,{
                 formUrl:Config.ajaxUrls.signIn,
                 formParam:$scope.login,
                 successCb:function(data){
@@ -60,16 +61,17 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
                         email:"csboyty@163.com",
                         description:"测试用户的说明"
                     });
+
+                    $scope.closePop();
                 }
             });
-
-            $scope.closePop();
         };
 
 
     }]);
 
 popControllers.controller("signUp",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
+    $scope.mainFlags.extMenuActive="";
     $scope.popFlags.title=Config.titles.signUp;
     $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
@@ -89,6 +91,7 @@ popControllers.controller("forgetPwd",["$scope","CFunctions","Config",function($
     $scope.popFlags.title=Config.titles.forgetPwd;
     $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
+    $scope.mainFlags.extMenuActive="";
 
     $scope.forgetPwdSubmit=function(){
 
@@ -100,6 +103,7 @@ popControllers.controller("search",["$scope","Config","LocationChanger",function
     $scope.popFlags.title=Config.titles.search;
     $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
+    $scope.mainFlags.extMenuActive="";
 
     $scope.toSearch=function(href){
         LocationChanger.canReload().withoutRefresh(href,false);
@@ -114,6 +118,7 @@ popControllers.controller("editPwd",["$scope","CFunctions","Config",function($sc
     $scope.popFlags.title=Config.titles.editPwd;
     $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
+    $scope.mainFlags.extMenuActive="";
 
     $scope.editPwdSubmit=function(){
 
@@ -123,6 +128,7 @@ popControllers.controller("editPwd",["$scope","CFunctions","Config",function($sc
 
 popControllers.controller("editInfo",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
     $scope.popFlags.title=Config.titles.editInfo;
+    $scope.mainFlags.extMenuActive="";
     $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
     $scope.editInfo.profile=$scope.currentUser.profile;

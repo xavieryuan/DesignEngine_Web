@@ -19,6 +19,7 @@ viewControllers.controller("projects",['$scope',"Config","Project","CFunctions",
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.menuStatus.projectsClass=Config.classNames.mainMenuActive;
     $scope.menuStatus.boxesClass="";
+    $scope.mainFlags.extMenuActive="";
 
     Project.query({"start":10},function(data){
         $scope.projects=data.projects;
@@ -34,6 +35,7 @@ viewControllers.controller("boxes",['$scope',"Config",function($scope,Config){
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.menuStatus.projectsClass="";
     $scope.menuStatus.boxesClass=Config.classNames.mainMenuActive;
+    $scope.mainFlags.extMenuActive="";
 
     $scope.boxes=[
         {
@@ -183,6 +185,7 @@ viewControllers.controller("boxDetail",['$scope',function($scope){
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.menuStatus.projectsClass="";
     $scope.menuStatus.boxesClass="";
+    $scope.mainFlags.extMenuActive="";
 
     $scope.box={
         "id":1,
@@ -268,37 +271,76 @@ viewControllers.controller("boxDetail",['$scope',function($scope){
 
 }]);
 
-viewControllers.controller("boxCreate",["$scope",function($scope){
-    function addTag(tag){
-        if($scope.box.tags.indexOf(tag)===-1){
-            $scope.box.tags.push(tag);
+viewControllers.controller("boxCreate",["$scope","toaster","CFunctions","Config","Box",
+    function($scope,toaster,CFunctions,Config,Box){
+        function addTag(tag){
+            if($scope.box.tags.indexOf(tag)===-1){
+                $scope.box.tags.push(tag);
+            }
+
+            $scope.box.newTag="";
         }
 
-        $scope.box.newTag="";
-    }
+        function initData($scope,Id){
+            Box.get({id:id},function(data){
+                $scope.box.title=data.title;
+                $scope.box.open=data.open;
+                $scope.box.tags=data.tags;
+            },function(data){
+                CFunctions.ajaxErrorHandler();
+            });
+        }
+
+        $scope.box={
+            id:0,
+            tags:[],
+            open:true
+        };
+
+        //修改的时候需要初始化数据
+        if(CFunctions.getPathId()){
+            initData($scope,CFunctions.getPathId());
+        }
 
 
-    $scope.menuStatus.projectsClass="";
-    $scope.menuStatus.boxesClass="";
+        $scope.menuStatus.projectsClass="";
+        $scope.menuStatus.boxesClass="";
+        $scope.mainFlags.extMenuActive="";
 
-    $scope.box={
-        id:0,
-        tags:[]
-    };
+        $scope.deleteTag=function(index){
+            $scope.box.tags.splice(index,1);
+        };
 
-    $scope.deleteTag=function(index){
-        $scope.box.tags.splice(index,1);
-    };
+        $scope.deleteBox=function(id){
+            if(confirm(Config.messages.deleteConfirm)){
 
+            }
+        };
 
-    $scope.keyDownAddTag=function($event,tag){
-        if($event.which==13){
+        $scope.keyDownAddTag=function($event,tag){
+            if($event.which==13){
+                addTag(tag);
+            }
+        };
+        $scope.blurAddTag=function(tag){
             addTag(tag);
-        }
-    };
-    $scope.blurAddTag=function(tag){
-        addTag(tag);
-    };
+        };
+
+        $scope.boxCreateSubmit=function(){
+            if($scope.box.title&&$scope.box.description&&$scope.box.tags.length!=0){
+                CFunctions.ajaxSubmit($scope,{
+                    formUrl:Config.ajaxUrls.signIn,
+                    formParam:$scope.box,
+                    successCb:function(data){
+
+                        $scope.mainFlags.showBlackOut=false;
+                    }
+                });
+            }else{
+                toaster.pop('error',Config.messages.errorTitle,Config.messages.boxUnComplete,null,null);
+                return false;
+            }
+        };
 }]);
 
 viewControllers.controller("userHome",['$scope',function($scope){
@@ -306,6 +348,7 @@ viewControllers.controller("userHome",['$scope',function($scope){
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.menuStatus.projectsClass="";
     $scope.menuStatus.boxesClass="";
+    $scope.mainFlags.extMenuActive="";
 
     $scope.user={
         "id":1,
@@ -391,10 +434,7 @@ viewControllers.controller("userHome",['$scope',function($scope){
 
 
 viewControllers.controller("projectDetail",["$scope",function($scope){
-
-    $scope.closeProjectDetail=function(){
-        history.back();
-    };
+    $scope.mainFlags.extMenuActive="";
 
     $scope.project={
         "praised":true,
@@ -521,6 +561,7 @@ viewControllers.controller("projectDetail",["$scope",function($scope){
 viewControllers.controller("searchResult",["$scope","LocationChanger",function($scope,LocationChanger){
     $scope.menuStatus.projectsClass="";
     $scope.menuStatus.boxesClass="";
+    $scope.mainFlags.extMenuActive="";
 
     $scope.projects=[
         {
@@ -548,25 +589,25 @@ viewControllers.controller("searchResult",["$scope","LocationChanger",function($
     ];
 }]);
 
-viewControllers.controller("uploadProject",["$scope","$http","$route","toaster","Config","CFunctions",
-    function($scope,$http,$route,toaster,Config,CFunctions){
+viewControllers.controller("uploadProject",["$scope","$http","$route","toaster","Config","CFunctions","Project",
+    function($scope,$http,$route,toaster,Config,CFunctions,Project){
 
         function addTag(tag){
-            if($scope.uploadProject.tags.indexOf(tag)===-1){
-                $scope.uploadProject.tags.push(tag);
+            if($scope.project.tags.indexOf(tag)===-1){
+                $scope.project.tags.push(tag);
             }
 
-            $scope.uploadProject.newTag="";
+            $scope.project.newTag="";
         }
         function fileAddedCb(files,type){
             var fileLength=files.length;
             var random="";
             for (var i = 0; i < fileLength; i++) {
                 random=CFunctions.getRandom(Config.mediaIdPrefixes.image);
-                $scope.uploadProject.medias[random]={};
-                $scope.uploadProject.medias[random][Config.mediaObj.mediaThumbFilePath]=Config.thumbs.smallThumb;
-                $scope.uploadProject.medias[random][Config.mediaObj.mediaFilename]="0%";
-                $scope.uploadProject.medias[random][Config.mediaObj.mediaType]=type;
+                $scope.project.medias[random]={};
+                $scope.project.medias[random][Config.mediaObj.mediaThumbFilePath]=Config.thumbs.smallThumb;
+                $scope.project.medias[random][Config.mediaObj.mediaFilename]="0%";
+                $scope.project.medias[random][Config.mediaObj.mediaType]=type;
 
                 fileIdToMediaIdHash[files[i]["id"]]=random;
 
@@ -576,7 +617,7 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
             $scope.$apply();
         }
         function progressCb(up,file){
-            $scope.uploadProject.medias[fileIdToMediaIdHash[file.id]][Config.mediaObj.mediaFilename]=file.percent+"%";
+            $scope.project.medias[fileIdToMediaIdHash[file.id]][Config.mediaObj.mediaFilename]=file.percent+"%";
             $scope.$apply();
         }
         function fileUploadedCb(file,info,type){
@@ -586,22 +627,22 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
 
             switch(type){
                 case Config.mediaTypes.image:
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaThumbFilePath]=path;
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaThumbFilename]=file.name;
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaFilename]=file.name;
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaFilePath]=path;
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaMemo]="";
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaTitle]="";
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilePath]=path;
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilename]=file.name;
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaFilename]=file.name;
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaFilePath]=path;
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaMemo]="";
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaTitle]="";
 
                     break;
                 default:
-                    /*$scope.uploadProject.medias[mediaId][Config.mediaObj.mediaThumbFilePath]=path;
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaThumbFilename]=file.name;*/
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaFilename]=file.name;
-                    $scope.uploadProject.medias[mediaId]["noThumb"]=true;
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaFilePath]=path;
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaMemo]="";
-                    $scope.uploadProject.medias[mediaId][Config.mediaObj.mediaTitle]="";
+                    /*$scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilePath]=path;
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilename]=file.name;*/
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaFilename]=file.name;
+                    $scope.project.medias[mediaId]["noThumb"]=true;
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaFilePath]=path;
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaMemo]="";
+                    $scope.project.medias[mediaId][Config.mediaObj.mediaTitle]="";
 
                     break;
             }
@@ -648,19 +689,26 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
                 }
             });
         }
-
-        //CFunctions.drag();
-
+        function initData($scope,Id){
+            Project.get({id:id},function(data){
+                $scope.project.title=data.title;
+                $scope.project.open=data.open;
+                $scope.project.tags=data.tags;
+            },function(data){
+                CFunctions.ajaxErrorHandler();
+            });
+        }
 
         var fileIdToMediaIdHash={};
 
-        $scope.uploadProject={
+        $scope.project={
             mediaOrders:[],
             thumb:Config.thumbs.defaultThumb,
             tags:[],
             medias:{}
         };
 
+        $scope.mainFlags.extMenuActive="";
         $scope.currentEditMediaId=0;
         $scope.mediaSetPanelUrl="";
         $scope.currentMediaType="";
@@ -673,7 +721,7 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
         $scope.getPreviewMedias=function(mediaClass,attr){
 
             //每次都重新获取
-            $scope.uploadProject.mediaOrders=[];
+            $scope.project.mediaOrders=[];
             $scope.previewMedias=[];
             var mediaItems=document.getElementsByClassName(mediaClass);
             var length=mediaItems.length;
@@ -682,8 +730,8 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
 
                 //console.log(mediaItems[i].getAttribute('data-media-id'));
                 mediaId=mediaItems[i].getAttribute(attr);
-                $scope.uploadProject.mediaOrders.push(mediaId);
-                $scope.previewMedias.push($scope.uploadProject.medias[mediaId]);
+                $scope.project.mediaOrders.push(mediaId);
+                $scope.previewMedias.push($scope.project.medias[mediaId]);
             }
         };
 
@@ -691,8 +739,8 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
 
             //判断是否数据都填写完整,才能执行界面转换
             if(index>=1){
-                if(!$scope.uploadProject.title||$scope.uploadProject.tags.length==0||
-                    $scope.uploadProject.thumb==Config.thumbs.defaultThumb||!$scope.uploadProject.description){
+                if(!$scope.project.title||$scope.project.tags.length==0||
+                    $scope.project.thumb==Config.thumbs.defaultThumb||!$scope.project.description){
 
                     toaster.pop('error',Config.messages.errorTitle,Config.messages.stepOneUnComplete,null,null);
                     return false;
@@ -701,12 +749,12 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
                 var noMedia=false,someMediaHasNoThumb=false,hasUnCompleteMedia=false;
 
                 //判断媒体文件是否上传完整
-                if(angular.equals({},$scope.uploadProject.medias)){
+                if(angular.equals({},$scope.project.medias)){
                     noMedia=true;
                 }else{
                     var cObj=null;
-                    for(var obj in $scope.uploadProject.medias){
-                        cObj=  $scope.uploadProject.medias[obj];
+                    for(var obj in $scope.project.medias){
+                        cObj=  $scope.project.medias[obj];
                         if(cObj.noThumb){
                             someMediaHasNoThumb=true;
                             break;
@@ -728,8 +776,8 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
 
             //在点击的时候需要去掉媒体文件的active状态
             if($scope.currentEditMediaId&&index!=2){
-                $scope.uploadProject.medias[$scope.currentEditMediaId]["active"]=undefined;
-                delete $scope.uploadProject.medias[$scope.currentEditMediaId]["active"];
+                $scope.project.medias[$scope.currentEditMediaId]["active"]=undefined;
+                delete $scope.project.medias[$scope.currentEditMediaId]["active"];
                 $scope.currentEditMediaId=0;
                 $scope.currentMediaType="";
                 $scope.mediaSetTitle=Config.messages.clickToSet;
@@ -749,7 +797,7 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
         };
 
         $scope.deleteTag=function(index){
-            $scope.uploadProject.tags.splice(index,1);
+            $scope.project.tags.splice(index,1);
         };
 
 
@@ -780,7 +828,7 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
                     $http.get(src+"?imageInfo").success(function(data,status,headers,config,statusText ){
                         //console.log(data);
                         if(data.width===data.height){
-                            $scope.uploadProject.thumb = src;
+                            $scope.project.thumb = src;
                             //$scope.$apply();
                         }else{
                             toaster.pop('error',Config.messages.errorTitle,Config.messages.imgSizeError,null,null);
@@ -823,9 +871,9 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
             createMediaUploader(buttonId,containerId,Config.mediaTypes.flash);
         };
         $scope.deleteMedia=function(mediaId){
-            if(confirm("确定删除此媒体文件吗？")){
-                $scope.uploadProject.medias[mediaId]=undefined;
-                delete $scope.uploadProject.medias[mediaId];
+            if(confirm(Config.messages.deleteConfirm)){
+                $scope.project.medias[mediaId]=undefined;
+                delete $scope.project.medias[mediaId];
 
                 if($scope.currentEditMediaId===mediaId){
                     $scope.currentEditMediaId=0;
@@ -841,26 +889,26 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
 
             //移除原来的元素的活动状态
             if($scope.currentEditMediaId){
-                $scope.uploadProject.medias[$scope.currentEditMediaId]["active"]=undefined;
-                delete  $scope.uploadProject.medias[$scope.currentEditMediaId]["active"];
+                $scope.project.medias[$scope.currentEditMediaId]["active"]=undefined;
+                delete  $scope.project.medias[$scope.currentEditMediaId]["active"];
             }
 
             $scope.currentEditMediaId=mediaId;
-            $scope.currentMediaType=$scope.uploadProject.medias[mediaId][Config.mediaObj.mediaType];
+            $scope.currentMediaType=$scope.project.medias[mediaId][Config.mediaObj.mediaType];
 
             //由于共用了一个页面，如果地址不改变，页面不会重新加载
             $scope.mediaSetPanelUrl=Config.mediaSetPanelUrl+"?"+new Date().getTime();
             $scope.mediaSetTitle=Config.mediaTitles[mediaType];
-            $scope.currentThumbSrc=$scope.uploadProject.medias[mediaId][Config.mediaObj.mediaThumbFilePath];
-            $scope.currentFilename=$scope.uploadProject.medias[mediaId][Config.mediaObj.mediaFilename];
-            $scope.uploadProject.medias[mediaId]["active"]=true;
+            $scope.currentThumbSrc=$scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilePath];
+            $scope.currentFilename=$scope.project.medias[mediaId][Config.mediaObj.mediaFilename];
+            $scope.project.medias[mediaId]["active"]=true;
         };
 
         $scope.setMediaTitle=function(title){
-            $scope.uploadProject.medias[$scope.currentEditMediaId][Config.mediaObj.mediaTitle]=title;
+            $scope.project.medias[$scope.currentEditMediaId][Config.mediaObj.mediaTitle]=title;
         };
         $scope.setMediaMemo=function(memo){
-            $scope.uploadProject.medias[$scope.currentEditMediaId][Config.mediaObj.mediaMemo]=memo;
+            $scope.project.medias[$scope.currentEditMediaId][Config.mediaObj.mediaMemo]=memo;
         };
 
         $scope.mediaSetThumbUploader=function(buttonId,containerId){
@@ -876,9 +924,9 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
                 uploadedCb:function(file,info){
                     var res = JSON.parse(info);
                     var path=Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
-                    $scope.uploadProject.medias[$scope.currentEditMediaId][Config.mediaObj.mediaThumbFilePath] =path;
-                    $scope.uploadProject.medias[$scope.currentEditMediaId]["noThumb"]=undefined;
-                    delete $scope.uploadProject.medias[$scope.currentEditMediaId]["noThumb"];
+                    $scope.project.medias[$scope.currentEditMediaId][Config.mediaObj.mediaThumbFilePath] =path;
+                    $scope.project.medias[$scope.currentEditMediaId]["noThumb"]=undefined;
+                    delete $scope.project.medias[$scope.currentEditMediaId]["noThumb"];
                     $scope.currentThumbSrc=path;
 
                     $scope.$apply();
@@ -926,8 +974,8 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
                     var path=Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
 
                     $scope.currentFilename =file.name;
-                    $scope.uploadProject.medias[$scope.currentEditMediaId][Config.mediaObj.mediaFilename] =file.name;
-                    $scope.uploadProject.medias[$scope.currentEditMediaId][Config.mediaObj.mediaFilePath] =path;
+                    $scope.project.medias[$scope.currentEditMediaId][Config.mediaObj.mediaFilename] =file.name;
+                    $scope.project.medias[$scope.currentEditMediaId][Config.mediaObj.mediaFilePath] =path;
 
                     $scope.$apply();
                 }

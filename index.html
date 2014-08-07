@@ -63,10 +63,10 @@
                     		</li>-->
                            	<li class="de_reg_view " ng-show="currentUser.id">
                                 <a ng-href="user/{{currentUser.id}}">我的作品集</a>
-                                <a class="de_btn_upload de_borderbox" href="upload">上传作品</a>
+                                <a class="de_btn_upload de_borderbox"   ng-href="upload/{{currentUser.boxId}}">上传作品</a>
                             </li>
                             <li class="de_reg_view">
-                                <a ng-href="box/create">我的投稿箱</a>
+                                <a ng-href="boxes">我的投稿箱</a>
                                 <a class="de_btn_create_box de_borderbox" ng-href="box/create">创建投稿箱</a>
                             </li>                                                       
                             <li class="de_reg_view">
@@ -74,9 +74,6 @@
                             </li>
                             <li class="de_reg_view ">
                                 <a href="" ng-click="editPwd()">修改密码</a>
-                            </li>
-                            <li class="de_reg_view">
-                                <a ng-href="box/create">创建投稿箱</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.role=='admin'">
                                 <a href="adminhome/users">用户管理</a>
