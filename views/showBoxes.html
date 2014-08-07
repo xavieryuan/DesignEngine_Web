@@ -23,10 +23,10 @@
             </div>
             <ul class="topic_action">
                 <!-- 根据权限控制 -->
-                <li ng-hide="box.disabledUpload"><a ng-href="upload/{{box.id}}" class="de_topic_action_submit" >投稿</a></li>
-                <li ng-show="box.disabledUpload"><a ng-href="box/{{box.id}}" class="de_topic_action_submit" >查看详情</a></li>
-                <li><a href="" class="de_topic_action_lock">锁定</a></li>
-                <li><a href="" class="de_topic_action_setting">设置</a></li>
+                <li ng-hide="box.disabledUpload" class="de_topic_action_submit"><a ng-href="upload/{{box.id}}" >投稿</a></li>
+                <li ng-show="box.disabledUpload" class="de_topic_action_view"><a ng-href="box/{{box.id}}" >查看</a></li>
+                <li class="de_topic_action_lock"><a href="" >锁定</a></li>
+                <li class="de_topic_action_setting"><a href="" >设置</a></li>
             </ul>
             <ul class="project_info">
                 <li class="de_borderbox" ng-repeat="project in box.projects">
