@@ -534,8 +534,8 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
 
     this.initPage=function($scope){
         var path=window.location.href;
-        $scope.popFlags.showPop=true;
-        //$scope.$apply();
+        $scope.mainFlags.showBlackOut=true;
+        $scope.$apply();
     }
 }]);
 
@@ -550,7 +550,6 @@ classes.service('LocationChanger', ['$location', '$route', '$rootScope', functio
         //这里绑定过后面会一直响应，关闭弹出层的时候要取消绑定，绑定的时候会返回取消绑定的函数
         this.rootScopeEvent=$rootScope.$on('$locationChangeSuccess', function () {
             $route.current = lastRoute;
-            //console.log("location");
         });
 
         return this;
@@ -571,8 +570,19 @@ classes.service('LocationChanger', ['$location', '$route', '$rootScope', functio
         else {
             $location.path(url || '/');
         }
+
+        return this;
     };
 
+    this.goBack=function(){
+        var me=this;
+        history.back();
+        window.onpopstate=function(){
+            me.canReload();
+        };
+
+        return this;
+    };
 
 }]);
 

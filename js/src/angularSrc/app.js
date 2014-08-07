@@ -62,8 +62,8 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
             $scope.popFlags.showPop=false;
             $scope.mainFlags.showBlackOut=false;
             $scope.popFlags.popTemplateUrl="";
-            LocationChanger.canReload();
-            window.history.go(-1);
+
+            LocationChanger.goBack();
         };
 
         $scope.validMessage={

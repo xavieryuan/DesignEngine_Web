@@ -122,7 +122,7 @@ directives.directive("drag",function(){
         }
     }
 });
-directives.directive('animateHide', function(LocationChanger){
+directives.directive('animateHide', ["LocationChanger",function(LocationChanger){
     return {
         link: function (scope, element, attrs, ctrl) {
 
@@ -138,13 +138,13 @@ directives.directive('animateHide', function(LocationChanger){
                     scope.mainFlags.showMainWrapper=true;
                     scope.$apply();
 
-                    LocationChanger.canReload();
-                    history.go(-1);
+
+                    LocationChanger.goBack();
                 }});
             });
         }
     }
-});
+}]);
 directives.directive('hideSomePanel', function(){
     return {
         link: function (scope, element, attrs, ctrl) {
