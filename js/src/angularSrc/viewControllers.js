@@ -12,7 +12,7 @@
  * Time: 下午3:42
  * To change this template use File | Settings | File Templates.
  */
-var viewControllers=angular.module("viewControllers",["classes","toaster","directives"]);
+var viewControllers=angular.module("viewControllers",["classes","toaster","directives","ngTable"]);
 
 viewControllers.controller("projects",['$scope',"Config","Project","CFunctions",function($scope,Config,Project,CFunctions){
 
@@ -29,409 +29,6 @@ viewControllers.controller("projects",['$scope',"Config","Project","CFunctions",
 
 
 }]);
-
-viewControllers.controller("boxes",['$scope',"Config",function($scope,Config){
-
-    //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
-    $scope.menuStatus.projectsClass="";
-    $scope.menuStatus.boxesClass=Config.classNames.mainMenuActive;
-    $scope.mainFlags.extMenuActive="";
-
-    $scope.boxes=[
-        {
-            "id":1,
-            "honorCount":34,
-            "projectCount":55,
-            "disabledUpload":false,
-            "userProfile":"data/people1.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化",
-            "description":"这个还一个很友好的作品",
-            projects:[
-                {
-                    "id":1,
-                    "thumb":"data/pic1.png",
-                    "praiseCount":34,
-                    "commentCount":45,
-                    "userProfile":"data/people1.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":2,
-                    "thumb":"data/pic2.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people2.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":3,
-                    "thumb":"data/pic3.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people3.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                }]
-        },
-        {
-            "id":2,
-            "honorCount":34,
-            "projectCount":55,
-            "disabledUpload":false,
-            "userProfile":"data/people2.jpg",
-            "userName":"涛涛",
-            "userId":2,
-            "date":"2013-07-08",
-            "title":"书香文化",
-            "description":"这个还一个很友好的作品",
-            projects:[
-                {
-                    "id":1,
-                    "thumb":"data/pic1.png",
-                    "praiseCount":34,
-                    "commentCount":45,
-                    "userProfile":"data/people1.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":2,
-                    "thumb":"data/pic2.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people2.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":3,
-                    "thumb":"data/pic3.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people3.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                }]
-        },
-        {
-            "id":3,
-            "honorCount":34,
-            "projectCount":55,
-            "disabledUpload":true,
-            "userProfile":"data/people3.jpg",
-            "userName":"涛涛",
-            "userId":3,
-            "date":"2013-07-08",
-            "title":"书香文化",
-            "description":"这个还一个很友好的作品",
-            projects:[
-                {
-                    "id":1,
-                    "thumb":"data/pic1.png",
-                    "praiseCount":34,
-                    "commentCount":45,
-                    "userProfile":"data/people1.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":2,
-                    "thumb":"data/pic2.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people2.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":3,
-                    "thumb":"data/pic3.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people3.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                }]
-        }
-    ];
-
-}]);
-
-viewControllers.controller("boxDetail",['$scope',function($scope){
-
-    //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
-    $scope.menuStatus.projectsClass="";
-    $scope.menuStatus.boxesClass="";
-    $scope.mainFlags.extMenuActive="";
-
-    $scope.box={
-        "id":1,
-        "honorCount":34,
-        "projectCount":55,
-        "disabledUpload":false,
-        "userProfile":"data/people1.jpg",
-        "userName":"涛涛",
-        "userId":1,
-        "title":"测试数据",
-        "date":"2013-07-08",
-        "description":"这个还一个很友好的作品",
-        "projects":[
-            {
-                "id":1,
-                "thumb":"data/pic1.png",
-                "praiseCount":34,
-                "commentCount":45,
-                "userProfile":"data/people1.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            },
-            {
-                "id":2,
-                "thumb":"data/pic2.png",
-                "praiseCount":34,
-                "commentsCount":45,
-                "userProfile":"data/people2.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            },
-            {
-                "id":3,
-                "thumb":"data/pic3.png",
-                "praiseCount":34,
-                "commentsCount":45,
-                "userProfile":"data/people3.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            }]
-    };
-    $scope.projects=[
-        {
-            "id":1,
-            "thumb":"data/pic1.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"data/people1.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":2,
-            "thumb":"data/pic2.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people2.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":3,
-            "thumb":"data/pic3.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people3.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        }
-    ];
-
-}]);
-
-viewControllers.controller("boxCreate",["$scope","toaster","CFunctions","Config","Box",
-    function($scope,toaster,CFunctions,Config,Box){
-        function addTag(tag){
-            if($scope.box.tags.indexOf(tag)===-1){
-                $scope.box.tags.push(tag);
-            }
-
-            $scope.box.newTag="";
-        }
-
-        function initData($scope,Id){
-            Box.get({id:id},function(data){
-                $scope.box.title=data.title;
-                $scope.box.open=data.open;
-                $scope.box.tags=data.tags;
-            },function(data){
-                CFunctions.ajaxErrorHandler();
-            });
-        }
-
-        $scope.box={
-            id:0,
-            tags:[],
-            open:true
-        };
-
-        //修改的时候需要初始化数据
-        if(CFunctions.getPathId()){
-            initData($scope,CFunctions.getPathId());
-        }
-
-
-        $scope.menuStatus.projectsClass="";
-        $scope.menuStatus.boxesClass="";
-        $scope.mainFlags.extMenuActive="";
-
-        $scope.deleteTag=function(index){
-            $scope.box.tags.splice(index,1);
-        };
-
-        $scope.deleteBox=function(id){
-            if(confirm(Config.messages.deleteConfirm)){
-
-            }
-        };
-
-        $scope.keyDownAddTag=function($event,tag){
-            if($event.which==13){
-                addTag(tag);
-            }
-        };
-        $scope.blurAddTag=function(tag){
-            addTag(tag);
-        };
-
-        $scope.boxCreateSubmit=function(){
-            if($scope.box.title&&$scope.box.description&&$scope.box.tags.length!=0){
-                CFunctions.ajaxSubmit($scope,{
-                    formUrl:Config.ajaxUrls.signIn,
-                    formParam:$scope.box,
-                    successCb:function(data){
-
-                        $scope.mainFlags.showBlackOut=false;
-                    }
-                });
-            }else{
-                toaster.pop('error',Config.messages.errorTitle,Config.messages.boxUnComplete,null,null);
-                return false;
-            }
-        };
-}]);
-
-viewControllers.controller("userHome",['$scope',function($scope){
-
-    //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
-    $scope.menuStatus.projectsClass="";
-    $scope.menuStatus.boxesClass="";
-    $scope.mainFlags.extMenuActive="";
-
-    $scope.user={
-        "id":1,
-        "honorCount":34,
-        "projectCount":55,
-        "disabledUpload":true,
-        "profile":"data/people1.jpg",
-        "name":"涛涛",
-        "date":"2013-07-08",
-        "description":"这个还一个很友好的作品",
-        "projects":[
-            {
-                "id":1,
-                "thumb":"data/pic1.png",
-                "praiseCount":34,
-                "commentCount":45,
-                "userProfile":"data/people1.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            },
-            {
-                "id":2,
-                "thumb":"data/pic2.png",
-                "praiseCount":34,
-                "commentsCount":45,
-                "userProfile":"data/people2.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            },
-            {
-                "id":3,
-                "thumb":"data/pic3.png",
-                "praiseCount":34,
-                "commentsCount":45,
-                "userProfile":"data/people3.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            }]
-    };
-    $scope.projects=[
-        {
-            "id":1,
-            "thumb":"data/pic1.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"data/people1.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":2,
-            "thumb":"data/pic2.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people2.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":3,
-            "thumb":"data/pic3.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people3.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        }
-    ];
-
-}]);
-
 
 viewControllers.controller("projectDetail",["$scope",function($scope){
     $scope.mainFlags.extMenuActive="";
@@ -558,37 +155,6 @@ viewControllers.controller("projectDetail",["$scope",function($scope){
     ];
 }]);
 
-viewControllers.controller("searchResult",["$scope","LocationChanger",function($scope,LocationChanger){
-    $scope.menuStatus.projectsClass="";
-    $scope.menuStatus.boxesClass="";
-    $scope.mainFlags.extMenuActive="";
-
-    $scope.projects=[
-        {
-            "id":1,
-            "thumb":"data/pic1.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"data/people1.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":2,
-            "thumb":"data/pic2.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people2.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        }
-    ];
-}]);
-
 viewControllers.controller("uploadProject",["$scope","$http","$route","toaster","Config","CFunctions","Project",
     function($scope,$http,$route,toaster,Config,CFunctions,Project){
 
@@ -637,7 +203,7 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
                     break;
                 default:
                     /*$scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilePath]=path;
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilename]=file.name;*/
+                     $scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilename]=file.name;*/
                     $scope.project.medias[mediaId][Config.mediaObj.mediaFilename]=file.name;
                     $scope.project.medias[mediaId]["noThumb"]=true;
                     $scope.project.medias[mediaId][Config.mediaObj.mediaFilePath]=path;
@@ -981,7 +547,567 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
                 }
             });
         };
+    }]);
+
+viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project","CFunctions",
+    function($scope,ngTableParams,Project,CFunctions){
+
+        $scope.tableParams= new ngTableParams({
+            count:3,
+            page:1,
+            sorting: {
+                name: 'asc'     // initial sorting
+            },
+            filter:{
+                name:"ty",
+                age:"13"
+            }
+        },{
+            total:0,
+            getData:function($defer,params){
+                Project.query(params.url(), function(data) {
+
+                    // update table params
+                    params.total(data.total);
+
+                    // set new data
+                    $defer.resolve(data.result);
+                },function(data){
+                    CFunctions.ajaxErrorHandler();
+                });
+            }
+        });
+
+    }]);
+
+viewControllers.controller("commentsManage",['$scope',"ngTableParams","Comment","CFunctions",
+    function($scope,ngTableParams,Comment,CFunctions){
+
+        $scope.tableParams= new ngTableParams({
+            count:3,
+            page:1,
+            sorting: {
+                name: 'asc'     // initial sorting
+            },
+            filter:{
+                name:"ty",
+                age:"13"
+            }
+        },{
+            total:0,
+            getData:function($defer,params){
+                Comment.query(params.url(), function(data) {
+
+                    // update table params
+                    params.total(data.total);
+
+                    // set new data
+                    $defer.resolve(data.result);
+                },function(data){
+                    CFunctions.ajaxErrorHandler();
+                });
+            }
+        });
+
+    }]);
+
+viewControllers.controller("boxes",['$scope',"Config",function($scope,Config){
+
+    //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
+    $scope.menuStatus.projectsClass="";
+    $scope.menuStatus.boxesClass=Config.classNames.mainMenuActive;
+    $scope.mainFlags.extMenuActive="";
+
+    $scope.boxes=[
+        {
+            "id":1,
+            "honorCount":34,
+            "projectCount":55,
+            "disabledUpload":false,
+            "userProfile":"data/people1.jpg",
+            "userName":"涛涛",
+            "userId":1,
+            "date":"2013-07-08",
+            "title":"书香文化",
+            "description":"这个还一个很友好的作品",
+            projects:[
+                {
+                    "id":1,
+                    "thumb":"data/pic1.png",
+                    "praiseCount":34,
+                    "commentCount":45,
+                    "userProfile":"data/people1.jpg",
+                    "userName":"涛涛",
+                    "userId":1,
+                    "date":"2013-07-08",
+                    "title":"书香文化"
+                },
+                {
+                    "id":2,
+                    "thumb":"data/pic2.png",
+                    "praiseCount":34,
+                    "commentsCount":45,
+                    "userProfile":"data/people2.jpg",
+                    "userName":"涛涛",
+                    "userId":1,
+                    "date":"2013-07-08",
+                    "title":"书香文化"
+                },
+                {
+                    "id":3,
+                    "thumb":"data/pic3.png",
+                    "praiseCount":34,
+                    "commentsCount":45,
+                    "userProfile":"data/people3.jpg",
+                    "userName":"涛涛",
+                    "userId":1,
+                    "date":"2013-07-08",
+                    "title":"书香文化"
+                }]
+        },
+        {
+            "id":2,
+            "honorCount":34,
+            "projectCount":55,
+            "disabledUpload":false,
+            "userProfile":"data/people2.jpg",
+            "userName":"涛涛",
+            "userId":2,
+            "date":"2013-07-08",
+            "title":"书香文化",
+            "description":"这个还一个很友好的作品",
+            projects:[
+                {
+                    "id":1,
+                    "thumb":"data/pic1.png",
+                    "praiseCount":34,
+                    "commentCount":45,
+                    "userProfile":"data/people1.jpg",
+                    "userName":"涛涛",
+                    "userId":1,
+                    "date":"2013-07-08",
+                    "title":"书香文化"
+                },
+                {
+                    "id":2,
+                    "thumb":"data/pic2.png",
+                    "praiseCount":34,
+                    "commentsCount":45,
+                    "userProfile":"data/people2.jpg",
+                    "userName":"涛涛",
+                    "userId":1,
+                    "date":"2013-07-08",
+                    "title":"书香文化"
+                },
+                {
+                    "id":3,
+                    "thumb":"data/pic3.png",
+                    "praiseCount":34,
+                    "commentsCount":45,
+                    "userProfile":"data/people3.jpg",
+                    "userName":"涛涛",
+                    "userId":1,
+                    "date":"2013-07-08",
+                    "title":"书香文化"
+                }]
+        },
+        {
+            "id":3,
+            "honorCount":34,
+            "projectCount":55,
+            "disabledUpload":true,
+            "userProfile":"data/people3.jpg",
+            "userName":"涛涛",
+            "userId":3,
+            "date":"2013-07-08",
+            "title":"书香文化",
+            "description":"这个还一个很友好的作品",
+            projects:[
+                {
+                    "id":1,
+                    "thumb":"data/pic1.png",
+                    "praiseCount":34,
+                    "commentCount":45,
+                    "userProfile":"data/people1.jpg",
+                    "userName":"涛涛",
+                    "userId":1,
+                    "date":"2013-07-08",
+                    "title":"书香文化"
+                },
+                {
+                    "id":2,
+                    "thumb":"data/pic2.png",
+                    "praiseCount":34,
+                    "commentsCount":45,
+                    "userProfile":"data/people2.jpg",
+                    "userName":"涛涛",
+                    "userId":1,
+                    "date":"2013-07-08",
+                    "title":"书香文化"
+                },
+                {
+                    "id":3,
+                    "thumb":"data/pic3.png",
+                    "praiseCount":34,
+                    "commentsCount":45,
+                    "userProfile":"data/people3.jpg",
+                    "userName":"涛涛",
+                    "userId":1,
+                    "date":"2013-07-08",
+                    "title":"书香文化"
+                }]
+        }
+    ];
+
 }]);
+
+viewControllers.controller("boxDetail",['$scope',function($scope){
+
+    //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
+    $scope.menuStatus.projectsClass="";
+    $scope.menuStatus.boxesClass="";
+    $scope.mainFlags.extMenuActive="";
+
+    $scope.box={
+        "id":1,
+        "honorCount":34,
+        "projectCount":55,
+        "disabledUpload":false,
+        "userProfile":"data/people1.jpg",
+        "userName":"涛涛",
+        "userId":1,
+        "title":"测试数据",
+        "date":"2013-07-08",
+        "description":"这个还一个很友好的作品",
+        "projects":[
+            {
+                "id":1,
+                "thumb":"data/pic1.png",
+                "praiseCount":34,
+                "commentCount":45,
+                "userProfile":"data/people1.jpg",
+                "userName":"涛涛",
+                "userId":1,
+                "date":"2013-07-08",
+                "title":"书香文化"
+            },
+            {
+                "id":2,
+                "thumb":"data/pic2.png",
+                "praiseCount":34,
+                "commentsCount":45,
+                "userProfile":"data/people2.jpg",
+                "userName":"涛涛",
+                "userId":1,
+                "date":"2013-07-08",
+                "title":"书香文化"
+            },
+            {
+                "id":3,
+                "thumb":"data/pic3.png",
+                "praiseCount":34,
+                "commentsCount":45,
+                "userProfile":"data/people3.jpg",
+                "userName":"涛涛",
+                "userId":1,
+                "date":"2013-07-08",
+                "title":"书香文化"
+            }]
+    };
+    $scope.projects=[
+        {
+            "id":1,
+            "thumb":"data/pic1.png",
+            "praiseCount":34,
+            "commentCount":45,
+            "userProfile":"data/people1.jpg",
+            "userName":"涛涛",
+            "userId":1,
+            "date":"2013-07-08",
+            "title":"书香文化"
+        },
+        {
+            "id":2,
+            "thumb":"data/pic2.png",
+            "praiseCount":34,
+            "commentsCount":45,
+            "userProfile":"data/people2.jpg",
+            "userName":"涛涛",
+            "userId":1,
+            "date":"2013-07-08",
+            "title":"书香文化"
+        },
+        {
+            "id":3,
+            "thumb":"data/pic3.png",
+            "praiseCount":34,
+            "commentsCount":45,
+            "userProfile":"data/people3.jpg",
+            "userName":"涛涛",
+            "userId":1,
+            "date":"2013-07-08",
+            "title":"书香文化"
+        }
+    ];
+
+}]);
+
+viewControllers.controller("boxCreate",["$scope","toaster","CFunctions","Config","Box",
+    function($scope,toaster,CFunctions,Config,Box){
+        function addTag(tag){
+            if($scope.box.tags.indexOf(tag)===-1){
+                $scope.box.tags.push(tag);
+            }
+
+            $scope.box.newTag="";
+        }
+
+        function initData($scope,Id){
+            Box.get({id:id},function(data){
+                $scope.box.title=data.title;
+                $scope.box.open=data.open;
+                $scope.box.tags=data.tags;
+            },function(data){
+                CFunctions.ajaxErrorHandler();
+            });
+        }
+
+        $scope.box={
+            id:0,
+            tags:[],
+            open:true
+        };
+
+        //修改的时候需要初始化数据
+        if(CFunctions.getPathId()){
+            initData($scope,CFunctions.getPathId());
+        }
+
+
+        $scope.menuStatus.projectsClass="";
+        $scope.menuStatus.boxesClass="";
+        $scope.mainFlags.extMenuActive="";
+
+        $scope.deleteTag=function(index){
+            $scope.box.tags.splice(index,1);
+        };
+
+        $scope.deleteBox=function(id){
+            if(confirm(Config.messages.deleteConfirm)){
+
+            }
+        };
+
+        $scope.keyDownAddTag=function($event,tag){
+            if($event.which==13){
+                addTag(tag);
+            }
+        };
+        $scope.blurAddTag=function(tag){
+            addTag(tag);
+        };
+
+        $scope.boxCreateSubmit=function(){
+            if($scope.box.title&&$scope.box.description&&$scope.box.tags.length!=0){
+                CFunctions.ajaxSubmit($scope,{
+                    formUrl:Config.ajaxUrls.signIn,
+                    formParam:$scope.box,
+                    successCb:function(data){
+
+                        $scope.mainFlags.showBlackOut=false;
+                    }
+                });
+            }else{
+                toaster.pop('error',Config.messages.errorTitle,Config.messages.boxUnComplete,null,null);
+                return false;
+            }
+        };
+}]);
+
+viewControllers.controller("boxesManage",['$scope',"ngTableParams","Box","CFunctions",
+    function($scope,ngTableParams,Box,CFunctions){
+
+        $scope.tableParams= new ngTableParams({
+            count:3,
+            page:1,
+            sorting: {
+                name: 'asc'     // initial sorting
+            },
+            filter:{
+                name:"ty",
+                age:"13"
+            }
+        },{
+            total:0,
+            getData:function($defer,params){
+                Box.query(params.url(), function(data) {
+
+                    // update table params
+                    params.total(data.total);
+
+                    // set new data
+                    $defer.resolve(data.result);
+                },function(data){
+                    CFunctions.ajaxErrorHandler();
+                });
+            }
+        });
+
+    }]);
+
+viewControllers.controller("userHome",['$scope',function($scope){
+
+    //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
+    $scope.menuStatus.projectsClass="";
+    $scope.menuStatus.boxesClass="";
+    $scope.mainFlags.extMenuActive="";
+
+    $scope.user={
+        "id":1,
+        "honorCount":34,
+        "projectCount":55,
+        "disabledUpload":true,
+        "profile":"data/people1.jpg",
+        "name":"涛涛",
+        "date":"2013-07-08",
+        "description":"这个还一个很友好的作品",
+        "projects":[
+            {
+                "id":1,
+                "thumb":"data/pic1.png",
+                "praiseCount":34,
+                "commentCount":45,
+                "userProfile":"data/people1.jpg",
+                "userName":"涛涛",
+                "userId":1,
+                "date":"2013-07-08",
+                "title":"书香文化"
+            },
+            {
+                "id":2,
+                "thumb":"data/pic2.png",
+                "praiseCount":34,
+                "commentsCount":45,
+                "userProfile":"data/people2.jpg",
+                "userName":"涛涛",
+                "userId":1,
+                "date":"2013-07-08",
+                "title":"书香文化"
+            },
+            {
+                "id":3,
+                "thumb":"data/pic3.png",
+                "praiseCount":34,
+                "commentsCount":45,
+                "userProfile":"data/people3.jpg",
+                "userName":"涛涛",
+                "userId":1,
+                "date":"2013-07-08",
+                "title":"书香文化"
+            }]
+    };
+    $scope.projects=[
+        {
+            "id":1,
+            "thumb":"data/pic1.png",
+            "praiseCount":34,
+            "commentCount":45,
+            "userProfile":"data/people1.jpg",
+            "userName":"涛涛",
+            "userId":1,
+            "date":"2013-07-08",
+            "title":"书香文化"
+        },
+        {
+            "id":2,
+            "thumb":"data/pic2.png",
+            "praiseCount":34,
+            "commentsCount":45,
+            "userProfile":"data/people2.jpg",
+            "userName":"涛涛",
+            "userId":1,
+            "date":"2013-07-08",
+            "title":"书香文化"
+        },
+        {
+            "id":3,
+            "thumb":"data/pic3.png",
+            "praiseCount":34,
+            "commentsCount":45,
+            "userProfile":"data/people3.jpg",
+            "userName":"涛涛",
+            "userId":1,
+            "date":"2013-07-08",
+            "title":"书香文化"
+        }
+    ];
+
+}]);
+
+viewControllers.controller("usersManage",['$scope',"ngTableParams","User","CFunctions",
+    function($scope,ngTableParams,User,CFunctions){
+
+        $scope.tableParams= new ngTableParams({
+            count:3,
+            page:1,
+            sorting: {
+                name: 'asc'     // initial sorting
+            },
+            filter:{
+                name:"ty",
+                age:"13"
+            }
+        },{
+            total:0,
+            getData:function($defer,params){
+                User.query(params.url(), function(data) {
+
+                    // update table params
+                    params.total(data.total);
+
+                    // set new data
+                    $defer.resolve(data.result);
+                },function(data){
+                    CFunctions.ajaxErrorHandler();
+                });
+            }
+        });
+
+    }]);
+
+viewControllers.controller("searchResult",["$scope","LocationChanger",function($scope,LocationChanger){
+    $scope.menuStatus.projectsClass="";
+    $scope.menuStatus.boxesClass="";
+    $scope.mainFlags.extMenuActive="";
+
+    $scope.projects=[
+        {
+            "id":1,
+            "thumb":"data/pic1.png",
+            "praiseCount":34,
+            "commentCount":45,
+            "userProfile":"data/people1.jpg",
+            "userName":"涛涛",
+            "userId":1,
+            "date":"2013-07-08",
+            "title":"书香文化"
+        },
+        {
+            "id":2,
+            "thumb":"data/pic2.png",
+            "praiseCount":34,
+            "commentsCount":45,
+            "userProfile":"data/people2.jpg",
+            "userName":"涛涛",
+            "userId":1,
+            "date":"2013-07-08",
+            "title":"书香文化"
+        }
+    ];
+}]);
+
+
+
 
 
 

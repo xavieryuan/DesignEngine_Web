@@ -16,3 +16,8 @@ filters.filter("setMaxLength", function(){
         return first.replace("${value}",second);
     }
 });
+filters.filter("getMinNumber", function(){
+    return function(first, second){
+        return Math.min(first,second);
+    }
+});

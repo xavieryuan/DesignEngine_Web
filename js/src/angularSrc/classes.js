@@ -682,6 +682,7 @@ classes.factory("Box",["$rootScope","$resource","Config",function($rootScope,$re
         get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
         remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
         add:{method:"put"},
+        lock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}},
         getProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
     });
 }]);
