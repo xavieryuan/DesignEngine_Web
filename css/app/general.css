@@ -129,6 +129,30 @@ li {
 	opacity:0.5;
 	cursor: default !important;
 }
+.de_red_btn{
+	display: inline-block;
+    font-size: 12px;
+    text-decoration: none;
+    height: 40px;
+    line-height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    border: #c1272d 1px solid;
+    padding: 0 10px;
+    background: #d32d39; 
+}
+.de_red_btn:hover{
+	background:#c1272d;	
+}
+.de_red_btn:disabled{
+	background: #d32d39;
+	opacity:0.5;
+	cursor: default !important;
+}
 .de_category_filter {
     margin: 20px 10px;
     display: block;
@@ -1655,14 +1679,145 @@ li {
 	left:30px;
 	transform:rotate(45deg);
 }
+/*************创建、修改投稿箱****************/
+.de_screen_box .de_box_title{
+	margin: 20px auto;
+	text-align: center;
+	font-size: 1.5em;
+	color: #bbb;
+	text-shadow: 0 1px 0 #fff;
+	font-weight: normal;
+}
+.de_screen_box .de_form_tip{
+	font-size:12px;
+	color:#666;	
+}
+.de_screen_box .de_form_box{
+	padding: 0;
+	background: #fff;
+	width: 950px;
+	margin: auto;
+	position: relative;
+}
+.de_form_box .de_left_col{
+	width: 50%;	
+	box-sizing: border-box;
+	padding: 20px;
+	border-right: #ccc 1px dotted;	
+	min-height: 500px;
+}
+.de_form_box .de_category_tag_box {
+    height: auto;
+    min-height: 10px;
+}
 
+.de_form_box .de_category_tag_box li {
+    display: inline;
+}
 
+.de_form_box .de_category_tag_box li a {
+    font-size: 12px;
+    padding: 0 10px 0 30px;
+    line-height: 30px;
+    text-decoration: none;
+    color: #fff;
+    display: inline-block;
+    position: relative;
+    background: #09bc72;
+    border-radius: 4px;
+    margin: 0 10px 10px 0;
+}
 
+.de_form_box .de_category_tag_box li a:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: url(../../images/app/icon20_tag_white.png) no-repeat;
+}
+
+.de_form_box .de_category_tag_box li a:hover:before {
+    background: url(../../images/app/icon20_delete_white.png) no-repeat #C00;
+    border-radius: 10px;
+}
+.de_form_box .de_right_col{
+	width: 50%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	box-sizing: border-box;
+	padding:20px;
+}
+
+.de_form_box label,.de_form_box h5 {
+font-size: 12px;
+font-weight: bold;
+margin: 10px 0;
+display: block;
+}
+.de_form_box textarea {
+	padding: 10px;
+	resize: vertical;
+	min-height: 60px;
+}
+.de_form_box .de_form_field{
+	padding:20px 0;
+	border-bottom: #ccc 1px dotted;
+	position: relative;
+}
+.de_form_box .de_submit_field{
+	border:none;
+}
+.de_form_box .de_box_save_btn{
+	width:100px;
+}
+.de_form_box .de_box_current_state{
+	position: absolute;
+	top: 20px;
+	left: 100px;
+	font-weight: bold;	
+	font-size: 24px;
+	color: #39c;
+}
+.de_form_box .de_box_change_state_btn{
+	position: absolute;
+	top:26px;
+	right:0;
+	color:#07af69;
+	font-weight: bold;
+	font-size: 14px;
+}
+.de_form_box .de_box_change_state_btn:hover{
+	color:#000;
+}
+.de_form_box .de_box_entry_num{
+	position: absolute;
+	top: 20px;
+	left: 100px;
+	font-weight: bold;	
+	font-size: 24px;
+	color: #39c;
+}
+.de_form_box .de_box_view_entry_btn{
+	position: absolute;
+	top:26px;
+	right:0;
+	color:#07af69;
+	font-weight: bold;
+	font-size: 14px;
+}
+.de_form_box .de_box_view_entry_btn:hover{
+	color:#000;
+}
 /*************作品上传****************/
 .de_screen_upload {
 
 }
-.de_screen_upload>h4{
+.de_screen_upload>de_upload_title{
 	margin:20px auto;
 	text-align: center;
 	font-size:1.5em;

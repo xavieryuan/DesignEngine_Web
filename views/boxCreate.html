@@ -1,4 +1,6 @@
-<form class="de_form_box_create de_borderbox de_boxshadow" ng-submit="">
+<section class="de_screen_box">
+	<h4 class="de_box_title">新建或设置投稿箱</h4>
+	<form class="de_form_box de_form_box_create de_borderbox de_boxshadow" ng-submit="">
     <div class="de_left_col de_borderbox">
         <p class="de_field_project_title">
             <label>标题</label>
@@ -41,13 +43,13 @@
                 </p>
             </div>
             <div class="de_form_field">
-                <a class="de_box_destroy_btn" ng-click="deleteBox(box.id)">删除投稿箱及其中的所有作品 (无法恢复，谨慎操作)</a>
+                <a class="de_box_destroy_btn de_red_btn" ng-click="deleteBox(box.id)">删除投稿箱及其中的所有作品 (无法恢复，谨慎操作)</a>
             </div>
         </div>
 
-        <div class="de_form_field">
-            <input class="de_box_save_btn" type="submit">保存</a>
-            <!--<a class="de_box_cancel_btn">取消</a>-->
+        <div class="de_form_field de_submit_field">
+            <input class="de_box_save_btn de_green_btn" type="submit" value="确定" />
         </div>
     </div>
 </form>
+</section>
