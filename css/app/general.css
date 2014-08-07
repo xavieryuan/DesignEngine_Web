@@ -1594,7 +1594,7 @@ li {
 	width:80px;
 	height:140px;
 	box-sizing: border-box;
-	background:url(/images/app/icon40_upload_white.png) #29abe2 no-repeat center 40px;	
+	background:url(../../images/app/icon40_upload_white.png) #29abe2 no-repeat center 40px;	
 	font-size:18px;
 	color:#fff;
 	font-weight: bold;
@@ -1608,7 +1608,7 @@ li {
 	width:80px;
 	height:140px;
 	box-sizing: border-box;
-	background:url(/images/app/icon40_visible_white.png) #07af69 no-repeat center 40px;	
+	background:url(../../images/app/icon40_visible_white.png) #07af69 no-repeat center 40px;	
 	font-size:18px;
 	color:#fff;
 	font-weight: bold;
@@ -1619,22 +1619,22 @@ li {
 }
 
 .de_topic_action_lock a{
-	background:url(/images/app/icon40_lock_white.png) no-repeat center;
+	background:url(../../images/app/icon40_lock_white.png) no-repeat center;
 }
 .de_topic_action_unlock a{
-	background:url(/images/app/icon40_unlock_white.png) no-repeat center;
+	background:url(../../images/app/icon40_unlock_white.png) no-repeat center;
 }
 .de_topic_action_setting a{
-	background:url(/images/app/icon40_setting_white.png) no-repeat center;
+	background:url(../../images/app/icon40_setting_white.png) no-repeat center;
 }
 .de_topic_action_lock a:hover {
-	background:url(/images/app/icon40_lock_green.png) no-repeat center;
+	background:url(../../images/app/icon40_lock_green.png) no-repeat center;
 }
 .de_topic_action_unlock a:hover{
-	background:url(/images/app/icon40_unlock_green.png) no-repeat center;
+	background:url(../../images/app/icon40_unlock_green.png) no-repeat center;
 }
 .de_topic_action_setting a:hover{
-	background:url(/images/app/icon40_setting_green.png) no-repeat center;
+	background:url(../../images/app/icon40_setting_green.png) no-repeat center;
 }
 
 .de_topic_box .project_info{
