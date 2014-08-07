@@ -122,28 +122,7 @@ directives.directive("drag",function(){
         }
     }
 });
-directives.directive('animateHide', ["LocationChanger",function(LocationChanger){
-    return {
-        link: function (scope, element, attrs, ctrl) {
-            element.on('click', function () {
-                var parent=$(element).parents(".de_animation_project_detail");
-                var header=parent.find(".de_project_header");
-                var detail=parent.find(".de_project_detail");
-                TweenMax.to(header,0.3,{y:-100});
-                TweenMax.to(detail,0.3,{y:100});
-                TweenMax.to(parent,0.4,{opacity:0,onComplete:function(){
-                    scope.mainFlags.showProjectDetailFlag=false;
-                    scope.mainFlags.projectDetailTemplate="";
-                    scope.mainFlags.showMainWrapper=true;
-                    scope.$apply();
 
-
-                    LocationChanger.goBack();
-                }});
-            });
-        }
-    }
-}]);
 directives.directive('hideModalPanel', function(){
     return {
         link: function (scope, element, attrs, ctrl) {            

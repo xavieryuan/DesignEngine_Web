@@ -392,6 +392,10 @@ viewControllers.controller("userHome",['$scope',function($scope){
 
 viewControllers.controller("projectDetail",["$scope",function($scope){
 
+    $scope.closeProjectDetail=function(){
+        history.back();
+    };
+
     $scope.project={
         "praised":true,
         "canDoHidden":true,

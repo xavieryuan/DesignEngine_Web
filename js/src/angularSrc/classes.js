@@ -40,13 +40,14 @@ classes.service("Config",["$rootScope",function($rootScope){
         "projectDetail":"views/projectDetail.html"
     };
     this.urls={  //用到的路径
-        "projects":"/projects",
+        "projects":"/project",
         "boxes":"/boxes",
         "boxDetail":"/box/:boxId",
         "home":"/",
-        "projectDetail":"/project/{projectId}",
-        "login":"/login",
-        "register":"/register",
+        "projectDetail":"/project/:projectId",
+        "projectDetailReg":/\/project\/\d*/,
+        "signIn":"/login",
+        "signUp":"/register",
         "editPwd":"change/password",
         "editInfo":"change/info",
         "userHome":"/user/{userId}",
@@ -301,7 +302,8 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
              });*/
     };
 
-    this.setMenuStatus=function(path){
+    this.setMenuStatus=function(){
+        var path=location.href;
         var menuStatus={};
 
         switch(path){
@@ -531,58 +533,111 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
 
         return uploader;
     };
-
-    this.initPage=function($scope){
+    this.getPathId=function(){
         var path=window.location.href;
-        $scope.mainFlags.showBlackOut=true;
-        $scope.$apply();
+        var pos=path.lastIndexOf("/");
+        return path.substring(pos+1);
+    };
+
+    this.hideProjectDetail=function($scope){
+        var target=$(".de_animation_project_detail");
+        var header=target.find(".de_project_header");
+        var detail=target.find(".de_project_detail");
+        TweenMax.to(header,0.3,{y:-100});
+        TweenMax.to(detail,0.3,{y:100});
+        TweenMax.to(parent,0.4,{opacity:0,onComplete:function(){
+            $scope.mainFlags.showProjectDetailFlag=false;
+            $scope.mainFlags.projectDetailTemplate="";
+            $scope.mainFlags.showMainWrapper=true;
+            $scope.$apply();
+        }});
     }
+
 }]);
 
-classes.service('LocationChanger', ['$location', '$route', '$rootScope', function ($location, $route, $rootScope) {
+classes.service('LocationChanger', ['$location', '$route', '$rootScope',"CFunctions","Config",
+    function ($location, $route, $rootScope,CFunctions,Config) {
 
-    this.rootScopeEvent=null;
+        this.rootScopeEvent=null;
 
-    //阻止ngView的刷新,返回this是方便链式调用
-    this.skipReload = function () {
-        var lastRoute = $route.current;
+        //阻止ngView的刷新,返回this是方便链式调用
+        this.skipReload = function () {
+            var lastRoute = $route.current;
 
-        //这里绑定过后面会一直响应，关闭弹出层的时候要取消绑定，绑定的时候会返回取消绑定的函数
-        this.rootScopeEvent=$rootScope.$on('$locationChangeSuccess', function () {
-            $route.current = lastRoute;
-        });
+            //这里绑定过后面会一直响应，关闭弹出层的时候要取消绑定，绑定的时候会返回取消绑定的函数
+            this.rootScopeEvent=$rootScope.$on('$locationChangeSuccess', function () {
+                $route.current = lastRoute;
+            });
 
-        return this;
-    };
-
-    this.canReload=function(){
-
-        //取消$rootScope.$on('$locationChangeSuccess'的绑定
-        this.rootScopeEvent();
-
-        return this;
-    };
-
-    this.withoutRefresh = function (url, doesReplace) {
-        if(doesReplace){
-            $location.path(url).replace();
-        }
-        else {
-            $location.path(url || '/');
-        }
-
-        return this;
-    };
-
-    this.goBack=function(){
-        var me=this;
-        history.back();
-        window.onpopstate=function(){
-            me.canReload();
+            return this;
         };
 
-        return this;
-    };
+        this.canReload=function(){
+
+            //取消$rootScope.$on('$locationChangeSuccess'的绑定
+            if(typeof this.rootScopeEvent ==="function"){
+                this.rootScopeEvent();
+            }
+
+            return this;
+        };
+
+        this.withReplace = function (url, doesReplace) {
+            if(doesReplace){
+                $location.path(url).replace();
+            }
+            else {
+                $location.path(url || '/');
+            }
+
+            return this;
+        };
+
+        this.initLocationPage=function($scope){
+            var path=$location.path();
+            $scope.popFlags.showPop=true;
+            $scope.mainFlags.showBlackOut=true;
+            $scope.mainFlags.extMenuActive=false;
+
+            if(path.indexOf(Config.urls.editPwd)!==-1){
+                $scope.popFlags.popTemplateUrl=Config.templateUrls.editPwd;
+            }else if(path.indexOf(Config.urls.signIn)!==-1){
+                $scope.popFlags.popTemplateUrl=Config.templateUrls.signIn;
+            }else if(path.indexOf(Config.urls.signUp)!==-1){
+                $scope.popFlags.popTemplateUrl=Config.templateUrls.signUp;
+            }else if(path.indexOf(Config.urls.editInfo)!==-1){
+                $scope.popFlags.popTemplateUrl=Config.templateUrls.editInfo;
+            }else if(path.match(Config.urls.projectDetailReg)!==null){
+                $scope.mainFlags.showProjectDetailFlag=true;
+                $scope.mainFlags.showMainWrapper=false;
+                $scope.mainFlags.showBlackOut=false;
+                $scope.mainFlags.projectDetailTemplate=Config.templateUrls.projectDetail;
+            }else if(path.indexOf(Config.urls.search)!==-1){
+                $scope.popFlags.popTemplateUrl=Config.templateUrls.search;
+            }else{
+                $scope.popFlags.showPop=false;
+                $scope.popFlags.popTemplateUrl="";
+                $scope.mainFlags.showBlackOut=false;
+
+                //关闭作品详情需要执行动画
+                CFunctions.hideProjectDetail($scope);
+            }
+            $scope.$apply();
+
+            return this;
+        };
+
+        this.windowHistoryChange=function($scope){
+            var me=this;
+
+            window.onpopstate=function(event){
+                console.log("d");
+                me.initLocationPage($scope);
+                me.canReload();
+            };
+
+            return this;
+        }
 
 }]);
 

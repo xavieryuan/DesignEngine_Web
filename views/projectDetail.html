@@ -14,7 +14,7 @@
     </ul>
 
     <a href="" ng-show="project.toHome"  class="de_btn_close_project_detail de_btn_back_to_home">关闭</a>
-    <a href="" ng-show="!project.toHome" animate-hide class="de_btn_close_project_detail">关闭</a>
+    <a href="" ng-show="!project.toHome" ng-click="closeProjectDetail()" class="de_btn_close_project_detail">关闭</a>
 </div>
 
 <!--显示详细信息-->
@@ -142,7 +142,7 @@
             </a>
         </div>
         <div class="project_info">
-            <a href="" ng-click="showProjectDetail(sp.id)">
+            <a href="" ng-click="showProjectDetail(sp.id,true)">
                 <img class="thumb" ng-src="{{sp.thumb}}">
                 <h4>{{sp.title}}</h4>
 

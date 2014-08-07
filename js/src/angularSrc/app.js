@@ -33,8 +33,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
 
 
         //弹出层使用的变量，绑定在body的controller上，在其下的controller会继承这些变量
-        var path=$location.path();
-        $scope.menuStatus=CFunctions.setMenuStatus(path);
+        $scope.menuStatus=CFunctions.setMenuStatus();
 
         //使用对象，子scope可以直接覆盖（对象地址）
         $scope.mainFlags={
@@ -56,14 +55,11 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
         $scope.currentUser=Storage.currentUser;
         $scope.currentUser.id=1;
 
-        //CFunctions.initPage($scope);
+        //LocationChanger.initPage($scope);
+        LocationChanger.windowHistoryChange($scope);
 
         $scope.closePop=function(){
-            $scope.popFlags.showPop=false;
-            $scope.mainFlags.showBlackOut=false;
-            $scope.popFlags.popTemplateUrl="";
-
-            LocationChanger.goBack();
+            history.back();
         };
 
         $scope.validMessage={
@@ -80,18 +76,19 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
          */
         $scope.login=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.signIn;
-            LocationChanger.skipReload().withoutRefresh(Config.urls.login,false);
+            LocationChanger.skipReload().withReplace(Config.urls.login,false);
         };
         $scope.toSearch=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.search;
-            LocationChanger.skipReload().withoutRefresh(Config.urls.search,false);
+            LocationChanger.skipReload().withReplace(Config.urls.search,false);
         };
 
-        $scope.showProjectDetail=function(id){
+        $scope.showProjectDetail=function(id,replaceUrl){
+            replaceUrl=!!replaceUrl;
             $scope.mainFlags.showMainWrapper=false;
             $scope.mainFlags.showProjectDetailFlag=true;
             $scope.mainFlags.projectDetailTemplate=Config.templateUrls.projectDetail;
-            LocationChanger.skipReload().withoutRefresh(Config.urls.projectDetail.replace("{projectId}",id),false);
+            LocationChanger.skipReload().withReplace(Config.urls.projectDetail.replace(":projectId",id),replaceUrl);
         };
 
         /**
@@ -109,7 +106,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
          */
         $scope.editPwd=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.editPwd;
-            LocationChanger.skipReload().withoutRefresh(Config.urls.editPwd,false);
+            LocationChanger.skipReload().withReplace(Config.urls.editPwd,false);
         };
 
         /**
@@ -117,7 +114,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
          */
         $scope.editInfo=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.editInfo;
-            LocationChanger.skipReload().withoutRefresh(Config.urls.editInfo,false);
+            LocationChanger.skipReload().withReplace(Config.urls.editInfo,false);
         };
 
         //播放媒体文件界面

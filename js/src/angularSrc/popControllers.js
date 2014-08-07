@@ -16,11 +16,11 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
 
         $scope.toRegPanel=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.signUp;
-            LocationChanger.skipReload().withoutRefresh(Config.urls.register,false);
+            LocationChanger.skipReload().withReplace(Config.urls.register,false);
         };
         $scope.forgetPwd=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.forgetPwd;
-            LocationChanger.skipReload().withoutRefresh(Config.urls.forgetPwd,false);
+            LocationChanger.skipReload().withReplace(Config.urls.forgetPwd,false);
         };
 
         if(document.cookie){
