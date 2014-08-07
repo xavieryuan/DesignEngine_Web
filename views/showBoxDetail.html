@@ -19,9 +19,11 @@
                     <li class="badges" title="勋章">{{box.honorCount}}</li>
                 </ul>
             </div>
-            <ul class="topic_action">
+            <ul class="topic_action" ng-show="!box.disabledUpload||">
                 <!-- 根据权限控制 -->
-                <li><a href="#" class="de_topic_action_submit" ng-disabled="{{box.disabledUpload}}">上传</a></li>
+                <li ng-disabled="{{box.disabledUpload}}"><a href="#" class="de_topic_action_submit">投稿</a></li>
+                <li><a href="" class="de_topic_action_lock">锁定</a></li>
+                <li ng-show=""><a href="#" class="de_topic_action_submit">设置</a></li>
             </ul>
             <ul class="project_info">
                 <li class="de_borderbox" ng-repeat="project in box.projects">

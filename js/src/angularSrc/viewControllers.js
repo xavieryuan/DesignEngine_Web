@@ -188,7 +188,7 @@ viewControllers.controller("boxDetail",['$scope',function($scope){
         "id":1,
         "honorCount":34,
         "projectCount":55,
-        "disabledUpload":true,
+        "disabledUpload":false,
         "userProfile":"data/people1.jpg",
         "userName":"涛涛",
         "userId":1,
@@ -390,7 +390,7 @@ viewControllers.controller("userHome",['$scope',function($scope){
 }]);
 
 
-viewControllers.controller("projectDetail",["$scope","$q","LocationChanger",function($scope,$q,LocationChanger){
+viewControllers.controller("projectDetail",["$scope",function($scope){
 
     $scope.project={
         "praised":true,
@@ -406,24 +406,6 @@ viewControllers.controller("projectDetail",["$scope","$q","LocationChanger",func
         "commentsCount":45,
         "description":"这个还一个很友好的作品"
     };
-
-    $scope.closeProjectDetail=function(){
-        return $q(function(resolve, reject) {
-            $scope.mainFlags.showProjectDetailFlag=false;
-            $scope.mainFlags.projectDetailTemplate="";
-
-            resolve();
-        }).then(function(value) {
-                $scope.mainFlags.showMainWrapper=true;
-            }, function(reason) {
-                $scope.mainFlags.showMainWrapper=true;
-            });
-
-        LocationChanger.canReload();
-
-       	history.go(-1);
-    };
-
     $scope.attachments=[
         {
             "attachmentMediaLocation":"data/01.jpg",

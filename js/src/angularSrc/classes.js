@@ -534,7 +534,8 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
 
     this.initPage=function($scope){
         var path=window.location.href;
-        popFlag.showPop=true;
+        $scope.popFlags.showPop=true;
+        //$scope.$apply();
     }
 }]);
 

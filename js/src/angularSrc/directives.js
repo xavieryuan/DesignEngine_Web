@@ -5,23 +5,24 @@
  * Time: 下午3:10
  * To change this template use File | Settings | File Templates.
  */
-var directives=angular.module("directives",[]);
+var directives=angular.module("directives",["classes"]);
 directives.directive('pwdCheck', function(){
     return {
         require: 'ngModel',
         link: function (scope, elem, attrs, ctrl) {
             var firstPassword = angular.element(document.getElementById(attrs.pwdCheck));
             elem.on('keyup', function () {
-                scope.$apply(function () {
+                /*scope.$apply(function () {
                     var v = elem.val()===firstPassword.val();
                     ctrl.$setValidity('noMatch', v);
-                });
+                });*/
+                var v = elem.val()===firstPassword.val();
+                ctrl.$setValidity('noMatch', v);
             });
             firstPassword.on('keyup', function () {
-                scope.$apply(function () {
-                    var v = elem.val()===firstPassword.val();
-                    ctrl.$setValidity('noMatch', v);
-                });
+
+                var v = elem.val()===firstPassword.val();
+                ctrl.$setValidity('noMatch', v);
             });
         }
     }
@@ -118,6 +119,47 @@ directives.directive("drag",function(){
                 event.preventDefault();
                 event.stopPropagation();
             };
+        }
+    }
+});
+directives.directive('animateHide', function(LocationChanger){
+    return {
+        link: function (scope, element, attrs, ctrl) {
+
+            element.on('click', function () {
+                var parent=$(element).parents(".de_animation_project_detail");
+                var header=parent.find(".de_project_header");
+                var detail=parent.find(".de_project_detail");
+                TweenMax.to(header,0.3,{y:-100});
+                TweenMax.to(detail,0.3,{y:100});
+                TweenMax.to(element,0.4,{opacity:0,onComplete:function(){
+                    scope.mainFlags.showProjectDetailFlag=false;
+                    scope.mainFlags.projectDetailTemplate="";
+                    scope.mainFlags.showMainWrapper=true;
+                    scope.$apply();
+
+                    LocationChanger.canReload();
+                    history.go(-1);
+                }});
+            });
+        }
+    }
+});
+directives.directive('hideSomePanel', function(){
+    return {
+        link: function (scope, element, attrs, ctrl) {
+            function hideExtMenu(target){
+                var extMenuEl=document.getElementsByClassName("de_ext_nav")[0];
+                if(target!=extMenuEl){
+                    scope.$apply(function(){
+                        scope.mainFlags.extMenuActive="";
+                    });
+                }
+            }
+
+            element.on('click', function (event) {
+                hideExtMenu(event.target||event.srcElement);
+            });
         }
     }
 });

@@ -12,9 +12,9 @@
     <meta name="keywords" content="图钉墙, 工业设计, 艺术设计, 设计教育, 设计作品, 设计资源, 湖南大学设计艺术学院" />
     <title>图钉墙 - HNU Design</title>
 
+    <base id="de_base_url" href="http://localhost/DesignEngine_Web/"/>
+    <!--<base id="de_base_url" href="http://127.0.0.1:56846/"/>-->
 
-    <!--<base id="de_base_url" href="http://localhost/DesignEngine_Web/"/>-->
-    <base id="de_base_url" href="http://127.0.0.1:56846/"/>
     <link href="css/lib/toaster.css" rel="stylesheet" type="text/css"/>
     <link href="css/app/general.css" rel="stylesheet" type="text/css"/>
     <script src="js/lib/jquery-2.1.1.min.js"></script>
@@ -37,7 +37,7 @@
     <script src="js/src/angularSrc/animations.js"></script>
     <script src="js/src/angularSrc/app.js"></script>
 </head>
-<body ng-controller="super" ng-click="hideExtMenu($event,'de_ext_nav');">
+<body ng-controller="super" hide-some-panel>
 <toaster-container></toaster-container>
     <div class="de_page_wrapper" ng-show="mainFlags.showMainWrapper">
         <header class="de_header">
