@@ -60,8 +60,8 @@ animations.animation(".de_animation_project_detail",function(){
 			var header=$(element).find(".de_project_header");
 			var detail=$(element).find(".de_project_detail");
 			TweenMax.to(header,0.3,{y:-100});
-			TweenMax.to(detail,0.3,{y:100});
-			TweenMax.to(element,0.4,{opacity:0,onComplete:done});
+			TweenMax.to(detail,0.3,{y:100});*/
+			TweenMax.to(element,0.4,{opacity:0/*,onComplete:done*/});
 		}
 	}
 });
