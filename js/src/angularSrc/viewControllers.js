@@ -580,34 +580,47 @@ viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project",
 
     }]);
 
-viewControllers.controller("commentsManage",['$scope',"ngTableParams","Comment","CFunctions",
-    function($scope,ngTableParams,Comment,CFunctions){
+viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams","Comment","CFunctions","Config",
+    function($scope,toaster,ngTableParams,Comment,CFunctions,Config){
+        $scope.menuStatus.projectsClass="";
+        $scope.menuStatus.boxesClass="";
+        $scope.mainFlags.extMenuActive="";
 
-        $scope.tableParams= new ngTableParams({
+        $scope.searchType="fullname";
+        $scope.searchContent="";
+
+        $scope.table= new ngTableParams({
             count:3,
             page:1,
-            sorting: {
+            /*sorting: {
                 name: 'asc'     // initial sorting
-            },
+            },*/
             filter:{
-                name:"ty",
-                age:"13"
+                type:$scope.searchType,
+                content:$scope.searchContent
             }
         },{
             total:0,
             getData:function($defer,params){
                 Comment.query(params.url(), function(data) {
+                    if(data.success){
+                        // update table params
+                        params.total(data.total);
 
-                    // update table params
-                    params.total(data.total);
-
-                    // set new data
-                    $defer.resolve(data.result);
+                        // set new data
+                        $defer.resolve(data.result);
+                    }else{
+                        toaster.pop("error",Config.messages.errorTitle,Config.messages.loadDataError,null,null);
+                    }
                 },function(data){
                     CFunctions.ajaxErrorHandler();
                 });
             }
         });
+
+        $scope.tableSearch=function(){
+            $scope.table.reload();
+        }
 
     }]);
 

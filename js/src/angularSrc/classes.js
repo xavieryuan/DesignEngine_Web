@@ -189,7 +189,8 @@ classes.service("Config",["$rootScope",function($rootScope){
         getAllProjects:"data/projects.json", //获取首页作品媒体文件)
         getProjectDetail:"post/info/:id", //获取作品（资源）详情
         deleteProject:"post/remove/:id",
-        getSimilarProjects:"post/similar"
+        getSimilarProjects:"post/similar",
+        getAllComments:"data/commentsManage.json"
     };
     this.roles={   //角色
         admin:"admin",
@@ -673,7 +674,7 @@ classes.factory("User",["$rootScope","$resource","Config",function($rootScope,$r
         get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
         remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
         add:{method:"put"},
-        getProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+        getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
     });
 }]);
 classes.factory("Box",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
@@ -683,15 +684,15 @@ classes.factory("Box",["$rootScope","$resource","Config",function($rootScope,$re
         remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
         add:{method:"put"},
         lock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}},
-        getProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+        getProjectsByBox:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
     });
 }]);
-classes.factory("Box",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
-    return $resource(Config.ajaxUrls.getAllProjects,{},{
+classes.factory("Comment",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
+    return $resource(Config.ajaxUrls.getAllComments,{},{
         query:{params:{"length":10}},
-        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+        get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
         remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
-        add:{method:"put"},
-        getProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+        getCommentsByProject:{method:"get",url:Config.ajaxUrls.deleteProject,params:{projectId:13}},
+        add:{method:"put"}
     });
 }]);

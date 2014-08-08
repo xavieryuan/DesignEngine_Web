@@ -1,0 +1,30 @@
+{
+    "total":4,
+    "success":true,
+    "result":[
+        {
+            "age": 13,
+            "id": "1",
+            "name": "ty",
+            "snippet": "Are you "
+        },
+        {
+            "age": 10,
+            "id": "2",
+            "name": "ty11",
+            "snippet": "Are you ready for "
+        },
+        {
+            "age": 8,
+            "id": "3",
+            "name": "ty22",
+            "snippet": "Are you ready for everything life "
+        },
+        {
+            "age": 6,
+            "id": "4",
+            "name": "ty33",
+            "snippet": "Are you ready for everything life throws your way?"
+        }
+    ]
+}

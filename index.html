@@ -16,12 +16,14 @@
     <!--<base id="de_base_url" href="http://127.0.0.1:55606/"/>-->
 
     <link href="css/lib/toaster.css" rel="stylesheet" type="text/css"/>
+    <link href="css/lib/ng-table.css" rel="stylesheet" type="text/css"/>
     <link href="css/app/general.css" rel="stylesheet" type="text/css"/>
     <script src="js/lib/jquery-2.1.1.min.js"></script>
     <script src="js/lib/angular.min.js"></script>
     <script src="js/lib/angular-route.min.js"></script>
     <script src="js/lib/angular-resource.min.js"></script>
     <script src="js/lib/angular-animate.min.js"></script>
+    <script src="js/lib/ng-table.min.js"></script>
     <script src="js/lib/toaster.js"></script>
 	<script src="js/lib/TweenMax.min.js"></script>
     <script src="js/lib/plupload.full.min.js"></script>
@@ -65,7 +67,7 @@
                                 <a ng-href="user/{{currentUser.id}}">我的作品集</a>
                                 <a class="de_btn_upload de_borderbox"   ng-href="upload/{{currentUser.boxId}}">上传作品</a>
                             </li>
-                            <li class="de_reg_view">
+                            <!--<li class="de_reg_view">
                                 <a ng-href="boxes">我的投稿箱</a>
                                 <a class="de_btn_create_box de_borderbox" ng-href="box/create">创建投稿箱</a>
                             </li>                                                       
@@ -74,18 +76,18 @@
                             </li>
                             <li class="de_reg_view ">
                                 <a href="" ng-click="editPwd()">修改密码</a>
+                            </li>-->
+                            <li class="de_admin_view " ng-show="currentUser.role=='admin'">
+                                <a href="adminHome/users">用户管理</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.role=='admin'">
-                                <a href="adminhome/users">用户管理</a>
+                                <a href="adminHome/items">作品管理</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.role=='admin'">
-                                <a href="adminhome/items">作品管理</a>
+                                <a href="adminHome/boxes">投稿箱管理</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.role=='admin'">
-                                <a href="adminhome/boxes">投稿箱管理</a>
-                            </li>
-                            <li class="de_admin_view " ng-show="currentUser.role=='admin'">
-                                <a href="adminhome/comments">评论管理</a>
+                                <a href="adminHome/comments">评论管理</a>
                             </li>
                             <li class="de_reg_view ">
                                 <a href="#" target="_self">退出登录</a>

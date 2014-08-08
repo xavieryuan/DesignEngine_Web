@@ -19,6 +19,7 @@ pinWall.config(["$routeProvider","$locationProvider",function($routeProvider,$lo
         when("/box/create",{templateUrl: 'views/boxCreate.html',controller:"boxCreate"}).
         when("/box/edit/:boxId",{templateUrl: 'views/boxCreate.html',controller:"boxCreate"}).
         when("/box/:id",{templateUrl: 'views/showBoxDetail.html',controller:"boxDetail"}).
+        when("/adminHome/comments",{templateUrl: 'views/admin/commentsManage.html',controller:"commentsManage"}).
         when("/upload/:boxId",{templateUrl: 'views/uploadProject.html',controller:"uploadProject"}).
         when("/search",{templateUrl: 'views/showProjects.html',controller:"projects"}).
         when("/search/:content",{templateUrl: 'views/searchResult.html',controller:"searchResult"}).
@@ -55,6 +56,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
 
         $scope.currentUser=Storage.currentUser;
         $scope.currentUser.id=1;
+        $scope.currentUser.role=Config.roles.admin;
         $scope.currentUser.boxId=2;
 
         //LocationChanger.initPage($scope);
