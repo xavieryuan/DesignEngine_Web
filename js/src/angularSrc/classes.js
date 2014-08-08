@@ -119,12 +119,14 @@ classes.service("Config",["$rootScope",function($rootScope){
     this.emailStatus={
         pending:"pending",
         invalid:"invalid",
-        actively:"actived"
+        actively:"actively"
     };
     this.scrollScreenType={ //当前在哪个页面滚动
         project:"project",
         boxes:"boxes",
-        userEntity:"userEntity" //用户页的用户作品,
+        search:"search",
+        boxDetail:"boxDetail",
+        userDetail:"userDetail" //用户页的用户作品,
     };
     this.validError={
         required:"请输入此字段！",
@@ -200,12 +202,9 @@ classes.service("Config",["$rootScope",function($rootScope){
 }]);
 
 classes.service("Storage",function(){
-    this.projectLoadedId=0; //分页加载，最后一个作品的时间，-1代表没有更多
-    this.searchLoadedCount=0;
-    this.currentEditEntityId=0; //当前编辑的作品、资源的id
-    this.currentScrollScreenType=""; //当前需要滚动加载的类型
-    this.userEntitiesShowCount=0; //查看用户那里的作品，已经显示的个数，本地分页
-    this.uploadedMedias={}; //上传作品、资源时已经上传的媒体文件
+    this.currentProjectLoadedDate=0; //分页加载，最后一个作品的时间，-1代表没有更多
+    this.scrollTimer=null;
+    this.currentScrollScreenType="";
 
     this.currentUser={  //当前登录的用户信息
         id:0,
@@ -548,7 +547,7 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
         return path.substring(pos+1);
     };
 
-    this.hideProjectDetail=function($scope){
+    this.hideProjectDetail=function($scope,goBack){
         var target=$(".de_animation_project_detail");
         var header=target.find(".de_project_header");
         var detail=target.find(".de_project_detail");
@@ -559,6 +558,10 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
             $scope.mainFlags.projectDetailTemplate="";
             $scope.mainFlags.showMainWrapper=true;
             $scope.$apply();
+
+            if(goBack){
+                history.back();
+            }
         }});
     }
 
@@ -629,7 +632,7 @@ classes.service('LocationChanger', ['$location', '$route', '$rootScope',"CFuncti
                 $scope.mainFlags.showBlackOut=false;
 
                 //关闭作品详情需要执行动画
-                CFunctions.hideProjectDetail($scope);
+                CFunctions.hideProjectDetail($scope,false);
             }
             $scope.$apply();
 
@@ -640,7 +643,7 @@ classes.service('LocationChanger', ['$location', '$route', '$rootScope',"CFuncti
             var me=this;
 
             window.onpopstate=function(event){
-                console.log("d");
+                //console.log("d");
                 me.initLocationPage($scope);
                 me.canReload();
             };

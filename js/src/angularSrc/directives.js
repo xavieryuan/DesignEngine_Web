@@ -138,3 +138,62 @@ directives.directive('hideModalPanel', function(){
         }
     }
 });
+directives.directive("windowScroll", ["$window","Storage",function ($window,Storage) {
+    return {
+        link: function(scope, element, attrs) {
+            angular.element($window).bind("scroll", function() {
+                if(Storage.scrollTimer){
+                    clearTimeout(DE.store.scrollTimer);
+                }
+
+                if(Storage.currentScrollScreenType){
+                    Storage.scrollTimer=setTimeout(function(){
+                        if($(document).height()-$(window).height()<=$(window).scrollTop()){
+
+                            //作品和资源要看是否是在搜索页面
+                            if(DE.store.currentSearch.currentSearchValue){
+
+                                //alert(DE.store.currentScrollScreenType+"search");
+                                if(DE.store.searchLoadedCount!=DE.config.hasNoMoreFlag){
+                                    DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,
+                                        DE.store.currentSearch.currentSearchType,DE.store.currentSearch.isTag,false);
+                                }
+
+                            }else{
+                                if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.project){
+
+                                    //首页作品
+                                    if(DE.store.projectLoadedId!=DE.config.hasNoMoreFlag){
+                                        DE.entity.getAllEntity(DE.config.entityTypes.project,false);
+                                    }
+
+                                }else if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.resource){
+
+                                    //首页资源
+                                    if(DE.store.resourceLoadedId!=DE.config.hasNoMoreFlag){
+                                        DE.entity.getAllEntity(DE.config.entityTypes.resource,false);
+                                    }
+
+                                }else if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.hotUser){
+
+                                    //热点用户
+                                    if(DE.store.hotUserLoadedCount!=DE.config.hasNoMoreFlag){
+                                        DE.user.getHotUsers(false);
+                                    }
+
+                                }else{
+
+                                    //用户页
+                                    if(DE.store.userEntitiesShowCount!=DE.config.hasNoMoreFlag){
+                                        DE.user.showUserEntity(false);
+                                    }
+                                }
+                            }
+
+                        }
+                    },200);
+                }
+            });
+        }
+    }
+}]);
