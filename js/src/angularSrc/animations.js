@@ -23,9 +23,11 @@ animations.animation(".de_animation_popout",function(){
 	return{
 		enter:function(element,done){
 			TweenMax.set(element,{z:90,opacity:0});
+			//TweenMax.to($(".de_page_wrapper"),0.5,{z:-50})
 			TweenMax.to(element,0.5,{z:0,opacity:1, ease:Circ.easeOut, onComplete:done})
 		},
 		leave:function(element,done){
+			//TweenMax.to($(".de_page_wrapper"),0.5,{z:0})
 			TweenMax.to(element,0.5,{z:90,opacity:0, ease:Circ.easeOut, onComplete:done})
 		}
 	}
@@ -49,6 +51,8 @@ animations.animation(".de_animation_project_detail",function(){
 	return{
 		enter:function(element,done){
             //console.log(element.scope());
+			//重置de_project_detail位置到页面顶端
+			window.scrollTo(0,0);
 			var header=$(element).find(".de_project_header");
 			var detail=$(element).find(".de_project_detail");
 			TweenMax.set(element,{opacity:0});
@@ -70,4 +74,20 @@ animations.animation(".de_animation_project_detail",function(){
 		}*/
 	}
 });
+animations.animation(".de_animation_loading",function(){
+	return{
+		beforeAddClass:function(element,className,done){
+			if(className=="ng-hide"){
+				TweenMax.to(element,0.3,{opacity:0,onComplete:done});				
+			}			
+		},
+		beforeRemoveClass:function(element,className,done){
+			if(className=="ng-hide"){
+				TweenMax.set(element,{opacity:0});
+				TweenMax.to(element,0.3,{opacity:1,onComplete:done});
+			}
+			
+		}
+	}
+})
 

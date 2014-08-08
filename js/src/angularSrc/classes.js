@@ -554,7 +554,9 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
         var detail=target.find(".de_project_detail");
         TweenMax.to(header,0.3,{y:-100});
         TweenMax.to(detail,0.3,{y:100});
-        TweenMax.to(parent,0.4,{opacity:0,onComplete:function(){
+        TweenMax.to(target,0.4,{opacity:0,onComplete:function(){
+			//重置de_project_detail位置到页面顶端
+			window.scrollTo(0,0);
             $scope.mainFlags.showProjectDetailFlag=false;
             $scope.mainFlags.projectDetailTemplate="";
             $scope.mainFlags.showMainWrapper=true;
