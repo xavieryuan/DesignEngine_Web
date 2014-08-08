@@ -133,19 +133,11 @@
         <span class="de_pop_show_media_close" ng-click="closePlayMediaPanel()">关闭</span>
         <div id="de_pop_show_media_content" class="de_pop_show_media_content"></div>
     </section>
-	<!-----------    ----------->
-    <section class="de_web_video_panel" ng-show="mainFlags.showWebVideoPanel">
-        <h3>请输入网络视频通用（含iframe标签）地址:</h3>
-        <span class="de_pop_show_media_close" ng-click="closeWebVideoPanel()">关闭</span>
-        <div id="de_web_video_panel_content" class="de_web_video_panel_content de_borderbox">
-        <input type="text" id="de_input_web_video" class="de_input_web_video de_inputbox_gray">
-        <input type="button" id="de_input_web_video_ok" class="de_input_web_video_ok de_button" value="确定">
-        </div>
-    </section>
+	
 	<!-----------blackout----------->
     <div class="de_blackout de_animation_blackout" ng-show="mainFlags.showBlackOut"></div>
     <!-----------load spinner----------->
-    <div class="de_loading" ng-show="mainFlags.showLoading">
+    <div class="de_loading de_animation_loading" ng-show="mainFlags.showLoading">
         <div class="de_loading_spinner" id="de_loading_spinner"></div>
     </div>
 

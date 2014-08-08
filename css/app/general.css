@@ -99,7 +99,7 @@ li {
 }
 .de_button:hover {
 	color:#333;
-    background: #ccc;
+    background: #dedede;
 }
 .de_button:disabled{
     opacity:0.5;
@@ -2893,16 +2893,16 @@ span.zy_tooltips{
 	cursor: pointer;
     position: fixed;
     top: 0;
-    right: 20px;
+    right: 10px;
     display: inline-block;
     font-size: 0;
     width: 60px;
     height: 60px;
-    background: url(../../images/app/icon60_close_black.png) no-repeat;
+    background: url(../../images/app/icon40_close_white.png) no-repeat center;
 	z-index:10001;
 	}
 .de_pop_show_media  .de_pop_show_media_close:hover {
-    background: url(../../images/app/icon60_close_black.png) no-repeat;
+    background: url(../../images/app/icon40_close_green.png) no-repeat center;
 }
 .de_pop_show_media .de_pop_show_media_content{
 /*    height: 100%;*/
@@ -3080,6 +3080,11 @@ span.zy_tooltips{
 	/*详情展示页面*/
 	.de_screen_project_detail{
 		padding: 60px 0;
+		position: absolute;
+		top:0;
+		bottom:0;
+		left:0;
+		right:0;
 	}
 	.de_screen_project_detail .de_project_detail {
         width: auto;
