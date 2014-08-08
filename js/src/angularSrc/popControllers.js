@@ -62,7 +62,7 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
                         description:"测试用户的说明"
                     });
 
-                    $scope.closePop();
+                    $scope.goBack();
                 }
             });
         };

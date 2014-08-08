@@ -47,7 +47,8 @@ animations.animation(".de_animation_blackout",function(){
 });
 animations.animation(".de_animation_project_detail",function(){
 	return{
-		enter:function(element,done){			
+		enter:function(element,done){
+            //console.log(element.scope());
 			var header=$(element).find(".de_project_header");
 			var detail=$(element).find(".de_project_detail");
 			TweenMax.set(element,{opacity:0});
@@ -61,7 +62,11 @@ animations.animation(".de_animation_project_detail",function(){
 			var detail=$(element).find(".de_project_detail");
 			TweenMax.to(header,0.3,{y:-100});
 			TweenMax.to(detail,0.3,{y:100});
-			TweenMax.to(element,0.4,{opacity:0,onComplete:done});
+			TweenMax.to(element,0.4,{opacity:0,onComplete:function(){
+
+                done();
+			});
+
 		}*/
 	}
 });

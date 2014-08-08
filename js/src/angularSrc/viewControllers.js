@@ -14,20 +14,20 @@
  */
 var viewControllers=angular.module("viewControllers",["classes","toaster","directives","ngTable"]);
 
-viewControllers.controller("projects",['$scope',"Config","Project","CFunctions",function($scope,Config,Project,CFunctions){
+viewControllers.controller("projects",['$scope',"Config","Storage","Project","CFunctions",function($scope,Config,Storage,Project,CFunctions){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.menuStatus.projectsClass=Config.classNames.mainMenuActive;
     $scope.menuStatus.boxesClass="";
     $scope.mainFlags.extMenuActive="";
 
-    Project.query({"start":10},function(data){
-        $scope.projects=data.projects;
-    },function(data){
-        CFunctions.ajaxErrorHandler();
-    });
+    Storage.currentScrollScreenType=Config.scrollScreenType.project;
+    Storage.currentPage=1;
 
+    $scope.projects=[];
+    Project.getProjects($scope);
 
+    //console.log(Project);
 }]);
 
 viewControllers.controller("projectDetail",["$scope","CFunctions",function($scope,CFunctions){
@@ -595,7 +595,7 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
         $scope.searchContent="";
 
         $scope.table= new ngTableParams({
-            count:3,
+            count:Config.perLoadCount,
             page:1,
             sorting: {
                 name: 'asc'     // initial sorting
@@ -615,7 +615,7 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
                         // set new data
                         $defer.resolve(data.result);
                     }else{
-                        toaster.pop("error",Config.messages.errorTitle,Config.messages.loadDataError,null,null);
+                        CFunctions.ajaxReturnErrorHandler(data);
                     }
                 },function(data){
                     CFunctions.ajaxErrorHandler();
@@ -636,153 +636,17 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
 
     }]);
 
-viewControllers.controller("boxes",['$scope',"Config",function($scope,Config){
+viewControllers.controller("boxes",['$scope',"Config","Storage","Box",function($scope,Config,Storage,Box){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.menuStatus.projectsClass="";
     $scope.menuStatus.boxesClass=Config.classNames.mainMenuActive;
     $scope.mainFlags.extMenuActive="";
+    Storage.currentScrollScreenType=Config.scrollScreenType.box;
+    Storage.currentPage=1;
 
-    $scope.boxes=[
-        {
-            "id":1,
-            "honorCount":34,
-            "projectCount":55,
-            "disabledUpload":false,
-            "userProfile":"data/people1.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化",
-            "description":"这个还一个很友好的作品",
-            projects:[
-                {
-                    "id":1,
-                    "thumb":"data/pic1.png",
-                    "praiseCount":34,
-                    "commentCount":45,
-                    "userProfile":"data/people1.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":2,
-                    "thumb":"data/pic2.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people2.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":3,
-                    "thumb":"data/pic3.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people3.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                }]
-        },
-        {
-            "id":2,
-            "honorCount":34,
-            "projectCount":55,
-            "disabledUpload":false,
-            "userProfile":"data/people2.jpg",
-            "userName":"涛涛",
-            "userId":2,
-            "date":"2013-07-08",
-            "title":"书香文化",
-            "description":"这个还一个很友好的作品",
-            projects:[
-                {
-                    "id":1,
-                    "thumb":"data/pic1.png",
-                    "praiseCount":34,
-                    "commentCount":45,
-                    "userProfile":"data/people1.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":2,
-                    "thumb":"data/pic2.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people2.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":3,
-                    "thumb":"data/pic3.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people3.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                }]
-        },
-        {
-            "id":3,
-            "honorCount":34,
-            "projectCount":55,
-            "disabledUpload":true,
-            "userProfile":"data/people3.jpg",
-            "userName":"涛涛",
-            "userId":3,
-            "date":"2013-07-08",
-            "title":"书香文化",
-            "description":"这个还一个很友好的作品",
-            projects:[
-                {
-                    "id":1,
-                    "thumb":"data/pic1.png",
-                    "praiseCount":34,
-                    "commentCount":45,
-                    "userProfile":"data/people1.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":2,
-                    "thumb":"data/pic2.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people2.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                },
-                {
-                    "id":3,
-                    "thumb":"data/pic3.png",
-                    "praiseCount":34,
-                    "commentsCount":45,
-                    "userProfile":"data/people3.jpg",
-                    "userName":"涛涛",
-                    "userId":1,
-                    "date":"2013-07-08",
-                    "title":"书香文化"
-                }]
-        }
-    ];
+    $scope.boxes=[];
+    Box.getBoxes($scope);
 
 }]);
 
@@ -904,8 +768,8 @@ viewControllers.controller("boxCreate",["$scope","toaster","CFunctions","Config"
         };
 
         //修改的时候需要初始化数据
-        if(CFunctions.getPathId()){
-            initData($scope,CFunctions.getPathId());
+        if(CFunctions.getPathParam()){
+            initData($scope,CFunctions.getPathParam());
         }
 
 

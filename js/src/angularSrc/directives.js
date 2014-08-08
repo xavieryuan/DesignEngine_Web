@@ -138,62 +138,38 @@ directives.directive('hideModalPanel', function(){
         }
     }
 });
-directives.directive("windowScroll", ["$window","Storage",function ($window,Storage) {
-    return {
-        link: function(scope, element, attrs) {
-            angular.element($window).bind("scroll", function() {
-                if(Storage.scrollTimer){
-                    clearTimeout(DE.store.scrollTimer);
-                }
+directives.directive("windowScroll", ["$window","Config","Storage","Project","Box",
+    function ($window,Config,Storage,Project,Box) {
+        return {
+            link: function(scope, element, attrs) {
 
-                if(Storage.currentScrollScreenType){
-                    Storage.scrollTimer=setTimeout(function(){
-                        if($(document).height()-$(window).height()<=$(window).scrollTop()){
+                //由于在多个view里面有绑定，所以每次绑定前解除，不然会重复绑定
+                angular.element($window).unbind("scroll");
+                angular.element($window).bind("scroll", function() {
+                    if(Storage.scrollTimer){
+                        clearTimeout(Storage.scrollTimer);
+                    }
+                    console.log(scope);
+                    if(Storage.currentScrollScreenType&&document.body.scrollHeight-$window.innerHeight<=$window.scrollY&&
+                        Storage.currentPage!=Config.hasNoMoreFlag){
+                        Storage.scrollTimer=setTimeout(function(){
+                            switch(Storage.currentScrollScreenType){
+                                case Config.scrollScreenType.project:
+                                    Project.getProjects(scope);
 
-                            //作品和资源要看是否是在搜索页面
-                            if(DE.store.currentSearch.currentSearchValue){
+                                    break;
+                                case Config.scrollScreenType.box:
+                                    Box.getBoxes(scope);
 
-                                //alert(DE.store.currentScrollScreenType+"search");
-                                if(DE.store.searchLoadedCount!=DE.config.hasNoMoreFlag){
-                                    DE.entity.getEntityBySearch(DE.store.currentSearch.currentSearchValue,
-                                        DE.store.currentSearch.currentSearchType,DE.store.currentSearch.isTag,false);
-                                }
-
-                            }else{
-                                if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.project){
-
-                                    //首页作品
-                                    if(DE.store.projectLoadedId!=DE.config.hasNoMoreFlag){
-                                        DE.entity.getAllEntity(DE.config.entityTypes.project,false);
-                                    }
-
-                                }else if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.resource){
-
-                                    //首页资源
-                                    if(DE.store.resourceLoadedId!=DE.config.hasNoMoreFlag){
-                                        DE.entity.getAllEntity(DE.config.entityTypes.resource,false);
-                                    }
-
-                                }else if(DE.store.currentScrollScreenType==DE.config.scrollScreenType.hotUser){
-
-                                    //热点用户
-                                    if(DE.store.hotUserLoadedCount!=DE.config.hasNoMoreFlag){
-                                        DE.user.getHotUsers(false);
-                                    }
-
-                                }else{
-
-                                    //用户页
-                                    if(DE.store.userEntitiesShowCount!=DE.config.hasNoMoreFlag){
-                                        DE.user.showUserEntity(false);
-                                    }
-                                }
+                                    break;
+                                case Config.scrollScreenType.boxDetail:
+                                    break;
+                                case Config.scrollScreenType.userDetail:
+                                    break;
                             }
-
-                        }
-                    },200);
-                }
-            });
+                        },200);
+                    }
+                });
+            }
         }
-    }
 }]);

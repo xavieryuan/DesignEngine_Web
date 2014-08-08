@@ -123,7 +123,7 @@ classes.service("Config",["$rootScope",function($rootScope){
     };
     this.scrollScreenType={ //当前在哪个页面滚动
         project:"project",
-        boxes:"boxes",
+        box:"box",
         search:"search",
         boxDetail:"boxDetail",
         userDetail:"userDetail" //用户页的用户作品,
@@ -192,7 +192,8 @@ classes.service("Config",["$rootScope",function($rootScope){
         getProjectDetail:"post/info/:id", //获取作品（资源）详情
         deleteProject:"post/remove/:id",
         getSimilarProjects:"post/similar",
-        getAllComments:"data/commentsManage.json"
+        getAllComments:"data/commentsManage.json",
+        getAllBoxes:"data/boxes.json"
     };
     this.roles={   //角色
         admin:"admin",
@@ -202,7 +203,7 @@ classes.service("Config",["$rootScope",function($rootScope){
 }]);
 
 classes.service("Storage",function(){
-    this.currentProjectLoadedDate=0; //分页加载，最后一个作品的时间，-1代表没有更多
+    this.currentPage=1;
     this.scrollTimer=null;
     this.currentScrollScreenType="";
 
@@ -541,7 +542,7 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
 
         return uploader;
     };
-    this.getPathId=function(){
+    this.getPathParam=function(){
         var path=window.location.href;
         var pos=path.lastIndexOf("/");
         return path.substring(pos+1);
@@ -662,14 +663,40 @@ classes.service('LocationChanger', ['$location', '$route', '$rootScope',"CFuncti
     'remove': {method:'DELETE'},
     'delete': {method:'DELETE'} };
     */
-classes.factory("Project",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
-    return $resource(Config.ajaxUrls.getAllProjects,{},{
-        query:{params:{"length":10}},
-        get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
-        remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
-        save:{url:Config.ajaxUrls.deleteProject},
-        getSimilar:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
-    })
+classes.factory("Project",["$rootScope","$resource","Storage","CFunctions","Config",
+    function($rootScope,$resource,Storage,CFunctions,Config){
+        return {
+            loadedProjects:{
+                count:2,
+                projects:[]
+            },
+            getProjects:function($scope){
+                var me=this;
+                this.resource.query({"page":Storage.currentPage},function(data){
+                    if(data.success){
+                        me.loadedProjects.count++;
+                        $scope.projects=$scope.projects.concat(data.projects);
+                        if(Storage.currentPage==data.total){
+                            Storage.currentPage=Config.hasNoMoreFlag;
+                        }else{
+                            Storage.currentPage++;
+                        }
+                    }else{
+                        CFunctions.ajaxReturnErrorHandler(data);
+                    }
+
+                },function(data){
+                    CFunctions.ajaxErrorHandler();
+                });
+            },
+            resource: $resource(Config.ajaxUrls.getAllProjects,{},{
+                query:{params:{"page":1,"count":10}},
+                get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+                remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+                save:{url:Config.ajaxUrls.deleteProject},
+                getSimilar:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+            })
+        };
 }]);
 classes.factory("User",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
     return $resource(Config.ajaxUrls.getAllProjects,{},{
@@ -680,19 +707,39 @@ classes.factory("User",["$rootScope","$resource","Config",function($rootScope,$r
         getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
     });
 }]);
-classes.factory("Box",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
-    return $resource(Config.ajaxUrls.getAllProjects,{},{
-        query:{params:{"length":10}},
-        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
-        remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
-        add:{method:"put"},
-        lock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}},
-        getProjectsByBox:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
-    });
+classes.factory("Box",["$rootScope","$resource","Config","Storage","CFunctions",
+    function($rootScope,$resource,Config,Storage,CFunctions){
+        return {
+            getBoxes:function($scope){
+                this.resource.query({"page":Storage.currentPage},function(data){
+                    if(data.success){
+                        $scope.boxes=$scope.boxes.concat(data.boxes);
+                        if(Storage.currentPage==data.total){
+                            Storage.currentPage=Config.hasNoMoreFlag;
+                        }else{
+                            Storage.currentPage++;
+                        }
+                    }else{
+                        CFunctions.ajaxReturnErrorHandler(data);
+                    }
+
+                },function(data){
+                    CFunctions.ajaxErrorHandler();
+                });
+            },
+            resource:$resource(Config.ajaxUrls.getAllBoxes,{},{
+                query:{params:{"page":1,"count":10}},
+                get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+                remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+                add:{method:"put"},
+                lock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}},
+                getProjectsByBox:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+            })
+        };
 }]);
 classes.factory("Comment",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
     return $resource(Config.ajaxUrls.getAllComments,{},{
-        query:{params:{"length":10}},
+        query:{params:{"count":10}},
         get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
         remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
         getCommentsByProject:{method:"get",url:Config.ajaxUrls.deleteProject,params:{projectId:13}},
