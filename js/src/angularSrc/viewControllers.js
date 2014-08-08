@@ -30,8 +30,13 @@ viewControllers.controller("projects",['$scope',"Config","Project","CFunctions",
 
 }]);
 
-viewControllers.controller("projectDetail",["$scope",function($scope){
+viewControllers.controller("projectDetail",["$scope","CFunctions",function($scope,CFunctions){
     $scope.mainFlags.extMenuActive="";
+
+    $scope.closeProjectDetail=function(){
+        CFunctions.hideProjectDetail($scope,true);
+
+    };
 
     $scope.project={
         "praised":true,
@@ -586,15 +591,15 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
         $scope.menuStatus.boxesClass="";
         $scope.mainFlags.extMenuActive="";
 
-        $scope.searchType="fullname";
+        $scope.searchType="";
         $scope.searchContent="";
 
         $scope.table= new ngTableParams({
             count:3,
             page:1,
-            /*sorting: {
+            sorting: {
                 name: 'asc'     // initial sorting
-            },*/
+            },
             filter:{
                 type:$scope.searchType,
                 content:$scope.searchContent
@@ -619,7 +624,14 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
         });
 
         $scope.tableSearch=function(){
-            $scope.table.reload();
+            $scope.table.page(1);
+
+            $scope.table.filter({
+                type:$scope.searchType,
+                content:$scope.searchContent
+            });
+
+            //$scope.table.reload();//这个函数不会动态更改filter
         }
 
     }]);
