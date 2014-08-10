@@ -23,11 +23,9 @@ animations.animation(".de_animation_popout",function(){
 	return{
 		enter:function(element,done){
 			TweenMax.set(element,{z:90,opacity:0});
-			//TweenMax.to($(".de_page_wrapper"),0.5,{z:-50})
 			TweenMax.to(element,0.5,{z:0,opacity:1, ease:Circ.easeOut, onComplete:done})
 		},
 		leave:function(element,done){
-			//TweenMax.to($(".de_page_wrapper"),0.5,{z:0})
 			TweenMax.to(element,0.5,{z:90,opacity:0, ease:Circ.easeOut, onComplete:done})
 		}
 	}

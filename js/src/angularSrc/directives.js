@@ -123,17 +123,13 @@ directives.directive("drag",function(){
     }
 });
 
-directives.directive('hideModalPanel', function(){
+directives.directive('clickToHideModalPanel', function(){
     return {
         link: function (scope, element, attrs, ctrl) {            
             element.on('click', function (event) {
-				var target=event.target||event.srcElement;
-				//判断是否隐藏侧边菜单
-                if($(target).parents("#de_ext_nav").length==0 && !$(target).is("#de_ext_nav")){
-					scope.$apply(function(){
+				scope.$apply(function(){
                         scope.mainFlags.extMenuActive="";
                     });
-				}
             });
         }
     }
@@ -149,7 +145,7 @@ directives.directive("windowScroll", ["$window","Config","Storage","Project","Bo
                     if(Storage.scrollTimer){
                         clearTimeout(Storage.scrollTimer);
                     }
-                    console.log(scope);
+					
                     if(Storage.currentScrollScreenType&&document.body.scrollHeight-$window.innerHeight<=$window.scrollY&&
                         Storage.currentPage!=Config.hasNoMoreFlag){
                         Storage.scrollTimer=setTimeout(function(){
