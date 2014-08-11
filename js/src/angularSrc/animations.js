@@ -4,7 +4,7 @@ CSSPlugin.defaultTransformPerspective=1200;
 /*定义动效*/
 var animations=angular.module("animations",["ngAnimate"]);
 
-animations.animation(".de_animation_ext_nav",function(){
+animations.animation(".de_ext_nav",function(){
 	return{
 		beforeAddClass: function(element, className, done) {
 			if(className=="de_ext_nav_active"){
@@ -18,21 +18,18 @@ animations.animation(".de_animation_ext_nav",function(){
 		}
 	}
 });
-
-animations.animation(".de_animation_popout",function(){
+animations.animation(".de_popout",function(){
 	return{
 		enter:function(element,done){
 			TweenMax.set(element,{z:90,opacity:0});
-			//TweenMax.to($(".de_page_wrapper"),0.5,{z:-50})
 			TweenMax.to(element,0.5,{z:0,opacity:1, ease:Circ.easeOut, onComplete:done})
 		},
 		leave:function(element,done){
-			//TweenMax.to($(".de_page_wrapper"),0.5,{z:0})
 			TweenMax.to(element,0.5,{z:90,opacity:0, ease:Circ.easeOut, onComplete:done})
 		}
 	}
 });
-animations.animation(".de_animation_blackout",function(){
+animations.animation(".de_blackout",function(){
 	return{
 		beforeAddClass: function(element, className, done) {
 			if(className=="ng-hide"){
@@ -47,7 +44,7 @@ animations.animation(".de_animation_blackout",function(){
 		}
 	}
 });
-animations.animation(".de_animation_project_detail",function(){
+animations.animation(".de_screen_project_detail",function(){
 	return{
 		enter:function(element,done){
             //console.log(element.scope());
@@ -74,7 +71,7 @@ animations.animation(".de_animation_project_detail",function(){
 		}*/
 	}
 });
-animations.animation(".de_animation_loading",function(){
+animations.animation(".de_loading",function(){
 	return{
 		beforeAddClass:function(element,className,done){
 			if(className=="ng-hide"){
