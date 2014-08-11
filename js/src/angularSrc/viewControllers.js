@@ -650,12 +650,17 @@ viewControllers.controller("boxes",['$scope',"Config","Storage","Box",function($
 
 }]);
 
-viewControllers.controller("boxDetail",['$scope',function($scope){
+viewControllers.controller("boxDetail",['$scope',"Box","Storage","Config",function($scope,Box,Storage,Config){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.menuStatus.projectsClass="";
     $scope.menuStatus.boxesClass="";
     $scope.mainFlags.extMenuActive="";
+
+    Storage.currentScrollScreenType=Config.scrollScreenType.boxDetail;
+    Storage.currentPage=1;
+    $scope.projects=[];
+    Box.getBoxProjects($scope);
 
     $scope.box={
         "id":1,
@@ -703,41 +708,6 @@ viewControllers.controller("boxDetail",['$scope',function($scope){
                 "title":"书香文化"
             }]
     };
-    $scope.projects=[
-        {
-            "id":1,
-            "thumb":"data/pic1.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"data/people1.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":2,
-            "thumb":"data/pic2.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people2.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":3,
-            "thumb":"data/pic3.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people3.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        }
-    ];
 
 }]);
 

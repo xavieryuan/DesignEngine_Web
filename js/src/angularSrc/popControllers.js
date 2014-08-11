@@ -12,7 +12,6 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
         $scope.loginError="";
         $scope.mainFlags.extMenuActive="";
         $scope.popFlags.title=Config.titles.signIn;
-        $scope.popFlags.showPop=true;
         $scope.mainFlags.showBlackOut=true;
 
         $scope.toRegPanel=function(){
@@ -73,7 +72,6 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
 popControllers.controller("signUp",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
     $scope.mainFlags.extMenuActive="";
     $scope.popFlags.title=Config.titles.signUp;
-    $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
     $scope.registerError="";
     $scope.captcha="captcha.jpg";
@@ -89,7 +87,6 @@ popControllers.controller("signUp",["$scope","CFunctions","Config",function($sco
 
 popControllers.controller("forgetPwd",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
     $scope.popFlags.title=Config.titles.forgetPwd;
-    $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
     $scope.mainFlags.extMenuActive="";
 
@@ -101,13 +98,11 @@ popControllers.controller("forgetPwd",["$scope","CFunctions","Config",function($
 
 popControllers.controller("search",["$scope","Config","LocationChanger",function($scope,Config,LocationChanger){
     $scope.popFlags.title=Config.titles.search;
-    $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
     $scope.mainFlags.extMenuActive="";
 
     $scope.toSearch=function(href){
         LocationChanger.canReload().withoutRefresh(href,false);
-        $scope.popFlags.showPop=false;
         $scope.mainFlags.showBlackOut=false;
         $scope.popFlags.popTemplateUrl="";
     }
@@ -116,7 +111,6 @@ popControllers.controller("search",["$scope","Config","LocationChanger",function
 
 popControllers.controller("editPwd",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
     $scope.popFlags.title=Config.titles.editPwd;
-    $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
     $scope.mainFlags.extMenuActive="";
 
@@ -129,7 +123,6 @@ popControllers.controller("editPwd",["$scope","CFunctions","Config",function($sc
 popControllers.controller("editInfo",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
     $scope.popFlags.title=Config.titles.editInfo;
     $scope.mainFlags.extMenuActive="";
-    $scope.popFlags.showPop=true;
     $scope.mainFlags.showBlackOut=true;
     $scope.editInfo.profile=$scope.currentUser.profile;
     $scope.editInfo.description=$scope.currentUser.description;

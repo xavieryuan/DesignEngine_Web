@@ -295,14 +295,14 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
      */
     this.ajaxSubmit=function($scope,params){
         var me=this;
-        $scope.mainFlags.showBlackOut=true;
+        $scope.showBlackOut();
         $http.post(params.formUrl,params.formParam).
             success(function(data, status, headers, config){
-                $scope.mainFlags.showBlackOut=false;
+                $scope.hideBlackOut();
                 params.successCb(data);
             }).error(function(data, status, headers, config){
-                $scope.mainFlags.showBlackOut=false;
-                me.ajaxReturnErrorHandler(data);
+                $scope.hideBlackOut();
+                me.ajaxErrorHandler();
             });
 
         /*$http.post(param.formUrl,param.formParam,postCfg). success(param.successCb).
@@ -610,7 +610,6 @@ classes.service('LocationChanger', ['$location', '$route', '$rootScope',"CFuncti
 
         this.initLocationPage=function($scope){
             var path=$location.path();
-            $scope.popFlags.showPop=true;
             $scope.mainFlags.showBlackOut=true;
             $scope.mainFlags.extMenuActive=false;
 
@@ -630,9 +629,7 @@ classes.service('LocationChanger', ['$location', '$route', '$rootScope',"CFuncti
             }else if(path.indexOf(Config.urls.search)!==-1){
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.search;
             }else{
-                $scope.popFlags.showPop=false;
-                $scope.popFlags.popTemplateUrl="";
-                $scope.mainFlags.showBlackOut=false;
+                $scope.closePop(true);
 
                 //关闭作品详情需要执行动画
                 CFunctions.hideProjectDetail($scope,false);
@@ -674,6 +671,7 @@ classes.factory("Project",["$rootScope","$resource","Storage","CFunctions","Conf
             },
             getProjects:function($scope){
                 var me=this;
+                $scope.showLoading();
                 this.resource.query({"page":Storage.currentPage},function(data){
                     if(data.success){
                         me.loadedProjects.count++;
@@ -686,8 +684,9 @@ classes.factory("Project",["$rootScope","$resource","Storage","CFunctions","Conf
                     }else{
                         CFunctions.ajaxReturnErrorHandler(data);
                     }
-
+                    $scope.hideLoading();
                 },function(data){
+                    $scope.hideLoading();
                     CFunctions.ajaxErrorHandler();
                 });
             },
@@ -713,6 +712,7 @@ classes.factory("Box",["$rootScope","$resource","Config","Storage","CFunctions",
     function($rootScope,$resource,Config,Storage,CFunctions){
         return {
             getBoxes:function($scope){
+                $scope.showLoading();
                 this.resource.query({"page":Storage.currentPage},function(data){
                     if(data.success){
                         $scope.boxes=$scope.boxes.concat(data.boxes);
@@ -725,17 +725,38 @@ classes.factory("Box",["$rootScope","$resource","Config","Storage","CFunctions",
                         CFunctions.ajaxReturnErrorHandler(data);
                     }
 
+                    $scope.hideLoading();
                 },function(data){
+                    $scope.hideLoading();
                     CFunctions.ajaxErrorHandler();
                 });
             },
+            getBoxProjects:function($scope){
+                $scope.showBlackOut();
+                this.resource.getBoxProjects({"page":Storage.currentPage},function(data){
+                    if(data.success){
+                        $scope.projects=$scope.projects.concat(data.projects);
+                        if(Storage.currentPage==data.total){
+                            Storage.currentPage=Config.hasNoMoreFlag;
+                        }else{
+                            Storage.currentPage++;
+                        }
+                    }else{
+                        CFunctions.ajaxReturnErrorHandler(data);
+                    }
+                    $scope.hideBlackOut();
+                },function(data){
+                    $scope.hideBlackOut();
+                    CFunctions.ajaxErrorHandler();
+                })
+            },
             resource:$resource(Config.ajaxUrls.getAllBoxes,{},{
-                query:{params:{"page":1,"count":10}},
+                query:{params:{"page":1,"count":Config.perLoadCount}},
                 get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
                 remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
                 add:{method:"put"},
                 lock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}},
-                getProjectsByBox:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+                getBoxProjects:{method:"get",url:Config.ajaxUrls.getAllProjects,params:{page:1,count:Config.perLoadCount}}
             })
         };
 }]);

@@ -50,20 +50,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
         };
         $scope.popFlags={
             "title":"",
-            "popTemplateUrl":"", //弹窗需要加载的页面url
-            "showPop":false  //是否显示弹窗
-        };
-
-        $scope.currentUser=Storage.currentUser;
-        $scope.currentUser.id=1;
-        $scope.currentUser.role=Config.roles.admin;
-        $scope.currentUser.boxId=2;
-
-        //LocationChanger.initPage($scope);
-        LocationChanger.windowHistoryChange($scope);
-
-        $scope.goBack=function(){
-            history.back();
+            "popTemplateUrl":"" //弹窗需要加载的页面url
         };
 
         $scope.validMessage={
@@ -74,6 +61,28 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
             "minLength":Config.validError.minLength,
             "pwdEqualError":Config.validError.pwdEqualError
         };
+
+        $scope.currentUser=Storage.currentUser;
+        $scope.currentUser.id=1;
+        $scope.currentUser.role=Config.roles.admin;
+        $scope.currentUser.boxId=2;
+
+
+
+        //LocationChanger.initPage($scope);
+        LocationChanger.windowHistoryChange($scope);
+
+        $scope.closePop=function(notGoBack){
+            $scope.popFlags.title="";
+            $scope.popFlags.popTemplateUrl="";
+            $scope.mainFlags.showBlackOut=false;
+
+            if(!notGoBack){
+                history.back();
+            }
+        };
+
+
 
         /**
          *点击登陆菜单
@@ -119,6 +128,13 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
         $scope.editInfo=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.editInfo;
             LocationChanger.skipReload().withReplace(Config.urls.editInfo,false);
+        };
+
+        $scope.showLoading=function(){
+            $scope.mainFlags.showLoading=true;
+        };
+        $scope.hideLoading=function(){
+            $scope.mainFlags.showLoading=false;
         };
 
         //播放媒体文件界面

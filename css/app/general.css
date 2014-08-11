@@ -2826,8 +2826,8 @@ span.zy_tooltips{
     text-align: center;
     line-height: 100%;
     color:#ccc;
-	-webkit-perspective: 100px;
-	perspective: 100px;
+	/*-webkit-perspective: 100px;
+	perspective: 100px;*/
 }
 .de_loading_spinner{
 	width:40px;
