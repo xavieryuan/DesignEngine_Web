@@ -1289,6 +1289,22 @@ li {
     background: url(../../images/app/zy_media_flash.png) no-repeat;
 }
 
+/*作品网格ng动效*/
+.de_project_grid li.ng-enter{
+	transition: 0.5s;	
+	opacity:0;
+	transform:translateZ(10px);
+	transform: translateY(10px);
+	transform-origin: center;
+}
+.de_project_grid li.ng-enter-stagger{
+	transition-delay: 0.2s;
+}
+.de_project_grid li.ng-enter-active{
+	opacity:1;
+	transform:translateZ(0px);
+	transform: translateY(0px);
+}
 
 /**作品卡片工具栏**/
 .de_project_grid .de_project_toolbar {
@@ -1679,6 +1695,25 @@ li {
 	left:30px;
 	transform:rotate(45deg);
 }
+
+/*投稿箱ng动效*/
+.de_topic_box.ng-enter{
+	transition: 0.5s;	
+	opacity:0;
+	transform:translateZ(10px);
+	transform: translateY(10px);
+	transform-origin: center;
+}
+.de_topic_box.ng-enter-stagger{
+	transition-delay: 0.2s;
+}
+.de_topic_box.ng-enter-active{
+	opacity:1;
+	transform:translateZ(0px);
+	transform: translateY(0px);
+}
+
+
 /*************创建、修改投稿箱****************/
 .de_screen_box .de_box_title{
 	margin: 20px auto;
