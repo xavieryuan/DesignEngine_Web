@@ -1299,6 +1299,7 @@ li {
 }
 .de_project_grid li.ng-enter-stagger{
 	transition-delay: 0.2s;
+ 	transition-duration:0;
 }
 .de_project_grid li.ng-enter-active{
 	opacity:1;
