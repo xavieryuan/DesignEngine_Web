@@ -806,6 +806,7 @@ li {
     text-indent: -9999px;
     margin: 0;
 	border-left:#ccc 1px dotted;
+	height:60px;
 }
 
 .de_user_nav>ul>li>.de_btn_hotdogmenu:before {
@@ -2853,7 +2854,6 @@ span.zy_tooltips{
     left: 0;
 }
 .de_loading{
-    background: #000;
     position: fixed;
     z-index: 10000;
     opacity: 0.7;
@@ -2864,10 +2864,11 @@ span.zy_tooltips{
     text-align: center;
     line-height: 100%;
     color:#ccc;
-	/*-webkit-perspective: 100px;
-	perspective: 100px;*/
+	-webkit-perspective: 100px;
+	perspective: 100px;
 }
 .de_loading_spinner{
+	opacity: 0.9;
 	width:40px;
 	height:40px;
 	position:fixed;
@@ -2875,7 +2876,7 @@ span.zy_tooltips{
 	left:50%;
 	margin-top:-20px;
     margin-left:-20px;
-    background:url(../../images/app/loading_spinner.png) no-repeat;
+    background:url(../../images/app/loading_spinner_black.png) no-repeat;
     -webkit-animation: spin 1.2s infinite ease-in-out;
     -moz-animation: spin 1.2s infinite ease-in-out;
     animation: spin 1.2s infinite ease-in-out;
