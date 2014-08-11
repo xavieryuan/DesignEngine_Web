@@ -567,7 +567,7 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
             }
         }});
     }
-
+	
 }]);
 
 classes.service('LocationChanger', ['$location', '$route', '$rootScope',"CFunctions","Config",

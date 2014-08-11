@@ -71,3 +71,19 @@ animations.animation(".de_screen_project_detail",function(){
 		}*/
 	}
 });
+animations.animation(".de_loading",function(){	
+	return{		 
+		addClass: function(element, className, done) {
+			if(className=="ng-hide"){
+				//延迟2s，避免闪烁
+				TweenMax.to(element,0.5,{opacity:0, delay:2, ease:Circ.easeOut, onComplete:done})
+			}
+		},
+		removeClass: function(element, className, done) {
+			if(className=="ng-hide"){		
+				TweenMax.killTweensOf(element);				
+				TweenMax.to(element,0.5,{opacity:1, ease:Circ.easeOut, onComplete:done})
+			}
+		}
+	}
+});
