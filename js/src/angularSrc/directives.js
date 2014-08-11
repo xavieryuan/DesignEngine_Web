@@ -122,7 +122,6 @@ directives.directive("drag",function(){
         }
     }
 });
-
 directives.directive('clickToHideModalPanel', function(){
     return {
         link: function (scope, element, attrs, ctrl) {            

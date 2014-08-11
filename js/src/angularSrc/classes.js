@@ -549,7 +549,7 @@ classes.service("CFunctions",["$rootScope","$http","toaster","Config",function($
     };
 
     this.hideProjectDetail=function($scope,goBack){
-        var target=$(".de_animation_project_detail");
+        var target=$(".de_screen_project_detail");
         var header=target.find(".de_project_header");
         var detail=target.find(".de_project_detail");
         TweenMax.to(header,0.3,{y:-100});

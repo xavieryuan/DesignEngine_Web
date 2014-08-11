@@ -4,7 +4,7 @@ CSSPlugin.defaultTransformPerspective=1200;
 /*定义动效*/
 var animations=angular.module("animations",["ngAnimate"]);
 
-animations.animation(".de_animation_ext_nav",function(){
+animations.animation(".de_ext_nav",function(){
 	return{
 		beforeAddClass: function(element, className, done) {
 			if(className=="de_ext_nav_active"){
@@ -18,8 +18,7 @@ animations.animation(".de_animation_ext_nav",function(){
 		}
 	}
 });
-
-animations.animation(".de_animation_popout",function(){
+animations.animation(".de_popout",function(){
 	return{
 		enter:function(element,done){
 			TweenMax.set(element,{z:90,opacity:0});
@@ -30,7 +29,7 @@ animations.animation(".de_animation_popout",function(){
 		}
 	}
 });
-animations.animation(".de_animation_blackout",function(){
+animations.animation(".de_blackout",function(){
 	return{
 		beforeAddClass: function(element, className, done) {
 			if(className=="ng-hide"){
@@ -45,7 +44,7 @@ animations.animation(".de_animation_blackout",function(){
 		}
 	}
 });
-animations.animation(".de_animation_project_detail",function(){
+animations.animation(".de_screen_project_detail",function(){
 	return{
 		enter:function(element,done){
             //console.log(element.scope());
@@ -72,7 +71,7 @@ animations.animation(".de_animation_project_detail",function(){
 		}*/
 	}
 });
-animations.animation(".de_animation_loading",function(){
+animations.animation(".de_loading",function(){
 	return{
 		beforeAddClass:function(element,className,done){
 			if(className=="ng-hide"){
