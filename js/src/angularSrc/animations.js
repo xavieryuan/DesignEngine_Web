@@ -80,11 +80,10 @@ animations.animation(".de_loading",function(){
 		},
 		beforeRemoveClass:function(element,className,done){
 			if(className=="ng-hide"){
-				TweenMax.set(element,{opacity:0});
+				TweenMax.set(element,{opacity:0,onComplete:done});
 				TweenMax.to(element,0.3,{opacity:1,onComplete:done});
 			}
-			
 		}
 	}
-})
+});
 

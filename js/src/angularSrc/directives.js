@@ -133,8 +133,8 @@ directives.directive('clickToHideModalPanel', function(){
         }
     }
 });
-directives.directive("windowScroll", ["$window","Config","Storage","Project","Box",
-    function ($window,Config,Storage,Project,Box) {
+directives.directive("windowScroll", ["$window","$timeout","Config","Storage","Project","Box",
+    function ($window,$timeout,Config,Storage,Project,Box) {
         return {
             link: function(scope, element, attrs) {
 
@@ -142,12 +142,12 @@ directives.directive("windowScroll", ["$window","Config","Storage","Project","Bo
                 angular.element($window).unbind("scroll");
                 angular.element($window).bind("scroll", function() {
                     if(Storage.scrollTimer){
-                        clearTimeout(Storage.scrollTimer);
+                        $timeout.cancel(Storage.scrollTimer);
                     }
-					
+                    //console.log(scope);
                     if(Storage.currentScrollScreenType&&document.body.scrollHeight-$window.innerHeight<=$window.scrollY&&
                         Storage.currentPage!=Config.hasNoMoreFlag){
-                        Storage.scrollTimer=setTimeout(function(){
+                        Storage.scrollTimer=$timeout(function(){
                             switch(Storage.currentScrollScreenType){
                                 case Config.scrollScreenType.project:
                                     Project.getProjects(scope);
@@ -158,6 +158,8 @@ directives.directive("windowScroll", ["$window","Config","Storage","Project","Bo
 
                                     break;
                                 case Config.scrollScreenType.boxDetail:
+                                    Box.getBoxProjects(scope);
+
                                     break;
                                 case Config.scrollScreenType.userDetail:
                                     break;

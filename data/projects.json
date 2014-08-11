@@ -4,7 +4,7 @@
     "projects":[
         {
             "id":1,
-            "thumb":"data/pic2.png",
+            "thumb":"data/pic1.png",
             "praiseCount":34,
             "commentCount":45,
             "userProfile":"data/people1.jpg",

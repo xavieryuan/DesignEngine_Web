@@ -1298,10 +1298,12 @@ li {
 	transform-origin: center;
 }
 .de_project_grid li.ng-enter-stagger{
+    -webkit-transition-delay: 0.2s;
 	transition-delay: 0.2s;
- 	transition-duration:0;
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
 }
-.de_project_grid li.ng-enter-active{
+.de_project_grid li.ng-enter.ng-enter-active{
 	opacity:1;
 	transform:translateZ(0px);
 	transform: translateY(0px);
@@ -2862,8 +2864,8 @@ span.zy_tooltips{
     text-align: center;
     line-height: 100%;
     color:#ccc;
-	-webkit-perspective: 100px;
-	perspective: 100px;
+	/*-webkit-perspective: 100px;
+	perspective: 100px;*/
 }
 .de_loading_spinner{
 	width:40px;
