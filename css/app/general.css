@@ -1298,9 +1298,13 @@ li {
 	transform-origin: center;
 }
 .de_project_grid li.ng-enter-stagger{
+    -webkit-transition-delay: 0.2s;
 	transition-delay: 0.2s;
+
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
 }
-.de_project_grid li.ng-enter-active{
+.de_project_grid li.ng-enter.ng-enter-active{
 	opacity:1;
 	transform:translateZ(0px);
 	transform: translateY(0px);
