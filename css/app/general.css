@@ -1291,11 +1291,15 @@ li {
 
 /*作品网格ng动效*/
 .de_project_grid li.ng-enter{
-	transition: 0.5s;	
 	opacity:0;
-	transform:translateZ(10px);
-	transform: translateY(10px);
-	transform-origin: center;
+    -webkit-transition: 0.5s linear all;
+    -webkit-transform:translateZ(10px);
+    -webkit-transform: translateY(10px);
+    -webkit-transform-origin: center;
+    transition: 0.5s linear all;
+    transform:translateZ(10px);
+    transform: translateY(10px);
+    transform-origin: center;
 }
 .de_project_grid li.ng-enter-stagger{
     -webkit-transition-delay: 0.2s;
@@ -1305,6 +1309,8 @@ li {
 }
 .de_project_grid li.ng-enter.ng-enter-active{
 	opacity:1;
+    -webkit-transform:translateZ(0px);
+    -webkit-transform: translateY(0px);
 	transform:translateZ(0px);
 	transform: translateY(0px);
 }
