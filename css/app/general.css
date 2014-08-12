@@ -1116,16 +1116,15 @@ li {
     margin: 20px 0;
 }
 
-.de_project_grid>li {
-    display: inline-block;
-    list-style: none;
+.de_project_grid>li {    
     width: 220px;
-    min-width: 175px;
-    height: 330px;
-    position: relative;
+    height: 330px;    
     background: #fff;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     margin: 10px;
+	display: inline-block;
+	position: relative;
+    list-style: none;    
     overflow: hidden;
 }
 
@@ -1292,22 +1291,20 @@ li {
 }
 
 /*作品网格ng动效*/
-.de_project_grid li.ng-enter{
-	transition: 0.5s;	
+.de_project_grid>li.ng-enter{
+	-webkit-transition: 0.3s linear all;
+	transition: 0.3s linear all;
 	opacity:0;
-	transform:translateZ(10px);
 	transform: translateY(10px);
-	transform-origin: center;
 }
-.de_project_grid li.ng-enter-stagger{
+.de_project_grid>li.ng-enter-stagger{
     -webkit-transition-delay: 0.2s;
 	transition-delay: 0.2s;
     -webkit-transition-duration: 0s;
     transition-duration: 0s;
 }
-.de_project_grid li.ng-enter.ng-enter-active{
+.de_project_grid>li.ng-enter.ng-enter-active{	
 	opacity:1;
-	transform:translateZ(0px);
 	transform: translateY(0px);
 }
 
