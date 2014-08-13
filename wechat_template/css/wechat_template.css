@@ -5,6 +5,7 @@ body {
     
     margin: 0px;
     font-family: "微软雅黑", "黑体", Arial, "Times New Roman", Verdana;
+	background: #f5f5f5;
 }
 
 ul, ol {
@@ -157,14 +158,14 @@ li {
 /*****************项目详情******************/
 .de_project_detail{
 	width: auto;
-	padding:20px;
 }
 .de_project_detail .logo{
-    margin-top: -10px;
+    margin:20px;
 }
 .de_project_detail h2 {
     font-size: 1.5em;
-	color:#390;
+	color:#09bc72;
+	margin:10px 20px;
 }
 .de_project_detail h4 {
     text-align: center;
@@ -175,25 +176,27 @@ li {
 }
 
 .de_project_detail .user_info {
-
+	margin:10px 20px;
+	position: relative;
 }
 
 .de_project_detail .user_info a {
-    color: #333;
+    color: #666;
 }
 
 .de_project_detail .user_info .photo {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     overflow: hidden;
-    border-radius: 60px;
-    border: #fff 3px solid;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    border-radius: 30px;
     display: block;
+	background:#999;
+	position: absolute;
+	top:5px;
+	left:0;
 }
 
 .de_project_detail .user_info .name {
-
     font-size: 12px;
     letter-spacing: 2px;
     text-align: left;
@@ -201,12 +204,15 @@ li {
     white-space: nowrap;
     overflow: hidden;
     display: inline-block;
-
+	margin-left:40px;
+	font-weight: bold;
+	color:#666;
 }
 
 .de_project_detail .de_stats_tags {
+	color:#999;
 	position: absolute;
-	top: 10px;
+	top: 20px;
 	right: 20px;
 }
 
@@ -248,16 +254,22 @@ li {
 
 .de_project_detail .publishtime {
     font-size: 12px;
+	color:#29abe2;
+	margin:10px 20px;
 }
 
 .de_project_detail .abstract {
-    font-size: 14px;
+    font-size: 1em;
     line-height: 2em;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+	margin:10px 20px;
+	color:#666;
 }
 
 .de_project_detail figure {
-    margin: 10px 0;
+    margin: 10px 5px;
+	font-size:0;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .de_project_detail figure img {
@@ -265,15 +277,26 @@ li {
 }
 
 .de_project_detail figcaption {
-    font-size: 12px;
-    line-height: 2em;
-    background: #ccc;
-    color: #fff;
-    text-align: center;
-    margin-bottom: 40px;
+    font-size: 14px;
+    line-height: 1.5em;
+    background: #fff;
+    color: #999;
+	padding:20px;
+	border-top:#ccc 1px dotted;
 }
 .main_content a{
     position: relative;
     display: inline-block;
 	width:100%;
+}
+.de_footer {
+padding: 5px 0;
+margin: 20px 0 0 0;
+color: #999;
+text-shadow: 0 1px rgba(255,255,255,1);
+font-size: 12px;
+height: 40px;
+width: 100%;
+overflow: hidden;
+text-align: center;
 }
