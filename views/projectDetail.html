@@ -1,5 +1,5 @@
 <!--作品详情展示-->
-
+<div ng-controller="projectDetail">
 <!--工具栏-->
 <div class="de_project_header de_borderbox">
     <a href="" ng-show="project.praised" class="de_flag_reg_zanned de_btn_zan de_borderbox">赞</a>
@@ -14,7 +14,7 @@
     </ul>
 
     <a href="" ng-show="project.toHome"  class="de_btn_close_project_detail de_btn_back_to_home">关闭</a>
-    <a href="" ng-show="!project.toHome" ng-click="closeProjectDetail()" class="de_btn_close_project_detail">关闭</a>
+    <a href="" ng-show="!project.toHome" ng-click="hideProjectDetail()" class="de_btn_close_project_detail">关闭</a>
 </div>
 
 <!--显示详细信息-->
@@ -157,3 +157,5 @@
         </ul>
     </li>
 </ul>
+
+</div>

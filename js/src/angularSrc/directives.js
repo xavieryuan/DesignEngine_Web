@@ -5,7 +5,7 @@
  * Time: 下午3:10
  * To change this template use File | Settings | File Templates.
  */
-var directives=angular.module("directives",["classes"]);
+var directives=angular.module("directives",["services"]);
 directives.directive('pwdCheck', function(){
     return {
         require: 'ngModel',
@@ -122,19 +122,21 @@ directives.directive("drag",function(){
         }
     }
 });
-directives.directive('clickToHideModalPanel', function(){
+
+directives.directive("windowStateChange",["$window","CFunctions","LocationChanger",function($window,CFunctions,LocationChanger){
     return {
-        link: function (scope, element, attrs, ctrl) {            
-            element.on('click', function (event) {
-				scope.$apply(function(){
-                        scope.mainFlags.extMenuActive="";
-                    });
-            });
+        link:function(scope,element,attrs){
+
+            $window.onpopstate=function(event){
+                scope.initPage();
+                scope.$apply();
+                LocationChanger.canReload();
+            };
         }
     }
-});
-directives.directive("windowScroll", ["$window","$timeout","Config","Storage","Project","Box",
-    function ($window,$timeout,Config,Storage,Project,Box) {
+}]);
+directives.directive("windowScroll", ["$window","$document","$timeout","Config","Storage","Project","Box",
+    function ($window,$document,$timeout,Config,Storage,Project,Box) {
         return {
             link: function(scope, element, attrs) {
 
@@ -144,9 +146,11 @@ directives.directive("windowScroll", ["$window","$timeout","Config","Storage","P
                     if(Storage.scrollTimer){
                         $timeout.cancel(Storage.scrollTimer);
                     }
-                    //console.log(scope);
-                    if(Storage.currentScrollScreenType&&document.body.scrollHeight-$window.innerHeight<=$window.scrollY&&
-                        Storage.currentPage!=Config.hasNoMoreFlag){
+
+                    //console.log($document[0]);
+
+                    if(Storage.currentScrollScreenType&&$document[0].body.scrollHeight-$window.innerHeight<=$window.scrollY&&
+                        Storage.currentPage!=Config.hasNoMoreFlag&&scope.mainFlags.showMainWrapper){
                         Storage.scrollTimer=$timeout(function(){
                             switch(Storage.currentScrollScreenType){
                                 case Config.scrollScreenType.project:

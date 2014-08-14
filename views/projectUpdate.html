@@ -3,14 +3,14 @@
    <h4 class="de_upload_title">上传至“{{box.name}}”</h4>
     <nav class="de_tab_upload">
         <ol>
-            <li><a href="" class="de_tab_step1 active {{stepClass[0]}}" ng-click="setStepActive(0)">1. 填写基本信息</a></li>
-            <li><a href="" class="de_tab_step2 active {{stepClass[1]}}" ng-click="setStepActive(1)">2. 上传</a></li>
-            <li><a href="" class="de_tab_step3 active {{stepClass[2]}}"
-                   ng-click="setStepActive(2);getPreviewMedias('mediaItem','data-media-id')">3. 预览并提交</a></li>
+            <li><a href="" ng-class="{current:currentTab==1}" class="de_tab_step1 active" ng-click="setTabActive(1)">1. 填写基本信息</a></li>
+            <li><a href="" ng-class="{current:currentTab==2}" class="de_tab_step2 active" ng-click="setTabActive(2)">2. 上传</a></li>
+            <li><a href="" ng-class="{current:currentTab==3}" class="de_tab_step3 active"
+                   ng-click="setTabActive(3);getPreviewMedias('mediaItem','data-media-id')">3. 预览并提交</a></li>
         </ol>
     </nav>
     <form class="de_form_upload de_borderbox de_boxshadow">
-        <div class="de_upload_step1" ng-show="stepPanelIndex==0">           
+        <div class="de_upload_step1" ng-show="currentTab==1">
             <p class="de_field_project_title">
                 <label>标题</label>
                 <input type="text" maxlength="80" class="de_borderbox de_inputbox_gray"
@@ -44,12 +44,13 @@
         </div>
 
         <!-- step 2-->
-        <div class="de_upload_step2" ng-show="stepPanelIndex==1">
+        <div class="de_upload_step2" ng-show="currentTab==2">
             <div class="zy_uploader_column_left">
                 <span class="zy_section_left_header" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()">添加文件</span>
                 <!--媒体文件类型的menu-->
 
-                <div id="uploadContainer" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()" class="zy_add_media_menu {{mediaMenuActive}}">
+                <div id="uploadContainer" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()"
+                     ng-class="{zy_add_media_menu_active:uploadMediaMenuActive}" class="zy_add_media_menu">
                     <ul>
                         <li><a id="uploadImage" class="zy_types1"
                                ng-init="createImageUploader('uploadImage','uploadContainer')">图片（JPG, PNG）</a></li>
@@ -88,7 +89,7 @@
         </div>
 
         <!-- step 3-->
-        <div class="de_upload_step3" ng-show="stepPanelIndex==2">
+        <div class="de_upload_step3" ng-show="currentTab==3">
             <input type="submit" autocomplete="default" value="提交" class="de_borderbox de_submit_upload"
                    name="de_submit_upload" id="de_submit_upload"/>
             <article id="de_upload_preview" class="de_project_detail de_borderbox">

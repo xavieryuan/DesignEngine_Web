@@ -12,30 +12,39 @@
  * Time: 下午3:42
  * To change this template use File | Settings | File Templates.
  */
-var viewControllers=angular.module("viewControllers",["classes","toaster","directives","ngTable"]);
+var viewControllers=angular.module("viewControllers",["services","toaster","directives","ngTable"]);
 
 viewControllers.controller("projects",['$scope',"Config","Storage","Project","CFunctions",function($scope,Config,Storage,Project,CFunctions){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
-    $scope.menuStatus.projectsClass=Config.classNames.mainMenuActive;
-    $scope.menuStatus.boxesClass="";
-    $scope.mainFlags.extMenuActive="";
+    $scope.mainFlags.currentMenu=Config.mainMenu.project;
+    $scope.mainFlags.extMenuActive=false;
 
-    Storage.currentScrollScreenType=Config.scrollScreenType.project;
-    Storage.currentPage=1;
+
+    Storage.clearScrollData(Config.scrollScreenType.project);
 
     $scope.projects=[];
     Project.getProjects($scope);
-
     //console.log(Project);
 }]);
 
-viewControllers.controller("projectDetail",["$scope","CFunctions",function($scope,CFunctions){
-    $scope.mainFlags.extMenuActive="";
+viewControllers.controller("projectDetail",["$scope","$window","Storage","CFunctions",function($scope,$window,Storage,CFunctions){
 
-    $scope.closeProjectDetail=function(){
-        CFunctions.hideProjectDetail($scope,true);
+    var projectId=CFunctions.getPathParam();
+    console.log(projectId);
 
+    $scope.mainFlags.extMenuActive=false;
+    $scope.mainFlags.showProjectDetailFlag=true;
+    $scope.mainFlags.showMainWrapper=false;
+
+    $scope.hideProjectDetail=function(){
+        CFunctions.hideProjectDetail(function(){
+            //重置de_project_detail位置到页面顶端
+
+            $scope.closeProjectDetailPanel();
+
+            history.back();
+        });
     };
 
     $scope.project={
@@ -160,8 +169,8 @@ viewControllers.controller("projectDetail",["$scope","CFunctions",function($scop
     ];
 }]);
 
-viewControllers.controller("uploadProject",["$scope","$http","$route","toaster","Config","CFunctions","Project",
-    function($scope,$http,$route,toaster,Config,CFunctions,Project){
+viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$route","toaster","Config","Storage","CFunctions","Project",
+    function($scope,$routeParams,$http,$route,toaster,Config,Storage,CFunctions,Project){
 
         function addTag(tag){
             if($scope.project.tags.indexOf(tag)===-1){
@@ -184,7 +193,7 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
 
 
             }
-            $scope.mediaMenuActive="";
+            $scope.mediaMenuActive=false;
             $scope.$apply();
         }
         function progressCb(up,file){
@@ -260,14 +269,19 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
                 }
             });
         }
-        function initData($scope,Id){
-            Project.get({id:id},function(data){
+
+        function initProjectData(Id){
+            Project.get({id:Id},function(data){
                 $scope.project.title=data.title;
                 $scope.project.open=data.open;
                 $scope.project.tags=data.tags;
             },function(data){
                 CFunctions.ajaxErrorHandler();
             });
+        }
+
+        function initBoxData(Id){
+
         }
 
         var fileIdToMediaIdHash={};
@@ -278,16 +292,32 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
             tags:[],
             medias:{}
         };
+        $scope.box={
+            id:0,
+            name:""
+        };
 
-        $scope.mainFlags.extMenuActive="";
+        $scope.box.id=$routeParams.boxId;
+
+
         $scope.currentEditMediaId=0;
         $scope.mediaSetPanelUrl="";
         $scope.currentMediaType="";
         $scope.previewMedias=[];
         $scope.mediaSetTitle=Config.messages.clickToSet;
-        $scope.mediaMenuActive=Config.classNames.mediaMenuActive;
-        $scope.stepClass=[Config.classNames.uploadStepActive,"",""];
-        $scope.stepPanelIndex=0;
+        $scope.uploadMediaMenuActive=false;
+        $scope.currentTab=1;
+        $scope.mainFlags.extMenuActive=false;
+
+        Storage.clearScrollData();
+
+        if($routeParams.projectId){
+            initProjectData($routeParams.projectId);
+        }
+
+        initBoxData($scope.box.id);
+
+
 
         $scope.getPreviewMedias=function(mediaClass,attr){
 
@@ -306,17 +336,17 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
             }
         };
 
-        $scope.setStepActive=function(index){
+        $scope.setTabActive=function(index){
 
             //判断是否数据都填写完整,才能执行界面转换
-            if(index>=1){
+            if(index>1){
                 if(!$scope.project.title||$scope.project.tags.length==0||
                     $scope.project.thumb==Config.thumbs.defaultThumb||!$scope.project.description){
 
                     toaster.pop('error',Config.messages.errorTitle,Config.messages.stepOneUnComplete,null,null);
                     return false;
                 }
-            }else if(index==2){
+            }else if(index==3){
                 var noMedia=false,someMediaHasNoThumb=false,hasUnCompleteMedia=false;
 
                 //判断媒体文件是否上传完整
@@ -356,14 +386,7 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
             }
 
             //设置状态
-            for(var i =0;i<3;i++){
-                if(index==i){
-                    $scope.stepClass[i]=Config.classNames.uploadStepActive;
-                    $scope.stepPanelIndex=i;
-                }else{
-                    $scope.stepClass[i]="";
-                }
-            }
+            $scope.currentTab=index;
 
         };
 
@@ -413,10 +436,10 @@ viewControllers.controller("uploadProject",["$scope","$http","$route","toaster",
         };
 
         $scope.showMediaMenu=function(){
-            $scope.mediaMenuActive=Config.classNames.mediaMenuActive;
+            $scope.uploadMediaMenuActive=true;
         };
         $scope.hideMediaMenu=function(){
-            $scope.mediaMenuActive="";
+            $scope.uploadMediaMenuActive=false;
         };
 
         $scope.createImageUploader=function(buttonId,containerId){
@@ -587,12 +610,13 @@ viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project",
 
 viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams","Comment","CFunctions","Config",
     function($scope,toaster,ngTableParams,Comment,CFunctions,Config){
-        $scope.menuStatus.projectsClass="";
-        $scope.menuStatus.boxesClass="";
-        $scope.mainFlags.extMenuActive="";
+        $scope.mainFlags.currentMenu="";
+
 
         $scope.searchType="";
         $scope.searchContent="";
+
+        $scope.mainFlags.extMenuActive=false;
 
         $scope.table= new ngTableParams({
             count:Config.perLoadCount,
@@ -639,28 +663,30 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
 viewControllers.controller("boxes",['$scope',"Config","Storage","Box",function($scope,Config,Storage,Box){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
-    $scope.menuStatus.projectsClass="";
-    $scope.menuStatus.boxesClass=Config.classNames.mainMenuActive;
-    $scope.mainFlags.extMenuActive="";
-    Storage.currentScrollScreenType=Config.scrollScreenType.box;
-    Storage.currentPage=1;
+    $scope.mainFlags.currentMenu=Config.mainMenu.box;
+
+    Storage.clearScrollData(Config.scrollScreenType.box);
 
     $scope.boxes=[];
     Box.getBoxes($scope);
 
+    $scope.mainFlags.extMenuActive=false;
+
 }]);
 
-viewControllers.controller("boxDetail",['$scope',"Box","Storage","Config",function($scope,Box,Storage,Config){
+viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage","Config",function($scope,$routeParams,Box,Storage,Config){
+
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
-    $scope.menuStatus.projectsClass="";
-    $scope.menuStatus.boxesClass="";
-    $scope.mainFlags.extMenuActive="";
+    var boxId=$routeParams.boxId;
+    $scope.mainFlags.currentMenu="";
 
-    Storage.currentScrollScreenType=Config.scrollScreenType.boxDetail;
-    Storage.currentPage=1;
+
+    Storage.clearScrollData(Config.scrollScreenType.boxDetail);
     $scope.projects=[];
     Box.getBoxProjects($scope);
+
+    $scope.mainFlags.extMenuActive=false;
 
     $scope.box={
         "id":1,
@@ -711,8 +737,8 @@ viewControllers.controller("boxDetail",['$scope',"Box","Storage","Config",functi
 
 }]);
 
-viewControllers.controller("boxCreate",["$scope","toaster","CFunctions","Config","Box",
-    function($scope,toaster,CFunctions,Config,Box){
+viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunctions","Config","Box",
+    function($scope,$routeParams,toaster,CFunctions,Config,Box){
         function addTag(tag){
             if($scope.box.tags.indexOf(tag)===-1){
                 $scope.box.tags.push(tag);
@@ -738,14 +764,14 @@ viewControllers.controller("boxCreate",["$scope","toaster","CFunctions","Config"
         };
 
         //修改的时候需要初始化数据
-        if(CFunctions.getPathParam()){
-            initData($scope,CFunctions.getPathParam());
+        if($routeParams.boxId){
+            initData($scope,$routeParams.boxId);
         }
 
 
-        $scope.menuStatus.projectsClass="";
-        $scope.menuStatus.boxesClass="";
-        $scope.mainFlags.extMenuActive="";
+        $scope.mainFlags.currentMenu="";
+
+        $scope.mainFlags.extMenuActive=false;
 
         $scope.deleteTag=function(index){
             $scope.box.tags.splice(index,1);
@@ -817,9 +843,9 @@ viewControllers.controller("boxesManage",['$scope',"ngTableParams","Box","CFunct
 viewControllers.controller("userHome",['$scope',function($scope){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
-    $scope.menuStatus.projectsClass="";
-    $scope.menuStatus.boxesClass="";
-    $scope.mainFlags.extMenuActive="";
+    $scope.mainFlags.currentMenu="";
+
+    $scope.mainFlags.extMenuActive=false;
 
     $scope.user={
         "id":1,
@@ -935,9 +961,11 @@ viewControllers.controller("usersManage",['$scope',"ngTableParams","User","CFunc
     }]);
 
 viewControllers.controller("searchResult",["$scope","LocationChanger",function($scope,LocationChanger){
-    $scope.menuStatus.projectsClass="";
-    $scope.menuStatus.boxesClass="";
-    $scope.mainFlags.extMenuActive="";
+    $scope.mainFlags.currentMenu="";
+
+    $scope.mainFlags.extMenuActive=false;
+
+    $scope.closePop(true);
 
     $scope.projects=[
         {

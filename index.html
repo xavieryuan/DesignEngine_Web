@@ -30,7 +30,7 @@
     <script src="js/lib/qiniu.js"></script>
    <!-- <script src="http://qzone.qq.com/gy/404/data.js"></script>
     <script src="js/src/baiduAnalytics.js"></script>-->
-    <script src="js/src/angularSrc/classes.js"></script>
+    <script src="js/src/angularSrc/services.js"></script>
     <script src="js/src/angularSrc/filters.js"></script>
     <script src="js/src/angularSrc/directives.js"></script>
 
@@ -39,11 +39,11 @@
     <script src="js/src/angularSrc/animations.js"></script>
     <script src="js/src/angularSrc/app.js"></script>
 </head>
-<body ng-controller="super" >
+<body ng-controller="super" window-state-change>
 <toaster-container></toaster-container>
     <div class="de_page_wrapper" ng-show="mainFlags.showMainWrapper">
         <header class="de_header">
-            <h1 class="de_logo"><a href="http://localhost/DesignEngine_Web/" target="_self">图钉墙</a></h1>
+            <h1 class="de_logo"><a href="#" target="_self">图钉墙</a></h1>
 
             <!-----用户菜单----->
             <nav class="de_user_nav de_borderbox">
@@ -58,14 +58,14 @@
                         <a class="de_btn_upload de_borderbox" href="upload">上传</a>
                     </li>-->
                     <li class="de_reg_view " ng-show="currentUser.id">
-                        <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="showExtMenu($event)">更多</a>
-                        <ul class="de_ext_nav {{mainFlags.extMenuActive}}" id="de_ext_nav">
+                        <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="toggleExtMenu($event)">更多</a>
+                        <ul ng-class="{de_ext_nav_active:mainFlags.extMenuActive}" class="de_ext_nav" id="de_ext_nav">
                            	<!--<li class="de_reg_view" ng-show="currentUser.id">
                         		<a class="de_btn_upload de_borderbox" href="upload">上传作品</a>
                     		</li>-->
                            	<li class="de_reg_view " ng-show="currentUser.id">
                                 <a ng-href="user/{{currentUser.id}}">我的作品集</a>
-                                <a class="de_btn_upload de_borderbox"   ng-href="upload/{{currentUser.boxId}}">上传作品</a>
+                                <a class="de_btn_upload de_borderbox"   ng-href="project/create/{{currentUser.boxId}}">上传作品</a>
                             </li>
                             <li class="de_reg_view">
                                 <a ng-href="boxes">我的投稿箱</a>
@@ -103,8 +103,8 @@
             <!-----顶部菜单----->
             <nav class="de_top_nav" id="de_top_nav" >
                 <ul>
-                    <li><a href="projects" class="de_borderbox {{menuStatus.projectsClass}}">作品酷</a></li>
-                    <li><a href="boxes" class="de_borderbox {{menuStatus.boxesClass}}">投稿箱</a></li>
+                    <li><a href="projects" ng-class="{active:mainFlags.currentMenu=='project'}" class="de_borderbox">作品酷</a></li>
+                    <li><a href="boxes" ng-class="{active:mainFlags.currentMenu=='box'}" class="de_borderbox">投稿箱</a></li>
                     <li class="de_btn_filter"><a href="" class="de_borderbox" ng-click="toSearch()">探索...</a></li>
                 </ul>
             </nav>
@@ -121,7 +121,7 @@
 
 
     <!-----------作品详情----------->
-    <section class="de_screen_project_detail" ng-controller="projectDetail"
+    <section class="de_screen_project_detail"
              ng-show="mainFlags.showProjectDetailFlag" ng-include="mainFlags.projectDetailTemplate" >
 
     </section>
@@ -140,7 +140,7 @@
     <div class="de_blackout" ng-show="mainFlags.showBlackOut"></div>
     <!-----------load spinner----------->
 
-    <div class="de_loading de_animation_loading" ng-show="mainFlags.showLoading">
+    <div class="de_loading de_animation_loading" ng-show="loading.show">
         <div class="de_loading_spinner"></div>
     </div>
 

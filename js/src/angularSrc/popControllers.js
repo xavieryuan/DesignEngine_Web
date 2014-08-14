@@ -5,15 +5,15 @@
  * Time: 上午9:52
  * To change this template use File | Settings | File Templates.
  */
-var popControllers=angular.module("popControllers",["classes"]);
-popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage","CFunctions",
-    function($scope,Config,LocationChanger,Storage,CFunctions){
+var popControllers=angular.module("popControllers",["services"]);
+popControllers.controller("signIn",["$scope","$document","Config","LocationChanger","Storage","CFunctions",
+    function($scope,$document,Config,LocationChanger,Storage,CFunctions){
 
         $scope.loginError="";
-        $scope.mainFlags.extMenuActive="";
         $scope.popFlags.title=Config.titles.signIn;
         $scope.mainFlags.showBlackOut=true;
 
+        $scope.mainFlags.extMenuActive=false;
         $scope.toRegPanel=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.signUp;
             LocationChanger.skipReload().withReplace(Config.urls.register,false);
@@ -23,8 +23,8 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
             LocationChanger.skipReload().withReplace(Config.urls.forgetPwd,false);
         };
 
-        if(document.cookie){
-            var obj=JSON.parse(decodeURIComponent(document.cookie));
+        if($document.cookie){
+            var obj=JSON.parse(decodeURIComponent($document.cookie));
             $scope.login.email=obj.email;
             $scope.login.password=obj.password;
             $scope.login.rememberMe=true;
@@ -39,9 +39,9 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
                     "email":email,
                     "password":password
                 };
-                document.cookie = encodeURIComponent(JSON.stringify(obj))+"; max-age=7*24*60*60; path=/";
+                $document.cookie = encodeURIComponent(JSON.stringify(obj))+"; max-age=7*24*60*60; path=/";
             }else{
-                document.cookie="";
+                $document.cookie="";
             }
         }
         $scope.loginSubmit=function(){
@@ -70,12 +70,13 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
     }]);
 
 popControllers.controller("signUp",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
-    $scope.mainFlags.extMenuActive="";
+
     $scope.popFlags.title=Config.titles.signUp;
     $scope.mainFlags.showBlackOut=true;
     $scope.registerError="";
     $scope.captcha="captcha.jpg";
 
+    $scope.mainFlags.extMenuActive=false;
     $scope.refreshCaptcha=function(){
         $scope.captha=$scope.captha+"?"+Math.random();
     };
@@ -88,7 +89,8 @@ popControllers.controller("signUp",["$scope","CFunctions","Config",function($sco
 popControllers.controller("forgetPwd",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
     $scope.popFlags.title=Config.titles.forgetPwd;
     $scope.mainFlags.showBlackOut=true;
-    $scope.mainFlags.extMenuActive="";
+
+    $scope.mainFlags.extMenuActive=false;
 
     $scope.forgetPwdSubmit=function(){
 
@@ -99,7 +101,8 @@ popControllers.controller("forgetPwd",["$scope","CFunctions","Config",function($
 popControllers.controller("search",["$scope","Config","LocationChanger",function($scope,Config,LocationChanger){
     $scope.popFlags.title=Config.titles.search;
     $scope.mainFlags.showBlackOut=true;
-    $scope.mainFlags.extMenuActive="";
+
+    $scope.mainFlags.extMenuActive=false;
 
     $scope.toSearch=function(href){
         LocationChanger.canReload().withoutRefresh(href,false);
@@ -112,8 +115,8 @@ popControllers.controller("search",["$scope","Config","LocationChanger",function
 popControllers.controller("editPwd",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
     $scope.popFlags.title=Config.titles.editPwd;
     $scope.mainFlags.showBlackOut=true;
-    $scope.mainFlags.extMenuActive="";
 
+    $scope.mainFlags.extMenuActive=false;
     $scope.editPwdSubmit=function(){
 
     };
@@ -122,11 +125,12 @@ popControllers.controller("editPwd",["$scope","CFunctions","Config",function($sc
 
 popControllers.controller("editInfo",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
     $scope.popFlags.title=Config.titles.editInfo;
-    $scope.mainFlags.extMenuActive="";
     $scope.mainFlags.showBlackOut=true;
     $scope.editInfo.profile=$scope.currentUser.profile;
     $scope.editInfo.description=$scope.currentUser.description;
 
+
+    $scope.mainFlags.extMenuActive=false;
     $scope.editInfoSubmit=function(){
 
     };
