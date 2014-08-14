@@ -457,7 +457,7 @@ services.service("CFunctions",["$rootScope","$location","$http","toaster","Confi
             refreshScope();
         }});
     }
-
+	
 }]);
 
 services.service("Storage",function(){

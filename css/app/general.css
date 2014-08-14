@@ -723,7 +723,7 @@ li {
     height:100%;
 	line-height:60px;
     width: 140px;
-    background: url(../../images/app/logo_40.png) no-repeat 10px center;
+    background: url(../../images/app/logo_40.png) no-repeat 8px center;
     text-indent: 60px;
 	font-size:18px;
 	font-weight:bold;
@@ -806,6 +806,7 @@ li {
     text-indent: -9999px;
     margin: 0;
 	border-left:#ccc 1px dotted;
+	height:60px;
 }
 
 .de_user_nav>ul>li>.de_btn_hotdogmenu:before {
@@ -923,7 +924,7 @@ li {
     left: 140px;
     bottom: 0;
     width: 40%;
-    text-align: center;
+    text-align: left;
     font-size: 12px;
     letter-spacing: 2px;
     color: #666;
@@ -941,6 +942,7 @@ li {
     width: 25%;
     max-width: 200px;
 	height:100%;
+	text-align: center;
 }
 
 .de_top_nav ul li a {
@@ -1114,16 +1116,15 @@ li {
     margin: 20px 0;
 }
 
-.de_project_grid>li {
-    display: inline-block;
-    list-style: none;
+.de_project_grid>li {    
     width: 220px;
-    min-width: 175px;
-    height: 330px;
-    position: relative;
+    height: 330px;    
     background: #fff;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     margin: 10px;
+	display: inline-block;
+	position: relative;
+    list-style: none;    
     overflow: hidden;
 }
 
@@ -1290,28 +1291,20 @@ li {
 }
 
 /*作品网格ng动效*/
-.de_project_grid li.ng-enter{
+.de_project_grid>li.ng-enter{
+	-webkit-transition: 0.3s linear all;
+	transition: 0.3s linear all;
 	opacity:0;
-    -webkit-transition: 0.5s linear all;
-    -webkit-transform:translateZ(10px);
-    -webkit-transform: translateY(10px);
-    -webkit-transform-origin: center;
-    transition: 0.5s linear all;
-    transform:translateZ(10px);
-    transform: translateY(10px);
-    transform-origin: center;
+	transform: translateY(10px);
 }
-.de_project_grid li.ng-enter-stagger{
+.de_project_grid>li.ng-enter-stagger{
     -webkit-transition-delay: 0.2s;
 	transition-delay: 0.2s;
     -webkit-transition-duration: 0s;
     transition-duration: 0s;
 }
-.de_project_grid li.ng-enter.ng-enter-active{
+.de_project_grid>li.ng-enter.ng-enter-active{	
 	opacity:1;
-    -webkit-transform:translateZ(0px);
-    -webkit-transform: translateY(0px);
-	transform:translateZ(0px);
 	transform: translateY(0px);
 }
 
@@ -2859,21 +2852,21 @@ span.zy_tooltips{
     left: 0;
 }
 .de_loading{
-    background: #000;
     position: fixed;
     z-index: 10000;
-    opacity: 0.7;
     top: 0;
     left: 0;
-    right: 0;
-    bottom:0;
+	height:60px;
+	width:60px;
     text-align: center;
     line-height: 100%;
     color:#ccc;
-	/*-webkit-perspective: 100px;
-	perspective: 100px;*/
+	background:#fff;
+	-webkit-perspective: 75px;
+	perspective: 75px;
 }
 .de_loading_spinner{
+	opacity: 0.9;
 	width:40px;
 	height:40px;
 	position:fixed;
@@ -2881,10 +2874,10 @@ span.zy_tooltips{
 	left:50%;
 	margin-top:-20px;
     margin-left:-20px;
-    background:url(../../images/app/loading_spinner.png) no-repeat;
-    -webkit-animation: spin 1.2s infinite ease-in-out;
-    -moz-animation: spin 1.2s infinite ease-in-out;
-    animation: spin 1.2s infinite ease-in-out;
+    background:url(../../images/app/loading_spinner_black.png) no-repeat;
+    -webkit-animation: spin 1s infinite ease-in-out;
+    -moz-animation: spin 1s infinite ease-in-out;
+    animation: spin 1s infinite ease-in-out;
 	}
 
 /*这里需要注意优先级，如果不使用important，这个声明需要在de_loading_spinner后*/
@@ -3099,13 +3092,13 @@ span.zy_tooltips{
 @media screen and (max-width: 768px) {
 	/*顶部导航*/
 	.de_logo>a{
-		width: 70px;
+		width: 60px;
 		font-size: 0;
 		background-position:center;
 		text-indent:-9999px;
 	}
 	.de_top_nav{
-		left:70px;
+		left:60px;
 		width:70%;
 	}
 	.de_filter_menu>.de_filter_group{
@@ -3325,26 +3318,26 @@ span.zy_tooltips{
 /*动画定义*/
 @-webkit-keyframes spin{
      0%{
-          -webkit-transform:rotateY(0deg);
+          -webkit-transform:rotateY(30deg);
      }
      100%{
-          -webkit-transform:rotateY(180deg);
+          -webkit-transform:rotateY(210deg);
      }
 }
 @-moz-keyframes spin{
      0%{
-          -moz-transform:rotateY(0deg);
+          -moz-transform:rotateY(30deg);
      }
      100%{
-          -moz-transform:rotateY(180deg);
+          -moz-transform:rotateY(210deg);
      }
 }
 @keyframes spin{
      0%{
-          transform:rotateY(0deg);
+          transform:rotateY(30deg);
      }
      100%{
-          transform:rotateY(180deg);
+          transform:rotateY(210deg);
      }
 }
 
