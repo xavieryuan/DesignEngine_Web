@@ -21,8 +21,7 @@ animations.animation(".de_ext_nav",function(){
 animations.animation(".de_popout",function(){
 	return{
 		enter:function(element,done){
-			TweenMax.set(element,{z:90,opacity:0});
-			TweenMax.to(element,0.5,{z:0,opacity:1, ease:Circ.easeOut, onComplete:done})
+			TweenMax.from(element,0.5,{z:90,opacity:0,ease:Circ.easeOut, onComplete:done});
 		},
 		leave:function(element,done){
 			TweenMax.to(element,0.5,{z:90,opacity:0, ease:Circ.easeOut, onComplete:done})
@@ -32,13 +31,13 @@ animations.animation(".de_popout",function(){
 animations.animation(".de_blackout",function(){
 	return{
 		beforeAddClass: function(element, className, done) {
-			if(className=="ng-hide"){
-				TweenMax.set(element,{opacity:0.7});
+			if(className=="ng-hide"){				
 				TweenMax.to(element,0.5,{opacity:0, ease:Circ.easeOut, onComplete:done})
 			}
 		},
 		beforeRemoveClass: function(element, className, done) {
-			if(className=="ng-hide"){				
+			if(className=="ng-hide"){
+				TweenMax.set(element,{opacity:0});
 				TweenMax.to(element,0.5,{opacity:0.7, ease:Circ.easeOut, onComplete:done})
 			}
 		}
@@ -52,11 +51,9 @@ animations.animation(".de_screen_project_detail",function(){
 			window.scrollTo(0,0);
 			var header=$(element).find(".de_project_header");
 			var detail=$(element).find(".de_project_detail");
-			TweenMax.set(element,{opacity:0});
-			TweenMax.set(header,{y:-100});
-			TweenMax.set(detail,{y:100});
-			TweenMax.to([header,detail],0.3,{y:0});
-			TweenMax.to(element,0.4,{opacity:1,onComplete:done});
+			TweenMax.from(element,0.4,{opacity:0,onComplete:done});
+			TweenMax.from(header,0.3,{y:-100});
+			TweenMax.from(detail,0.3,{y:100});
 		}/*,
 		leave:function(element,done){
 			var header=$(element).find(".de_project_header");
