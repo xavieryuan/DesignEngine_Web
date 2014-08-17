@@ -41,19 +41,20 @@ services.constant("Config",{
         "projectDetail":"views/projectDetail.html"
     },
     urls:{  //用到的路径
-        "projects":"/project",
+        "projects":"/projects",
         "boxes":"/boxes",
         "boxDetail":"/box/:boxId",
         "home":"/",
         "projectDetail":"/project/:projectId",
-        "projectDetailReg":/\/project\/\d*/,
+        "projectDetailReg":/\/project\/\d?/,
         "signIn":"/login",
         "signUp":"/register",
         "editPwd":"change/password",
         "editInfo":"change/info",
         "userHome":"/user/{userId}",
         "search":"/search",
-        "searchResult":"/search/{content}",
+        "searchResult":"/search/:content",
+        "searchResultReg":/\/search\/*?/,
         "forgetPwd":"/forgetPassword"
     },
     imageScale:{
@@ -194,7 +195,8 @@ services.constant("Config",{
         deleteProject:"post/remove/:id",
         getSimilarProjects:"post/similar",
         getAllComments:"data/commentsManage.json",
-        getAllBoxes:"data/boxes.json"
+        getAllBoxes:"data/boxes.json",
+        getCompleteUrl:"data/autocomplete.json"
     },
     roles:{   //角色
         admin:"admin",
@@ -551,21 +553,16 @@ services.service('LocationChanger', ['$location', '$route', '$rootScope',"CFunct
 services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Config",
     function($rootScope,$resource,Storage,CFunctions,Config){
         return {
-            getProjects:function($scope){
-                var me=this;
-                this.resource.query({"page":Storage.currentPage},function(data){
+            getProjects:function(){
+                return this.resource.query({"page":Storage.currentPage},function(data){
+                    //console.log("In services");
                     if(data.success){
-                        $scope.projects=$scope.projects.concat(data.projects);
                         if(Storage.currentPage==data.total){
                             Storage.currentPage=Config.hasNoMoreFlag;
                         }else{
                             Storage.currentPage++;
                         }
-                    }else{
-                        CFunctions.ajaxReturnErrorHandler(data);
                     }
-                },function(data){
-                    CFunctions.ajaxErrorHandler();
                 });
             },
             resource: $resource(Config.ajaxUrls.getAllProjects,{},{
@@ -573,6 +570,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
                 remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
                 save:{url:Config.ajaxUrls.deleteProject},
+                getSearchResult:{method:"get",url:"#",params:{content:"search"}},
                 getSimilar:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
             })
         };
@@ -591,6 +589,7 @@ services.factory("Box",["$rootScope","$resource","Config","Storage","CFunctions"
         return {
             getBoxes:function($scope){
                 this.resource.query({"page":Storage.currentPage},function(data){
+
                     if(data.success){
                         $scope.boxes=$scope.boxes.concat(data.boxes);
                         if(Storage.currentPage==data.total){

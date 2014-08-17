@@ -24,8 +24,10 @@ viewControllers.controller("projects",['$scope',"Config","Storage","Project","CF
     Storage.clearScrollData(Config.scrollScreenType.project);
 
     $scope.projects=[];
-    Project.getProjects($scope);
-    //console.log(Project);
+    Project.getProjects().$promise.then(function(data){
+        //console.log("In views");
+        $scope.projects=$scope.projects.concat(data.projects);
+    });
 }]);
 
 viewControllers.controller("projectDetail",["$scope","$window","Storage","CFunctions",function($scope,$window,Storage,CFunctions){
@@ -395,13 +397,13 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         };
 
 
-        $scope.keyDownAddTag=function($event,tag){
+        $scope.keyDownAddTag=function($event){
             if($event.which==13){
-                addTag(tag);
+                addTag($scope.project.newTag);
             }
         };
-        $scope.blurAddTag=function(tag){
-            addTag(tag);
+        $scope.blurAddTag=function(){
+            addTag($scope.project.newTag);
         };
 
         $scope.createThumbUploader=function(buttonId,containerId){
@@ -960,7 +962,7 @@ viewControllers.controller("usersManage",['$scope',"ngTableParams","User","CFunc
 
     }]);
 
-viewControllers.controller("searchResult",["$scope","LocationChanger",function($scope,LocationChanger){
+viewControllers.controller("searchResult",["$scope",function($scope){
     $scope.mainFlags.currentMenu="";
 
     $scope.mainFlags.extMenuActive=false;

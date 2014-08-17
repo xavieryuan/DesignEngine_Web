@@ -26,8 +26,8 @@
                 </ul>
                 <p class="de_form_tip">在下方输入标签，按回车确认。</p>
                 <input type="text" class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20"
-                   placeholder="新标签..." ng-keydown="keyDownAddTag($event,project.newTag)"
-                   ng-blur="blurAddTag(project.newTag)" ng-model="project.newTag">
+                   placeholder="新标签..." ng-keydown="keyDownAddTag($event)"
+                   ng-blur="blurAddTag()" ng-model="project.newTag">
             </p>
             <p class="de_field_project_description">
                 <label>内容说明</label>

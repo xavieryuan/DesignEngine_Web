@@ -154,7 +154,9 @@ directives.directive("windowScroll", ["$window","$document","$timeout","Config",
                         Storage.scrollTimer=$timeout(function(){
                             switch(Storage.currentScrollScreenType){
                                 case Config.scrollScreenType.project:
-                                    Project.getProjects(scope);
+                                    Project.getProjects().$promise.then(function(data){
+                                        scope.projects=scope.projects.concat(data.projects);
+                                    });
 
                                     break;
                                 case Config.scrollScreenType.box:

@@ -5,7 +5,7 @@
  * Time: 上午9:52
  * To change this template use File | Settings | File Templates.
  */
-var popControllers=angular.module("popControllers",["services"]);
+var popControllers=angular.module("popControllers",["services","autoComplete"]);
 popControllers.controller("signIn",["$scope","$document","Config","LocationChanger","Storage","CFunctions",
     function($scope,$document,Config,LocationChanger,Storage,CFunctions){
 
@@ -98,14 +98,21 @@ popControllers.controller("forgetPwd",["$scope","CFunctions","Config",function($
 
 }]);
 
-popControllers.controller("search",["$scope","Config","LocationChanger",function($scope,Config,LocationChanger){
+popControllers.controller("search",["$scope","AutoComplete","Config","LocationChanger",function($scope,AutoComplete,Config,LocationChanger){
     $scope.popFlags.title=Config.titles.search;
     $scope.mainFlags.showBlackOut=true;
 
     $scope.mainFlags.extMenuActive=false;
 
-    $scope.toSearch=function(href){
-        LocationChanger.canReload().withoutRefresh(href,false);
+    AutoComplete.autoComplete({
+        url:Config.ajaxUrls.getCompleteUrl,
+        selectedEvent:function(content){
+            $scope.toSearch(content);
+        }
+    });
+
+    $scope.toSearch=function(content){
+        LocationChanger.canReload().withReplace(Config.urls.searchResult.replace(":content",content),false);
         $scope.mainFlags.showBlackOut=false;
         $scope.popFlags.popTemplateUrl="";
     }

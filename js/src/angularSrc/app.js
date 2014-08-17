@@ -202,7 +202,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.editInfo;
             }else if(path.match(Config.urls.projectDetailReg)!==null){
                 $scope.mainFlags.projectDetailTemplate=Config.templateUrls.projectDetail;
-            }else if(path.indexOf(Config.urls.search)!==-1){
+            }else if(path.indexOf(Config.urls.search)!==-1&&path.match(Config.urls.searchResultReg)==null){
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.search;
             }else{
                 $scope.closePop(true);
