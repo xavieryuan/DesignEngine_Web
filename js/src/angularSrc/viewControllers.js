@@ -30,145 +30,45 @@ viewControllers.controller("projects",['$scope',"Config","Storage","Project","CF
     });
 }]);
 
-viewControllers.controller("projectDetail",["$scope","$window","Storage","CFunctions",function($scope,$window,Storage,CFunctions){
+viewControllers.controller("projectDetail",["$scope","$window","Storage","CFunctions","Project","Comment",
+    function($scope,$window,Storage,CFunctions,Project,Comment){
 
-    var projectId=CFunctions.getPathParam();
-    console.log(projectId);
+        var projectId=CFunctions.getPathParam();
+        //console.log(projectId);
 
-    $scope.mainFlags.extMenuActive=false;
-    $scope.mainFlags.showProjectDetailFlag=true;
-    $scope.mainFlags.showMainWrapper=false;
+        $scope.mainFlags.extMenuActive=false;
+        $scope.mainFlags.showProjectDetailFlag=true;
+        $scope.mainFlags.showMainWrapper=false;
 
-    $scope.hideProjectDetail=function(){
-        CFunctions.hideProjectDetail(function(){
-            //重置de_project_detail位置到页面顶端
+        $scope.hideProjectDetail=function(){
+            CFunctions.hideProjectDetail(function(){
+                //重置de_project_detail位置到页面顶端
 
-            $scope.closeProjectDetailPanel();
+                $scope.closeProjectDetailPanel();
 
-            history.back();
+                history.back();
+            });
+        };
+
+        $scope.project={};
+        Project.resource.getProjectDetail({id:projectId},function(data){
+            $scope.project=data.project;
         });
-    };
 
-    $scope.project={
-        "praised":true,
-        "canDoHidden":true,
-        "toHome":false,
-        "title":"测试数据",
-        "date":"2012-09-09",
-        "userName":"涛涛",
-        "userId":1,
-        "userProfile":"data/people3.jpg",
-        "honorCount":33,
-        "praiseCount":20,
-        "commentsCount":45,
-        "description":"这个还一个很友好的作品"
-    };
-    $scope.attachments=[
-        {
-            "attachmentMediaLocation":"data/01.jpg",
-            "type":"image",
-            "attachmentId":1,
-            "attachmentPreviewLocation":"data/01.jpg",
-            "attachmentDescription":"关于图片的书名"
-        },
-        {
-            "attachmentMediaLocation":"data/01.jpg",
-            "type":"video",
-            "attachmentId":2,
-            "attachmentPreviewLocation":"data/02.jpg",
-            "attachmentDescription":"关于图片的书名"
-        },
-        {
-            "attachmentMediaLocation":"data/01.jpg",
-            "type":"flash",
-            "attachmentId":3,
-            "attachmentPreviewLocation":"data/03.jpg",
-            "attachmentDescription":"关于图片的书名"
-        },
-        {
-            "attachmentMediaLocation":"data/01.jpg",
-            "type":"ppt",
-            "attachmentId":4,
-            "attachmentPreviewLocation":"data/03.jpg",
-            "attachmentDescription":"关于图片的书名"
-        },
-        {
-            "attachmentMediaLocation":"data/01.jpg",
-            "type":"3d",
-            "attachmentId":5,
-            "attachmentPreviewLocation":"data/02.jpg",
-            "attachmentDescription":"关于图片的书名"
-        }
-    ];
-    $scope.comments=[
-        {
-            "id":0,
-            "userId":0,
-            "userName":"ssss",
-            "userProfile":"data/people1.jpg",
-            "commentContent":"ssssssssssss",
-            "commentTime":"2012-09-09 23:23:23"
-        },
-        {
-            "id":0,
-            "userId":0,
-            "userName":"ssss",
-            "userProfile":"data/people2.jpg",
-            "commentContent":"ssssssssssss",
-            "commentTime":"2012-09-09 23:23:23"
-        },
-        {
-            "id":0,
-            "userId":0,
-            "userName":"ssss",
-            "userProfile":"data/people3.jpg",
-            "commentContent":"ssssssssssss",
-            "commentTime":"2012-09-09 23:23:23"
-        },
-        {
-            "id":0,
-            "userId":0,
-            "userName":"ssss",
-            "userProfile":"data/people4.jpg",
-            "commentContent":"ssssssssssss",
-            "commentTime":"2012-09-09 23:23:23"
-        }
-    ];
-    $scope.similarProjects=[
-        {
-            "id":1,
-            "thumb":"data/pic1.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"data/people1.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":2,
-            "thumb":"data/pic2.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people2.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":3,
-            "thumb":"data/pic3.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people3.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        }
-    ];
+        $scope.attachments=[];
+        Project.resource.getProjectAttachments({id:projectId},function(data){
+            $scope.attachments=data.attachments;
+        });
+
+        $scope.comments=[];
+        Comment.getCommentsByProject({projectId:projectId},function(data){
+            $scope.comments=data.comments;
+        });
+
+        $scope.similarProjects=[];
+        Project.resource.getSimilarProjects({id:projectId},function(data){
+            $scope.similarProjects=data.projects;
+        });
 }]);
 
 viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$route","toaster","Config","Storage","CFunctions","Project",
@@ -666,13 +566,14 @@ viewControllers.controller("boxes",['$scope',"Config","Storage","Box",function($
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.mainFlags.currentMenu=Config.mainMenu.box;
+    $scope.mainFlags.extMenuActive=false;
 
     Storage.clearScrollData(Config.scrollScreenType.box);
 
     $scope.boxes=[];
-    Box.getBoxes($scope);
-
-    $scope.mainFlags.extMenuActive=false;
+    Box.getBoxes().$promise.then(function(data){
+        $scope.boxes=$scope.boxes.concat(data.boxes);
+    });
 
 }]);
 
@@ -680,63 +581,22 @@ viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage",
 
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
-    var boxId=$routeParams.boxId;
+    $scope.boxId=$routeParams.boxId;
     $scope.mainFlags.currentMenu="";
+    $scope.mainFlags.extMenuActive=false;
 
 
     Storage.clearScrollData(Config.scrollScreenType.boxDetail);
+
+    $scope.box={};
+    Box.resource.get({id:$scope.boxId},function(data){
+        $scope.box=data.box;
+    });
+
     $scope.projects=[];
-    Box.getBoxProjects($scope);
-
-    $scope.mainFlags.extMenuActive=false;
-
-    $scope.box={
-        "id":1,
-        "honorCount":34,
-        "projectCount":55,
-        "disabledUpload":false,
-        "userProfile":"data/people1.jpg",
-        "userName":"涛涛",
-        "userId":1,
-        "title":"测试数据",
-        "date":"2013-07-08",
-        "description":"这个还一个很友好的作品",
-        "projects":[
-            {
-                "id":1,
-                "thumb":"data/pic1.png",
-                "praiseCount":34,
-                "commentCount":45,
-                "userProfile":"data/people1.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            },
-            {
-                "id":2,
-                "thumb":"data/pic2.png",
-                "praiseCount":34,
-                "commentsCount":45,
-                "userProfile":"data/people2.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            },
-            {
-                "id":3,
-                "thumb":"data/pic3.png",
-                "praiseCount":34,
-                "commentsCount":45,
-                "userProfile":"data/people3.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            }]
-    };
-
+    Box.getBoxProjects($scope.boxId).$promise.then(function(data){
+        $scope.projects=$scope.projects.concat(data.projects);
+    });
 }]);
 
 viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunctions","Config","Box",
@@ -962,37 +822,22 @@ viewControllers.controller("usersManage",['$scope',"ngTableParams","User","CFunc
 
     }]);
 
-viewControllers.controller("searchResult",["$scope",function($scope){
-    $scope.mainFlags.currentMenu="";
+viewControllers.controller("searchResult",["$scope","$routeParams","Project","Config","Storage",
+    function($scope,$routeParams,Project,Config,Storage){
+        var searchContent=$routeParams.content;
 
-    $scope.mainFlags.extMenuActive=false;
+        $scope.mainFlags.currentMenu="";
 
-    $scope.closePop(true);
+        $scope.mainFlags.extMenuActive=false;
 
-    $scope.projects=[
-        {
-            "id":1,
-            "thumb":"data/pic1.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"data/people1.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":2,
-            "thumb":"data/pic2.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people2.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        }
-    ];
+        Storage.clearScrollData(Config.scrollScreenType.searchResult,searchContent);
+
+        $scope.closePop(true);
+
+        $scope.projects=[];
+        Project.getSearchResult().$promise.then(function(data){
+            $scope.projects=$scope.projects.concat(data.projects);
+        });
 }]);
 
 

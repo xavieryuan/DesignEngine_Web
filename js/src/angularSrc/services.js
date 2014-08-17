@@ -112,7 +112,8 @@ services.constant("Config",{
         mediaThumbFilename:"mediaThumbFilename",
         mediaThumbFilePath:"mediaThumbFilePath",
         mediaFilename:"mediaFilename",
-        mediaFilePath:"mediaFilePath"
+        mediaFilePath:"mediaFilePath",
+        mediaId:"mediaId"
     },
     userStatus:{   //用户状态（禁言、激活）
         enabled:"enabled",
@@ -191,12 +192,17 @@ services.constant("Config",{
         signIn:"#",
         upload:"http://localhost/idchannel/chinese/wp-admin/admin-ajax.php?action=getUploadToken",
         getAllProjects:"data/projects.json", //获取首页作品媒体文件)
-        getProjectDetail:"post/info/:id", //获取作品（资源）详情
+        getProjectDetail:"data/projectDetail.json", //获取作品（资源）详情
         deleteProject:"post/remove/:id",
-        getSimilarProjects:"post/similar",
+        getProjectAttachments:"data/projectAttachments.json",
+        getProjectComments:"data/comments.json",
+        getSimilarProjects:"data/projects.json",
         getAllComments:"data/commentsManage.json",
         getAllBoxes:"data/boxes.json",
-        getCompleteUrl:"data/autocomplete.json"
+        getBoxDetail:"data/boxDetail.json",
+        getBoxProjects:"data/projects.json",
+        getCompleteUrl:"data/autocomplete.json",
+        getSearchProjects:"data/projects.json"
     },
     roles:{   //角色
         admin:"admin",
@@ -466,11 +472,13 @@ services.service("Storage",function(){
     this.currentPage=1;
     this.scrollTimer=null;
     this.currentScrollScreenType="";
+    this.searchContent="";
 
-    this.clearScrollData=function(currentScrollScreenType){
+    this.clearScrollData=function(currentScrollScreenType,searchContent){
         this.currentPage=1;
         this.scrollTimer=null;
         this.currentScrollScreenType=currentScrollScreenType?currentScrollScreenType:"";
+        this.searchContent=searchContent?searchContent:"";
     };
 
     this.currentUser={  //当前登录的用户信息
@@ -557,7 +565,19 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 return this.resource.query({"page":Storage.currentPage},function(data){
                     //console.log("In services");
                     if(data.success){
-                        if(Storage.currentPage==data.total){
+                        if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
+                            Storage.currentPage=Config.hasNoMoreFlag;
+                        }else{
+                            Storage.currentPage++;
+                        }
+                    }
+                });
+            },
+            getSearchResult:function(){
+                return this.resource.getSearchResult({"page":Storage.currentPage},function(data){
+                    //console.log("In services");
+                    if(data.success){
+                        if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
                             Storage.currentPage=Config.hasNoMoreFlag;
                         }else{
                             Storage.currentPage++;
@@ -570,8 +590,10 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
                 remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
                 save:{url:Config.ajaxUrls.deleteProject},
-                getSearchResult:{method:"get",url:"#",params:{content:"search"}},
-                getSimilar:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+                getProjectDetail:{url:Config.ajaxUrls.getProjectDetail,params:{id:1}},
+                getProjectAttachments:{url:Config.ajaxUrls.getProjectAttachments,params:{id:1}},
+                getSearchResult:{method:"get",url:Config.ajaxUrls.getSearchProjects,params:{content:"search"}},
+                getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
             })
         };
 }]);
@@ -584,53 +606,40 @@ services.factory("User",["$rootScope","$resource","Config",function($rootScope,$
         getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
     });
 }]);
-services.factory("Box",["$rootScope","$resource","Config","Storage","CFunctions",
-    function($rootScope,$resource,Config,Storage,CFunctions){
+services.factory("Box",["$rootScope","$resource","Config","Storage",
+    function($rootScope,$resource,Config,Storage){
         return {
-            getBoxes:function($scope){
-                this.resource.query({"page":Storage.currentPage},function(data){
+            getBoxes:function(){
+                return this.resource.query({"page":Storage.currentPage},function(data){
 
                     if(data.success){
-                        $scope.boxes=$scope.boxes.concat(data.boxes);
-                        if(Storage.currentPage==data.total){
+                        if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
                             Storage.currentPage=Config.hasNoMoreFlag;
                         }else{
                             Storage.currentPage++;
                         }
-                    }else{
-                        CFunctions.ajaxReturnErrorHandler(data);
                     }
-
-                },function(data){
-                    CFunctions.ajaxErrorHandler();
                 });
             },
-            getBoxProjects:function($scope){
-                $scope.mainFlags.showLoading=true;
-                this.resource.getBoxProjects({"page":Storage.currentPage},function(data){
+            getBoxProjects:function(boxId){
+                return this.resource.getBoxProjects({boxId:boxId,page:Storage.currentPage},function(data){
                     if(data.success){
-                        $scope.projects=$scope.projects.concat(data.projects);
                         if(Storage.currentPage==data.total){
                             Storage.currentPage=Config.hasNoMoreFlag;
                         }else{
                             Storage.currentPage++;
                         }
-                    }else{
-                        CFunctions.ajaxReturnErrorHandler(data);
                     }
-                    $scope.mainFlags.showLoading=false;
-                },function(data){
-                    $scope.mainFlags.showLoading=false;
-                    CFunctions.ajaxErrorHandler();
                 })
             },
             resource:$resource(Config.ajaxUrls.getAllBoxes,{},{
                 query:{params:{"page":1,"count":Config.perLoadCount}},
-                get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+                get:{url:Config.ajaxUrls.getBoxDetail,params:{id:1}},
                 remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
                 add:{method:"put"},
                 lock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}},
-                getBoxProjects:{method:"get",url:Config.ajaxUrls.getAllProjects,params:{page:1,count:Config.perLoadCount}}
+                getBoxProjects:{method:"get",url:Config.ajaxUrls.getBoxProjects,
+                    params:{boxId:1,page:1,count:Config.perLoadCount}}
             })
         };
 }]);
@@ -639,7 +648,7 @@ services.factory("Comment",["$rootScope","$resource","Config",function($rootScop
         query:{params:{"count":10}},
         get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
         remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
-        getCommentsByProject:{method:"get",url:Config.ajaxUrls.deleteProject,params:{projectId:13}},
+        getCommentsByProject:{method:"get",url:Config.ajaxUrls.getProjectComments,params:{projectId:1}},
         add:{method:"put"}
     });
 }]);
