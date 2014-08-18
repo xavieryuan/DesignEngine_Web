@@ -29,8 +29,10 @@
             <div class="de_form_field">
                 <h5>投稿箱状态</h5>
                 <p>
-                    <span class="de_box_current_state">开放</span>
-                    <a class="de_box_change_state_btn">设为关闭</a>
+                    <span class="de_box_current_state" ng-show="!box.lock">开放</span>
+                    <span class="de_box_current_state" ng-show="box.lock">关闭</span>
+                    <a href="" ng-show="!box.lock" toggle-lock-box="box" class="de_box_change_state_btn">设为关闭</a>
+                    <a href="" ng-show="box.lock" toggle-lock-box="{{box.id}},{{box.lock}}" class="de_box_change_state_btn">设为开放</a>
                     <!--<a class="de_box_change_state_btn">设为开放</a>-->
                 </p>
                 <p class="de_form_tip">投稿箱关闭后，用户将无法修改或删除已上传到投稿箱的作品，也不能上传其他新的作品到投稿箱。</p>

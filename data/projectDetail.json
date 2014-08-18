@@ -1,0 +1,20 @@
+{
+    "success":true,
+    "artifact":{
+        "praised":true,
+        "boxId":2,
+        "show":true,
+        "title":"测试数据444444444444444",
+        "date":"2012-09-09",
+        "userName":"涛涛",
+        "userId":1,
+        "userProfile":"data/people3.jpg",
+        "honorCount":33,
+        "praiseCount":20,
+        "commentsCount":45,
+        "description":"这个还一个很友好的作品"
+    },
+    "user":{
+
+    }
+}

@@ -7,14 +7,15 @@
 
 
 
-    <ul class="de_project_toolbar de_transition">
-        <li><a class="de_toolbar_edit" href="" title="编辑">编辑</a></li>
-        <li><a class="de_toolbar_delete"  href="" title="删除">删除</a></li>
-        <li><a class="de_toolbar_invisible" ng-show="project.canDoHidden" href="" title="显示/隐藏">显示/隐藏</a></li>
+    <ul class="de_project_toolbar de_transition" ng-show="currentUser.id==project.userId||currentUser.role=='admin'">
+        <li><a class="de_toolbar_edit" href="/project/update/{{project.boxId}}/{{project.id}}" title="编辑">编辑</a></li>
+        <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
+        <li><a ng-class="{de_toolbar_invisible:!project.show,de_toolbar_visible:project.show}" href=""
+               ng-click="toggleShowProject(project.id,!project.show)" title="显示/隐藏">显示/隐藏</a></li>
     </ul>
 
-    <a href="" ng-show="project.toHome"  class="de_btn_close_project_detail de_btn_back_to_home">关闭</a>
-    <a href="" ng-show="!project.toHome" ng-click="hideProjectDetail()" class="de_btn_close_project_detail">关闭</a>
+    <!--<a href="#" target="_self" ng-show="project.toHome"  class="de_btn_close_project_detail de_btn_back_to_home">关闭</a>-->
+    <a href=""  ng-click="hideProjectDetail()" class="de_btn_close_project_detail">关闭</a>
 </div>
 
 <!--显示详细信息-->
@@ -45,42 +46,48 @@
 
     <!--附件-->
     <div class="main_content">
-        <figure ng-repeat="at in attachments" ng-switch="at.type">
+        <figure ng-repeat="at in attachments" ng-switch="at.mediaType">
 
-            <a ng-switch-when="image" href=""
-               ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)">
-                <img ng-src="{{attachment.attachmentPreviewLocation}}"/>
+            <a ng-switch-when="1" href=""
+               ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)">
+                <img ng-src="{{at.mediaThumbFilePath}}"/>
             </a>
 
-            <a ng-switch-when="video" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
+            <a ng-switch-when="4" ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)"
                class="de_has_media de_has_video" href="">
-                <img ng-src="{{at.attachmentPreviewLocation}}"/>
+                <img ng-src="{{at.mediaThumbFilePath}}"/>
             </a>
 
-            <a ng-switch-when="networkVideo" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
+           <!-- <a ng-switch-when="networkVideo" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
                href="" class="de_has_media de_has_web_video">
                 <img ng-src="{{at.attachmentPreviewLocation}}"/></a>
 
             <a ng-switch-when="3d" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
                href="" class="de_has_media de_has_3d">
-                <img ng-src="{{at.attachmentPreviewLocation}}"/></a>
+                <img ng-src="{{at.attachmentPreviewLocation}}"/></a>-->
 
 
-            <a ng-switch-when="ppt" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
+            <a ng-switch-when="2" ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)"
                href="" class="de_has_media de_has_ppt">
-                <img ng-src="{{at.attachmentPreviewLocation}}"/></a>
+                <img ng-src="{{at.mediaThumbFilePath}}"/></a>
 
+            <a ng-switch-when="128" ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)"
+               href="" class="de_has_media de_has_ppt">
+                <img ng-src="{{at.mediaThumbFilePath}}"/></a>
 
-            <a ng-switch-when="zip" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
+            <a ng-switch-when="32" ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)"
                href="" class="de_has_media de_has_file">
-                <img ng-src="{{at.attachmentPreviewLocation}}"/></a>
+                <img ng-src="{{at.mediaThumbFilePath}}"/></a>
 
-            <a ng-switch-when="flash" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
+            <a ng-switch-when="64" ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)"
                href="" class="de_has_media de_has_flash">
-                <img ng-src="{{at.attachmentPreviewLocation}}"/></a>
+                <img ng-src="{{at.mediaThumbFilePath}}"/></a>
 
             <figcaption>
-                <span class="description">{{at.attachmentDescription}}</span>
+                {{at.mediaTitle}}
+                <span class="description">
+                    {{at.mediaDescription}}
+                </span>
             </figcaption>
 
         </figure>
@@ -90,7 +97,7 @@
 <!--评论-->
 <div class="de_comment_box de_boxshadow de_borderbox">
     <ul class="de_comment_list">
-        <li ng-repeat="c in comments">
+        <li ng-repeat="c in commentObj.showComments">
             <div class="user_info">
                 <a ng-href="user/{{c.userId}}" class="de_borderbox">
                     <img ng-src="{{c.userProfile}}" class="photo">
@@ -98,16 +105,16 @@
             </div>
             <div class="comment_wrapper">
                 <a ng-href="user/{{c.userId}}" class="name">{{c.userName}}</a>
-                <span class="publishtime">{{c.commentTime}}</span>
+                <span class="publishtime">{{c.time}}</span>
 
-                <a ng-show="c.deleteAble" href="" ng-click="deleteComment(c.id)" class="de_delete_comment">X</a>
+                <a ng-show="c.userId==currentUser.id||currentUser.role=='admin'" href="" ng-click="deleteComment(c.id,$index)" class="de_delete_comment">X</a>
 
-                <p class="comment">{{c.commentContent}}</p>
+                <p class="comment">{{c.content}}</p>
             </div>
         </li>
     </ul>
 
-    <span ng-click="loadMoreComments()" class="de_comment_more_btn de_hidden">加载更多...</span>
+    <span ng-show="commentObj.hasMore" ng-click="loadMoreComments()" class="de_comment_more_btn">加载更多...</span>
 
 
     <div ng-show="currentUser.id" class="de_comment_form de_reg_view de_borderbox">
@@ -118,10 +125,10 @@
         </div>
         <div class="comment_wrapper">
             <a ng-href="user/{{currentUser.userId}}" class="name">{{currentUser.name}}</a>
-            <textarea ng-model="commentContent" maxlength="200" class="comment de_borderbox de_inputbox_gray"
+            <textarea ng-model="commentObj.newComment" maxlength="200" class="comment de_borderbox de_inputbox_gray"
                       placeholder="你的评论..."></textarea>
             <input type="button" class="de_button de_btn_add_comment"
-                   ng-click="addComment(commentContent)" value="提交">
+                   ng-click="addComment(commentObj.newComment)" value="提交">
         </div>
     </div>
 

@@ -9,25 +9,25 @@
                    ng-click="setTabActive(3);getPreviewMedias('mediaItem','data-media-id')">3. 预览并提交</a></li>
         </ol>
     </nav>
-    <form class="de_form_upload de_borderbox de_boxshadow">
+    <form class="de_form_upload de_borderbox de_boxshadow" ng-submit="uploadFormSubmit()">
         <div class="de_upload_step1" ng-show="currentTab==1">
             <p class="de_field_project_title">
                 <label>标题</label>
                 <input type="text" maxlength="80" class="de_borderbox de_inputbox_gray"
-                       name="title" ng-model="project.title">
+                       name="title" ng-model="project.name">
             </p>
 
             <p class="de_field_project_tag">
                 <label>标签</label>
                 <ul class="de_borderbox de_category_tag_box">
-                    <li ng-repeat="tag in project.tags">
+                    <li ng-repeat="tag in project.terms">
                         <a href="" ng-click="deleteTag($index)">{{tag}}</a>
                     </li>
                 </ul>
                 <p class="de_form_tip">在下方输入标签，按回车确认。</p>
                 <input type="text" class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20"
-                   placeholder="新标签..." ng-keydown="keyDownAddTag($event)"
-                   ng-blur="blurAddTag()" ng-model="project.newTag">
+                   placeholder="新标签..." ng-keydown="keyDownAddTag($event,project.newTag)"
+                   ng-blur="blurAddTag(project.newTag)" ng-model="project.newTag">
             </p>
             <p class="de_field_project_description">
                 <label>内容说明</label>
@@ -38,7 +38,7 @@
                 <a href="" class="de_btn_upload_thumb de_button" id="uploadThumb"
                    ng-init="createThumbUploader('uploadThumb','uploadThumbContainer')">上传缩略图</a>
 
-                <img class="de_project_thumb" width="400" height="400" ng-src="{{project.thumb}}"/>
+                <img class="de_project_thumb" width="400" height="400" ng-src="{{project.profile_image}}"/>
 
             </p>
         </div>
@@ -60,8 +60,8 @@
                                ng-init="createPptUploader('uploadPPt','uploadContainer')">幻灯片（PPT）</a></li>
                         <li><a id="uploadPdf" class="zy_types4"
                                 ng-init="createPdfUploader('uploadPdf','uploadContainer')" >文档（PDF）</a></li>
-                        <li><a id="uploadFlash" class="zy_types5"
-                               ng-init="createFlashUploader('uploadFlash','uploadContainer')">FLASH动画（SWF）</a></li>
+                        <li><a id="uploadSwf" class="zy_types5"
+                               ng-init="createSwfUploader('uploadSwf','uploadContainer')">FLASH动画（SWF）</a></li>
                         <li><a id="uploadZip" class="zy_types6"
                                ng-init="createZipUploader('uploadZip','uploadContainer')">附件（ZIP）</a></li>
                          <!--<li><a id="upload3d" class="zy_types7"
@@ -96,9 +96,9 @@
                 <h2>{{project.title}}</h2>
                 <p class="publishtime"></p>
                 <div class="user_info">
-                    <a href="user/{{currentUser.id}}">
-                        <img class="photo" src="{{currentUser.profile}}">
-                        <p class="name">{{currentUser.name}}</p>
+                    <a ng-href="user/{{project.user_id}}">
+                        <img class="photo" ng-src="{{project.user_profile_image}}">
+                        <p class="name">{{project.user_fullname}}</p>
                     </a>
                 </div>
                 <p class="abstract">

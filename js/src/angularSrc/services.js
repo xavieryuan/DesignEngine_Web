@@ -72,17 +72,16 @@ services.constant("Config",{
         mp4:"mp4",
         _3d:"3d",
         zip:"zip",
-        flash:"swf"
+        swf:"swf"
     },
     mediaTypes:{  //媒体类型
-        image:"image",
-        ppt:"ppt",
-        pdf:"pdf",
-        _3d:"_3d",
-        mp4:"mp4",
-        zip:"zip",
-        webVideo:"webVideo",
-        flash:"swf"
+        image:"1",
+        ppt:"2",
+        pdf:"128",
+        _3d:"16",
+        mp4:"4",
+        zip:"32",
+        swf:"64"
     },
     mediaTitles:{
         image:"图片",
@@ -91,8 +90,7 @@ services.constant("Config",{
         _3d:"3d文件",
         mp4:"视频",
         zip:"压缩文件",
-        webVideo:"网络视频",
-        flash:"swf动画"
+        swf:"swf动画"
     },
     mediaSetPanelUrl:"views/mediaSet.html",
     mediaIdPrefixes:{
@@ -106,13 +104,13 @@ services.constant("Config",{
         swf:"swf_"
     },
     mediaObj:{  //媒体对象
-        mediaTitle:"mediaTitle",
-        mediaMemo:"mediaMemo",
-        mediaType:"mediaType",
-        mediaThumbFilename:"mediaThumbFilename",
-        mediaThumbFilePath:"mediaThumbFilePath",
-        mediaFilename:"mediaFilename",
-        mediaFilePath:"mediaFilePath",
+        mediaPos:"pos",
+        mediaTitle:"title",
+        mediaMemo:"description",
+        mediaType:"type",
+        mediaThumbFilePath:"profile_image",
+        mediaFilename:"name",
+        mediaFilePath:"media_file",
         mediaId:"mediaId"
     },
     userStatus:{   //用户状态（禁言、激活）
@@ -148,7 +146,7 @@ services.constant("Config",{
         clickToSet:"点击上传完成的媒体文件进行设置！",
         deleteConfirm:"确定删除吗？",
         successTitle:"成功提示",
-        operationSuccess:"操作成功，请关闭后选择其他操作！",
+        operationSuccess:"操作成功！",
         registerSuccess:"注册成功，如果您是非QQ登录用户，请进入邮箱激活账户，否则无法登录！",
         timeout:"登录超时，请关闭后刷新页面并登录！",
         networkError:"网络连接失败，请稍后重试！",
@@ -194,6 +192,8 @@ services.constant("Config",{
         getAllProjects:"data/projects.json", //获取首页作品媒体文件)
         getProjectDetail:"data/projectDetail.json", //获取作品（资源）详情
         deleteProject:"post/remove/:id",
+        toggleShowProject:"#",
+        projectCreate:"#",
         getProjectAttachments:"data/projectAttachments.json",
         getProjectComments:"data/comments.json",
         getSimilarProjects:"data/projects.json",
@@ -464,7 +464,48 @@ services.service("CFunctions",["$rootScope","$location","$http","toaster","Confi
         TweenMax.to(target,0.4,{opacity:0,onComplete:function(){
             refreshScope();
         }});
-    }
+    };
+
+    this.formatDate=function(format){
+        var string,currentDate,year,month,day, h, m, s,fMonth,fDay,fH,fM,fS;
+        currentDate =new Date();
+        year=currentDate.getFullYear();
+        fMonth=month=currentDate.getMonth()+1;
+        fDay=day=currentDate.getDay();
+        fH=h=currentDate.getHours();
+        fM=m=currentDate.getMinutes();
+        fS=s=currentDate.getSeconds();
+
+        if(fMonth<10){
+            fMonth="0"+fMonth;
+        }
+        if(fDay<10){
+            fDay="0"+fDay;
+        }
+        if(fH<10){
+            fH="0"+fH;
+        }
+        if(fM<10){
+            fM="0"+fM;
+        }
+        if(fS<10){
+            fS="0"+fS;
+        }
+
+        switch(format){
+            case "Y-MM-DD hh:mm:ss":
+                string=year+"-"+fMonth+"-"+fDay+" "+fH+":"+fM+":"+fS;
+                break;
+            case "Y-M-D h:m:s":
+                string=year+"-"+month+"-"+day+" "+h+":"+m+":"+s;
+                break;
+            default :
+                string=year+"-"+fMonth+"-"+fDay+" "+fH+":"+fM+":"+fS;
+                break;
+        }
+
+        return string;
+    };
 	
 }]);
 
@@ -564,34 +605,33 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
             getProjects:function(){
                 return this.resource.query({"page":Storage.currentPage},function(data){
                     //console.log("In services");
-                    if(data.success){
-                        if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
-                            Storage.currentPage=Config.hasNoMoreFlag;
-                        }else{
-                            Storage.currentPage++;
-                        }
+                    if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
+                        Storage.currentPage=Config.hasNoMoreFlag;
+                    }else{
+                        Storage.currentPage++;
                     }
                 });
             },
             getSearchResult:function(){
                 return this.resource.getSearchResult({"page":Storage.currentPage},function(data){
                     //console.log("In services");
-                    if(data.success){
-                        if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
-                            Storage.currentPage=Config.hasNoMoreFlag;
-                        }else{
-                            Storage.currentPage++;
-                        }
+                    if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
+                        Storage.currentPage=Config.hasNoMoreFlag;
+                    }else{
+                        Storage.currentPage++;
                     }
                 });
             },
             resource: $resource(Config.ajaxUrls.getAllProjects,{},{
                 query:{params:{"page":1,"count":10}},
                 get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+                delete:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
                 remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
                 save:{url:Config.ajaxUrls.deleteProject},
-                getProjectDetail:{url:Config.ajaxUrls.getProjectDetail,params:{id:1}},
-                getProjectAttachments:{url:Config.ajaxUrls.getProjectAttachments,params:{id:1}},
+                add:{method:"put",url:Config.ajaxUrls.projectCreate,params:{}},
+                toggleShowProject:{method:"post",url:Config.ajaxUrls.toggleShowProject,params:{id:1,show:true}},
+                getProjectDetail:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:1}},
+                getProjectAttachments:{method:"get",url:Config.ajaxUrls.getProjectAttachments,params:{id:1}},
                 getSearchResult:{method:"get",url:Config.ajaxUrls.getSearchProjects,params:{content:"search"}},
                 getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
             })
@@ -600,9 +640,12 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
 services.factory("User",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
     return $resource(Config.ajaxUrls.getAllProjects,{},{
         query:{params:{"length":10}},
-        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+        get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+        save:{},
         remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+        delete:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
         add:{method:"put"},
+        login:{method:"post",url:Config.ajaxUrls.signIn,params:{}},
         getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
     });
 }]);
@@ -611,24 +654,19 @@ services.factory("Box",["$rootScope","$resource","Config","Storage",
         return {
             getBoxes:function(){
                 return this.resource.query({"page":Storage.currentPage},function(data){
-
-                    if(data.success){
-                        if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
-                            Storage.currentPage=Config.hasNoMoreFlag;
-                        }else{
-                            Storage.currentPage++;
-                        }
+                    if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
+                        Storage.currentPage=Config.hasNoMoreFlag;
+                    }else{
+                        Storage.currentPage++;
                     }
                 });
             },
             getBoxProjects:function(boxId){
                 return this.resource.getBoxProjects({boxId:boxId,page:Storage.currentPage},function(data){
-                    if(data.success){
-                        if(Storage.currentPage==data.total){
-                            Storage.currentPage=Config.hasNoMoreFlag;
-                        }else{
-                            Storage.currentPage++;
-                        }
+                    if(Storage.currentPage==data.total){
+                        Storage.currentPage=Config.hasNoMoreFlag;
+                    }else{
+                        Storage.currentPage++;
                     }
                 })
             },
@@ -637,7 +675,7 @@ services.factory("Box",["$rootScope","$resource","Config","Storage",
                 get:{url:Config.ajaxUrls.getBoxDetail,params:{id:1}},
                 remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
                 add:{method:"put"},
-                lock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}},
+                toggleLock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3,lock:true}},
                 getBoxProjects:{method:"get",url:Config.ajaxUrls.getBoxProjects,
                     params:{boxId:1,page:1,count:Config.perLoadCount}}
             })
@@ -647,8 +685,10 @@ services.factory("Comment",["$rootScope","$resource","Config",function($rootScop
     return $resource(Config.ajaxUrls.getAllComments,{},{
         query:{params:{"count":10}},
         get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+        save:{url:"#",params:{id:3}},
         remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+        delete:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
         getCommentsByProject:{method:"get",url:Config.ajaxUrls.getProjectComments,params:{projectId:1}},
-        add:{method:"put"}
+        add:{method:"put",url:"#",params:{content:"test"}}
     });
 }]);

@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 var popControllers=angular.module("popControllers",["services","autoComplete"]);
-popControllers.controller("signIn",["$scope","$document","Config","LocationChanger","Storage","CFunctions",
-    function($scope,$document,Config,LocationChanger,Storage,CFunctions){
+popControllers.controller("signIn",["$scope","$document","Config","LocationChanger","Storage","User",
+    function($scope,$document,Config,LocationChanger,Storage,User){
 
         $scope.loginError="";
         $scope.popFlags.title=Config.titles.signIn;
@@ -25,16 +25,16 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
 
         if($document.cookie){
             var obj=JSON.parse(decodeURIComponent($document.cookie));
-            $scope.login.email=obj.email;
-            $scope.login.password=obj.password;
-            $scope.login.rememberMe=true;
+            $scope.loginObj.email=obj.email;
+            $scope.loginObj.password=obj.password;
+            $scope.loginObj.rememberMe=true;
         }
 
         //记住我
         function rememberMe(){
-            if($scope.login.rememberMe){
-                var email= $scope.login.email;
-                var password=$scope.login.password;
+            if($scope.loginObj.rememberMe){
+                var email= $scope.loginObj.email;
+                var password=$scope.loginObj.password;
                 var obj={
                     "email":email,
                     "password":password
@@ -48,21 +48,17 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
             rememberMe();
 
             //登陆
-            CFunctions.ajaxSubmit($scope,{
-                formUrl:Config.ajaxUrls.signIn,
-                formParam:$scope.login,
-                successCb:function(data){
-                    Storage.initCurrentUser({
-                        userId:2,
-                        profile:"data/people1.jpg",
-                        role:"admin",
-                        name:"测试用户",
-                        email:"csboyty@163.com",
-                        description:"测试用户的说明"
-                    });
+            User.login($scope.loginObj,function(data){
+                Storage.initCurrentUser({
+                    userId:2,
+                    profile:"data/people1.jpg",
+                    role:"admin",
+                    name:"测试用户",
+                    email:"csboyty@163.com",
+                    description:"测试用户的说明"
+                });
 
-                    $scope.goBack();
-                }
+                $scope.closePop();
             });
         };
 

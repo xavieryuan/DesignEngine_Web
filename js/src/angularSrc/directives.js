@@ -122,7 +122,39 @@ directives.directive("drag",function(){
         }
     }
 });
+directives.directive("toggleLockBox",["toaster","Box","Config",function(toaster,Box,Config){
+    return {
+        link: function (scope, element, attrs, ctrl) {
+            element.on('click', function (event) {
+                var params=attrs.toggleLockBox.split(",");
 
+                Box.resource.toggleLock({id:params[0],lock:params[1]},function(data){
+                    if(params[2]){
+                        scope.boxes[params[2]]["lock"]=!scope.boxes[params[2]]["lock"];
+                    }else{
+                        scope.box=!scope.box;
+                    }
+                    toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                });
+            });
+        }
+    }
+}]);
+directives.directive('clickToHideModalPanel', function(){
+    return {
+        link: function (scope, element, attrs, ctrl) {
+            element.on('click', function (event) {
+                var target=event.target||event.srcElement;
+                //判断是否隐藏侧边菜单
+                if($(target).parents("#de_ext_nav").length==0 && !$(target).is("#de_ext_nav")){
+                    scope.$apply(function(){
+                        scope.mainFlags.extMenuActive="";
+                    });
+                }
+            });
+        }
+    }
+});
 directives.directive("windowStateChange",["$window","CFunctions","LocationChanger",function($window,CFunctions,LocationChanger){
     return {
         link:function(scope,element,attrs){
@@ -160,11 +192,21 @@ directives.directive("windowScroll", ["$window","$document","$timeout","Config",
 
                                     break;
                                 case Config.scrollScreenType.box:
-                                    Box.getBoxes(scope);
+                                    Box.getBoxes().$promise.then(function(data){
+                                        scope.boxes=scope.boxes.concat(data.boxes);
+                                    });
 
                                     break;
                                 case Config.scrollScreenType.boxDetail:
-                                    Box.getBoxProjects(scope);
+                                    Box.getBoxProjects(scope.boxId).$promise.then(function(data){
+                                        scope.projects=scope.projects.concat(data.projects);
+                                    });
+
+                                    break;
+                                case Config.scrollScreenType.searchResult:
+                                    Project.getSearchResult().$promise.then(function(data){
+                                        scope.projects=scope.projects.concat(data.projects);
+                                    });
 
                                     break;
                                 case Config.scrollScreenType.userDetail:

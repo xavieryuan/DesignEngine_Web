@@ -75,7 +75,7 @@ animations.animation(".de_loading",function(){
 				//延迟2s，避免闪烁
 				TweenMax.to(element,0.5,{opacity:0, delay:2, ease:Circ.easeOut, onComplete:function(){
 					//清理工作
-					element.removeClass("ng-animate")
+					element.removeClass("ng-animate");
 					done();
 				}})
 			}

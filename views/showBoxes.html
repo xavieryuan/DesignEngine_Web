@@ -31,10 +31,13 @@
             </div>
             <ul class="topic_action">
                 <!-- 根据权限控制 -->
-                <li ng-hide="box.disabledUpload" class="de_topic_action_submit"><a ng-href="upload/{{box.id}}" >投稿</a></li>
-                <li ng-show="box.disabledUpload" class="de_topic_action_view"><a ng-href="box/{{box.id}}" >查看</a></li>
-                <li class="de_topic_action_lock"><a href="" ng-click="lockBox(box.id)">锁定</a></li>
-                <li class="de_topic_action_setting"><a ng-href="box/edit/{{box.id}" >设置</a></li>
+                <li ng-show="!box.lock" class="de_topic_action_submit"><a ng-href="upload/{{box.id}}" >投稿</a></li>
+                <li ng-show="box.lock" class="de_topic_action_view"><a ng-href="box/{{box.id}}" >查看</a></li>
+                <li ng-show="box.userId==currentUser.id||currentUser.role=='admin'"
+                    ng-class="{de_topic_action_lock:!box.lock,de_topic_action_unlock:box.lock}">
+                    <a href="" toggle-lock-box="{{box.id}},{{box.lock}},{{$index}}">锁定</a></li>
+                <li ng-show="box.userId==currentUser.id||currentUser.role=='admin'" class="de_topic_action_setting">
+                    <a ng-href="box/edit/{{box.id}}" >设置</a></li>
             </ul>
             <ul class="project_info">
                 <li class="de_borderbox" ng-repeat="project in box.projects">

@@ -30,8 +30,24 @@ viewControllers.controller("projects",['$scope',"Config","Storage","Project","CF
     });
 }]);
 
-viewControllers.controller("projectDetail",["$scope","$window","Storage","CFunctions","Project","Comment",
-    function($scope,$window,Storage,CFunctions,Project,Comment){
+viewControllers.controller("projectDetail",["$scope","$window","Storage","Config","CFunctions","Project","Comment","toaster",
+    function($scope,$window,Storage,Config,CFunctions,Project,Comment,toaster){
+
+        function loadMore(){
+            var count=Config.perLoadCount;
+            if($scope.commentObj.allComments.length<Config.perLoadCount){
+                count=$scope.commentObj.allComments.length;
+            }
+
+            $scope.commentObj.showComments=
+                $scope.commentObj.showComments.concat($scope.commentObj.allComments.splice(0,count));
+
+            //判断是否还有
+            if($scope.commentObj.allComments.length==0){
+                $scope.commentObj.hasMore=false;
+            }
+
+        }
 
         var projectId=CFunctions.getPathParam();
         //console.log(projectId);
@@ -53,6 +69,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","CFunct
         $scope.project={};
         Project.resource.getProjectDetail({id:projectId},function(data){
             $scope.project=data.project;
+            $scope.project.toHome=true;
         });
 
         $scope.attachments=[];
@@ -60,15 +77,57 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","CFunct
             $scope.attachments=data.attachments;
         });
 
-        $scope.comments=[];
+        $scope.commentObj={
+            newComment:"",
+            allComments:[],
+            showComments:[],
+            hasMore:true
+        };
         Comment.getCommentsByProject({projectId:projectId},function(data){
-            $scope.comments=data.comments;
+            $scope.commentObj.allComments=data.comments;
+            loadMore();
         });
+
+        $scope.loadMoreComments=function(){
+            loadMore();
+        };
+        $scope.addComment=function(content){
+            Comment.add({content:content},function(data){
+                $scope.commentObj.showComments.unshift({
+                    "id":data.id,
+                    "userId":Storage.currentUser.id,
+                    "userName":Storage.currentUser.name,
+                    "userProfile":Storage.currentUser.profile,
+                    "content":content,
+                    "time":CFunctions.formatDate()
+                });
+                $scope.commentObj.newComment="";
+            });
+        };
+        $scope.deleteComment=function(id,index){
+            Comment.delete({id:id},function(data){
+                $scope.commentObj.showComments.splice(index,1);
+                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+            });
+        };
 
         $scope.similarProjects=[];
         Project.resource.getSimilarProjects({id:projectId},function(data){
             $scope.similarProjects=data.projects;
         });
+
+        $scope.deleteProject=function(id){
+            Project.resource.delete({id:id},function(data){
+                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+            });
+        };
+
+        $scope.toggleShowProject=function(id,showFlag){
+            Project.resource.delete({id:id,show:showFlag},function(data){
+                $scope.project.show=showFlag;
+                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+            });
+        };
 }]);
 
 viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$route","toaster","Config","Storage","CFunctions","Project",
@@ -150,8 +209,8 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 case Config.mediaTypes.zip:
                     filter=Config.mediaFilters.zip;
                     break;
-                case Config.mediaTypes.flash:
-                    filter=Config.mediaFilters.flash;
+                case Config.mediaTypes.swf:
+                    filter=Config.mediaFilters.swf;
                     break;
             }
 
@@ -189,10 +248,15 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         var fileIdToMediaIdHash={};
 
         $scope.project={
-            mediaOrders:[],
-            thumb:Config.thumbs.defaultThumb,
-            tags:[],
-            medias:{}
+            id:0,
+            profile_image:Config.thumbs.defaultThumb,
+            terms:[],
+            assets:[],
+            user_id:Storage.currentUser.id,
+            user_profile_image:Storage.currentUser.profile,
+            user_fullname:Storage.currentUser.name,
+            name:"",
+            description:""
         };
         $scope.box={
             id:0,
@@ -295,15 +359,13 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         $scope.deleteTag=function(index){
             $scope.project.tags.splice(index,1);
         };
-
-
-        $scope.keyDownAddTag=function($event){
+        $scope.keyDownAddTag=function($event,tag){
             if($event.which==13){
-                addTag($scope.project.newTag);
+                addTag(tag);
             }
         };
-        $scope.blurAddTag=function(){
-            addTag($scope.project.newTag);
+        $scope.blurAddTag=function(tag){
+            addTag(tag);
         };
 
         $scope.createThumbUploader=function(buttonId,containerId){
@@ -363,8 +425,8 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         $scope.createMp4Uploader=function(buttonId,containerId){
             createMediaUploader(buttonId,containerId,Config.mediaTypes.mp4);
         };
-        $scope.createFlashUploader=function(buttonId,containerId){
-            createMediaUploader(buttonId,containerId,Config.mediaTypes.flash);
+        $scope.createSwfUploader=function(buttonId,containerId){
+            createMediaUploader(buttonId,containerId,Config.mediaTypes.swf);
         };
         $scope.deleteMedia=function(mediaId){
             if(confirm(Config.messages.deleteConfirm)){
@@ -445,8 +507,8 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 case Config.mediaTypes.zip:
                     filter=Config.mediaFilters.zip;
                     break;
-                case Config.mediaTypes.flash:
-                    filter=Config.mediaFilters.flash;
+                case Config.mediaTypes.swf:
+                    filter=Config.mediaFilters.swf;
                     break;
             }
 
@@ -477,6 +539,10 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 }
             });
         };
+
+        $scope.uploadFormSubmit=function(){
+
+        }
     }]);
 
 viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project","CFunctions",
@@ -619,6 +685,8 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
             });
         }
 
+        $scope.mainFlags.currentMenu="";
+        $scope.mainFlags.extMenuActive=false;
         $scope.box={
             id:0,
             tags:[],
@@ -629,11 +697,6 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
         if($routeParams.boxId){
             initData($scope,$routeParams.boxId);
         }
-
-
-        $scope.mainFlags.currentMenu="";
-
-        $scope.mainFlags.extMenuActive=false;
 
         $scope.deleteTag=function(index){
             $scope.box.tags.splice(index,1);
