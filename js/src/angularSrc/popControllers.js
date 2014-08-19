@@ -52,7 +52,7 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
                 Storage.initCurrentUser({
                     userId:2,
                     profile:"data/people1.jpg",
-                    role:"admin",
+                    roles:["admin"],
                     name:"测试用户",
                     email:"csboyty@163.com",
                     description:"测试用户的说明"

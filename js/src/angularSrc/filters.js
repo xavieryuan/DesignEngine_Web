@@ -21,3 +21,17 @@ filters.filter("getMinNumber", function(){
         return Math.min(first,second);
     }
 });
+filters.filter("arrayHasElement",function(){
+    return function(array,element){
+        var length=array.length;
+        var result=false;
+        for(var i=0;i<length;i++){
+            if(array[i]==element){
+                result=true;
+                break;
+            }
+        }
+
+        return result;
+    }
+});

@@ -18,7 +18,7 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
             when("/projects",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/project/:projectId",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/boxes",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
-            when("/box/create",{templateUrl: 'views/boxCreate.html',controller:"boxCreate"}).
+            when("/box/create",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
             when("/box/edit/:boxId",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
             when("/box/:boxId",{templateUrl: 'views/showBoxDetail.html',controller:"boxDetail"}).
             when("/adminHome/comments",{templateUrl: 'views/admin/commentsManage.html',controller:"commentsManage"}).
@@ -113,8 +113,9 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
 
         $scope.currentUser=Storage.currentUser;
         $scope.currentUser.id=1;
-        $scope.currentUser.role=Config.roles.admin;
-        $scope.currentUser.boxId=2;
+        $scope.currentUser.profile="data/people1.jpg";
+        $scope.currentUser.name="测试用户";
+        $scope.currentUser.roles=[Config.roles.admin,Config.roles.vip];
 
         $scope.closePop=function(notGoBack){
             $scope.popFlags.title="";

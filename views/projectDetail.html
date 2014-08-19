@@ -2,16 +2,17 @@
 <div ng-controller="projectDetail">
 <!--工具栏-->
 <div class="de_project_header de_borderbox">
-    <a href="" ng-show="project.praised" class="de_flag_reg_zanned de_btn_zan de_borderbox">赞</a>
-    <a href="" ng-show="!project.praised" class="de_btn_zan de_borderbox">赞</a>
+    <a href="" ng-show="project.artifact.praised" class="de_flag_reg_zanned de_btn_zan de_borderbox">赞</a>
+    <a href="" ng-show="!project.artifact.praised" class="de_btn_zan de_borderbox">赞</a>
 
 
 
-    <ul class="de_project_toolbar de_transition" ng-show="currentUser.id==project.userId||currentUser.role=='admin'">
-        <li><a class="de_toolbar_edit" href="/project/update/{{project.boxId}}/{{project.id}}" title="编辑">编辑</a></li>
-        <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
-        <li><a ng-class="{de_toolbar_invisible:!project.show,de_toolbar_visible:project.show}" href=""
-               ng-click="toggleShowProject(project.id,!project.show)" title="显示/隐藏">显示/隐藏</a></li>
+    <ul class="de_project_toolbar de_transition"
+        ng-show="currentUser.id==project.user.id||(currentUser.roles|arrayHasElement:'admin')">
+        <li><a class="de_toolbar_edit" href="/project/update/{{project.artifact.boxId}}/{{project.artifact.id}}" title="编辑">编辑</a></li>
+        <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.artifact.id)" title="删除">删除</a></li>
+        <li><a ng-class="{de_toolbar_invisible:!project.artifact.visible,de_toolbar_visible:project.artifact.visible}" href=""
+               ng-click="toggleShowProject(project.artifact.id,!project.artifact.visible)" title="显示/隐藏">显示/隐藏</a></li>
     </ul>
 
     <!--<a href="#" target="_self" ng-show="project.toHome"  class="de_btn_close_project_detail de_btn_back_to_home">关闭</a>-->
@@ -20,42 +21,42 @@
 
 <!--显示详细信息-->
 <article class="de_project_detail de_borderbox de_boxshadow">
-    <h2>{{project.title}}</h2>
+    <h2>{{project.artifact.name}}</h2>
 
-    <p class="publishtime">{{project.date}}</p>
+    <p class="publishtime">{{project.artifact.created_at}}</p>
 
     <div class="user_info">
-        <a ng-href="user/{{project.userId}}">
-            <img class="photo" ng-src="{{project.userProfile}}">
+        <a ng-href="user/{{project.user.id}}">
+            <img class="photo" ng-src="{{project.user.setting.profile_image}}">
 
-            <p class="name">{{project.userName}}</p>
+            <p class="name">{{project.user.fullname}}</p>
         </a>
     </div>
 
     <ul class="de_stats_tags">
 
-        <li class="badges" id="honorCount" title="勋章">{{project.honorCount}}</li>
-        <li class="likes" id="praiseCount" title="赞">{{project.praiseCount}}</li>
-        <li class="comments" id="commentsCount" title="评论">{{project.commentsCount}}</li>
+        <li class="badges" id="honorCount" title="勋章">{{project.artifact.honor_count}}</li>
+        <li class="likes" id="praiseCount" title="赞">{{project.artifact.praise_count}}</li>
+        <li class="comments" id="commentsCount" title="评论">{{project.artifact.comment_count}}</li>
     </ul>
 
 
     <p class="abstract">
-        {{description}}
+        {{project.artifact.description}}
     </p>
 
     <!--附件-->
     <div class="main_content">
-        <figure ng-repeat="at in attachments" ng-switch="at.mediaType">
+        <figure ng-repeat="at in project.artifact.assets" ng-switch="at.type">
 
             <a ng-switch-when="1" href=""
-               ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)">
-                <img ng-src="{{at.mediaThumbFilePath}}"/>
+               ng-click="showAttachmentDetail(at.media_file,at.type)">
+                <img ng-src="{{at.profile_image}}"/>
             </a>
 
-            <a ng-switch-when="4" ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)"
+            <a ng-switch-when="4" ng-click="showAttachmentDetail(at.media_file,at.type)"
                class="de_has_media de_has_video" href="">
-                <img ng-src="{{at.mediaThumbFilePath}}"/>
+                <img ng-src="{{at.profile_image}}"/>
             </a>
 
            <!-- <a ng-switch-when="networkVideo" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
@@ -67,26 +68,26 @@
                 <img ng-src="{{at.attachmentPreviewLocation}}"/></a>-->
 
 
-            <a ng-switch-when="2" ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)"
+            <a ng-switch-when="2" ng-click="showAttachmentDetail(at.media_file,at.type)"
                href="" class="de_has_media de_has_ppt">
-                <img ng-src="{{at.mediaThumbFilePath}}"/></a>
+                <img ng-src="{{at.profile_image}}"/></a>
 
-            <a ng-switch-when="128" ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)"
+            <a ng-switch-when="128" ng-click="showAttachmentDetail(at.media_file,at.type)"
                href="" class="de_has_media de_has_ppt">
-                <img ng-src="{{at.mediaThumbFilePath}}"/></a>
+                <img ng-src="{{at.profile_image}}"/></a>
 
-            <a ng-switch-when="32" ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)"
+            <a ng-switch-when="32" ng-click="showAttachmentDetail(at.media_file,at.type)"
                href="" class="de_has_media de_has_file">
-                <img ng-src="{{at.mediaThumbFilePath}}"/></a>
+                <img ng-src="{{at.profile_image}}"/></a>
 
-            <a ng-switch-when="64" ng-click="showAttachmentDetail(at.mediaFilePath,at.mediaType,at.mediaId)"
+            <a ng-switch-when="64" ng-click="showAttachmentDetail(at.media_file,at.type)"
                href="" class="de_has_media de_has_flash">
-                <img ng-src="{{at.mediaThumbFilePath}}"/></a>
+                <img ng-src="{{at.profile_image}}"/></a>
 
             <figcaption>
-                {{at.mediaTitle}}
+                {{at.name}}
                 <span class="description">
-                    {{at.mediaDescription}}
+                    {{at.description}}
                 </span>
             </figcaption>
 
@@ -99,17 +100,17 @@
     <ul class="de_comment_list">
         <li ng-repeat="c in commentObj.showComments">
             <div class="user_info">
-                <a ng-href="user/{{c.userId}}" class="de_borderbox">
-                    <img ng-src="{{c.userProfile}}" class="photo">
+                <a ng-href="user/{{c.user.id}}" class="de_borderbox">
+                    <img ng-src="{{c.user.setting.profile_image}}" class="photo">
                 </a>
             </div>
             <div class="comment_wrapper">
-                <a ng-href="user/{{c.userId}}" class="name">{{c.userName}}</a>
-                <span class="publishtime">{{c.time}}</span>
+                <a ng-href="user/{{c.user.id}}" class="name">{{c.user.fullname}}</a>
+                <span class="publishtime">{{c.commented_at}}</span>
 
-                <a ng-show="c.userId==currentUser.id||currentUser.role=='admin'" href="" ng-click="deleteComment(c.id,$index)" class="de_delete_comment">X</a>
+                <a ng-show="c.userId==currentUser.id||(currentUser.roles|arrayHasElement:'admin')" href="" ng-click="deleteComment(c.comment.id,$index)" class="de_delete_comment">X</a>
 
-                <p class="comment">{{c.content}}</p>
+                <p class="comment">{{c.comment.content}}</p>
             </div>
         </li>
     </ul>
@@ -142,25 +143,25 @@
 <ul class="de_project_grid">
     <li class="de_borderbox" ng-repeat="sp in similarProjects">
         <div class="user_info">
-            <a ng-href="user/{{sp.userId}}">
-                <img class="photo" ng-src="{{sp.userProfile}}"/>
+            <a ng-href="user/{{sp.user.id}}">
+                <img class="photo" ng-src="{{sp.user.setting.profile_image}}"/>
 
-                <p class="name">{{sp.userName}}</p>
+                <p class="name">{{sp.user.fullname}}</p>
             </a>
         </div>
         <div class="project_info">
-            <a href="" ng-click="showProjectDetail(sp.id,true)">
-                <img class="thumb" ng-src="{{sp.thumb}}">
-                <h4>{{sp.title}}</h4>
+            <a href="" ng-click="showProjectDetail(sp.artifact.id,true)">
+                <img class="thumb" ng-src="{{sp.artifact.profile_image}}">
+                <h4>{{sp.artifact.name}}</h4>
 
-                <p class="date">{{sp.date}}</p>
+                <p class="date">{{sp.artifact.created_at}}</p>
             </a>
         </div>
         <ul class="de_stats_tags">
             <!-- badges是荣誉勋章的数量 -->
-            <li class="badges" title="勋章">{{sp.honorCount}}</li>
-            <li class="likes" title="赞">{{sp.praiseCount}}</li>
-            <li class="comments" title="评价">{{sp.commentsCount}}</li>
+            <li class="badges" title="勋章">{{sp.artifact.honor_count}}</li>
+            <li class="likes" title="赞">{{sp.artifact.praise_count}}</li>
+            <li class="comments" title="评价">{{sp.artifact.comment_count}}</li>
         </ul>
     </li>
 </ul>

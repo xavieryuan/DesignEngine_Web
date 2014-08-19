@@ -182,18 +182,18 @@ directives.directive("windowScroll", ["$window","$document","$timeout","Config",
                     //console.log($document[0]);
 
                     if(Storage.currentScrollScreenType&&$document[0].body.scrollHeight-$window.innerHeight<=$window.scrollY&&
-                        Storage.currentPage!=Config.hasNoMoreFlag&&scope.mainFlags.showMainWrapper){
+                        Storage.lastLoadedId!=Config.hasNoMoreFlag&&scope.mainFlags.showMainWrapper){
                         Storage.scrollTimer=$timeout(function(){
                             switch(Storage.currentScrollScreenType){
                                 case Config.scrollScreenType.project:
                                     Project.getProjects().$promise.then(function(data){
-                                        scope.projects=scope.projects.concat(data.projects);
+                                        scope.projects=scope.projects.concat(data.artifacts);
                                     });
 
                                     break;
                                 case Config.scrollScreenType.box:
                                     Box.getBoxes().$promise.then(function(data){
-                                        scope.boxes=scope.boxes.concat(data.boxes);
+                                        scope.boxes=scope.boxes.concat(data.topics);
                                     });
 
                                     break;
@@ -204,8 +204,8 @@ directives.directive("windowScroll", ["$window","$document","$timeout","Config",
 
                                     break;
                                 case Config.scrollScreenType.searchResult:
-                                    Project.getSearchResult().$promise.then(function(data){
-                                        scope.projects=scope.projects.concat(data.projects);
+                                    Project.getSearchResult(scope.searchContent).$promise.then(function(data){
+                                        scope.projects=scope.projects.concat(data.artifacts);
                                     });
 
                                     break;

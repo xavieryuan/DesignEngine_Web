@@ -84,13 +84,13 @@ services.constant("Config",{
         swf:"64"
     },
     mediaTitles:{
-        image:"图片",
-        ppt:"ppt文件",
-        pdf:"pdf文件",
-        _3d:"3d文件",
-        mp4:"视频",
-        zip:"压缩文件",
-        swf:"swf动画"
+        1:"图片",
+        2:"ppt文件",
+        128:"pdf文件",
+        16:"3d文件",
+        4:"视频",
+        32:"压缩文件",
+        64:"swf动画"
     },
     mediaSetPanelUrl:"views/mediaSet.html",
     mediaIdPrefixes:{
@@ -105,11 +105,11 @@ services.constant("Config",{
     },
     mediaObj:{  //媒体对象
         mediaPos:"pos",
-        mediaTitle:"title",
+        mediaTitle:"name",
         mediaMemo:"description",
         mediaType:"type",
         mediaThumbFilePath:"profile_image",
-        mediaFilename:"name",
+        mediaFilename:"filename",
         mediaFilePath:"media_file",
         mediaId:"mediaId"
     },
@@ -510,13 +510,13 @@ services.service("CFunctions",["$rootScope","$location","$http","toaster","Confi
 }]);
 
 services.service("Storage",function(){
-    this.currentPage=1;
+    this.lastLoadedId=0;
     this.scrollTimer=null;
     this.currentScrollScreenType="";
     this.searchContent="";
 
     this.clearScrollData=function(currentScrollScreenType,searchContent){
-        this.currentPage=1;
+        this.lastLoadedId=0;
         this.scrollTimer=null;
         this.currentScrollScreenType=currentScrollScreenType?currentScrollScreenType:"";
         this.searchContent=searchContent?searchContent:"";
@@ -526,28 +526,31 @@ services.service("Storage",function(){
         id:0,
         name:"",
         figure:"",
-        role:"",
+        roles:[],
         description:"",
         email:"",
-        status:""
+        active:true,
+        commentActive:true
     };
     this.clearCurrentUser=function(){
         this.currentUser.id=0;
         this.currentUser.name="";
         this.currentUser.profile="";
-        this.currentUser.role="";
+        this.currentUser.roles=[];
         this.currentUser.email="";
         this.currentUser.description="";
-        this.currentUser.status="";
+        this.currentUser.active=true;
+        this.currentUser.commentActive=true;
     };
     this.initCurrentUser=function(data){
-        this.currentUser.id=data.userId?data.userId:this.currentUser.userId;
-        this.currentUser.profile=data.profile?data.profile:this.currentUser.profile;
-        this.currentUser.role=data.role?data.role:this.currentUser.role;
-        this.currentUser.name=data.name?data.name:this.currentUser.name;
+        this.currentUser.id=data.id?data.id:this.currentUser.id;
+        this.currentUser.profile=data.setting.profile_image?data.setting.profile_image:this.currentUser.profile;
+        this.currentUser.role=data.roles?data.roles:this.currentUser.roles;
+        this.currentUser.name=data.fullname?data.fullname:this.currentUser.name;
         this.currentUser.email=data.email?data.email:this.currentUser.email;
-        this.currentUser.description=typeof data.description!=="undefined"?data.description:this.currentUser.description;
-        this.currentUser.status=data.status?data.status:this.currentUser.status;
+        this.currentUser.description=data.setting.description?data.setting.description:this.currentUser.description;
+        this.currentUser.active=typeof data.active !=="undefined"?data.active:this.currentUser.active;
+        this.currentUser.commentActive=typeof data.setting.comment_active !=="undefined"?data.setting.comment_active:this.currentUser.commentActive;
     };
 });
 
@@ -603,91 +606,91 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
     function($rootScope,$resource,Storage,CFunctions,Config){
         return {
             getProjects:function(){
-                return this.resource.query({"page":Storage.currentPage},function(data){
+                return this.resource.query({"last_id":Storage.lastLoadedId},function(data){
                     //console.log("In services");
-                    if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
-                        Storage.currentPage=Config.hasNoMoreFlag;
+                    if(data.artifacts.length<Config.perLoadCount){
+                        Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.currentPage++;
+                        Storage.lastLoadedId=data.last_id;
                     }
                 });
             },
-            getSearchResult:function(){
-                return this.resource.getSearchResult({"page":Storage.currentPage},function(data){
+            getSearchResult:function(content){
+                return this.resource.getSearchResult({last_id:Storage.lastLoadedId,content:content},function(data){
                     //console.log("In services");
-                    if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
-                        Storage.currentPage=Config.hasNoMoreFlag;
+                    if(data.artifacts.length<Config.perLoadCount){
+                        Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.currentPage++;
+                        Storage.lastLoadedId=data.last_id;
                     }
                 });
             },
             resource: $resource(Config.ajaxUrls.getAllProjects,{},{
-                query:{params:{"page":1,"count":10}},
-                get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
-                delete:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
-                remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+                query:{params:{"last_id":0,"count":10}},
+                get:{url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
+                delete:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
+                remove:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
                 save:{url:Config.ajaxUrls.deleteProject},
                 add:{method:"put",url:Config.ajaxUrls.projectCreate,params:{}},
-                toggleShowProject:{method:"post",url:Config.ajaxUrls.toggleShowProject,params:{id:1,show:true}},
-                getProjectDetail:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:1}},
-                getProjectAttachments:{method:"get",url:Config.ajaxUrls.getProjectAttachments,params:{id:1}},
-                getSearchResult:{method:"get",url:Config.ajaxUrls.getSearchProjects,params:{content:"search"}},
-                getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+                toggleShowProject:{method:"post",url:Config.ajaxUrls.toggleShowProject,params:{id:0,show:true}},
+                getProjectDetail:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
+                getProjectAttachments:{method:"get",url:Config.ajaxUrls.getProjectAttachments,params:{id:0}},
+                getSearchResult:{method:"get",url:Config.ajaxUrls.getSearchProjects,params:{last_id:0,content:"search"}},
+                getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:0}}
             })
         };
 }]);
 services.factory("User",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
     return $resource(Config.ajaxUrls.getAllProjects,{},{
         query:{params:{"length":10}},
-        get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
+        get:{url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
         save:{},
-        remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
-        delete:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+        remove:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
+        delete:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
         add:{method:"put"},
         login:{method:"post",url:Config.ajaxUrls.signIn,params:{}},
-        getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:3}}
+        getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:0}}
     });
 }]);
 services.factory("Box",["$rootScope","$resource","Config","Storage",
     function($rootScope,$resource,Config,Storage){
         return {
             getBoxes:function(){
-                return this.resource.query({"page":Storage.currentPage},function(data){
-                    if(Storage.currentPage==Math.ceil(data.total/Config.perLoadCount)){
-                        Storage.currentPage=Config.hasNoMoreFlag;
+                return this.resource.query({last_id:Storage.lastLoadedId},function(data){
+                    if(data.topics.length<Config.perLoadCount){
+                        Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.currentPage++;
+                        Storage.lastLoadedId=data.last_id;
                     }
                 });
             },
             getBoxProjects:function(boxId){
-                return this.resource.getBoxProjects({boxId:boxId,page:Storage.currentPage},function(data){
-                    if(Storage.currentPage==data.total){
-                        Storage.currentPage=Config.hasNoMoreFlag;
+                return this.resource.getBoxProjects({boxId:boxId,last_id:Storage.lastLoadedId},function(data){
+                    if(data.artifacts.length<Config.perLoadCount){
+                        Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.currentPage++;
+                        Storage.lastLoadedId=data.last_id;
                     }
                 })
             },
             resource:$resource(Config.ajaxUrls.getAllBoxes,{},{
-                query:{params:{"page":1,"count":Config.perLoadCount}},
-                get:{url:Config.ajaxUrls.getBoxDetail,params:{id:1}},
-                remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+                query:{params:{"last_id":0,"count":Config.perLoadCount}},
+                get:{url:Config.ajaxUrls.getBoxDetail,params:{id:0}},
+                remove:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
                 add:{method:"put"},
                 toggleLock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3,lock:true}},
                 getBoxProjects:{method:"get",url:Config.ajaxUrls.getBoxProjects,
-                    params:{boxId:1,page:1,count:Config.perLoadCount}}
+                    params:{boxId:0,last_id:0,count:Config.perLoadCount}}
             })
         };
 }]);
 services.factory("Comment",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
     return $resource(Config.ajaxUrls.getAllComments,{},{
         query:{params:{"count":10}},
-        get:{url:Config.ajaxUrls.getProjectDetail,params:{id:3}},
-        save:{url:"#",params:{id:3}},
-        remove:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
-        delete:{url:Config.ajaxUrls.deleteProject,params:{id:3}},
+        get:{url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
+        save:{url:"#",params:{id:0}},
+        remove:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
+        delete:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
         getCommentsByProject:{method:"get",url:Config.ajaxUrls.getProjectComments,params:{projectId:1}},
         add:{method:"put",url:"#",params:{content:"test"}}
     });

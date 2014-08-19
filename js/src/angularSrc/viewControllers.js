@@ -26,7 +26,7 @@ viewControllers.controller("projects",['$scope',"Config","Storage","Project","CF
     $scope.projects=[];
     Project.getProjects().$promise.then(function(data){
         //console.log("In views");
-        $scope.projects=$scope.projects.concat(data.projects);
+        $scope.projects=$scope.projects.concat(data.artifacts);
     });
 }]);
 
@@ -68,14 +68,16 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
 
         $scope.project={};
         Project.resource.getProjectDetail({id:projectId},function(data){
-            $scope.project=data.project;
-            $scope.project.toHome=true;
+            $scope.project.artifact=data.artifact;
+            $scope.project.artifact.boxId=data.artifact.topic_id||data.user.id;
+            $scope.project.artifact.praised=data.praised;
+            $scope.project.user=data.user;
         });
 
-        $scope.attachments=[];
+        /*$scope.attachments=[];
         Project.resource.getProjectAttachments({id:projectId},function(data){
             $scope.attachments=data.attachments;
-        });
+        });*/
 
         $scope.commentObj={
             newComment:"",
@@ -92,15 +94,23 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
             loadMore();
         };
         $scope.addComment=function(content){
+
             Comment.add({content:content},function(data){
                 $scope.commentObj.showComments.unshift({
-                    "id":data.id,
-                    "userId":Storage.currentUser.id,
-                    "userName":Storage.currentUser.name,
-                    "userProfile":Storage.currentUser.profile,
-                    "content":content,
-                    "time":CFunctions.formatDate()
+                    comment:{
+                        id:data.id,
+                        content:content,
+                        commented_at:CFunctions.formatDate()
+                    },
+                    user:{
+                        id:Storage.currentUser.id,
+                        fullname:Storage.currentUser.name,
+                        setting:{
+                            profile_image:Storage.currentUser.profile
+                        }
+                    }
                 });
+
                 $scope.commentObj.newComment="";
             });
         };
@@ -113,7 +123,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
 
         $scope.similarProjects=[];
         Project.resource.getSimilarProjects({id:projectId},function(data){
-            $scope.similarProjects=data.projects;
+            $scope.similarProjects=data.artifacts;
         });
 
         $scope.deleteProject=function(id){
@@ -134,8 +144,8 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
     function($scope,$routeParams,$http,$route,toaster,Config,Storage,CFunctions,Project){
 
         function addTag(tag){
-            if($scope.project.tags.indexOf(tag)===-1){
-                $scope.project.tags.push(tag);
+            if($scope.project.terms.indexOf(tag)===-1){
+                $scope.project.terms.push(tag);
             }
 
             $scope.project.newTag="";
@@ -169,7 +179,6 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             switch(type){
                 case Config.mediaTypes.image:
                     $scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilePath]=path;
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilename]=file.name;
                     $scope.project.medias[mediaId][Config.mediaObj.mediaFilename]=file.name;
                     $scope.project.medias[mediaId][Config.mediaObj.mediaFilePath]=path;
                     $scope.project.medias[mediaId][Config.mediaObj.mediaMemo]="";
@@ -177,8 +186,6 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
 
                     break;
                 default:
-                    /*$scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilePath]=path;
-                     $scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilename]=file.name;*/
                     $scope.project.medias[mediaId][Config.mediaObj.mediaFilename]=file.name;
                     $scope.project.medias[mediaId]["noThumb"]=true;
                     $scope.project.medias[mediaId][Config.mediaObj.mediaFilePath]=path;
@@ -233,9 +240,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
 
         function initProjectData(Id){
             Project.get({id:Id},function(data){
-                $scope.project.title=data.title;
-                $scope.project.open=data.open;
-                $scope.project.tags=data.tags;
+
             },function(data){
                 CFunctions.ajaxErrorHandler();
             });
@@ -250,6 +255,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         $scope.project={
             id:0,
             profile_image:Config.thumbs.defaultThumb,
+            medias:{},
             terms:[],
             assets:[],
             user_id:Storage.currentUser.id,
@@ -264,12 +270,12 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         };
 
         $scope.box.id=$routeParams.boxId;
+        initBoxData($scope.box.id);
 
 
         $scope.currentEditMediaId=0;
         $scope.mediaSetPanelUrl="";
         $scope.currentMediaType="";
-        $scope.previewMedias=[];
         $scope.mediaSetTitle=Config.messages.clickToSet;
         $scope.uploadMediaMenuActive=false;
         $scope.currentTab=1;
@@ -281,15 +287,11 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             initProjectData($routeParams.projectId);
         }
 
-        initBoxData($scope.box.id);
-
-
 
         $scope.getPreviewMedias=function(mediaClass,attr){
 
             //每次都重新获取
-            $scope.project.mediaOrders=[];
-            $scope.previewMedias=[];
+            $scope.project.assets=[];
             var mediaItems=document.getElementsByClassName(mediaClass);
             var length=mediaItems.length;
             var mediaId="";
@@ -297,8 +299,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
 
                 //console.log(mediaItems[i].getAttribute('data-media-id'));
                 mediaId=mediaItems[i].getAttribute(attr);
-                $scope.project.mediaOrders.push(mediaId);
-                $scope.previewMedias.push($scope.project.medias[mediaId]);
+                $scope.project.medias[mediaId][Config.mediaObj.mediaPos]=i+1;
+                $scope.project.assets.push($scope.project.medias[mediaId]);
+
             }
         };
 
@@ -306,8 +309,8 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
 
             //判断是否数据都填写完整,才能执行界面转换
             if(index>1){
-                if(!$scope.project.title||$scope.project.tags.length==0||
-                    $scope.project.thumb==Config.thumbs.defaultThumb||!$scope.project.description){
+                if(!$scope.project.name||$scope.project.terms.length==0||
+                    $scope.project.profile_image==Config.thumbs.defaultThumb||!$scope.project.description){
 
                     toaster.pop('error',Config.messages.errorTitle,Config.messages.stepOneUnComplete,null,null);
                     return false;
@@ -357,7 +360,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         };
 
         $scope.deleteTag=function(index){
-            $scope.project.tags.splice(index,1);
+            $scope.project.terms.splice(index,1);
         };
         $scope.keyDownAddTag=function($event,tag){
             if($event.which==13){
@@ -386,7 +389,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                     $http.get(src+"?imageInfo").success(function(data,status,headers,config,statusText ){
                         //console.log(data);
                         if(data.width===data.height){
-                            $scope.project.thumb = src;
+                            $scope.project.profile_image = src;
                             //$scope.$apply();
                         }else{
                             toaster.pop('error',Config.messages.errorTitle,Config.messages.imgSizeError,null,null);
@@ -638,7 +641,7 @@ viewControllers.controller("boxes",['$scope',"Config","Storage","Box",function($
 
     $scope.boxes=[];
     Box.getBoxes().$promise.then(function(data){
-        $scope.boxes=$scope.boxes.concat(data.boxes);
+        $scope.boxes=$scope.boxes.concat(data.topics);
     });
 
 }]);
@@ -887,7 +890,7 @@ viewControllers.controller("usersManage",['$scope',"ngTableParams","User","CFunc
 
 viewControllers.controller("searchResult",["$scope","$routeParams","Project","Config","Storage",
     function($scope,$routeParams,Project,Config,Storage){
-        var searchContent=$routeParams.content;
+        $scope.searchContent=$routeParams.content;
 
         $scope.mainFlags.currentMenu="";
 
@@ -898,7 +901,7 @@ viewControllers.controller("searchResult",["$scope","$routeParams","Project","Co
         $scope.closePop(true);
 
         $scope.projects=[];
-        Project.getSearchResult().$promise.then(function(data){
+        Project.getSearchResult($scope.searchContent).$promise.then(function(data){
             $scope.projects=$scope.projects.concat(data.projects);
         });
 }]);

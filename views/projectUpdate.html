@@ -69,12 +69,12 @@
                     </ul>
                 </div>
                 <ol id="mediaList" class="zy_uploaded_medias_ol" drag="mediaItem">
-                    <li ng-click="showSetPanel(mediaId,value.mediaType)" data-media-id="{{mediaId}}"
+                    <li ng-click="showSetPanel(mediaId,value.type)" data-media-id="{{mediaId}}"
                         ng-repeat="(mediaId,value) in project.medias" draggable="true"
                         ng-class="{zy_media_list_error:value.noThumb,zy_media_list_active:value.active}" class="mediaItem">
-                        <img class="zy_small_thumb" ng-src="{{value.mediaThumbFilePath}}">
-                        <span title='{{value.mediaFilename}}' class="zy_media_filename">
-                            {{value.mediaFilename}}
+                        <img class="zy_small_thumb" ng-src="{{value.profile_image}}">
+                        <span title='{{value.filename}}' class="zy_media_filename">
+                            {{value.filename}}
                         </span>
                         <span class="zy_media_delete" ng-click="deleteMedia(mediaId)"></span>
                     </li>
@@ -93,7 +93,7 @@
             <input type="submit" autocomplete="default" value="提交" class="de_borderbox de_submit_upload"
                    name="de_submit_upload" id="de_submit_upload"/>
             <article id="de_upload_preview" class="de_project_detail de_borderbox">
-                <h2>{{project.title}}</h2>
+                <h2>{{project.name}}</h2>
                 <p class="publishtime"></p>
                 <div class="user_info">
                     <a ng-href="user/{{project.user_id}}">
@@ -106,16 +106,50 @@
                 </p>
 
                 <div class="main_content">
-                    <figure ng-repeat="media in previewMedias">
-                        <a ng-class="{de_has_ppt:media.type=='image'}" class="de_has_media"  href="" ng-click="">
-                            <img ng-src="{{media.mediaThumbFilePath}}"/>
+                    <figure ng-repeat="at in project.assets" ng-switch="at.type">
+
+                        <a ng-switch-when="1" href=""
+                           ng-click="showAttachmentDetail(at.media_file,at.type)">
+                            <img ng-src="{{at.profile_image}}"/>
                         </a>
+
+                        <a ng-switch-when="4" ng-click="showAttachmentDetail(at.media_file,at.type)"
+                           class="de_has_media de_has_video" href="">
+                            <img ng-src="{{at.profile_image}}"/>
+                        </a>
+
+                        <!-- <a ng-switch-when="networkVideo" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
+                            href="" class="de_has_media de_has_web_video">
+                             <img ng-src="{{at.attachmentPreviewLocation}}"/></a>
+
+                         <a ng-switch-when="3d" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
+                            href="" class="de_has_media de_has_3d">
+                             <img ng-src="{{at.attachmentPreviewLocation}}"/></a>-->
+
+
+                        <a ng-switch-when="2" ng-click="showAttachmentDetail(at.media_file,at.type)"
+                           href="" class="de_has_media de_has_ppt">
+                            <img ng-src="{{at.profile_image}}"/></a>
+
+                        <a ng-switch-when="128" ng-click="showAttachmentDetail(at.media_file,at.type)"
+                           href="" class="de_has_media de_has_ppt">
+                            <img ng-src="{{at.profile_image}}"/></a>
+
+                        <a ng-switch-when="32" ng-click="showAttachmentDetail(at.media_file,at.type)"
+                           href="" class="de_has_media de_has_file">
+                            <img ng-src="{{at.profile_image}}"/></a>
+
+                        <a ng-switch-when="64" ng-click="showAttachmentDetail(at.media_file,at.type)"
+                           href="" class="de_has_media de_has_flash">
+                            <img ng-src="{{at.profile_image}}"/></a>
+
                         <figcaption>
-                            {{media.mediaTitle}}
+                            {{at.name}}
                             <span class="description">
-                                {{media.mediaMemo}}
+                                {{at.description}}
                             </span>
                         </figcaption>
+
                     </figure>
                 </div>
             </article>
