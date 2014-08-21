@@ -283,11 +283,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
 
 
         $scope.currentEditMediaId=0;
-        $scope.mediaSetPanelUrl="";
         $scope.currentMediaType="";
-        $scope.mediaSetTitle=Config.messages.clickToSet;
         $scope.uploadMediaMenuActive=false;
-        $scope.currentTab=1;
+        $scope.currentTab=2;
         $scope.mainFlags.extMenuActive=false;
 
         Storage.clearScrollData();
@@ -359,8 +357,6 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 delete $scope.project.medias[$scope.currentEditMediaId]["active"];
                 $scope.currentEditMediaId=0;
                 $scope.currentMediaType="";
-                $scope.mediaSetTitle=Config.messages.clickToSet;
-                $scope.mediaSetPanelUrl="";
             }
 
             //设置状态
@@ -447,9 +443,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
 
                 if($scope.currentEditMediaId===mediaId){
                     $scope.currentEditMediaId=0;
-                    $scope.mediaSetPanelUrl="";
                     $scope.currentMediaType="";
-                    $scope.mediaSetTitle=Config.messages.clickToSet;
                 }
             }
         };
@@ -467,8 +461,6 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             $scope.currentMediaType=$scope.project.medias[mediaId][Config.mediaObj.mediaType];
 
             //由于共用了一个页面，如果地址不改变，页面不会重新加载
-            $scope.mediaSetPanelUrl=Config.mediaSetPanelUrl+"?"+new Date().getTime();
-            $scope.mediaSetTitle=Config.mediaTitles[mediaType];
             $scope.currentThumbSrc=$scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilePath];
             $scope.currentFilename=$scope.project.medias[mediaId][Config.mediaObj.mediaFilename];
             $scope.project.medias[mediaId]["active"]=true;
@@ -918,13 +910,13 @@ viewControllers.controller("searchResult",["$scope","$routeParams","Project","Co
 
         $scope.mainFlags.extMenuActive=false;
 
-        Storage.clearScrollData(Config.scrollScreenType.searchResult,searchContent);
+        Storage.clearScrollData(Config.scrollScreenType.searchResult,$scope.searchContent);
 
         $scope.closePop(true);
 
         $scope.projects=[];
         Project.getSearchResult($scope.searchContent).$promise.then(function(data){
-            $scope.projects=$scope.projects.concat(data.projects);
+            $scope.projects=$scope.projects.concat(data.artifacts);
         });
 }]);
 

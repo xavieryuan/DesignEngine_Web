@@ -621,7 +621,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                     }
                 });
             },
-            getSearchRessult:function(content){
+            getSearchResult:function(content){
                 return this.resource.getSearchResult({last_id:Storage.lastLoadedId,content:content},function(data){
                     //console.log("In services");
                     if(data.artifacts.length<Config.perLoadCount){

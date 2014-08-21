@@ -54,7 +54,7 @@ angular.module("autoComplete",[]).
             $scope.items=[];
         };
         $scope.keyDownEvent=function(event){
-            if(event.wheelDelta==13&&$scope.content){
+            if(event.keyCode==13&&$scope.content){
                 AutoComplete.selectedEvent($scope.content);
             }
         };

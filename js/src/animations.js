@@ -21,6 +21,7 @@ animations.animation(".de_ext_nav",function(){
 animations.animation(".de_popout",function(){
 	return{
 		enter:function(element,done){
+            console.log(element);
 			TweenMax.from(element,0.5,{z:90,opacity:0,ease:Circ.easeOut, onComplete:done});
 		},
 		leave:function(element,done){
