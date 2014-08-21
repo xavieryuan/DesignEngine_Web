@@ -8,8 +8,6 @@
 var popControllers=angular.module("popControllers",["services","autoComplete"]);
 popControllers.controller("signIn",["$scope","$document","Config","LocationChanger","Storage","User",
     function($scope,$document,Config,LocationChanger,Storage,User){
-
-        $scope.loginError="";
         $scope.popFlags.title=Config.titles.signIn;
         $scope.mainFlags.showBlackOut=true;
 

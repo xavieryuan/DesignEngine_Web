@@ -67,16 +67,16 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
 
 //在run中做一些扩展,扩展App模块，从而可以在config中使用
 pinWall.run(["$rootScope","$q","App","AjaxErrorHandler",function($rootScope,$q,App,AjaxErrorHandler){
-    $rootScope.mainFlags={
+    $rootScope.rootFlags={
         showLoading:true
     };
     angular.extend(App,AjaxErrorHandler);
 
     App.showLoading=function(){
-        $rootScope.mainFlags.showLoading=true;
+        $rootScope.rootFlags.showLoading=true;
     };
     App.hideLoading=function(){
-        $rootScope.mainFlags.showLoading=false;
+        $rootScope.rootFlags.showLoading=false;
     };
 
     App.$q=$q;
