@@ -31,7 +31,7 @@ animations.animation(".de_popout",function(){
 animations.animation(".de_blackout",function(){
 	return{
 		beforeAddClass: function(element, className, done) {
-			if(className=="ng-hide"){				
+			if(className=="ng-hide"){
 				TweenMax.to(element,0.5,{opacity:0, ease:Circ.easeOut, onComplete:done})
 			}
 		},
@@ -68,8 +68,8 @@ animations.animation(".de_screen_project_detail",function(){
 		}*/
 	}
 });
-animations.animation(".de_loading",function(){	
-	return{		 
+animations.animation(".de_loading",function(){
+	return{
 		addClass: function(element, className, done) {
 			if(className=="ng-hide"){
 				//延迟2s，避免闪烁
@@ -81,8 +81,8 @@ animations.animation(".de_loading",function(){
 			}
 		},
 		removeClass: function(element, className, done) {
-			if(className=="ng-hide"){		
-				TweenMax.killTweensOf(element);				
+			if(className=="ng-hide"){
+				TweenMax.killTweensOf(element);
 				TweenMax.to(element,0.5,{opacity:1, ease:Circ.easeOut, onComplete:done})
 			}
 		}

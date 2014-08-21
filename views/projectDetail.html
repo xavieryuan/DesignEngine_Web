@@ -2,17 +2,17 @@
 <div ng-controller="projectDetail">
 <!--工具栏-->
 <div class="de_project_header de_borderbox">
-    <a href="" ng-show="project.artifact.praised" class="de_flag_reg_zanned de_btn_zan de_borderbox">赞</a>
-    <a href="" ng-show="!project.artifact.praised" class="de_btn_zan de_borderbox">赞</a>
+    <a href="" ng-show="project.praised" class="de_flag_reg_zanned de_btn_zan de_borderbox">赞</a>
+    <a href="" ng-show="!project.praised" class="de_btn_zan de_borderbox">赞</a>
 
 
 
     <ul class="de_project_toolbar de_transition"
         ng-show="currentUser.id==project.user.id||(currentUser.roles|arrayHasElement:'admin')">
-        <li><a class="de_toolbar_edit" href="/project/update/{{project.artifact.boxId}}/{{project.artifact.id}}" title="编辑">编辑</a></li>
-        <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.artifact.id)" title="删除">删除</a></li>
-        <li><a ng-class="{de_toolbar_invisible:!project.artifact.visible,de_toolbar_visible:project.artifact.visible}" href=""
-               ng-click="toggleShowProject(project.artifact.id,!project.artifact.visible)" title="显示/隐藏">显示/隐藏</a></li>
+        <li><a class="de_toolbar_edit" href="/project/update/{{project.boxId}}/{{project.id}}" title="编辑">编辑</a></li>
+        <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
+        <li><a ng-class="{de_toolbar_invisible:!project.visible,de_toolbar_visible:project.visible}" href=""
+               ng-click="toggleShowProject(project.id,!project.visible)" title="显示/隐藏">显示/隐藏</a></li>
     </ul>
 
     <!--<a href="#" target="_self" ng-show="project.toHome"  class="de_btn_close_project_detail de_btn_back_to_home">关闭</a>-->
@@ -21,9 +21,9 @@
 
 <!--显示详细信息-->
 <article class="de_project_detail de_borderbox de_boxshadow">
-    <h2>{{project.artifact.name}}</h2>
+    <h2>{{project.name}}</h2>
 
-    <p class="publishtime">{{project.artifact.created_at}}</p>
+    <p class="publishtime">{{project.created_at}}</p>
 
     <div class="user_info">
         <a ng-href="user/{{project.user.id}}">
@@ -35,19 +35,19 @@
 
     <ul class="de_stats_tags">
 
-        <li class="badges" id="honorCount" title="勋章">{{project.artifact.honor_count}}</li>
-        <li class="likes" id="praiseCount" title="赞">{{project.artifact.praise_count}}</li>
-        <li class="comments" id="commentsCount" title="评论">{{project.artifact.comment_count}}</li>
+        <li class="badges" id="honorCount" title="勋章">{{project.honor_count}}</li>
+        <li class="likes" id="praiseCount" title="赞">{{project.praise_count}}</li>
+        <li class="comments" id="commentsCount" title="评论">{{project.comment_count}}</li>
     </ul>
 
 
     <p class="abstract">
-        {{project.artifact.description}}
+        {{project.description}}
     </p>
 
     <!--附件-->
     <div class="main_content">
-        <figure ng-repeat="at in project.artifact.assets" ng-switch="at.type">
+        <figure ng-repeat="at in project.assets" ng-switch="at.type">
 
             <a ng-switch-when="1" href=""
                ng-click="showAttachmentDetail(at.media_file,at.type)">

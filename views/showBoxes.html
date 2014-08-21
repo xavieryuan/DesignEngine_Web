@@ -2,11 +2,11 @@
 <section class="de_topic_wrapper" >
     <div class="toolbar">
         <label>显示投稿箱:</label>
-        <a href="">全部</a>
-        <a href="">开放中</a>
-        <a href="">已关闭</a>
-        <a href="">由我创建</a>
-        <input  type="text" class="searchInput">
+        <a href="" ng-class="{active:filterType==''}" ng-click="filterType=''">全部</a>
+        <a href="" ng-class="{active:filterType=='open'}" ng-click="filterType='open'">开放中</a>
+        <a href="" ng-class="{active:filterType=='closed'}" ng-click="filterType='closed'">已关闭</a>
+        <a href="" ng-class="{active:filterType=='me'}" ng-click="filterType='me'">由我创建</a>
+        <input  type="text" class="searchInput" ng-model="keyWord">
     </div>
     <!-- 选题列表 -->
     <ul class="de_topic_list">        

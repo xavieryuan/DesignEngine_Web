@@ -127,12 +127,12 @@ directives.directive("toggleLockBox",["toaster","Box","Config",function(toaster,
         link: function (scope, element, attrs, ctrl) {
             element.on('click', function (event) {
                 var params=attrs.toggleLockBox.split(",");
-
-                Box.resource.toggleLock({id:params[0],lock:params[1]},function(data){
+                var targetStatus=params[1]==Config.boxStatus.open?Config.boxStatus.closed:Config.boxStatus.open;
+                Box.resource.toggleLock({id:params[0],status:targetStatus},function(data){
                     if(params[2]){
-                        scope.boxes[params[2]]["lock"]=!scope.boxes[params[2]]["lock"];
+                        scope.boxes[params[2]]["topic"]["status"]=targetStatus;
                     }else{
-                        scope.box=!scope.box;
+                        scope.box.status=targetStatus;
                     }
                     toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
                 });
@@ -199,7 +199,7 @@ directives.directive("windowScroll", ["$window","$document","$timeout","Config",
                                     break;
                                 case Config.scrollScreenType.boxDetail:
                                     Box.getBoxProjects(scope.boxId).$promise.then(function(data){
-                                        scope.projects=scope.projects.concat(data.projects);
+                                        scope.projects=scope.projects.concat(data.artifacts);
                                     });
 
                                     break;

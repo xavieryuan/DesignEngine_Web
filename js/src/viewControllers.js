@@ -14,7 +14,7 @@
  */
 var viewControllers=angular.module("viewControllers",["services","toaster","directives","ngTable"]);
 
-viewControllers.controller("projects",['$scope',"Config","Storage","Project","CFunctions",function($scope,Config,Storage,Project,CFunctions){
+viewControllers.controller("projects",['$scope',"$interval","Config","Storage","Project","CFunctions",function($scope,$interval,Config,Storage,Project,CFunctions){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.mainFlags.currentMenu=Config.mainMenu.project;
@@ -23,10 +23,19 @@ viewControllers.controller("projects",['$scope',"Config","Storage","Project","CF
 
     Storage.clearScrollData(Config.scrollScreenType.project);
 
+
     $scope.projects=[];
     Project.getProjects().$promise.then(function(data){
         //console.log("In views");
-        $scope.projects=$scope.projects.concat(data.artifacts);
+        var count= 0,length=data.artifacts.length;
+        var inter=$interval(function(){
+            if(count<length){
+                $scope.projects.push(data.artifacts[count]);
+                count++;
+            }else{
+                $interval.cancel(inter);
+            }
+        },200);
     });
 }]);
 
@@ -68,9 +77,9 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
 
         $scope.project={};
         Project.resource.getProjectDetail({id:projectId},function(data){
-            $scope.project.artifact=data.artifact;
-            $scope.project.artifact.boxId=data.artifact.topic_id||data.user.id;
-            $scope.project.artifact.praised=data.praised;
+            $scope.project=data.artifact;
+            $scope.project.boxId=data.artifact.topic_id||data.user.id;
+            $scope.project.praised=data.praised;
             $scope.project.user=data.user;
         });
 
@@ -659,7 +668,9 @@ viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage",
 
     $scope.box={};
     Box.resource.get({id:$scope.boxId},function(data){
-        $scope.box=data.box;
+        $scope.box=data.topic;
+        $scope.box.user=data.user;
+        $scope.box.projects=data.artifacts;
     });
 
     $scope.projects=[];

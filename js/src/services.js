@@ -23,6 +23,10 @@ services.constant("Config",{
         project:"project",
         box:"box"
     },
+    boxStatus:{
+        open:0,
+        closed:1
+    },
     titles:{
         "signIn":"登陆",
         "signUp":"注册",
@@ -443,6 +447,8 @@ services.service("CFunctions",["$rootScope","$location","$http","toaster","Confi
 
                     // do something with key here
                     return key
+
+                    //return file.name;
                 }
             }
         });
@@ -615,7 +621,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                     }
                 });
             },
-            getSearchResult:function(content){
+            getSearchRessult:function(content){
                 return this.resource.getSearchResult({last_id:Storage.lastLoadedId,content:content},function(data){
                     //console.log("In services");
                     if(data.artifacts.length<Config.perLoadCount){
@@ -626,11 +632,11 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 });
             },
             resource: $resource(Config.ajaxUrls.getAllProjects,{},{
-                query:{params:{"last_id":0,"count":10}},
-                get:{url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
-                delete:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
-                remove:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
-                save:{url:Config.ajaxUrls.deleteProject},
+                query:{method:"get",params:{"last_id":0,"count":10}},
+                get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
+                delete:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{id:0}},
+                remove:{method:"remove",url:Config.ajaxUrls.deleteProject,params:{id:0}},
+                save:{method:"post",url:Config.ajaxUrls.deleteProject},
                 add:{method:"put",url:Config.ajaxUrls.projectCreate,params:{}},
                 toggleShowProject:{method:"post",url:Config.ajaxUrls.toggleShowProject,params:{id:0,show:true}},
                 getProjectDetail:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},

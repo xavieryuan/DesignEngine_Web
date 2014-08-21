@@ -16,7 +16,7 @@
     <!--<base id="de_base_url" href="http://127.0.0.1:59305/"/>-->
 
     <link href="css/lib/toaster.css" rel="stylesheet" type="text/css"/>
-    <link href="js/src/angularSrc/autoComplete/autoComplete.css" rel="stylesheet" type="text/css"/>
+    <link href="js/src/autoComplete/autoComplete.css" rel="stylesheet" type="text/css"/>
     <link href="css/lib/ng-table.css" rel="stylesheet" type="text/css"/>
     <link href="css/app/general.css" rel="stylesheet" type="text/css"/>
     <script src="js/lib/jquery-2.1.1.min.js"></script>
@@ -31,15 +31,14 @@
     <script src="js/lib/qiniu.js"></script>
    <!-- <script src="http://qzone.qq.com/gy/404/data.js"></script>
     <script src="js/src/baiduAnalytics.js"></script>-->
-    <script src="js/src/angularSrc/services.js"></script>
-    <script src="js/src/angularSrc/filters.js"></script>
-    <script src="js/src/angularSrc/directives.js"></script>
-
-    <script src="js/src/angularSrc/viewControllers.js"></script>
-    <script src="js/src/angularSrc/popControllers.js"></script>
-    <script src="js/src/angularSrc/animations.js"></script>
-    <script src="js/src/angularSrc/autoComplete/autoComplete.js"></script>
-    <script src="js/src/angularSrc/app.js"></script>
+    <script src="js/src/animations.js"></script>
+    <script src="js/src/services.js"></script>
+    <script src="js/src/filters.js"></script>
+    <script src="js/src/directives.js"></script>
+    <script src="js/src/viewControllers.js"></script>
+    <script src="js/src/popControllers.js"></script>
+    <script src="js/src/autoComplete/autoComplete.js"></script>
+    <script src="js/src/app.js"></script>
 </head>
 <body ng-controller="super" window-state-change>
 <toaster-container></toaster-container>
@@ -62,33 +61,33 @@
                     <li class="de_reg_view " ng-show="currentUser.id">
                         <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="toggleExtMenu($event)">更多</a>
                         <ul ng-class="{de_ext_nav_active:mainFlags.extMenuActive}" class="de_ext_nav" id="de_ext_nav">
-                           	<!--<li class="de_reg_view" ng-show="currentUser.id">
-                        		<a class="de_btn_upload de_borderbox" href="upload">上传作品</a>
-                    		</li>-->
-                           	<li class="de_reg_view " ng-show="currentUser.id">
+                           	<li class="de_reg_view" ng-show="!currentUser.active">
+                        		<a class="de_btn_upload de_borderbox" href="" ng-clic="activeAccount()">激活</a>
+                    		</li>
+                           	<li class="de_reg_view " ng-show="currentUser.active">
                                 <a ng-href="user/{{currentUser.id}}">我的作品集</a>
                                 <a class="de_btn_upload de_borderbox"   ng-href="project/create/{{currentUser.id}}">上传作品</a>
                             </li>
-                            <li class="de_reg_view">
+                            <li class="de_reg_view" ng-show="currentUser.active">
                                 <a ng-href="boxes">我的投稿箱</a>
                                 <a class="de_btn_create_box de_borderbox" ng-href="box/create">创建投稿箱</a>
                             </li>                                                       
-                            <li class="de_reg_view">
+                            <li class="de_reg_view" ng-show="currentUser.active">
                                 <a href="" ng-click="editInfo()">修改个人信息</a>
                             </li>
-                            <li class="de_reg_view ">
+                            <li class="de_reg_view " ng-show="currentUser.active">
                                 <a href="" ng-click="editPwd()">修改密码</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.role=='admin'">
+                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElement:'admin'">
                                 <a href="adminHome/users">用户管理</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.role=='admin'">
+                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElement:'admin'">
                                 <a href="adminHome/items">作品管理</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.role=='admin'">
+                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElement:'admin'">
                                 <a href="adminHome/boxes">投稿箱管理</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.role=='admin'">
+                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElement:'admin'">
                                 <a href="adminHome/comments">评论管理</a>
                             </li>
                             <li class="de_reg_view ">
