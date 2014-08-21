@@ -640,7 +640,7 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
 
     }]);
 
-viewControllers.controller("boxes",['$scope',"Config","Storage","Box",function($scope,Config,Storage,Box){
+viewControllers.controller("boxes",['$scope',"$interval","Config","Storage","Box",function($scope,$interval,Config,Storage,Box){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.mainFlags.currentMenu=Config.mainMenu.box;
@@ -650,9 +650,20 @@ viewControllers.controller("boxes",['$scope',"Config","Storage","Box",function($
 
     $scope.boxes=[];
     Box.getBoxes().$promise.then(function(data){
-        $scope.boxes=$scope.boxes.concat(data.topics);
+        //$scope.boxes=$scope.boxes.concat(data.topics);
+		
+		//console.log("In views");
+        var count= 0,length=data.topics.length;
+        var inter=$interval(function(){
+            if(count<length){
+                $scope.boxes.push(data.topics[count]);
+                count++;
+            }else{
+                $interval.cancel(inter);
+            }
+        },200);
+		
     });
-
 }]);
 
 viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage","Config",function($scope,$routeParams,Box,Storage,Config){

@@ -1111,9 +1111,10 @@ li {
 
 /*************作品网格****************/
 .de_project_grid {
-    text-align: center;
+    text-align: left;
     width: 100%;
     margin: 20px 0;
+	padding:0 20px;
 }
 
 .de_project_grid>li {    
@@ -1172,12 +1173,14 @@ li {
     text-align: left;
     position: absolute;
     left: 50px;
-    top: 230px;
+    top: 250px;
     right:10px;
     white-space: nowrap;
 	text-overflow:ellipsis;
     overflow: hidden;
 	color:#09bc72;
+	margin:0;
+	line-height: 30px;
 }
 
 .de_project_grid .project_info .date {
@@ -1187,8 +1190,9 @@ li {
 .de_project_grid .user_info {
     position: absolute;
     top: 230px;
-    left: 10px;
-	right:10px;
+	padding:0 10px;
+    /*left: 10px;*/
+	/*right:10px;*/
 }
 
 .de_project_grid .user_info .photo {
@@ -1202,8 +1206,7 @@ li {
 .de_project_grid .user_info .name {
 	position: absolute;
 	top: 0;
-	left: 40px;
-	right: 0;
+	left: 52px;
 	text-align: left;
     margin: 0;
     font-size: 12px;
@@ -1726,7 +1729,47 @@ li {
 }
 
 
-/*************创建、修改投稿箱****************/
+/*************投稿箱****************/
+.de_box_toolbar{
+	margin: 20px 70px 20px 30px;
+	text-align: right;
+	font-size: 12px;
+	line-height: 40px;
+	color:#999;
+}
+.de_box_toolbar label{
+	padding:0;
+	margin-right: 5px;
+}
+.de_box_toolbar a{
+	padding:0 15px;
+	display: inline-block;	
+	color:#666;
+}
+.de_box_toolbar a.active{
+	color:#fff;
+	background:#ccc;
+}
+.de_box_toolbar .de_search_wrapper{	
+	position: relative;
+	display: inline-block;
+	font-size: 0;	
+	margin:8px;
+}
+.de_box_toolbar .de_search_wrapper:after{
+	content: "";
+	width:30px;
+	height:40px;
+	background:url(../../images/app/icon14_search_dark.png) no-repeat center;
+	position: absolute;
+	top:0;
+	left:0;
+	margin-left: 5px;	
+}
+.de_box_toolbar .de_search_wrapper input{
+	width: 200px;
+	padding-left:35px;
+}
 .de_screen_box .de_box_title{
 	margin: 20px auto;
 	text-align: center;
@@ -3120,6 +3163,9 @@ span.zy_tooltips{
 	.de_btn_upload{
         display:none !important;
     }
+	.de_btn_create_box{
+        display:none !important;
+    }
     .de_link_openid_login{
         display: none;
     }
@@ -3279,7 +3325,10 @@ span.zy_tooltips{
 		width:100%!important;
     }
 	
-	
+	/*作品列表*/
+	.de_project_grid{
+		text-align: center;
+	}
 	
 	/*详情展示页面*/
 	.de_screen_project_detail .de_project_detail{
@@ -3302,6 +3351,12 @@ span.zy_tooltips{
 	.de_project_detail .user_info{
 		top:70px;
 	}
+	
+	/*筛选投稿箱*/
+	.de_box_toolbar{
+		text-align: center;
+	}
+	
 }
 
 @media screen and (max-width: 360px) {

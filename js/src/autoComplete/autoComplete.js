@@ -70,7 +70,7 @@ angular.module("autoComplete",[]).
     directive("autoComplete",[function(){
         return {
             replace:true,
-            templateUrl:"js/src/angularSrc/autoComplete/tpl.html",
+            templateUrl:"js/src/autoComplete/tpl.html",
             link:function($scope,element){
 
             }
