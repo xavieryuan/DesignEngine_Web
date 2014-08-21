@@ -907,13 +907,13 @@ viewControllers.controller("searchResult",["$scope","$routeParams","Project","Co
 
         $scope.mainFlags.extMenuActive=false;
 
-        Storage.clearScrollData(Config.scrollScreenType.searchResult,searchContent);
+        Storage.clearScrollData(Config.scrollScreenType.searchResult,$scope.searchContent);
 
         $scope.closePop(true);
 
         $scope.projects=[];
         Project.getSearchResult($scope.searchContent).$promise.then(function(data){
-            $scope.projects=$scope.projects.concat(data.projects);
+            $scope.projects=$scope.projects.concat(data.artifacts);
         });
 }]);
 
