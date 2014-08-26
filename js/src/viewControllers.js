@@ -159,60 +159,66 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
 
             $scope.project.newTag="";
         }
-        function fileAddedCb(files,type){
+        function imageAddedCb(files){
             var fileLength=files.length;
             var random="";
             for (var i = 0; i < fileLength; i++) {
-                random=CFunctions.getRandom(Config.mediaIdPrefixes.image);
-                $scope.project.medias[random]={};
-                $scope.project.medias[random][Config.mediaObj.mediaThumbFilePath]=Config.thumbs.smallThumb;
-                $scope.project.medias[random][Config.mediaObj.mediaFilename]="0%";
-                $scope.project.medias[random][Config.mediaObj.mediaType]=type;
+                random=CFunctions.getRandom("random_");
+                var obj=$scope.project.medias[random]={};
+                obj[Config.mediaObj.mediaThumbFilePath]=Config.thumbs.smallThumb;
+                obj[Config.mediaObj.mediaThumbFilename]="0%";
+                obj[Config.mediaObj.mediaType]=Config.mediaTypes.image;
 
                 fileIdToMediaIdHash[files[i]["id"]]=random;
-
-
             }
+            $scope.$apply();
+        }
+        function fileAddedCb(files,type){
+            $scope.currentMediaObj[Config.mediaObj.mediaFilename]="0%";
+            $scope.currentMediaObj[Config.mediaObj.mediaType]=type;
             $scope.mediaMenuActive=false;
             $scope.$apply();
         }
-        function progressCb(up,file){
-            $scope.project.medias[fileIdToMediaIdHash[file.id]][Config.mediaObj.mediaFilename]=file.percent+"%";
-            $scope.$apply();
+        function imageProgressCb(up,file){
+            if($scope.project.medias[fileIdToMediaIdHash[file.id]]){
+                $scope.project.medias[fileIdToMediaIdHash[file.id]][Config.mediaObj.mediaFilename]=file.percent+"%";
+                $scope.$apply();
+            }
         }
-        function fileUploadedCb(file,info,type){
-            var res = JSON.parse(info);
-            var path = Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
-            var mediaId=fileIdToMediaIdHash[file.id];
+        function fileProgressCb(up,file){
+            if($scope.currentMediaObj[Config.mediaObj.mediaFilename]){
+                $scope.currentMediaObj[Config.mediaObj.mediaFilename]=file.percent+"%";
+                $scope.$apply();
+            }
+        }
+        function imageUploadedCb(file,info){
+            var currentMedia=$scope.project.medias[fileIdToMediaIdHash[file.id]];
+            if(currentMedia){
+                var res = JSON.parse(info);
+                var path = Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
+                currentMedia[Config.mediaObj.mediaThumbFilePath]=path;
+                currentMedia[Config.mediaObj.mediaThumbFilename]=path;
+                currentMedia[Config.mediaObj.mediaFilename]=file.name;
+                currentMedia[Config.mediaObj.mediaFilePath]=path;
+                currentMedia[Config.mediaObj.mediaMemo]="";
+                currentMedia[Config.mediaObj.mediaTitle]="";
+            }
+        }
+        function fileUploadedCb(file,info){
+            if($scope.currentMediaObj[Config.mediaObj.mediaFilename]){
+                var res = JSON.parse(info);
+                var path = Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
+                $scope.currentMediaObj[Config.mediaObj.mediaFilename]=file.name;
+                $scope.currentMediaObj[Config.mediaObj.mediaFilePath]=path;
 
-            switch(type){
-                case Config.mediaTypes.image:
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilePath]=path;
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaFilename]=file.name;
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaFilePath]=path;
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaMemo]="";
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaTitle]="";
-
-                    break;
-                default:
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaFilename]=file.name;
-                    $scope.project.medias[mediaId]["noThumb"]=true;
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaFilePath]=path;
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaMemo]="";
-                    $scope.project.medias[mediaId][Config.mediaObj.mediaTitle]="";
-
-                    break;
+                $scope.$apply();
             }
 
-            $scope.$apply();
         }
         function createMediaUploader(buttonId,containerId,type){
             var filter=Config.mediaFilters.image;
             var maxSize=Config.uploadSize.maxMediaSize;
             switch(type){
-                case Config.mediaTypes.image:
-                    maxSize=Config.uploadSize.maxImageSize;
-                    break;
                 case Config.mediaTypes.mp4:
                     filter=Config.mediaFilters.mp4;
                     break;
@@ -228,6 +234,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 case Config.mediaTypes.swf:
                     filter=Config.mediaFilters.swf;
                     break;
+                case Config.mediaTypes.html5:
+                    filter=Config.mediaFilters.html5;
+                    break;
             }
 
             CFunctions.createUploader({
@@ -240,9 +249,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 fileAddCb:function(up,files){
                     fileAddedCb(files,type);
                 },
-                progressCb:progressCb,
+                progressCb:fileProgressCb,
                 uploadedCb:function(file,info){
-                    fileUploadedCb(file,info,type);
+                    fileUploadedCb(file,info);
                 }
             });
         }
@@ -281,9 +290,8 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         $scope.box.id=$routeParams.boxId;
         initBoxData($scope.box.id);
 
+        $scope.currentMediaObj={};
 
-        $scope.currentEditMediaId=0;
-        $scope.currentMediaType="";
         $scope.uploadMediaMenuActive=false;
         $scope.currentTab=2;
         $scope.mainFlags.extMenuActive=false;
@@ -352,11 +360,10 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             }
 
             //在点击的时候需要去掉媒体文件的active状态
-            if($scope.currentEditMediaId&&index!=2){
-                $scope.project.medias[$scope.currentEditMediaId]["active"]=undefined;
-                delete $scope.project.medias[$scope.currentEditMediaId]["active"];
-                $scope.currentEditMediaId=0;
-                $scope.currentMediaType="";
+            if(angular.equals({},$scope.currentMediaObj)&&index!=2){
+                $scope.currentMediaObj.active=undefined;
+                delete $scope.currentMediaObj.active;
+                $scope.currentMediaObj={};
             }
 
             //设置状态
@@ -391,7 +398,14 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                     var src= Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
 
                     //判断是否是1：1
-                    $http.get(src+"?imageInfo").success(function(data,status,headers,config,statusText ){
+                    $http.get(src+"?imageInfo",{
+                        transformRequest:function(data, headersGetter){
+                            return JSON.stringify(data);
+                        },
+                        transformResponse:function(data, headersGetter){
+                            return JSON.parse(data);
+                        }
+                    }).success(function(data,status,headers,config,statusText ){
                         //console.log(data);
                         if(data.width===data.height){
                             $scope.project.profile_image = src;
@@ -400,9 +414,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                             toaster.pop('error',Config.messages.errorTitle,Config.messages.imgSizeError,null,null);
                         }
 
-                    }).error(function(data,status,headers,config,statusText){
-                            CFunctions.ajaxErrorHandler();
-                        });
+                    });
                 }
             });
         };
@@ -415,7 +427,21 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         };
 
         $scope.createImageUploader=function(buttonId,containerId){
-            createMediaUploader(buttonId,containerId,Config.mediaTypes.image);
+            CFunctions.createUploader({
+                browseButton:buttonId,
+                multiSelection:true,
+                container:containerId,
+                multipartParams:null,
+                maxSize:Config.uploadSize.maxImageSize,
+                filter:Config.mediaFilters.image,
+                fileAddCb:function(up,files){
+                    imageAddedCb(files);
+                },
+                progressCb:imageProgressCb,
+                uploadedCb:function(file,info){
+                    imageUploadedCb(file,info);
+                }
+            });
         };
 
         $scope.createPptUploader=function(buttonId,containerId){
@@ -438,39 +464,37 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         };
         $scope.deleteMedia=function(mediaId){
             if(confirm(Config.messages.deleteConfirm)){
+                if(angular.equals($scope.currentMediaObj,$scope.project.medias[mediaId])){
+                    $scope.currentMediaObj={};
+                }
+
                 $scope.project.medias[mediaId]=undefined;
                 delete $scope.project.medias[mediaId];
-
-                if($scope.currentEditMediaId===mediaId){
-                    $scope.currentEditMediaId=0;
-                    $scope.currentMediaType="";
-                }
             }
         };
 
         /*****************媒体设置部分********************/
-        $scope.showSetPanel=function(mediaId,mediaType){
+        $scope.showSetPanel=function(mediaId){
+            if($scope.currentMediaObj[Config.mediaObj.mediaId]&&$scope.currentMediaObj[Config.mediaObj.mediaId]!=mediaId){
+                $scope.currentMediaObj.active=undefined;
+                delete $scope.currentMediaObj.active;
 
-            //移除原来的元素的活动状态
-            if($scope.currentEditMediaId){
-                $scope.project.medias[$scope.currentEditMediaId]["active"]=undefined;
-                delete  $scope.project.medias[$scope.currentEditMediaId]["active"];
+                $scope.currentMediaObj = $scope.project.medias[mediaId];
+                $scope.currentMediaObj["active"]=true;
             }
-
-            $scope.currentEditMediaId=mediaId;
-            $scope.currentMediaType=$scope.project.medias[mediaId][Config.mediaObj.mediaType];
-
-            //由于共用了一个页面，如果地址不改变，页面不会重新加载
-            $scope.currentThumbSrc=$scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilePath];
-            $scope.currentFilename=$scope.project.medias[mediaId][Config.mediaObj.mediaFilename];
-            $scope.project.medias[mediaId]["active"]=true;
         };
 
         $scope.setMediaTitle=function(title){
-            $scope.project.medias[$scope.currentEditMediaId][Config.mediaObj.mediaTitle]=title;
+            $scope.currentMediaObj[Config.mediaObj.mediaTitle]=title;
         };
         $scope.setMediaMemo=function(memo){
-            $scope.project.medias[$scope.currentEditMediaId][Config.mediaObj.mediaMemo]=memo;
+            $scope.currentMediaObj[Config.mediaObj.mediaMemo]=memo;
+        };
+        $scope.deleteBindFile=function(){
+            $scope.currentMediaObj[Config.mediaObj.mediaFilename]=undefined;
+            $scope.currentMediaObj[Config.mediaObj.mediaFilePath]=undefined;
+            delete $scope.currentMediaObj[Config.mediaObj.mediaFilename];
+            delete $scope.currentMediaObj[Config.mediaObj.mediaFilePath]
         };
 
         $scope.mediaSetThumbUploader=function(buttonId,containerId){
@@ -486,58 +510,8 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 uploadedCb:function(file,info){
                     var res = JSON.parse(info);
                     var path=Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
-                    $scope.project.medias[$scope.currentEditMediaId][Config.mediaObj.mediaThumbFilePath] =path;
-                    $scope.project.medias[$scope.currentEditMediaId]["noThumb"]=undefined;
-                    delete $scope.project.medias[$scope.currentEditMediaId]["noThumb"];
-                    $scope.currentThumbSrc=path;
-
-                    $scope.$apply();
-                }
-            });
-        };
-
-        $scope.mediaSetUploader=function(buttonId,containerId){
-            var filter="";
-            switch($scope.currentMediaType){
-                case Config.mediaTypes.mp4:
-                    filter=Config.mediaFilters.mp4;
-                    break;
-                case Config.mediaTypes.ppt:
-                    filter=Config.mediaFilters.ppt;
-                    break;
-                case Config.mediaTypes.pdf:
-                    filter=Config.mediaFilters.pdf;
-                    break;
-                case Config.mediaTypes.zip:
-                    filter=Config.mediaFilters.zip;
-                    break;
-                case Config.mediaTypes.swf:
-                    filter=Config.mediaFilters.swf;
-                    break;
-            }
-
-            CFunctions.createUploader({
-                browseButton:buttonId,
-                multiSelection:false,
-                container:containerId,
-                multipartParams:null,
-                filter:filter,
-                maxSize:Config.uploadSize.maxMediaSize,
-                fileAddCb:function(up,files){
-                    $scope.currentFilename=files[0].name+"----0%";
-                    $scope.$apply();
-                },
-                progressCb:function(up,file){
-                    $scope.currentFilename=file.name+file.percent+"%";
-                    $scope.$apply();
-                },
-                uploadedCb:function(file,info){
-                    var res = JSON.parse(info);
-                    var path=Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
-
-                    $scope.currentFilename =file.name;
-                    $scope.project.medias[$scope.currentEditMediaId][Config.mediaObj.mediaFilename] =file.name;
-                    $scope.project.medias[$scope.currentEditMediaId][Config.mediaObj.mediaFilePath] =path;
+                    $scope.currentMediaObj[Config.mediaObj.mediaThumbFilePath] =path;
+                    $scope.currentMediaObj[Config.mediaObj.mediaThumbFilename]=file.name;
 
                     $scope.$apply();
                 }
@@ -730,7 +704,7 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
                     formParam:$scope.box,
                     successCb:function(data){
 
-                        $scope.mainFlags.showBlackOut=false;
+                        $scope.hideBlackOut();
                     }
                 });
             }else{

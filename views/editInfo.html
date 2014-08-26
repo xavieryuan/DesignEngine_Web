@@ -7,15 +7,16 @@
             <div class="de_edit_col de_borderbox">
                 <form class="de_form_edit_profile" name="editInfoForm" ng-submit="editInfoSubmit()" novalidate>
                     <p class="de_photo_field" id="de_change_figure_container">
-                        <img class="photo" ng-src="{{currentUser.profile}}">
-                        <a href="#" id="de_change_figure" class="de_change_figure" style="z-index: 0;"> 点击更换</a>
+                        <img class="photo" ng-src="{{user.setting.profile_image}}">
+                        <a href="" ng-init="createProfileUploader('de_change_figure','de_change_figure_container')"
+                           id="de_change_figure" class="de_change_figure" style="z-index: 0;"> 点击更换</a>
                     </p>
 
-                    <p><em>{{currentUser.name}}</em><span class="de_form_tip">（不可更改）</span></p>
+                    <p><em>{{user.email}}</em><span class="de_form_tip">（不可更改）</span></p>
 
                     <p class="de_about_field">
                         <textarea class="de_borderbox de_inputbox_gray" placeholder="关于你..."
-                                  ng-model="editInfo.description" name="description"></textarea>
+                                  ng-model="user.setting.description" name="description"></textarea>
                     </p>
 
                     <input type="submit" class="de_green_btn de_btn_save_profile" ng-disabled="editInfoForm.$invalid"

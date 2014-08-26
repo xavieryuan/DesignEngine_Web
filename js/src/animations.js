@@ -21,7 +21,7 @@ animations.animation(".de_ext_nav",function(){
 animations.animation(".de_popout",function(){
 	return{
 		enter:function(element,done){
-            console.log(element);
+            //console.log(element);
 			TweenMax.from(element,0.5,{z:90,opacity:0,ease:Circ.easeOut, onComplete:done});
 		},
 		leave:function(element,done){
@@ -38,7 +38,7 @@ animations.animation(".de_blackout",function(){
 		},
 		removeClass: function(element, className, done) {
 			if(className=="ng-hide"){
-                console.log(element);
+                 //console.log(element);
 				//TweenMax.set(element,{opacity:0});
 				TweenMax.to(element,0.5,{opacity:0.7, ease:Circ.easeOut, onComplete:done})
 			}

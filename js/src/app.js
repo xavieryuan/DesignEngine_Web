@@ -15,9 +15,9 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
         $locationProvider.html5Mode(true);
         //$locationProvider.hashPrefix("!");
         $routeProvider.when("/",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/projects",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+            when("/artifacts",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/project/:projectId",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/boxes",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
+            when("/topics",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
             when("/box/create",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
             when("/box/edit/:boxId",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
             when("/box/:boxId",{templateUrl: 'views/showBoxDetail.html',controller:"boxDetail"}).
@@ -29,6 +29,8 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
             when("/user/:userId",{templateUrl: 'views/userHome.html',controller:"userHome"}).
             when("/login",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/register",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+            when("/users/:userId/update",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+            when("/change_password",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/forgetPassword",{templateUrl: 'views/showProjects.html',controller:"projects"})/*.
             otherwise({redirectTo: '/'});*/
 
@@ -49,7 +51,7 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
         $httpProvider.interceptors.push(function () {
             return {
                 response: function (res) {
-                    if(res.data.success&&res.data.success==false){
+                    if(typeof res.data.success!="undefined"&&res.data.success==false){
                         App.ajaxReturnErrorHandler(res.data);
                         return App.$q.reject(res.data);
                     }else{
@@ -68,14 +70,23 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
 //在run中做一些扩展,扩展App模块，从而可以在config中使用
 pinWall.run(["$rootScope","$q","App","AjaxErrorHandler",function($rootScope,$q,App,AjaxErrorHandler){
     $rootScope.rootFlags={
-        showLoading:true
+        showLoading:false,
+        showBlackOut:false
     };
     angular.extend(App,AjaxErrorHandler);
 
+    App.showBlackOut=function(){
+        $rootScope.rootFlags.showBlackOut=true;
+    };
+    App.hideBlackOut=function(){
+        $rootScope.rootFlags.showBlackOut=false;
+    };
     App.showLoading=function(){
+        App.showBlackOut();
         $rootScope.rootFlags.showLoading=true;
     };
     App.hideLoading=function(){
+        App.hideBlackOut();
         $rootScope.rootFlags.showLoading=false;
     };
 
@@ -83,8 +94,8 @@ pinWall.run(["$rootScope","$q","App","AjaxErrorHandler",function($rootScope,$q,A
 
 }]);
 
-pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage","LocationChanger",
-    function($scope,$location,Config,CFunctions,Storage,LocationChanger){
+pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage","User","LocationChanger","toaster","App",
+    function($scope,$location,Config,CFunctions,Storage,User,LocationChanger,toaster,App){
 
         //使用对象，子scope可以直接覆盖（对象地址）
         $scope.mainFlags={
@@ -94,8 +105,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
             "showProjectDetailFlag":false,  //是否显示作品详情
             "projectDetailTemplate":"",
             "showPlayMedialPanel":false,   //是否显示视频播放界面
-            "showWebVideoPanel":false,   //控制显示网络视频输入界面
-            "showBlackOut":false
+            "showWebVideoPanel":false   //控制显示网络视频输入界面S
         };
         $scope.popFlags={
             "title":"",
@@ -112,23 +122,25 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
         };
 
         $scope.currentUser=Storage.currentUser;
-        $scope.currentUser.id=1;
-        $scope.currentUser.profile="data/people1.jpg";
-        $scope.currentUser.name="测试用户";
-        $scope.currentUser.roles=[Config.roles.admin,Config.roles.vip];
+        //$scope.currentUser.id=1;
 
         $scope.closePop=function(notGoBack){
             $scope.popFlags.title="";
             $scope.popFlags.popTemplateUrl="";
-            $scope.mainFlags.showBlackOut=false;
+
+            $scope.hideBlackOut();
 
             if(!notGoBack){
                 history.back();
             }
         };
 
-
-
+        $scope.showBlackOut=function(){
+            App.showBlackOut();
+        };
+        $scope.hideBlackOut=function(){
+            App.hideBlackOut();
+        };
         /**
          *点击登陆菜单
          */
@@ -177,17 +189,17 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
          */
         $scope.editInfo=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.editInfo;
-            LocationChanger.skipReload().withReplace(Config.urls.editInfo,false);
+            LocationChanger.skipReload().withReplace(Config.urls.editInfo.replace(":userId",$scope.currentUser.id),false);
         };
 
         //播放媒体文件界面
         $scope.closePlayMediaPanel=function(){
             $scope.mainFlags.showPlayMedialPanel=false;
-            $scope.mainFlags.showBlackOut=false;
+            $scope.hideBlackOut();
         };
         $scope.closeWebVideoPanel=function(){
             $scope.mainFlags.showWebVideoPanel=false;
-            $scope.mainFlags.showBlackOut=false;
+            $scope.hideBlackOut();
         };
 
         $scope.initPage=function(){
@@ -214,6 +226,32 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
             }
         };
 
+        $scope.activeAccount=function(){
+            User.setUserActive({email:Storage.currentUser.email},function(data){
+                toaster.pop('success',Config.messages.successTitle,Config.messages.activeSuccess,null,null);
+            });
+        };
+
         $scope.initPage();
+        //初始化登陆用户
+        User.getCurrentUser(function(data){
+            if(data.user){
+                Storage.initCurrentUser({
+                    id:data.user.id,
+                    roles:data.user.roles,
+                    name:data.user.fullname,
+                    active:data.user.active,
+                    email:data.user.email,
+                    setting:{
+                        profile_image:data.user.setting&&data.user.setting.profile_image?
+                            data.user.setting.profile_image:Config.thumbs.defaultUserProfile,
+                        description:data.user.setting&&data.user.setting.description?
+                            data.user.setting.description:"",
+                        comment_active:data.user.setting&&data.user.setting.comment_active?
+                            data.user.setting.comment_active:true
+                    }
+                });
+            }
+        });
 
     }]);

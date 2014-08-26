@@ -13,12 +13,14 @@ var services=angular.module("services",["ngResource","toaster"]);
 services.constant("Config",{
     thumbs:{
         defaultThumb:"images/app/default_thumb_500.png",
-        smallThumb:"images/app/default_small_thumb.png"
+        smallThumb:"images/app/default_small_thumb.png",
+        defaultUserProfile:"images/app/default_user_photo.png"
     },
     perLoadCount:10,//作品、评论、资源等每次加载的个数
     hasNoMoreFlag:-1,//作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
     qNUploadDomain:'http://qiniu-plupload.qiniudn.com/',
-    qNBucketDomain:"http://id-channel-1.qiniudn.com/",
+    qNBucketDomain:"http://pinwall.qiniudn.com/",
+    captcha:"captcha.jpg",
     mainMenu:{
         project:"project",
         box:"box"
@@ -53,8 +55,8 @@ services.constant("Config",{
         "projectDetailReg":/\/project\/\d?/,
         "signIn":"/login",
         "signUp":"/register",
-        "editPwd":"change/password",
-        "editInfo":"change/info",
+        "editPwd":"/change_password",
+        "editInfo":"/users/:userId/update",
         "userHome":"/user/{userId}",
         "search":"/search",
         "searchResult":"/search/:content",
@@ -76,7 +78,8 @@ services.constant("Config",{
         mp4:"mp4",
         _3d:"3d",
         zip:"zip",
-        swf:"swf"
+        swf:"swf",
+        html5:"zip"
     },
     mediaTypes:{  //媒体类型
         image:"1",
@@ -85,7 +88,8 @@ services.constant("Config",{
         _3d:"16",
         mp4:"4",
         zip:"32",
-        swf:"64"
+        swf:"64",
+        html:"256"
     },
     mediaTitles:{
         1:"图片",
@@ -94,18 +98,8 @@ services.constant("Config",{
         16:"3d文件",
         4:"视频",
         32:"压缩文件",
-        64:"swf动画"
-    },
-    mediaSetPanelUrl:"views/mediaSet.html",
-    mediaIdPrefixes:{
-        image:"img_",
-        ppt:"ppt_",
-        pdf:"pdf_",
-        _3d:"3d_",
-        mp4:"mp4_",
-        zip:"zip_",
-        webVideo:"networkVideo_",
-        swf:"swf_"
+        64:"swf动画",
+        256:"HTML5应用"
     },
     mediaObj:{  //媒体对象
         mediaPos:"pos",
@@ -113,6 +107,7 @@ services.constant("Config",{
         mediaMemo:"description",
         mediaType:"type",
         mediaThumbFilePath:"profile_image",
+        mediaThumbFilename:"profile_filename",
         mediaFilename:"filename",
         mediaFilePath:"media_file",
         mediaId:"mediaId"
@@ -133,6 +128,20 @@ services.constant("Config",{
         boxDetail:"boxDetail",
         userDetail:"userDetail" //用户页的用户作品,
     },
+    emailUrls:{
+        163:"http://mail.163.com",
+        126:"http://mail.126.com",
+        yeah:"http://www.yeah.net/",
+        sina:"http://mail.sina.com.cn",
+        yahoo:"http://mail.yahoo.com",
+        sohu:"http://mail.sohu.com",
+        gmail:"http://mail.google.com",
+        hotmail:"http://www.hotmail.com" ,
+        live:"http://www.hotmail.com",
+        outlook:"http://www.hotmail.com",
+        qq:"http://mail.qq.com",
+        139:"http://mail.10086.cn"
+    },
     validError:{
         required:"请输入此字段！",
         email:"请输入正确的邮箱格式！",
@@ -151,48 +160,34 @@ services.constant("Config",{
         deleteConfirm:"确定删除吗？",
         successTitle:"成功提示",
         operationSuccess:"操作成功！",
-        registerSuccess:"注册成功，如果您是非QQ登录用户，请进入邮箱激活账户，否则无法登录！",
         timeout:"登录超时，请关闭后刷新页面并登录！",
         networkError:"网络连接失败，请稍后重试！",
-        validCodeError:"验证码错误！",
+        captchaError:"验证码错误！",
         operationError:"操作失败，请稍后重试！",
         imgSizeError:"图片不是1:1比例！",
+        userActiveError:"用户已经激活！",
         loadDataError:"请求数据失败！",
-        filenameError:"文件名必须是数字下划线汉字字母,且不能以下划线开头！",
         nameOrPwdError:"用户名或者密码错误！",
-        emailNotConfirm:"请登录邮箱进行激活！",
-        notFound:"页面资源未发现，2秒后跳转到首页！",
-        changePwdSuccess:"密码修改成功，2秒后跳转到首页并退出！",
+        oldPwdError:"原始密码不正确！",
         emailNotExist:"输入的邮箱不存在！",
-        emailSendSuccess:"操作成功，请进入邮箱查看邮件！",
-        emailChangeSuccess:"绑定成功，请进入邮箱确认！",
+        activeSuccess:"操作成功，请进入邮箱查看激活邮件！",
         mediaHasNoThumb:"有媒体文件没有上传缩略图，请上传后再预览！",
         hasNoMedia:"没有上传媒体文件或者有上传错误的媒体文件，请上传或者删除后再预览！",
         boxUnComplete:"标题、标签、描述等没有填写完整",
         stepOneUnComplete:"标题、标签、描述、缩略图等没有填写完整！",
         pptHasNotUploaded:"此资源还没有被上传到资源服务器，暂时不能查看！",
         pptUploadError:"此资源上传到资源服务器出错，无法查看！",
-        uploadSizeError:"最大文件大小",
-        uploadExtensionError:"只允许上传",
-        uploadIOError:"上传插件异常，请刷新后重试！",
-        emailPending:"你的新邮箱${email}没有激活，请进入邮箱激活！",
-        emailInvalid:"你提交的新邮箱${email},已被其他人激活，如需修改邮箱，请提交另外一个邮箱！"
-    },
-    errorCode:{
-        captchaUnMatch:"captcha_unmatches",
-        accountUpdateFail:"account_update_fail",
-        emailNotConfirm:"email_not_confirm",
-        accountRequired:"account_required",
-        accountFullNameRequired:"account_fullname_required",
-        authenticationError:"authentication_error",
-        uploadException:"upload_exception",
-        timeout:"timeout",
-        thumbHeightNotEqualsWidth:"thumb_height_not_equals_width",
-        notFound:"not_found"
+        systemError:"系统发生错误，请稍后重试！"
     },
     ajaxUrls:{
-        signIn:"#",
-        upload:"http://localhost/idchannel/chinese/wp-admin/admin-ajax.php?action=getUploadToken",
+        signIn:"/login",
+        signUp:"/register",
+        editInfo:"/api/users/:userId/setting",
+        changePwd:"/change_password",
+        getCurrentUser:"/api/users/whoami",
+        addUploadedKey:"/api/qiniu/add_key",
+        setUserActive:"/confirm",
+        upload:"/api/qiniu/uptoken",
         getAllProjects:"data/projects.json", //获取首页作品媒体文件)
         getProjectDetail:"data/projectDetail.json", //获取作品（资源）详情
         deleteProject:"post/remove/:id",
@@ -260,9 +255,47 @@ services.constant("App",{
     }
 });*/
 
-services.service("AjaxErrorHandler",["toaster","Config",function(toaster,Config){
+services.service("AjaxErrorHandler",["$timeout","toaster","Config",function($timeout,toaster,Config){
     this.ajaxReturnErrorHandler=function(data){
-        toaster.pop('error',Config.messages.errorTitle,Config.messages.networkError,null,null);
+        //console.log(data);
+        var errorCode=data.error_code;
+        var message="";
+        switch(errorCode){
+            case "UNAUTHORIZED":
+                message=Config.messages.timeout;
+                $timeout(function(){
+                    window.location.href="./";
+                });
+                break;
+            case "USER_NOT_EXIST":
+                message=Config.messages.nameOrPwdError;
+                break;
+            case "INVALID_PASSWORD":
+                message=Config.messages.nameOrPwdError;
+                break;
+            case "EMAIL_ALREADY_ASSOCIATED":
+                message=Config.messages.emailExist;
+                break;
+            case "PASSWORD_NOT_SET":
+                message=Config.messages.pwdEqualError;
+                break;
+            case "PASSWORD_NOT_MATCH":
+                message=Config.messages.oldPwdError;
+                break;
+            case "UNEXPECTED_ERROR":
+                message=Config.messages.systemError;
+                break;
+            case "USER_ALREADY_CONFIRMED":
+                message=Config.messages.userActiveError;
+                break;
+            case "CAPTCHA_NOT_MATCH":
+                message=Config.messages.captchaError;
+                break;
+            default :
+                message=Config.messages.loadDataError;
+                break;
+        }
+        toaster.pop('error',Config.messages.errorTitle,message,null,null);
     };
 
     this.ajaxErrorHandler=function(){
@@ -428,6 +461,19 @@ services.service("CFunctions",["$rootScope","$location","$http","toaster","Confi
                     if(typeof param.uploadedCb==="function"){
                         param.uploadedCb(file,info);
                     }
+
+                    //每次上传完成都需要告知后台
+                    var res = JSON.parse(info);
+                    var src = Config.qNBucketDomain + res.key;
+                    $http.put(Config.ajaxUrls.addUploadedKey,{key:src},{
+                        transformRequest:function(data, headersGetter){
+                            //console.log(data);
+                            return JSON.stringify(data);
+                        },
+                        transformResponse:function(data, headersGetter){
+                            return JSON.parse(data);
+                        }
+                    });
                 },
                 'Error': function(up, err, errTip) {
                     toaster.pop('error',Config.messages.errorTitle,errTip,null,null);
@@ -460,7 +506,12 @@ services.service("CFunctions",["$rootScope","$location","$http","toaster","Confi
         var pos=path.lastIndexOf("/");
         return path.substring(pos+1);
     };
-
+    this.getEmailDomain=function(email){
+        var domain=email.substring(email.indexOf("@")+1);
+        domain=domain.substring(0,domain.lastIndexOf("."));
+        domain=domain.replace(/vip.|.com|.cn/g,"");
+        return domain;
+    };
     this.hideProjectDetail=function(refreshScope){
         var target=$(".de_screen_project_detail");
         var header=target.find(".de_project_header");
@@ -531,7 +582,7 @@ services.service("Storage",function(){
     this.currentUser={  //当前登录的用户信息
         id:0,
         name:"",
-        figure:"",
+        profile:"",
         roles:[],
         description:"",
         email:"",
@@ -551,8 +602,8 @@ services.service("Storage",function(){
     this.initCurrentUser=function(data){
         this.currentUser.id=data.id?data.id:this.currentUser.id;
         this.currentUser.profile=data.setting.profile_image?data.setting.profile_image:this.currentUser.profile;
-        this.currentUser.role=data.roles?data.roles:this.currentUser.roles;
-        this.currentUser.name=data.fullname?data.fullname:this.currentUser.name;
+        this.currentUser.roles=data.roles?data.roles:this.currentUser.roles;
+        this.currentUser.name=data.name?data.name:this.currentUser.name;
         this.currentUser.email=data.email?data.email:this.currentUser.email;
         this.currentUser.description=data.setting.description?data.setting.description:this.currentUser.description;
         this.currentUser.active=typeof data.active !=="undefined"?data.active:this.currentUser.active;
@@ -648,14 +699,37 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
 }]);
 services.factory("User",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
     return $resource(Config.ajaxUrls.getAllProjects,{},{
-        query:{params:{"length":10}},
-        get:{url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
-        save:{},
-        remove:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
-        delete:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
-        add:{method:"put"},
-        login:{method:"post",url:Config.ajaxUrls.signIn,params:{}},
-        getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:0}}
+        query:{method:"get",params:{"length":10}},
+        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
+        save:{method:"post",url:Config.ajaxUrls.editInfo,params:{userId:0},
+            transformRequest:function(data, headersGetter){
+                return JSON.stringify(data);
+            },
+            transformResponse:function(data, headersGetter){
+                return JSON.parse(data);
+            }
+        },
+        remove:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{id:0}},
+        delete:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{id:0}},
+        add:{method:"put",url:Config.ajaxUrls.signUp,
+            transformRequest:function(data, headersGetter){
+                return JSON.stringify(data);
+            },
+            transformResponse:function(data, headersGetter){
+                return JSON.parse(data);
+            }
+        },
+        setUserActive:{method:"post",url:Config.ajaxUrls.setUserActive},
+        getCurrentUser:{method:"get",url:Config.ajaxUrls.getCurrentUser},
+        login:{method:"post",url:Config.ajaxUrls.signIn},
+        changePwd:{method:"post",url:Config.ajaxUrls.changePwd,
+            transformRequest:function(data, headersGetter){
+                return JSON.stringify(data);
+            },
+            transformResponse:function(data, headersGetter){
+                return JSON.parse(data);
+            }
+        }
     });
 }]);
 services.factory("Box",["$rootScope","$resource","Config","Storage",

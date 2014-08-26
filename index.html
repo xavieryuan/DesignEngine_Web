@@ -62,7 +62,7 @@
                         <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="toggleExtMenu($event)">更多</a>
                         <ul ng-class="{de_ext_nav_active:mainFlags.extMenuActive}" class="de_ext_nav" id="de_ext_nav">
                            	<li class="de_reg_view" ng-show="!currentUser.active">
-                        		<a class="de_btn_upload de_borderbox" href="" ng-clic="activeAccount()">激活</a>
+                        		<a  href="" ng-click="activeAccount()">激活</a>
                     		</li>
                            	<li class="de_reg_view " ng-show="currentUser.active">
                                 <a ng-href="user/{{currentUser.id}}">我的作品集</a>
@@ -91,7 +91,7 @@
                                 <a href="adminHome/comments">评论管理</a>
                             </li>
                             <li class="de_reg_view ">
-                                <a href="#" target="_self">退出登录</a>
+                                <a href="/logout" target="_self">退出登录</a>
                             </li>
                         </ul>
                     </li>
@@ -104,8 +104,8 @@
             <!-----顶部菜单----->
             <nav class="de_top_nav" id="de_top_nav" >
                 <ul>
-                    <li><a href="projects" ng-class="{active:mainFlags.currentMenu=='project'}" class="de_borderbox">作品酷</a></li>
-                    <li><a href="boxes" ng-class="{active:mainFlags.currentMenu=='box'}" class="de_borderbox">投稿箱</a></li>
+                    <li><a href="artifacts" ng-class="{active:mainFlags.currentMenu=='project'}" class="de_borderbox">作品酷</a></li>
+                    <li><a href="topics" ng-class="{active:mainFlags.currentMenu=='box'}" class="de_borderbox">投稿箱</a></li>
                     <li class="de_btn_filter"><a href="" class="de_borderbox" ng-click="toSearch()">探索...</a></li>
                 </ul>
             </nav>
@@ -136,7 +136,7 @@
     </section>
 	
 	<!-----------blackout----------->
-    <div class="de_blackout" ng-show="mainFlags.showBlackOut"></div>
+    <div class="de_blackout" ng-show="rootFlags.showBlackOut"></div>
     <!-----------load spinner----------->
 
 

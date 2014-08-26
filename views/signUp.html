@@ -7,8 +7,9 @@
             <div class="de_reg_col de_left_col de_borderbox">
                 <form name="registerForm" class="" ng-submit="registerSubmit()" novalidate>
                     <p class="de_username_field">
-                        <input type="text" class="de_borderbox de_inputbox_gray" name="fullname" placeholder="姓名（无法修改）" ng-maxlength="32" ng-model="register.fullname" required>
-                        <span class="error" ng-show="user.fullname.$dirty && registerForm.fullname.$invalid">
+                        <input type="text" class="de_borderbox de_inputbox_gray" name="fullname"
+                               placeholder="姓名（无法修改）" ng-maxlength="32" ng-model="user.fullname" required>
+                        <span class="error" ng-show="registerForm.fullname.$dirty && registerForm.fullname.$invalid">
                             <label ng-show="registerForm.fullname.$error.required">{{validMessage.required}}</label>
                             <label ng-show="registerForm.fullname.$error.maxlength">{{validMessage.maxLength | setMaxLength:32}}</label>
                         </span>
@@ -46,6 +47,9 @@
                     <input type="submit" class="de_green_btn de_submit_btn" value="注册" ng-disabled="registerForm.$invalid">
 
                 </form>
+                <div ng-show="emailUrl!=''">
+                    注册成功，请进入<a ng-href="{{emailUrl}}" class="de_green_text" target="_blank">邮箱</a>进行账户激活！
+                </div>
             </div>
         </article>
         <!-- 注册弹窗结束 -->

@@ -12,17 +12,33 @@ directives.directive('pwdCheck', function(){
         link: function (scope, elem, attrs, ctrl) {
             var firstPassword = angular.element(document.getElementById(attrs.pwdCheck));
             elem.on('keyup', function () {
-                /*scope.$apply(function () {
+                scope.$apply(function () {
                     var v = elem.val()===firstPassword.val();
                     ctrl.$setValidity('noMatch', v);
-                });*/
-                var v = elem.val()===firstPassword.val();
-                ctrl.$setValidity('noMatch', v);
+                });
             });
             firstPassword.on('keyup', function () {
+                scope.$apply(function () {
+                    var v = elem.val()===firstPassword.val();
+                    ctrl.$setValidity('noMatch', v);
+                });
+            });
+        }
+    }
+});
+directives.directive("isEmail",function(){
+    return {
+        require:"ngModel",
+        link:function(scope,elem,attrs,ctrl){
+            elem.bind("keyup",function(){
+                if(ctrl.$viewValue){
+                    var reg=/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$/;
 
-                var v = elem.val()===firstPassword.val();
-                ctrl.$setValidity('noMatch', v);
+                    ctrl.$setValidity("emailExist",reg.test(ctrl.$viewValue));
+
+                }else{
+                    ctrl.$setValidity("emailExist",true);
+                }
             });
         }
     }
@@ -31,14 +47,16 @@ directives.directive("emailExist",function($http){
     return {
         require:"ngModel",
         link:function(scope,elem,attrs,ctrl){
-
             elem.bind("keyup",function(){
-                //console.log(ctrl);
                 if(ctrl.$viewValue){
-                    $http({
-                        method:"get",
-                        url:"php/nameExist.php",
-                        params:{email:ctrl.$viewValue}
+                    $http.get("/email_exists",{
+                        params:{email:ctrl.$viewValue},
+                        transformRequest:function(data, headersGetter){
+                            return JSON.stringify(data);
+                        },
+                        transformResponse:function(data, headersGetter){
+                            return JSON.parse(data);
+                        }
                     }).success(function(data,status,headers,config){
                             if(data.exist){
                                 ctrl.$setValidity("emailExist",false);

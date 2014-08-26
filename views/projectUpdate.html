@@ -45,35 +45,15 @@
 
         <!-- step 2-->
         <div class="de_upload_step2" ng-show="currentTab==2">
-            <div class="zy_uploader_column_left">
-                <span class="zy_section_left_header" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()">添加文件</span>
-                <!--媒体文件类型的menu-->
+            <div class="zy_uploader_column_left" id="zy_uploader_column_left">
+                <span class="zy_section_left_header" id="uploadImage" ng-init="createImageUploader('uploadImage','uploadContainer')">添加图片</span>
 
-                <div id="uploadContainer" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()"
-                     ng-class="{zy_add_media_menu_active:uploadMediaMenuActive}" class="zy_add_media_menu">
-                    <ul>
-                        <li><a id="uploadImage" class="zy_types1"
-                               ng-init="createImageUploader('uploadImage','uploadContainer')">图片（JPG, PNG）</a></li>
-                        <li><a id="uploadMp4" class="zy_types2"
-                               ng-init="createMp4Uploader('uploadMp4','uploadContainer')">视频（MP4）</a></li>
-                        <li><a id="uploadPpt" class="zy_types3"
-                               ng-init="createPptUploader('uploadPPt','uploadContainer')">幻灯片（PPT）</a></li>
-                        <li><a id="uploadPdf" class="zy_types4"
-                                ng-init="createPdfUploader('uploadPdf','uploadContainer')" >文档（PDF）</a></li>
-                        <li><a id="uploadSwf" class="zy_types5"
-                               ng-init="createSwfUploader('uploadSwf','uploadContainer')">FLASH动画（SWF）</a></li>
-                        <li><a id="uploadZip" class="zy_types6"
-                               ng-init="createZipUploader('uploadZip','uploadContainer')">附件（ZIP）</a></li>
-                         <!--<li><a id="upload3d" class="zy_types7"
-                               ng-init="createFileUploader('uploadFile','uploadContainer')">3D文件</a></li>-->
-                    </ul>
-                </div>
-                <ol id="mediaList" class="zy_uploaded_medias_ol" drag="mediaItem">
-                    <li ng-click="showSetPanel(mediaId,value.type)" data-media-id="{{mediaId}}"
+                <ol class="zy_uploaded_medias_ol" drag="mediaItem">
+                    <li ng-click="showSetPanel(mediaId)" data-media-id="{{mediaId}}"
                         ng-repeat="(mediaId,value) in project.medias" draggable="true"
-                        ng-class="{zy_media_list_error:value.noThumb,zy_media_list_active:value.active}" class="mediaItem">
+                        ng-class="{zy_media_list_active:value.active}" class="mediaItem">
                         <img class="zy_small_thumb" ng-src="{{value.profile_image}}">
-                        <span title='{{value.filename}}' class="zy_media_filename">
+                        <span title='{{value.profile_filename}}' class="zy_media_filename">
                             {{value.filename}}
                         </span>
                         <span class="zy_media_delete" ng-click="deleteMedia(mediaId)"></span>
@@ -82,35 +62,59 @@
             </div>
             <div class="zy_uploader_column_right" id="zy_uploader_column_right">
                 <header class="zy_section_right_header"><p><b>{{mediaSetTitle}}</b></p></header>
-                <section>
-                    <article id="zy_content" class="zy_content">
-                        <section id="zy_left" class="zy_column_50">
-                            <section id="zy_left_top" ng-hide="currentMediaType=='image'">
-                                <label class="zy_section_heading">文件</label>
-                                <div class="zy_toolbar">
-                                    <input type="button" id="zy_upload_media_button" class="zy_upload_btn" value="更改"
-                                           ng-init="mediaSetUploader('zy_upload_media_button','zy_left_top')">
-                                    <span class="zy_file_info">{{currentFilename}}</span>
-                                </div>
-                            </section>
+                <section ng-show="currentMediaObj.mediaId!=''">
+                    <article class="zy_content" >
+                        <section  class="zy_column_50">
                             <section id="zy_left_bottom">
                                 <label class="zy_section_heading">缩略图</label>
                                 <div class="zy_toolbar">
-                                    <input type="button" id="zy_upload_thumb_button" class="zy_upload_btn" value="上传"
+                                    <input type="button" id="zy_upload_thumb_button" class="zy_upload_btn" value="更换"
                                            ng-init="mediaSetThumbUploader('zy_upload_thumb_button','zy_left_bottom')">
                                     <div class="zy_tooltips">限2M以内的jpg或png</div>
                                 </div>
-                                <img ng-src="{{currentThumbSrc}}" class="zy_media_thumb">
+                                <img ng-src="{{currentMediaObj.profile_image}}" class="zy_media_thumb">
                             </section>
                         </section>
                         <section id="zy_right" class="zy_column_50">
-                            <section id="zy_right_top">
-                                <label class="zy_section_heading">标题</label><span class="zy_tooltips">可选</span>
-                                <input ng-blur="setMediaTitle(CurrentMediaTitle)" ng-model="CurrentMediaTitle" maxlength="80" type="text" class="zy_input_text">
+                            <section class="zy_bind_file_container">
+                                <label class="zy_section_heading">绑定媒体文件<span class="zy_tooltips">(可选)</span></label>
+                                <span class="zy_section_left_header zy_bind_file" ng-mouseenter="showMediaMenu()"
+                                      ng-mouseleave="hideMediaMenu()">添加文件</span>
+                                <!--媒体文件类型的menu-->
+                                <div id="uploadContainer" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()"
+                                     ng-class="{zy_add_media_menu_active:uploadMediaMenuActive}" class="zy_add_media_menu">
+                                    <ul>
+                                        <li><a id="uploadMp4" class="zy_types2"
+                                               ng-init="createMp4Uploader('uploadMp4','uploadContainer')">视频（MP4）</a></li>
+                                        <li><a id="uploadPpt" class="zy_types3"
+                                               ng-init="createPptUploader('uploadPPt','uploadContainer')">幻灯片（PPT）</a></li>
+                                        <li><a id="uploadPdf" class="zy_types4"
+                                               ng-init="createPdfUploader('uploadPdf','uploadContainer')" >文档（PDF）</a></li>
+                                        <li><a id="uploadSwf" class="zy_types5"
+                                               ng-init="createSwfUploader('uploadSwf','uploadContainer')">FLASH动画（SWF）</a></li>
+                                        <li><a id="uploadZip" class="zy_types6"
+                                               ng-init="createZipUploader('uploadZip','uploadContainer')">压缩包（ZIP）</a></li>
+                                        <li><a id="uploadHtml5" class="zy_types7"
+                                               ng-init="createHtml5Uploader('uploadHtml5','uploadContainer')">HTML5应用（ZIP）</a></li>
+                                        <!--<li><a id="upload3d" class="zy_types7"
+                                              ng-init="createFileUploader('uploadFile','uploadContainer')">3D文件</a></li>-->
+                                    </ul>
+                                </div>
+                                <div class="zy_bind_file_info">
+                                    <span class="zy_bind_file_name"
+                                          ng-class="{zy_types2:currentMediaObj.type==4,zy_types3:currentMediaObj.type==2,zy_types4:currentMediaObj.type==128,
+                                          zy_types5:currentMediaObj.type==64,zy_types6:currentMediaObj.type==32,zy_types7:currentMediaObj.type==256}">
+                                        {{currentMediaObj.filename}}</span>
+                                    <span class="zy_delete_bind_file" ng-click="deleteBindFile()">删除</span>
+                                </div>
                             </section>
-                            <section id="zy_right_bottom">
-                                <label class="zy_section_heading">描述</label><span class="zy_tooltips">可选</span>
-                                <textarea ng-blur="setMediaMemo(CurrentMediaMemo)" ng-model="CurrentMediaMemo" class="zy_textarea_input"></textarea>
+                            <section>
+                                <label class="zy_section_heading">标题<span class="zy_tooltips">(可选)</span></label>
+                                <input ng-blur="setMediaTitle(currentMediaObj.name)" ng-model="currentMediaObj.name" maxlength="80" type="text" class="zy_input_text">
+                            </section>
+                            <section >
+                                <label class="zy_section_heading">描述<span class="zy_tooltips">(可选)</span></label>
+                                <textarea ng-blur="setMediaMemo(currentMediaObj.description)" ng-model="currentMediaObj.description" class="zy_textarea_input"></textarea>
                             </section>
                         </section>
                     </article>
