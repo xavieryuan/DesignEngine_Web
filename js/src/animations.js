@@ -38,9 +38,10 @@ animations.animation(".de_blackout",function(){
 		},
 		removeClass: function(element, className, done) {
 			if(className=="ng-hide"){
-                 //console.log(element);
-				//TweenMax.set(element,{opacity:0});
-				TweenMax.to(element,0.5,{opacity:0.7, ease:Circ.easeOut, onComplete:done})
+                //console.log(element);
+                //TweenMax.set(element,{opacity:0});
+                TweenMax.to(element,0.5,{opacity:0.7, ease:Circ.easeOut, onComplete:done})
+
 			}
 		}
 	}
