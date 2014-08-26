@@ -46,7 +46,7 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
             rememberMe();
 
             //登陆
-            User.login($scope.user,function(data){
+            User.resource.login($scope.user,function(data){
                 Storage.initCurrentUser({
                     id:data.user.id,
                     roles:data.user.roles,
@@ -84,7 +84,7 @@ popControllers.controller("signUp",["$scope","CFunctions","Config","User","toast
     };
 
     $scope.registerSubmit=function(){
-        User.add($scope.user,function(data){
+        User.resource.add($scope.user,function(data){
             $scope.emailUrl=Config.emailUrls[CFunctions.getEmailDomain($scope.user.email)];
             toaster.pop("success",Config.messages.successTitle,Config.messages.activeSuccess,null,null);
             //$scope.closePop();
@@ -132,7 +132,7 @@ popControllers.controller("editPwd",["$scope","CFunctions","Config","User","toas
 
     $scope.editPwdSubmit=function(){
         console.log($scope.user);
-        User.changePwd($scope.user,function(data){
+        User.resource.changePwd($scope.user,function(data){
             toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
         })
     };
@@ -153,7 +153,7 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
 
     $scope.mainFlags.extMenuActive=false;
     $scope.editInfoSubmit=function(){
-        User.save({userId:$scope.user.userId},$scope.user.setting,function(data){
+        User.resource.save({userId:$scope.user.userId},$scope.user.setting,function(data){
             Storage.initCurrentUser({
                 setting:{
                     profile_image:$scope.user.setting.profile_image,

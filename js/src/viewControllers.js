@@ -241,7 +241,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
 
             CFunctions.createUploader({
                 browseButton:buttonId,
-                multiSelection:true,
+                multiSelection:false,
                 container:containerId,
                 multipartParams:null,
                 maxSize:maxSize,
@@ -552,6 +552,18 @@ viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project",
             }
         });
 
+        $scope.tableSearch=function(){
+            $scope.table.page(1);
+
+            $scope.table.filter({
+                type:$scope.searchType,
+                content:$scope.searchContent
+            });
+
+            //$scope.table.reload();//这个函数不会动态更改filter
+        }
+
+
     }]);
 
 viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams","Comment","CFunctions","Config",
@@ -615,8 +627,10 @@ viewControllers.controller("boxes",['$scope',"$interval","Config","Storage","Box
     Storage.clearScrollData(Config.scrollScreenType.box);
 
     $scope.boxes=[];
-    Box.getBoxes().$promise.then(function(data){
-        //$scope.boxes=$scope.boxes.concat(data.topics);
+    $scope.filterType="";
+    $scope.keyWord="";
+
+    Box.getBoxes($scope.filterType,$scope.keyWord).$promise.then(function(data){
 		
 		//console.log("In views");
         var count= 0,length=data.topics.length;
@@ -756,123 +770,70 @@ viewControllers.controller("boxesManage",['$scope',"ngTableParams","Box","CFunct
 
     }]);
 
-viewControllers.controller("userHome",['$scope',function($scope){
+viewControllers.controller("userHome",['$scope',"User",function($scope,User){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.mainFlags.currentMenu="";
 
     $scope.mainFlags.extMenuActive=false;
 
-    $scope.user={
-        "id":1,
-        "honorCount":34,
-        "projectCount":55,
-        "disabledUpload":true,
-        "profile":"data/people1.jpg",
-        "name":"涛涛",
-        "date":"2013-07-08",
-        "description":"这个还一个很友好的作品",
-        "projects":[
-            {
-                "id":1,
-                "thumb":"data/pic1.png",
-                "praiseCount":34,
-                "commentCount":45,
-                "userProfile":"data/people1.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            },
-            {
-                "id":2,
-                "thumb":"data/pic2.png",
-                "praiseCount":34,
-                "commentsCount":45,
-                "userProfile":"data/people2.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            },
-            {
-                "id":3,
-                "thumb":"data/pic3.png",
-                "praiseCount":34,
-                "commentsCount":45,
-                "userProfile":"data/people3.jpg",
-                "userName":"涛涛",
-                "userId":1,
-                "date":"2013-07-08",
-                "title":"书香文化"
-            }]
-    };
-    $scope.projects=[
-        {
-            "id":1,
-            "thumb":"data/pic1.png",
-            "praiseCount":34,
-            "commentCount":45,
-            "userProfile":"data/people1.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":2,
-            "thumb":"data/pic2.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people2.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        },
-        {
-            "id":3,
-            "thumb":"data/pic3.png",
-            "praiseCount":34,
-            "commentsCount":45,
-            "userProfile":"data/people3.jpg",
-            "userName":"涛涛",
-            "userId":1,
-            "date":"2013-07-08",
-            "title":"书香文化"
-        }
-    ];
+    $scope.user={};
+    User.resource.get({id:$scope.currentUser.id},function(data){
+
+    });
+
+    $scope.projects=[];
+    User.getUserProjects($scope.currentUser.id).$promise.then(function(data){
+        $scope.projects=$scope.projects.concat(data.projects);
+    });
 
 }]);
 
 viewControllers.controller("usersManage",['$scope',"ngTableParams","User","CFunctions",
     function($scope,ngTableParams,User,CFunctions){
 
-        $scope.tableParams= new ngTableParams({
-            count:3,
-            page:1,
-            sorting: {
-                name: 'asc'     // initial sorting
-            },
-            filter:{
-                name:"ty",
-                age:"13"
-            }
-        },{
-            total:0,
-            getData:function($defer,params){
-                User.query(params.url(), function(data) {
+        viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project","CFunctions",
+            function($scope,ngTableParams,Project,CFunctions){
 
-                    // update table params
-                    params.total(data.total);
+                $scope.tableParams= new ngTableParams({
+                    count:3,
+                    page:1,
+                    sorting: {
+                        name: 'asc'     // initial sorting
+                    },
+                    filter:{
+                        name:"ty",
+                        age:"13"
+                    }
+                },{
+                    total:0,
+                    getData:function($defer,params){
+                        Project.query(params.url(), function(data) {
 
-                    // set new data
-                    $defer.resolve(data.result);
-                },function(data){
-                    CFunctions.ajaxErrorHandler();
+                            // update table params
+                            params.total(data.total);
+
+                            // set new data
+                            $defer.resolve(data.result);
+                        },function(data){
+                            CFunctions.ajaxErrorHandler();
+                        });
+                    }
                 });
-            }
-        });
+
+                $scope.tableSearch=function(){
+                    $scope.table.page(1);
+
+                    $scope.table.filter({
+                        type:$scope.searchType,
+                        content:$scope.searchContent
+                    });
+
+                    //$scope.table.reload();//这个函数不会动态更改filter
+                }
+
+
+            }]);
 
     }]);
 

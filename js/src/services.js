@@ -698,44 +698,56 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
         };
 }]);
 services.factory("User",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
-    return $resource(Config.ajaxUrls.getAllProjects,{},{
-        query:{method:"get",params:{"length":10}},
-        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
-        save:{method:"post",url:Config.ajaxUrls.editInfo,params:{userId:0},
-            transformRequest:function(data, headersGetter){
-                return JSON.stringify(data);
-            },
-            transformResponse:function(data, headersGetter){
-                return JSON.parse(data);
-            }
+    return {
+        getUserProjects:function(boxId){
+            return this.resource.getBoxProjects({boxId:boxId,last_id:Storage.lastLoadedId},function(data){
+                if(data.artifacts.length<Config.perLoadCount){
+                    Storage.lastLoadedId=Config.hasNoMoreFlag;
+                }else{
+                    Storage.lastLoadedId=data.last_id;
+                }
+            })
         },
-        remove:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{id:0}},
-        delete:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{id:0}},
-        add:{method:"put",url:Config.ajaxUrls.signUp,
-            transformRequest:function(data, headersGetter){
-                return JSON.stringify(data);
+        resource:$resource(Config.ajaxUrls.getAllProjects,{},{
+            query:{method:"get",params:{"length":10}},
+            get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
+            save:{method:"post",url:Config.ajaxUrls.editInfo,params:{userId:0},
+                transformRequest:function(data, headersGetter){
+                    return JSON.stringify(data);
+                },
+                transformResponse:function(data, headersGetter){
+                    return JSON.parse(data);
+                }
             },
-            transformResponse:function(data, headersGetter){
-                return JSON.parse(data);
-            }
-        },
-        setUserActive:{method:"post",url:Config.ajaxUrls.setUserActive},
-        getCurrentUser:{method:"get",url:Config.ajaxUrls.getCurrentUser},
-        login:{method:"post",url:Config.ajaxUrls.signIn},
-        changePwd:{method:"post",url:Config.ajaxUrls.changePwd,
-            transformRequest:function(data, headersGetter){
-                return JSON.stringify(data);
+            remove:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{id:0}},
+            delete:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{id:0}},
+            add:{method:"put",url:Config.ajaxUrls.signUp,
+                transformRequest:function(data, headersGetter){
+                    return JSON.stringify(data);
+                },
+                transformResponse:function(data, headersGetter){
+                    return JSON.parse(data);
+                }
             },
-            transformResponse:function(data, headersGetter){
-                return JSON.parse(data);
+            setUserActive:{method:"post",url:Config.ajaxUrls.setUserActive},
+            getCurrentUser:{method:"get",url:Config.ajaxUrls.getCurrentUser},
+            login:{method:"post",url:Config.ajaxUrls.signIn},
+            changePwd:{method:"post",url:Config.ajaxUrls.changePwd,
+                transformRequest:function(data, headersGetter){
+                    return JSON.stringify(data);
+                },
+                transformResponse:function(data, headersGetter){
+                    return JSON.parse(data);
+                }
             }
-        }
-    });
+        })
+    }
 }]);
+
 services.factory("Box",["$rootScope","$resource","Config","Storage",
     function($rootScope,$resource,Config,Storage){
         return {
-            getBoxes:function(){
+            getBoxes:function(filterType,keyWord){
                 return this.resource.query({last_id:Storage.lastLoadedId},function(data){
                     if(data.topics.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
@@ -754,7 +766,7 @@ services.factory("Box",["$rootScope","$resource","Config","Storage",
                 })
             },
             resource:$resource(Config.ajaxUrls.getAllBoxes,{},{
-                query:{params:{"last_id":0,"count":Config.perLoadCount}},
+                query:{params:{last_id:0,count:Config.perLoadCount,filterType:"",keyWord:""}},
                 get:{url:Config.ajaxUrls.getBoxDetail,params:{id:0}},
                 remove:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
                 add:{method:"put"},

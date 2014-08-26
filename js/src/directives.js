@@ -210,7 +210,7 @@ directives.directive("windowScroll", ["$window","$document","$timeout","Config",
 
                                     break;
                                 case Config.scrollScreenType.box:
-                                    Box.getBoxes().$promise.then(function(data){
+                                    Box.getBoxes(scope.filterType,scope.keyWord).$promise.then(function(data){
                                         scope.boxes=scope.boxes.concat(data.topics);
                                     });
 
