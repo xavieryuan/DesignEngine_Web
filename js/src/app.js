@@ -16,25 +16,24 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
         //$locationProvider.hashPrefix("!");
         $routeProvider.when("/",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/artifacts",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/project/:projectId",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+            when("/artifacts/create",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
+            when("/artifacts/:projectId",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/topics",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
-            when("/box/create",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
-            when("/box/edit/:boxId",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
+            when("/topics/create",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
+            when("/topics/:boxId/update",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
             when("/box/:boxId",{templateUrl: 'views/showBoxDetail.html',controller:"boxDetail"}).
             when("/adminHome/comments",{templateUrl: 'views/admin/commentsManage.html',controller:"commentsManage"}).
-            when("/project/create/:boxId",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
-            when("/project/update/:boxId/:projectId",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
+            when("/topic/:boxId/artifact",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
+            when("/artifacts/:projectId/update",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
             when("/search",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/search/:content",{templateUrl: 'views/searchResult.html',controller:"searchResult"}).
-            when("/user/:userId",{templateUrl: 'views/userHome.html',controller:"userHome"}).
+            when("/users/:userId",{templateUrl: 'views/userHome.html',controller:"userHome"}).
             when("/login",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/register",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/users/:userId/update",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/change_password",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/forgetPassword",{templateUrl: 'views/showProjects.html',controller:"projects"})/*.
             otherwise({redirectTo: '/'});*/
-
-
 
         //ajax的一些默认配置，全局启用loading
         $httpProvider.defaults.transformRequest.push(function (data) {
@@ -50,6 +49,11 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
         //对返回的数据进行拦截，直接全局处理出错信息
         $httpProvider.interceptors.push(function () {
             return {
+                request:function(config){
+                    config.url=config.url.replace(/\\/,"/");
+
+                    return config||App.$q.reject(config);
+                },
                 response: function (res) {
                     if(typeof res.data.success!="undefined"&&res.data.success==false){
                         App.ajaxReturnErrorHandler(res.data);
@@ -211,7 +215,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.signIn;
             }else if(path.indexOf(Config.urls.signUp)!==-1){
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.signUp;
-            }else if(path.indexOf(Config.urls.editInfo)!==-1){
+            }else if(path.match(Config.urls.editInfoReg)!==null){
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.editInfo;
             }else if(path.match(Config.urls.projectDetailReg)!==null){
                 $scope.mainFlags.projectDetailTemplate=Config.templateUrls.projectDetail;
@@ -227,14 +231,14 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
         };
 
         $scope.activeAccount=function(){
-            User.setUserActive({email:Storage.currentUser.email},function(data){
+            User.resource.setUserActive({email:Storage.currentUser.email},function(data){
                 toaster.pop('success',Config.messages.successTitle,Config.messages.activeSuccess,null,null);
             });
         };
 
         $scope.initPage();
         //初始化登陆用户
-        User.getCurrentUser(function(data){
+        User.resource.getCurrentUser(function(data){
             if(data.user){
                 Storage.initCurrentUser({
                     id:data.user.id,

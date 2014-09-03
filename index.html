@@ -13,7 +13,7 @@
     <title>图钉墙 - HNU Design</title>
 
     <!--<base id="de_base_url" href="http://localhost/DesignEngine_Web/"/>-->
-    <base id="de_base_url" href="http://127.0.0.1:50417/"/>
+    <base id="de_base_url" href="http://192.168.2.167/"/>
 
     <link href="css/lib/toaster.css" rel="stylesheet" type="text/css"/>
     <link href="js/src/autoComplete/autoComplete.css" rel="stylesheet" type="text/css"/>
@@ -65,12 +65,12 @@
                         		<a  href="" ng-click="activeAccount()">激活</a>
                     		</li>
                            	<li class="de_reg_view " ng-show="currentUser.active">
-                                <a ng-href="user/{{currentUser.id}}">我的作品集</a>
-                                <a class="de_btn_upload de_borderbox"   ng-href="project/create/{{currentUser.id}}">上传作品</a>
+                                <a ng-href="users/{{currentUser.id}}">我的作品集</a>
+                                <a class="de_btn_upload de_borderbox"   ng-href="artifacts/create">上传作品</a>
                             </li>
                             <li class="de_reg_view" ng-show="currentUser.active">
                                 <a ng-href="boxes">我的投稿箱</a>
-                                <a class="de_btn_create_box de_borderbox" ng-href="box/create">创建投稿箱</a>
+                                <a class="de_btn_create_box de_borderbox" ng-href="topics/create">创建投稿箱</a>
                             </li>                                                       
                             <li class="de_reg_view" ng-show="currentUser.active">
                                 <a href="" ng-click="editInfo()">修改个人信息</a>
@@ -78,20 +78,20 @@
                             <li class="de_reg_view " ng-show="currentUser.active">
                                 <a href="" ng-click="editPwd()">修改密码</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElement:'admin'">
+                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
                                 <a href="adminHome/users">用户管理</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElement:'admin'">
+                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
                                 <a href="adminHome/items">作品管理</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElement:'admin'">
+                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
                                 <a href="adminHome/boxes">投稿箱管理</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElement:'admin'">
+                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
                                 <a href="adminHome/comments">评论管理</a>
                             </li>
                             <li class="de_reg_view ">
-                                <a href="/logout" target="_self">退出登录</a>
+                                <a href="logout" target="_self">退出登录</a>
                             </li>
                         </ul>
                     </li>

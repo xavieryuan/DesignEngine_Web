@@ -2,14 +2,15 @@
 <div ng-controller="projectDetail">
 <!--工具栏-->
 <div class="de_project_header de_borderbox">
-    <a href="" ng-show="project.praised" class="de_flag_reg_zanned de_btn_zan de_borderbox">赞</a>
-    <a href="" ng-show="!project.praised" class="de_btn_zan de_borderbox">赞</a>
+    <a href="" ng-class="{de_flag_reg_zanned:project.praised,de_flag_reg_zan:!project.praised}"
+       class="de_btn_zan de_borderbox" ng-click="praiseProject(project.id)">赞</a>
+
 
 
 
     <ul class="de_project_toolbar de_transition"
-        ng-show="currentUser.id==project.user.id||(currentUser.roles|arrayHasElement:'admin')">
-        <li><a class="de_toolbar_edit" href="/project/update/{{project.boxId}}/{{project.id}}" title="编辑">编辑</a></li>
+        ng-show="currentUser.id==project.user.id||(currentUser.roles|arrayHasElements:'admin')">
+        <li><a class="de_toolbar_edit" ng-href="/artifacts/{{project.id}}/update" title="编辑">编辑</a></li>
         <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
         <li><a ng-class="{de_toolbar_invisible:!project.visible,de_toolbar_visible:project.visible}" href=""
                ng-click="toggleShowProject(project.id,!project.visible)" title="显示/隐藏">显示/隐藏</a></li>
@@ -108,7 +109,7 @@
                 <a ng-href="user/{{c.user.id}}" class="name">{{c.user.fullname}}</a>
                 <span class="publishtime">{{c.commented_at}}</span>
 
-                <a ng-show="c.userId==currentUser.id||(currentUser.roles|arrayHasElement:'admin')" href="" ng-click="deleteComment(c.comment.id,$index)" class="de_delete_comment">X</a>
+                <a ng-show="c.userId==currentUser.id||(currentUser.roles|arrayHasElements:'admin')" href="" ng-click="deleteComment(c.comment.id,$index)" class="de_delete_comment">X</a>
 
                 <p class="comment">{{c.comment.content}}</p>
             </div>
@@ -129,7 +130,7 @@
             <textarea ng-model="commentObj.newComment" maxlength="200" class="comment de_borderbox de_inputbox_gray"
                       placeholder="你的评论..."></textarea>
             <input type="button" class="de_button de_btn_add_comment"
-                   ng-click="addComment(commentObj.newComment)" value="提交">
+                   ng-click="addComment(project.id,commentObj.newComment)" value="提交">
         </div>
     </div>
 

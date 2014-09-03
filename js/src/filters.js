@@ -21,13 +21,21 @@ filters.filter("getMinNumber", function(){
         return Math.min(first,second);
     }
 });
-filters.filter("arrayHasElement",function(){
+filters.filter("arrayHasElements",function(){
     return function(array,element){
-        var length=array.length;
         var result=false;
-        for(var i=0;i<length;i++){
-            if(array[i]==element){
-                result=true;
+        var elements=element.split(",");
+        var arrayLength=array.length,elementsLength=elements.length;
+        for(var i=0;i<arrayLength;i++){
+            for(var j=0;j<elementsLength;j++){
+                if(array[i]==elements[j]){
+                    result=true;
+                    break;
+                }
+            }
+
+            //跳出外层循环
+            if(result===true){
                 break;
             }
         }

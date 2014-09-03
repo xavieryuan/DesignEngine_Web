@@ -26,6 +26,17 @@ directives.directive('pwdCheck', function(){
         }
     }
 });
+directives.directive('preventEnterSubmit', function(){
+    return {
+        link: function (scope, elem, attrs) {
+            elem.on("keydown",function(event){
+                if(event.keyCode==13){
+                    return false;
+                }
+            })
+        }
+    }
+});
 directives.directive("isEmail",function(){
     return {
         require:"ngModel",
@@ -146,7 +157,7 @@ directives.directive("toggleLockBox",["toaster","Box","Config",function(toaster,
             element.on('click', function (event) {
                 var params=attrs.toggleLockBox.split(",");
                 var targetStatus=params[1]==Config.boxStatus.open?Config.boxStatus.closed:Config.boxStatus.open;
-                Box.resource.toggleLock({id:params[0],status:targetStatus},function(data){
+                Box.resource.setBoxStatus({boxId:params[0]},{id:params[0],status:targetStatus},function(data){
                     if(params[2]){
                         scope.boxes[params[2]]["topic"]["status"]=targetStatus;
                     }else{
@@ -185,8 +196,8 @@ directives.directive("windowStateChange",["$window","CFunctions","LocationChange
         }
     }
 }]);
-directives.directive("windowScroll", ["$window","$document","$timeout","Config","Storage","Project","Box",
-    function ($window,$document,$timeout,Config,Storage,Project,Box) {
+directives.directive("windowScroll", ["$window","$document","$timeout","Config","Storage","Project","Box","User",
+    function ($window,$document,$timeout,Config,Storage,Project,Box,User) {
         return {
             link: function(scope, element, attrs) {
 
@@ -228,6 +239,9 @@ directives.directive("windowScroll", ["$window","$document","$timeout","Config",
 
                                     break;
                                 case Config.scrollScreenType.userDetail:
+                                    User.getUserProjects(scope.userId).$promise.then(function(data){
+                                        scope.projects=scope.projects.concat(data.artifacts);
+                                    });
                                     break;
                             }
                         },200);

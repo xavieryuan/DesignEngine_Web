@@ -2667,7 +2667,7 @@ span.zy_tooltips{
     left: 0;
     width: 100%;
 	height:60px;
-    z-index: 9999;
+    z-index: 9996;
     font-size: 0;
 }
 

@@ -24,7 +24,7 @@ viewControllers.controller("projects",['$scope',"$interval","Config","Storage","
     Storage.clearScrollData(Config.scrollScreenType.project);
 
 
-    $scope.projects=[];
+    Storage.loadedProjects=$scope.projects=[];
     Project.getProjects().$promise.then(function(data){
         //console.log("In views");
         var count= 0,length=data.artifacts.length;
@@ -76,17 +76,13 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
         };
 
         $scope.project={};
-        Project.resource.getProjectDetail({id:projectId},function(data){
+        Project.resource.getProjectDetail({projectId:projectId},function(data){
             $scope.project=data.artifact;
             $scope.project.boxId=data.artifact.topic_id||data.user.id;
             $scope.project.praised=data.praised;
             $scope.project.user=data.user;
+            $scope.project.topic=data.topic;
         });
-
-        /*$scope.attachments=[];
-        Project.resource.getProjectAttachments({id:projectId},function(data){
-            $scope.attachments=data.attachments;
-        });*/
 
         $scope.commentObj={
             newComment:"",
@@ -102,9 +98,9 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
         $scope.loadMoreComments=function(){
             loadMore();
         };
-        $scope.addComment=function(content){
+        $scope.addComment=function(projectId,content){
 
-            Comment.add({content:content},function(data){
+            Comment.add({projectId:projectId},{content:content},function(data){
                 $scope.commentObj.showComments.unshift({
                     comment:{
                         id:data.id,
@@ -120,11 +116,27 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
                     }
                 });
 
+                //跟新view面板的数据
+                var length=Storage.loadedProjects.length;
+                for(var i=0;i<length;i++){
+                    if(Storage.loadedProjects[i]["artifact"]["id"]==id){
+                        Storage.loadedProjects[i]["artifact"]["comment_count"]++;
+                    }
+                }
+
                 $scope.commentObj.newComment="";
             });
         };
         $scope.deleteComment=function(id,index){
-            Comment.delete({id:id},function(data){
+            Comment.delete({projectId:id},function(data){
+
+                //跟新view面板的数据
+                var length=Storage.loadedProjects.length;
+                for(var i=0;i<length;i++){
+                    if(Storage.loadedProjects[i]["artifact"]["id"]==id){
+                        Storage.loadedProjects[i]["artifact"]["comment_count"]--;
+                    }
+                }
                 $scope.commentObj.showComments.splice(index,1);
                 toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
             });
@@ -136,21 +148,63 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
         });
 
         $scope.deleteProject=function(id){
-            Project.resource.delete({id:id},function(data){
+            Project.resource.delete({projectId:id},function(data){
+
+                //跟新view面板的数据
+                var length=Storage.loadedProjects.length;
+                for(var i=0;i<length;i++){
+                    if(Storage.loadedProjects[i]["artifact"]["id"]==id){
+                        Storage.loadedProjects.splice(i,1);
+                    }
+                }
                 toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+
+                $scope.hideProjectDetail();
             });
         };
 
-        $scope.toggleShowProject=function(id,showFlag){
-            Project.resource.delete({id:id,show:showFlag},function(data){
-                $scope.project.show=showFlag;
+        $scope.praiseProject=function(id){
+            if($scope.currentUser.id){
+                Project.resource.praiseProject({projectId:id},{},function(data){
+
+                    //跟新view面板的数据
+                    var length=Storage.loadedProjects.length;
+                    var rolesString=$scope.currentUser.roles.join(",");
+                    for(var i=0;i<length;i++){
+                        if(Storage.loadedProjects[i]["artifact"]["id"]==id){
+                            if($scope.project.praised==false){
+                                if(rolesString.match(Config.roles.vip)!==null){
+                                    Storage.loadedProjects[i]["artifact"]["honor_count"]++;
+                                }else{
+                                    Storage.loadedProjects[i]["artifact"]["praise_count"]++;
+                                }
+                            }else{
+                                if(rolesString.match(Config.roles.vip)!==null){
+                                    Storage.loadedProjects[i]["artifact"]["honor_count"]--;
+                                }else{
+                                    Storage.loadedProjects[i]["artifact"]["praise_count"]--;
+                                }
+                            }
+
+                        }
+                    }
+                    $scope.project.praised=!$scope.project.praised;
+
+                });
+            }else{
+                $scope.login();
+            }
+        };
+        $scope.toggleShowProject=function(id){
+            Project.resource.toggleShowProject({projectId:id},{},function(data){
+                $scope.project.visible=!$scope.project.visible;
                 toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
             });
         };
 }]);
 
-viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$route","toaster","Config","Storage","CFunctions","Project",
-    function($scope,$routeParams,$http,$route,toaster,Config,Storage,CFunctions,Project){
+viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$route","toaster","Config","Storage","Box","CFunctions","Project",
+    function($scope,$routeParams,$http,$route,toaster,Config,Storage,Box,CFunctions,Project){
 
         function addTag(tag){
             if($scope.project.terms.indexOf(tag)===-1){
@@ -197,9 +251,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 var res = JSON.parse(info);
                 var path = Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
                 currentMedia[Config.mediaObj.mediaThumbFilePath]=path;
-                currentMedia[Config.mediaObj.mediaThumbFilename]=path;
-                currentMedia[Config.mediaObj.mediaFilename]=file.name;
-                currentMedia[Config.mediaObj.mediaFilePath]=path;
+                currentMedia[Config.mediaObj.mediaThumbFilename]=file.name;
+                currentMedia[Config.mediaObj.mediaFilename]="";
+                currentMedia[Config.mediaObj.mediaFilePath]="";
                 currentMedia[Config.mediaObj.mediaMemo]="";
                 currentMedia[Config.mediaObj.mediaTitle]="";
             }
@@ -256,19 +310,34 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             });
         }
 
-        function initProjectData(Id){
-            Project.get({id:Id},function(data){
+        function initProjectData(id){
+            Project.resource.get({id:id},function(data){
+                var random;
+                var length=data.artifact.assets.length;
 
-            },function(data){
-                CFunctions.ajaxErrorHandler();
+                $scope.project.id=data.artifact.id;
+                $scope.project.profile_image=data.artifact.profile_image;
+                //$scope.project.assets=data.artifact.assets;
+                $scope.project.terms=data.artifact.terms;
+                $scope.project.name=data.artifact.name;
+                $scope.project.description=data.artifact.description;
+
+                //初始化附件
+                for (var i = 0; i < length; i++) {
+                    random=CFunctions.getRandom("random_");
+                    $scope.project.medias[random]=data.assets[i];
+                }
             });
         }
 
-        function initBoxData(Id){
-
+        function initBoxData(id){
+            Box.get({boxId:id},function(data){
+                $scope.box.name=data.topic.name;
+            });
         }
 
         var fileIdToMediaIdHash={};
+        var hasBox=false;
 
         $scope.project={
             id:0,
@@ -283,18 +352,25 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             description:""
         };
         $scope.box={
-            id:0,
-            name:""
+            id:$scope.currentUser.id,
+            name:$scope.currentUser.name
         };
 
-        $scope.box.id=$routeParams.boxId;
-        initBoxData($scope.box.id);
+        if($routeParams.boxId){
+            hasBox=true;
+            $scope.box.id=$routeParams.boxId;
+            initBoxData($scope.box.id);
+        }
+
 
         $scope.currentMediaObj={};
 
         $scope.uploadMediaMenuActive=false;
-        $scope.currentTab=2;
+        $scope.currentTab=1;
         $scope.mainFlags.extMenuActive=false;
+        $scope.mainFlags.showProjectDetailFlag=false;
+        $scope.mainFlags.currentMenu="";
+        $scope.mainFlags.showMainWrapper=true;
 
         Storage.clearScrollData();
 
@@ -360,7 +436,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             }
 
             //在点击的时候需要去掉媒体文件的active状态
-            if(angular.equals({},$scope.currentMediaObj)&&index!=2){
+            if(!angular.equals({},$scope.currentMediaObj)&&index!=2){
                 $scope.currentMediaObj.active=undefined;
                 delete $scope.currentMediaObj.active;
                 $scope.currentMediaObj={};
@@ -475,7 +551,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
 
         /*****************媒体设置部分********************/
         $scope.showSetPanel=function(mediaId){
-            if($scope.currentMediaObj[Config.mediaObj.mediaId]&&$scope.currentMediaObj[Config.mediaObj.mediaId]!=mediaId){
+            if($scope.currentMediaObj[Config.mediaObj.mediaThumbFilename]!=
+                $scope.project.medias[mediaId][Config.mediaObj.mediaThumbFilename]){
+
                 $scope.currentMediaObj.active=undefined;
                 delete $scope.currentMediaObj.active;
 
@@ -519,7 +597,15 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         };
 
         $scope.uploadFormSubmit=function(){
-
+            if(hasBox){
+                Project.resource.addToBox({},$scope.project,function(data){
+                    toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                });
+            }else{
+                Project.resource.add($scope.project,function(data){
+                    toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                });
+            }
         }
     }]);
 
@@ -624,26 +710,31 @@ viewControllers.controller("boxes",['$scope',"$interval","Config","Storage","Box
     $scope.mainFlags.currentMenu=Config.mainMenu.box;
     $scope.mainFlags.extMenuActive=false;
 
-    Storage.clearScrollData(Config.scrollScreenType.box);
+
 
     $scope.boxes=[];
     $scope.filterType="";
     $scope.keyWord="";
 
-    Box.getBoxes($scope.filterType,$scope.keyWord).$promise.then(function(data){
-		
-		//console.log("In views");
-        var count= 0,length=data.topics.length;
-        var inter=$interval(function(){
-            if(count<length){
-                $scope.boxes.push(data.topics[count]);
-                count++;
-            }else{
-                $interval.cancel(inter);
-            }
-        },200);
-		
-    });
+    $scope.loadBoxes=function(){
+        Storage.clearScrollData(Config.scrollScreenType.box);
+        Box.getBoxes($scope.filterType,$scope.keyWord).$promise.then(function(data){
+
+            //console.log("In views");
+            var count= 0,length=data.topics.length;
+            var inter=$interval(function(){
+                if(count<length){
+                    $scope.boxes.push(data.topics[count]);
+                    count++;
+                }else{
+                    $interval.cancel(inter);
+                }
+            },200);
+
+        });
+    };
+    $scope.loadBoxes();
+
 }]);
 
 viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage","Config",function($scope,$routeParams,Box,Storage,Config){
@@ -664,7 +755,7 @@ viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage",
         $scope.box.projects=data.artifacts;
     });
 
-    $scope.projects=[];
+    Storage.loadedProjects=$scope.projects=[];
     Box.getBoxProjects($scope.boxId).$promise.then(function(data){
         $scope.projects=$scope.projects.concat(data.projects);
     });
@@ -673,18 +764,20 @@ viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage",
 viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunctions","Config","Box",
     function($scope,$routeParams,toaster,CFunctions,Config,Box){
         function addTag(tag){
-            if($scope.box.tags.indexOf(tag)===-1){
-                $scope.box.tags.push(tag);
+            if(tag!==""&&$scope.box.terms.indexOf(tag)===-1){
+                $scope.box.terms.push(tag);
             }
 
-            $scope.box.newTag="";
+            $scope.newTag="";
         }
 
-        function initData($scope,Id){
-            Box.get({id:id},function(data){
-                $scope.box.title=data.title;
-                $scope.box.open=data.open;
-                $scope.box.tags=data.tags;
+        function initData($scope,id){
+            Box.resource.get({boxId:id},{id:id},function(data){
+                $scope.box.name=data.topic.name;
+                $scope.box.artifact_count=data.topic.artifact_count;
+                $scope.box.status=data.topic.status;
+                $scope.box.terms=data.topic.terms;
+                $scope.box.description=data.topic.description;
             },function(data){
                 CFunctions.ajaxErrorHandler();
             });
@@ -692,24 +785,28 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
 
         $scope.mainFlags.currentMenu="";
         $scope.mainFlags.extMenuActive=false;
+        $scope.newTag="";
+        $scope.boxId=$routeParams.boxId;
+
         $scope.box={
-            id:0,
-            tags:[],
-            open:true
+            terms:[]
         };
 
         //修改的时候需要初始化数据
-        if($routeParams.boxId){
-            initData($scope,$routeParams.boxId);
+        if($scope.boxId){
+            initData($scope,$scope.boxId);
         }
 
         $scope.deleteTag=function(index){
-            $scope.box.tags.splice(index,1);
+            $scope.box.terms.splice(index,1);
         };
 
         $scope.deleteBox=function(id){
             if(confirm(Config.messages.deleteConfirm)){
-
+                Box.resource.remove({boxId:id},function(data){
+                    toaster.pop("success",Config.messages.successTitle,Config.messages.optSuccRedirect,null,null);
+                    CFunctions.timeoutRedirect("topics",false,true);
+                });
             }
         };
 
@@ -722,16 +819,18 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
             addTag(tag);
         };
 
-        $scope.boxCreateSubmit=function(){
-            if($scope.box.title&&$scope.box.description&&$scope.box.tags.length!=0){
-                CFunctions.ajaxSubmit($scope,{
-                    formUrl:Config.ajaxUrls.signIn,
-                    formParam:$scope.box,
-                    successCb:function(data){
+        $scope.boxUpdateSubmit=function(){
+            if($scope.box.name&&$scope.box.description&&$scope.box.terms.length!=0){
+                if($scope.boxId){
+                    Box.resource.add($scope.box,function(data){
+                        toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                    });
+                }else{
+                    Box.resource.save({boxId:$scope.boxId},$scope.box,function(data){
+                        toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                    });
+                }
 
-                        $scope.hideBlackOut();
-                    }
-                });
             }else{
                 toaster.pop('error',Config.messages.errorTitle,Config.messages.boxUnComplete,null,null);
                 return false;
@@ -770,21 +869,23 @@ viewControllers.controller("boxesManage",['$scope',"ngTableParams","Box","CFunct
 
     }]);
 
-viewControllers.controller("userHome",['$scope',"User",function($scope,User){
+viewControllers.controller("userHome",['$scope',"$routeParams","User","Storage",function($scope,$routeParams,User,Storage){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
-    $scope.mainFlags.currentMenu="";
+    var userId=$routeParams.userId;
 
+    $scope.mainFlags.currentMenu="";
     $scope.mainFlags.extMenuActive=false;
 
     $scope.user={};
-    User.resource.get({id:$scope.currentUser.id},function(data){
-
+    User.resource.get({userId:userId},function(data){
+        $scope.user=data.user;
+        $scope.user.topProjects=data.artifacts;
     });
 
-    $scope.projects=[];
-    User.getUserProjects($scope.currentUser.id).$promise.then(function(data){
-        $scope.projects=$scope.projects.concat(data.projects);
+    Storage.loadedProjects=$scope.projects=[];
+    User.getUserProjects(userId).$promise.then(function(data){
+        $scope.projects=$scope.projects.concat(data.artifacts);
     });
 
 }]);

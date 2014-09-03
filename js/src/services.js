@@ -46,18 +46,14 @@ services.constant("Config",{
         "search":"views/searchPanel.html",
         "projectDetail":"views/projectDetail.html"
     },
-    urls:{  //用到的路径
-        "projects":"/projects",
-        "boxes":"/boxes",
-        "boxDetail":"/box/:boxId",
-        "home":"/",
-        "projectDetail":"/project/:projectId",
-        "projectDetailReg":/\/project\/\d?/,
+    urls:{  //用到的路径，主要是用于initPage
+        "projectDetail":"/artifacts/:projectId",
+        "projectDetailReg":/\/artifacts\/\d+/,
         "signIn":"/login",
         "signUp":"/register",
         "editPwd":"/change_password",
         "editInfo":"/users/:userId/update",
-        "userHome":"/user/{userId}",
+        "editInfoReg":/users\/[\d]+\/update/,
         "search":"/search",
         "searchResult":"/search/:content",
         "searchResultReg":/\/search\/*?/,
@@ -160,6 +156,7 @@ services.constant("Config",{
         deleteConfirm:"确定删除吗？",
         successTitle:"成功提示",
         operationSuccess:"操作成功！",
+        optSuccRedirect:"操作成功，稍后跳转到管理页！",
         timeout:"登录超时，请关闭后刷新页面并登录！",
         networkError:"网络连接失败，请稍后重试！",
         captchaError:"验证码错误！",
@@ -177,7 +174,8 @@ services.constant("Config",{
         stepOneUnComplete:"标题、标签、描述、缩略图等没有填写完整！",
         pptHasNotUploaded:"此资源还没有被上传到资源服务器，暂时不能查看！",
         pptUploadError:"此资源上传到资源服务器出错，无法查看！",
-        systemError:"系统发生错误，请稍后重试！"
+        systemError:"系统发生错误，请稍后重试！",
+        notFound:"资源丢失，将跳转到首页！"
     },
     ajaxUrls:{
         signIn:"/login",
@@ -186,20 +184,30 @@ services.constant("Config",{
         changePwd:"/change_password",
         getCurrentUser:"/api/users/whoami",
         addUploadedKey:"/api/qiniu/add_key",
-        setUserActive:"/confirm",
-        upload:"/api/qiniu/uptoken",
-        getAllProjects:"data/projects.json", //获取首页作品媒体文件)
-        getProjectDetail:"data/projectDetail.json", //获取作品（资源）详情
-        deleteProject:"post/remove/:id",
-        toggleShowProject:"#",
-        projectCreate:"#",
-        getProjectAttachments:"data/projectAttachments.json",
-        getProjectComments:"data/comments.json",
-        getSimilarProjects:"data/projects.json",
-        getAllComments:"data/commentsManage.json",
-        getAllBoxes:"data/boxes.json",
-        getBoxDetail:"data/boxDetail.json",
+        createBox:"/api/topics\\/",
+        updateBox:"/api/topics/:boxId",
+        getAllBoxes:"/api/topics\\/",
+        getBoxDetail:"/api/topics/:boxId",
         getBoxProjects:"data/projects.json",
+        setBoxStatus:"/api/topics/:boxId/change_status",
+        deleteBox:"/api/topics/:boxId",
+        setUserActive:"/confirm",
+        getUserDetail:"/api/users/:userId",
+        getUserProjects:"/api/users/:userId/artifacts",
+        upload:"/api/qiniu/uptoken",
+        getAllProjects:"/api/artifacts/", //获取首页作品媒体文件
+        getProjectDetail:"/api/artifacts/:projectId", //获取作品（资源）详情
+        deleteProject:"/api/artifacts/:projectId",
+        toggleShowProject:"/api/artifacts/:projectId/visible/toggle",
+        praiseProject:"/api/artifacts/:projectId/scores/toggle",
+        projectCreate:"/api/artifacts\\/",
+        addProjectToBox:"/api/topics/:boxId/artifacts/append",
+        getProjectAttachments:"data/projectAttachments.json",
+        getProjectComments:"/api/artifacts/:projectId/comments",
+        getSimilarProjects:"data/projects.json",
+        addComment:"/api/:projectId/comments/append",
+        deleteComment:"/api/:projectId/comments/remove",
+        getAllComments:"data/commentsManage.json",
         getCompleteUrl:"data/autocomplete.json",
         getSearchProjects:"data/projects.json"
     },
@@ -255,7 +263,7 @@ services.constant("App",{
     }
 });*/
 
-services.service("AjaxErrorHandler",["$timeout","toaster","Config",function($timeout,toaster,Config){
+services.service("AjaxErrorHandler",["toaster","Config","CFunctions",function(toaster,Config,CFunctions){
     this.ajaxReturnErrorHandler=function(data){
         //console.log(data);
         var errorCode=data.error_code;
@@ -263,9 +271,7 @@ services.service("AjaxErrorHandler",["$timeout","toaster","Config",function($tim
         switch(errorCode){
             case "UNAUTHORIZED":
                 message=Config.messages.timeout;
-                $timeout(function(){
-                    window.location.href="./";
-                });
+                CFunctions.timeoutRedirect("./",true);
                 break;
             case "USER_NOT_EXIST":
                 message=Config.messages.nameOrPwdError;
@@ -291,6 +297,10 @@ services.service("AjaxErrorHandler",["$timeout","toaster","Config",function($tim
             case "CAPTCHA_NOT_MATCH":
                 message=Config.messages.captchaError;
                 break;
+            case "NOT_FOUND":
+                message=Config.messages.notFound;
+                CFunctions.timeoutRedirect("./",true);
+                break;
             default :
                 message=Config.messages.loadDataError;
                 break;
@@ -303,7 +313,8 @@ services.service("AjaxErrorHandler",["$timeout","toaster","Config",function($tim
     };
 }]);
 
-services.service("CFunctions",["$rootScope","$location","$http","toaster","Config",function($rootScope,$location,$http,toaster,Config){
+services.service("CFunctions",["$rootScope","$location","$http","$timeout","toaster","Config","LocationChanger",
+    function($rootScope,$location,$http,$timeout,toaster,Config,LocationChanger){
 
     var postCfg={
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
@@ -374,6 +385,17 @@ services.service("CFunctions",["$rootScope","$location","$http","toaster","Confi
     };
 
 
+    this.timeoutRedirect=function(url,refresh,replace){
+        $timeout(function(){
+            if(refresh){
+                window.location.href=url;
+            }else{
+                LocationChanger.withReplace(url,replace);
+            }
+
+        },3000);
+
+    };
 
     this.checkMobile=function(){
         var userAgentList = new Array("2.0 MMP", "240320", "AvantGo","BlackBerry", "Blazer",
@@ -571,12 +593,14 @@ services.service("Storage",function(){
     this.scrollTimer=null;
     this.currentScrollScreenType="";
     this.searchContent="";
+    this.loadedProjects=[];
 
     this.clearScrollData=function(currentScrollScreenType,searchContent){
         this.lastLoadedId=0;
         this.scrollTimer=null;
         this.currentScrollScreenType=currentScrollScreenType?currentScrollScreenType:"";
         this.searchContent=searchContent?searchContent:"";
+        this.loadedProjects=[];
     };
 
     this.currentUser={  //当前登录的用户信息
@@ -611,8 +635,8 @@ services.service("Storage",function(){
     };
 });
 
-services.service('LocationChanger', ['$location', '$route', '$rootScope',"CFunctions","Config",
-    function ($location, $route, $rootScope,CFunctions,Config) {
+services.service('LocationChanger', ['$location', '$route', '$rootScope',
+    function ($location, $route, $rootScope) {
 
         this.rootScopeEvent=null;
 
@@ -664,7 +688,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
         return {
             getProjects:function(){
                 return this.resource.query({"last_id":Storage.lastLoadedId},function(data){
-                    //console.log("In services");
+                    //console.log(data);
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
@@ -683,14 +707,16 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 });
             },
             resource: $resource(Config.ajaxUrls.getAllProjects,{},{
-                query:{method:"get",params:{"last_id":0,"count":10}},
-                get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
-                delete:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{id:0}},
-                remove:{method:"remove",url:Config.ajaxUrls.deleteProject,params:{id:0}},
+                query:{method:"get",params:{"last_id":0,"count":Config.perLoadCount}},
+                get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{projectId:0}},
+                delete:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{projectId:0}},
+                remove:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{projectId:0}},
                 save:{method:"post",url:Config.ajaxUrls.deleteProject},
                 add:{method:"put",url:Config.ajaxUrls.projectCreate,params:{}},
-                toggleShowProject:{method:"post",url:Config.ajaxUrls.toggleShowProject,params:{id:0,show:true}},
-                getProjectDetail:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
+                addToBox:{method:"put",url:Config.ajaxUrls.addProjectToBox,params:{boxId:0}},
+                toggleShowProject:{method:"post",url:Config.ajaxUrls.toggleShowProject,params:{projectId:0}},
+                praiseProject:{method:"post",url:Config.ajaxUrls.praiseProject,params:{projectId:0}},
+                getProjectDetail:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{projectId:0}},
                 getProjectAttachments:{method:"get",url:Config.ajaxUrls.getProjectAttachments,params:{id:0}},
                 getSearchResult:{method:"get",url:Config.ajaxUrls.getSearchProjects,params:{last_id:0,content:"search"}},
                 getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:0}}
@@ -699,8 +725,8 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
 }]);
 services.factory("User",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
     return {
-        getUserProjects:function(boxId){
-            return this.resource.getBoxProjects({boxId:boxId,last_id:Storage.lastLoadedId},function(data){
+        getUserProjects:function(userId){
+            return this.resource.getUserProjects({userId:userId,last_id:Storage.lastLoadedId},function(data){
                 if(data.artifacts.length<Config.perLoadCount){
                     Storage.lastLoadedId=Config.hasNoMoreFlag;
                 }else{
@@ -710,7 +736,8 @@ services.factory("User",["$rootScope","$resource","Config",function($rootScope,$
         },
         resource:$resource(Config.ajaxUrls.getAllProjects,{},{
             query:{method:"get",params:{"length":10}},
-            get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
+            get:{method:"get",url:Config.ajaxUrls.getUserDetail,params:{userId:0}},
+            getUserProjects:{method:"get",url:Config.ajaxUrls.getUserProjects,params:{userId:0,last_id:0,"count":Config.perLoadCount}},
             save:{method:"post",url:Config.ajaxUrls.editInfo,params:{userId:0},
                 transformRequest:function(data, headersGetter){
                     return JSON.stringify(data);
@@ -767,9 +794,13 @@ services.factory("Box",["$rootScope","$resource","Config","Storage",
             },
             resource:$resource(Config.ajaxUrls.getAllBoxes,{},{
                 query:{params:{last_id:0,count:Config.perLoadCount,filterType:"",keyWord:""}},
-                get:{url:Config.ajaxUrls.getBoxDetail,params:{id:0}},
-                remove:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
-                add:{method:"put"},
+                get:{method:"get",url:Config.ajaxUrls.getBoxDetail,params:{boxId:0}},
+                remove:{method:"delete",url:Config.ajaxUrls.deleteBox,params:{boxId:0}, transformResponse:function(data, headersGetter){
+                    return JSON.parse(data);
+                }},
+                add:{method:"put",url:Config.ajaxUrls.createBox},
+                save:{method:"post",url:Config.ajaxUrls.updateBox,params:{boxId:0}},
+                setBoxStatus:{method:"post",url:Config.ajaxUrls.setBoxStatus,params:{boxId:0}},
                 toggleLock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3,lock:true}},
                 getBoxProjects:{method:"get",url:Config.ajaxUrls.getBoxProjects,
                     params:{boxId:0,last_id:0,count:Config.perLoadCount}}
@@ -781,9 +812,9 @@ services.factory("Comment",["$rootScope","$resource","Config",function($rootScop
         query:{params:{"count":10}},
         get:{url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
         save:{url:"#",params:{id:0}},
-        remove:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
-        delete:{url:Config.ajaxUrls.deleteProject,params:{id:0}},
+        remove:{url:Config.ajaxUrls.deleteComment,params:{projectId:0}},
+        delete:{url:Config.ajaxUrls.deleteComment,params:{projectId:0}},
         getCommentsByProject:{method:"get",url:Config.ajaxUrls.getProjectComments,params:{projectId:1}},
-        add:{method:"put",url:"#",params:{content:"test"}}
+        add:{method:"put",url:Config.ajaxUrls.addComment,params:{projectId:0}}
     });
 }]);

@@ -9,7 +9,7 @@
                    ng-click="setTabActive(3);getPreviewMedias('mediaItem','data-media-id')">3. 预览并提交</a></li>
         </ol>
     </nav>
-    <form class="de_form_upload de_borderbox de_boxshadow" ng-submit="uploadFormSubmit()">
+    <form class="de_form_upload de_borderbox de_boxshadow" prevent-enter-submit novalidate ng-submit="uploadFormSubmit()">
         <div class="de_upload_step1" ng-show="currentTab==1">
             <p class="de_field_project_title">
                 <label>标题</label>
@@ -54,15 +54,15 @@
                         ng-class="{zy_media_list_active:value.active}" class="mediaItem">
                         <img class="zy_small_thumb" ng-src="{{value.profile_image}}">
                         <span title='{{value.profile_filename}}' class="zy_media_filename">
-                            {{value.filename}}
+                            {{value.profile_filename}}
                         </span>
                         <span class="zy_media_delete" ng-click="deleteMedia(mediaId)"></span>
                     </li>
                 </ol>
             </div>
             <div class="zy_uploader_column_right" id="zy_uploader_column_right">
-                <header class="zy_section_right_header"><p><b>{{mediaSetTitle}}</b></p></header>
-                <section ng-show="currentMediaObj.mediaId!=''">
+                <header class="zy_section_right_header"><p><b>{{currentMediaObj.profile_filename||""}}</b></p></header>
+                <section ng-show="currentMediaObj.profile_filename">
                     <article class="zy_content" >
                         <section  class="zy_column_50">
                             <section id="zy_left_bottom">
@@ -100,7 +100,7 @@
                                               ng-init="createFileUploader('uploadFile','uploadContainer')">3D文件</a></li>-->
                                     </ul>
                                 </div>
-                                <div class="zy_bind_file_info">
+                                <div class="zy_bind_file_info" ng-show="currentMediaObj.filename">
                                     <span class="zy_bind_file_name"
                                           ng-class="{zy_types2:currentMediaObj.type==4,zy_types3:currentMediaObj.type==2,zy_types4:currentMediaObj.type==128,
                                           zy_types5:currentMediaObj.type==64,zy_types6:currentMediaObj.type==32,zy_types7:currentMediaObj.type==256}">
