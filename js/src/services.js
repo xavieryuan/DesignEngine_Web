@@ -57,7 +57,7 @@ services.constant("Config",{
         "search":"/search",
         "searchResult":"/search/:content",
         "searchResultReg":/\/search\/*?/,
-        "forgetPwd":"/forgetPassword"
+        "forgetPwd":"/forget_password"
     },
     imageScale:{
         ThumbSmall:"-200x200",
@@ -96,6 +96,9 @@ services.constant("Config",{
         32:"压缩文件",
         64:"swf动画",
         256:"HTML5应用"
+    },
+    searchTypes:{
+        fullname:"用户名"
     },
     mediaObj:{  //媒体对象
         mediaPos:"pos",
@@ -170,6 +173,7 @@ services.constant("Config",{
         activeSuccess:"操作成功，请进入邮箱查看激活邮件！",
         mediaHasNoThumb:"有媒体文件没有上传缩略图，请上传后再预览！",
         hasNoMedia:"没有上传媒体文件或者有上传错误的媒体文件，请上传或者删除后再预览！",
+        uploadUnComplete:"当前文件上传未完成，不能选择其他文件！",
         boxUnComplete:"标题、标签、描述等没有填写完整",
         stepOneUnComplete:"标题、标签、描述、缩略图等没有填写完整！",
         pptHasNotUploaded:"此资源还没有被上传到资源服务器，暂时不能查看！",
@@ -182,31 +186,34 @@ services.constant("Config",{
         signUp:"/register",
         editInfo:"/api/users/:userId/setting",
         changePwd:"/change_password",
+        forgetPwd:"/reset",
         getCurrentUser:"/api/users/whoami",
         addUploadedKey:"/api/qiniu/add_key",
         createBox:"/api/topics\\/",
         updateBox:"/api/topics/:boxId",
         getAllBoxes:"/api/topics\\/",
         getBoxDetail:"/api/topics/:boxId",
-        getBoxProjects:"data/projects.json",
+        getBoxProjects:"/api/topics/:boxId/artifacts",
         setBoxStatus:"/api/topics/:boxId/change_status",
         deleteBox:"/api/topics/:boxId",
         setUserActive:"/confirm",
         getUserDetail:"/api/users/:userId",
         getUserProjects:"/api/users/:userId/artifacts",
+        getAllUsers:"/api/users\\/",
         upload:"/api/qiniu/uptoken",
-        getAllProjects:"/api/artifacts/", //获取首页作品媒体文件
+        getAllProjects:"/api/artifacts\\/", //获取首页作品媒体文件
         getProjectDetail:"/api/artifacts/:projectId", //获取作品（资源）详情
         deleteProject:"/api/artifacts/:projectId",
         toggleShowProject:"/api/artifacts/:projectId/visible/toggle",
         praiseProject:"/api/artifacts/:projectId/scores/toggle",
         projectCreate:"/api/artifacts\\/",
+        projectUpdate:"/api/artifacts/:projectId",
         addProjectToBox:"/api/topics/:boxId/artifacts/append",
         getProjectAttachments:"data/projectAttachments.json",
         getProjectComments:"/api/artifacts/:projectId/comments",
         getSimilarProjects:"data/projects.json",
-        addComment:"/api/:projectId/comments/append",
-        deleteComment:"/api/:projectId/comments/remove",
+        addComment:"/api/artifacts/:projectId/comments/append",
+        deleteComment:"/api/artifacts/:projectId/comments/:commentId/remove",
         getAllComments:"data/commentsManage.json",
         getCompleteUrl:"data/autocomplete.json",
         getSearchProjects:"data/projects.json"
@@ -474,19 +481,12 @@ services.service("CFunctions",["$rootScope","$location","$http","$timeout","toas
                         param.fileAddCb(up,files);
                     }
                 },
-                'UploadProgress': function(up, file) {
-                    if(typeof param.progressCb==="function"){
-                        param.progressCb(up,file);
-                    }
-                },
-                'FileUploaded': function(up, file, info) {
-                    if(typeof param.uploadedCb==="function"){
-                        param.uploadedCb(file,info);
-                    }
+                'BeforeUpload':function(up,file){
+                    var initObj=up.getOption("init");
+                    var keyFunction=initObj.Key;
 
-                    //每次上传完成都需要告知后台
-                    var res = JSON.parse(info);
-                    var src = Config.qNBucketDomain + res.key;
+                    //每次上传都需要告知后台
+                    var src = Config.qNBucketDomain + keyFunction(up,file);
                     $http.put(Config.ajaxUrls.addUploadedKey,{key:src},{
                         transformRequest:function(data, headersGetter){
                             //console.log(data);
@@ -496,6 +496,16 @@ services.service("CFunctions",["$rootScope","$location","$http","$timeout","toas
                             return JSON.parse(data);
                         }
                     });
+                },
+                'UploadProgress': function(up, file) {
+                    if(typeof param.progressCb==="function"){
+                        param.progressCb(up,file);
+                    }
+                },
+                'FileUploaded': function(up, file, info) {
+                    if(typeof param.uploadedCb==="function"){
+                        param.uploadedCb(file,info);
+                    }
                 },
                 'Error': function(up, err, errTip) {
                     toaster.pop('error',Config.messages.errorTitle,errTip,null,null);
@@ -692,7 +702,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.lastLoadedId=data.last_id;
+                        Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                     }
                 });
             },
@@ -702,7 +712,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.lastLoadedId=data.last_id;
+                        Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                     }
                 });
             },
@@ -711,7 +721,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{projectId:0}},
                 delete:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{projectId:0}},
                 remove:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{projectId:0}},
-                save:{method:"post",url:Config.ajaxUrls.deleteProject},
+                save:{method:"post",url:Config.ajaxUrls.projectUpdate},
                 add:{method:"put",url:Config.ajaxUrls.projectCreate,params:{}},
                 addToBox:{method:"put",url:Config.ajaxUrls.addProjectToBox,params:{boxId:0}},
                 toggleShowProject:{method:"post",url:Config.ajaxUrls.toggleShowProject,params:{projectId:0}},
@@ -730,12 +740,12 @@ services.factory("User",["$rootScope","$resource","Config",function($rootScope,$
                 if(data.artifacts.length<Config.perLoadCount){
                     Storage.lastLoadedId=Config.hasNoMoreFlag;
                 }else{
-                    Storage.lastLoadedId=data.last_id;
+                    Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                 }
             })
         },
-        resource:$resource(Config.ajaxUrls.getAllProjects,{},{
-            query:{method:"get",params:{"length":10}},
+        resource:$resource(Config.ajaxUrls.getAllUsers,{},{
+            query:{method:"get",params:{"count":10}},
             get:{method:"get",url:Config.ajaxUrls.getUserDetail,params:{userId:0}},
             getUserProjects:{method:"get",url:Config.ajaxUrls.getUserProjects,params:{userId:0,last_id:0,"count":Config.perLoadCount}},
             save:{method:"post",url:Config.ajaxUrls.editInfo,params:{userId:0},
@@ -758,7 +768,22 @@ services.factory("User",["$rootScope","$resource","Config",function($rootScope,$
             },
             setUserActive:{method:"post",url:Config.ajaxUrls.setUserActive},
             getCurrentUser:{method:"get",url:Config.ajaxUrls.getCurrentUser},
-            login:{method:"post",url:Config.ajaxUrls.signIn},
+            forgetPwd:{method:"post",url:Config.ajaxUrls.forgetPwd,
+                transformRequest:function(data, headersGetter){
+                    return JSON.stringify(data);
+                },
+                transformResponse:function(data, headersGetter){
+                    return JSON.parse(data);
+                }
+            },
+            login:{method:"post",url:Config.ajaxUrls.signIn,
+                transformRequest:function(data, headersGetter){
+                    return JSON.stringify(data);
+                },
+                transformResponse:function(data, headersGetter){
+                    return JSON.parse(data);
+                }
+            },
             changePwd:{method:"post",url:Config.ajaxUrls.changePwd,
                 transformRequest:function(data, headersGetter){
                     return JSON.stringify(data);
@@ -774,12 +799,12 @@ services.factory("User",["$rootScope","$resource","Config",function($rootScope,$
 services.factory("Box",["$rootScope","$resource","Config","Storage",
     function($rootScope,$resource,Config,Storage){
         return {
-            getBoxes:function(filterType,keyWord){
-                return this.resource.query({last_id:Storage.lastLoadedId},function(data){
+            getBoxes:function(scope,keyword){
+                return this.resource.query({scope:scope,keyword:keyword,last_id:Storage.lastLoadedId},function(data){
                     if(data.topics.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.lastLoadedId=data.last_id;
+                        Storage.lastLoadedId=data.topics[Config.perLoadCount-1]["topic"]["id"];
                     }
                 });
             },
@@ -788,12 +813,12 @@ services.factory("Box",["$rootScope","$resource","Config","Storage",
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.lastLoadedId=data.last_id;
+                        Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                     }
                 })
             },
             resource:$resource(Config.ajaxUrls.getAllBoxes,{},{
-                query:{params:{last_id:0,count:Config.perLoadCount,filterType:"",keyWord:""}},
+                query:{method:"get",params:{last_id:0,count:Config.perLoadCount,scope:"",keyword:""}},
                 get:{method:"get",url:Config.ajaxUrls.getBoxDetail,params:{boxId:0}},
                 remove:{method:"delete",url:Config.ajaxUrls.deleteBox,params:{boxId:0}, transformResponse:function(data, headersGetter){
                     return JSON.parse(data);
@@ -809,12 +834,12 @@ services.factory("Box",["$rootScope","$resource","Config","Storage",
 }]);
 services.factory("Comment",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
     return $resource(Config.ajaxUrls.getAllComments,{},{
-        query:{params:{"count":10}},
-        get:{url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
-        save:{url:"#",params:{id:0}},
-        remove:{url:Config.ajaxUrls.deleteComment,params:{projectId:0}},
-        delete:{url:Config.ajaxUrls.deleteComment,params:{projectId:0}},
-        getCommentsByProject:{method:"get",url:Config.ajaxUrls.getProjectComments,params:{projectId:1}},
+        query:{method:"get",params:{"count":10}},
+        get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
+        save:{method:"post",url:"#",params:{id:0}},
+        remove:{method:"delete",url:Config.ajaxUrls.deleteComment,params:{projectId:0,commentId:0}},
+        delete:{method:"delete",url:Config.ajaxUrls.deleteComment,params:{projectId:0,commentId:0}},
+        getCommentsByProject:{method:"get",url:Config.ajaxUrls.getProjectComments,params:{projectId:0}},
         add:{method:"put",url:Config.ajaxUrls.addComment,params:{projectId:0}}
     });
 }]);

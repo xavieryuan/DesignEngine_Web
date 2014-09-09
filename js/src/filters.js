@@ -21,6 +21,21 @@ filters.filter("getMinNumber", function(){
         return Math.min(first,second);
     }
 });
+filters.filter("showActive", function(){
+    return function(active){
+        var string="激活";
+        if(active===false){
+            string="未激活";
+        }
+
+        return string;
+    }
+});
+filters.filter("showRoles", function(){
+    return function(roles){
+        return roles.join(",");
+    }
+});
 filters.filter("arrayHasElements",function(){
     return function(array,element){
         var result=false;

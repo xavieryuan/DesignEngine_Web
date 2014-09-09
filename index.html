@@ -13,7 +13,7 @@
     <title>图钉墙 - HNU Design</title>
 
     <!--<base id="de_base_url" href="http://localhost/DesignEngine_Web/"/>-->
-    <base id="de_base_url" href="http://192.168.2.167/"/>
+    <base id="de_base_url" href="http://192.168.2.102/"/>
 
     <link href="css/lib/toaster.css" rel="stylesheet" type="text/css"/>
     <link href="js/src/autoComplete/autoComplete.css" rel="stylesheet" type="text/css"/>
@@ -50,7 +50,7 @@
             <nav class="de_user_nav de_borderbox">
                 <ul>
                     <li class="de_reg_view" ng-show="currentUser.id">
-                        <a class="de_btn_user_profile de_borderbox" ng-href="user/{{currentUser.id}}">
+                        <a class="de_btn_user_profile de_borderbox" ng-href="users/{{currentUser.id}}">
                             <img class="photo" ng-src="{{currentUser.profile}}" title="{{currentUser.name}}">
                             {{currentUser.name}}
                         </a>
@@ -69,7 +69,7 @@
                                 <a class="de_btn_upload de_borderbox"   ng-href="artifacts/create">上传作品</a>
                             </li>
                             <li class="de_reg_view" ng-show="currentUser.active">
-                                <a ng-href="boxes">我的投稿箱</a>
+                                <a ng-href="users/{{currentUser.id}}/topics">我的投稿箱</a>
                                 <a class="de_btn_create_box de_borderbox" ng-href="topics/create">创建投稿箱</a>
                             </li>                                                       
                             <li class="de_reg_view" ng-show="currentUser.active">
@@ -79,16 +79,16 @@
                                 <a href="" ng-click="editPwd()">修改密码</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
-                                <a href="adminHome/users">用户管理</a>
+                                <a href="admin/users">用户管理</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
-                                <a href="adminHome/items">作品管理</a>
+                                <a href="admin/items">作品管理</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
-                                <a href="adminHome/boxes">投稿箱管理</a>
+                                <a href="admin/boxes">投稿箱管理</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
-                                <a href="adminHome/comments">评论管理</a>
+                                <a href="admin/comments">评论管理</a>
                             </li>
                             <li class="de_reg_view ">
                                 <a href="logout" target="_self">退出登录</a>
@@ -124,15 +124,19 @@
              ng-show="mainFlags.showProjectDetailFlag" ng-include="mainFlags.projectDetailTemplate" >
 
     </section>
-    <!-----------弹窗小组件----------->
 
+    <!-----------弹窗小组件----------->
     <section class="de_popout de_boxshadow de_borderbox de_animation_popout" ng-include="popFlags.popTemplateUrl">
 
     </section>
+
     <!-----------媒体详情----------->
     <section class="de_pop_show_media" ng-show="mainFlags.showPlayMedialPanel">
         <span class="de_pop_show_media_close" ng-click="closePlayMediaPanel()">关闭</span>
-        <div id="de_pop_show_media_content" class="de_pop_show_media_content"></div>
+        <!--<div class="de_pop_show_media_content" ng-include="mainFlags.mediaPlayTemplate"></div>-->
+        <iframe class="de_pop_show_media_content" ng-show="mainFlags.showMediaPath!=''" ng-src="{{mainFlags.playMediaPath}}">
+        </iframe>
+        <div class="de_pop_show_media_content" ng-show="mainFlags.showMediaPath==''">资源正在处理，暂时不能观看</div>
     </section>
 	
 	<!-----------blackout----------->

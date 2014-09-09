@@ -211,7 +211,7 @@ directives.directive("windowScroll", ["$window","$document","$timeout","Config",
                     //console.log($document[0]);
 
                     if(Storage.currentScrollScreenType&&$document[0].body.scrollHeight-$window.innerHeight<=$window.scrollY&&
-                        Storage.lastLoadedId!=Config.hasNoMoreFlag&&scope.mainFlags.showMainWrapper){
+                        Storage.lastLoadedId!=Config.hasNoMoreFlag&&Storage.lastLoadedId!=0&&scope.mainFlags.showMainWrapper){
                         Storage.scrollTimer=$timeout(function(){
                             switch(Storage.currentScrollScreenType){
                                 case Config.scrollScreenType.project:
@@ -221,7 +221,7 @@ directives.directive("windowScroll", ["$window","$document","$timeout","Config",
 
                                     break;
                                 case Config.scrollScreenType.box:
-                                    Box.getBoxes(scope.filterType,scope.keyWord).$promise.then(function(data){
+                                    Box.getBoxes(scope.scope,scope.keyword).$promise.then(function(data){
                                         scope.boxes=scope.boxes.concat(data.topics);
                                     });
 

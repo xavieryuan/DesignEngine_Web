@@ -26,8 +26,8 @@
                 </ul>
                 <p class="de_form_tip">在下方输入标签，按回车确认。</p>
                 <input type="text" class="de_inputbox_gray de_borderbox de_input_project_tag " maxlength="20"
-                   placeholder="新标签..." ng-keydown="keyDownAddTag($event,project.newTag)"
-                   ng-blur="blurAddTag(project.newTag)" ng-model="project.newTag">
+                   placeholder="新标签..." ng-keydown="keyDownAddTag($event,newTag)"
+                   ng-blur="blurAddTag(newTag)" ng-model="newTag">
             </p>
             <p class="de_field_project_description">
                 <label>内容说明</label>
@@ -87,7 +87,7 @@
                                         <li><a id="uploadMp4" class="zy_types2"
                                                ng-init="createMp4Uploader('uploadMp4','uploadContainer')">视频（MP4）</a></li>
                                         <li><a id="uploadPpt" class="zy_types3"
-                                               ng-init="createPptUploader('uploadPPt','uploadContainer')">幻灯片（PPT）</a></li>
+                                               ng-init="createPptUploader('uploadPpt','uploadContainer')">幻灯片（PPT）</a></li>
                                         <li><a id="uploadPdf" class="zy_types4"
                                                ng-init="createPdfUploader('uploadPdf','uploadContainer')" >文档（PDF）</a></li>
                                         <li><a id="uploadSwf" class="zy_types5"
@@ -141,11 +141,7 @@
 
                 <div class="main_content">
                     <figure ng-repeat="at in project.assets" ng-switch="at.type">
-
-                        <a ng-switch-when="1" href=""
-                           ng-click="showAttachmentDetail(at.media_file,at.type)">
-                            <img ng-src="{{at.profile_image}}"/>
-                        </a>
+                        <img ng-switch-when="1" ng-src="{{at.profile_image}}"/>
 
                         <a ng-switch-when="4" ng-click="showAttachmentDetail(at.media_file,at.type)"
                            class="de_has_media de_has_video" href="">
@@ -161,16 +157,14 @@
                              <img ng-src="{{at.attachmentPreviewLocation}}"/></a>-->
 
 
-                        <a ng-switch-when="2" ng-click="showAttachmentDetail(at.media_file,at.type)"
+                        <a ng-switch-when="2" ng-click="showAttachmentDetail(at.view_url,at.type)"
                            href="" class="de_has_media de_has_ppt">
                             <img ng-src="{{at.profile_image}}"/></a>
 
-                        <a ng-switch-when="128" ng-click="showAttachmentDetail(at.media_file,at.type)"
-                           href="" class="de_has_media de_has_ppt">
+                        <a ng-switch-when="128" ng-click="showAttachmentDetail(at.view_url,at.type)" href="" class="de_has_media de_has_pdf">
                             <img ng-src="{{at.profile_image}}"/></a>
 
-                        <a ng-switch-when="32" ng-click="showAttachmentDetail(at.media_file,at.type)"
-                           href="" class="de_has_media de_has_file">
+                        <a ng-switch-when="32" ng-href="{{at.media_file}}" target="_blank" class="de_has_media de_has_file">
                             <img ng-src="{{at.profile_image}}"/></a>
 
                         <a ng-switch-when="64" ng-click="showAttachmentDetail(at.media_file,at.type)"

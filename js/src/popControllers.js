@@ -13,11 +13,11 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
 
         $scope.mainFlags.extMenuActive=false;
         $scope.toRegPanel=function(){
-            $scope.popFlags.popTemplateUrl=Config.templateUrls.signUp;
+            $scope.popFlags.popTemplateUrl=Config.templateUrls.signUp+"?dc="+new Date().getTime();
             LocationChanger.skipReload().withReplace(Config.urls.signUp,true);
         };
         $scope.forgetPwd=function(){
-            $scope.popFlags.popTemplateUrl=Config.templateUrls.forgetPwd;
+            $scope.popFlags.popTemplateUrl=Config.templateUrls.forgetPwd+"?dc="+new Date().getTime();
             LocationChanger.skipReload().withReplace(Config.urls.forgetPwd,true);
         };
 
@@ -92,14 +92,18 @@ popControllers.controller("signUp",["$scope","CFunctions","Config","User","toast
     };
 }]);
 
-popControllers.controller("forgetPwd",["$scope","CFunctions","Config",function($scope,CFunctions,Config){
+popControllers.controller("forgetPwd",["$scope","toaster","CFunctions","Config","User",function($scope,toaster,CFunctions,Config,User){
     $scope.popFlags.title=Config.titles.forgetPwd;
     $scope.showBlackOut();
 
     $scope.mainFlags.extMenuActive=false;
+    $scope.emailUrl="";
 
     $scope.forgetPwdSubmit=function(){
-
+        User.resource.forgetPwd({email:$scope.email},function(data){
+            $scope.emailUrl=Config.emailUrls[CFunctions.getEmailDomain($scope.email)];
+            toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+        });
     };
 
 }]);
@@ -134,6 +138,7 @@ popControllers.controller("editPwd",["$scope","CFunctions","Config","User","toas
         console.log($scope.user);
         User.resource.changePwd($scope.user,function(data){
             toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+            $scope.closePop();
         })
     };
 
@@ -161,6 +166,7 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
                 }
             });
             toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+            $scope.closePop();
         })
     };
 

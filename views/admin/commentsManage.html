@@ -2,8 +2,8 @@
 <header>
     <span class="de_manager_title">评论管理</span>
     <div class="de_manager_search">
-        <input type="text" ng-model="searchContent">
-        <select ng-model="searchType">
+        <input type="text" ng-model="keyword">
+        <select ng-model="type">
             <option value="fullname">用户名</option>
             <option value="term">作品标签</option>
         </select>
@@ -17,8 +17,8 @@
     </thead>
     <tbody>
         <tr ng-repeat="comment in $data">
-            <td data-title="'Name'">{{comment.name}}</td>
-            <td data-title="'Age'">{{comment.age}}</td>
+            <td>{{comment.name}}</td>
+            <td>{{comment.age}}</td>
         </tr>
     </tbody>
 </table>

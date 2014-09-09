@@ -8,7 +8,7 @@
 
         <form name="forgetPwdForm" class="de_form_recover_pwd" novalidate ng-submit="forgetPwdSubmit()">
             <p class="de_email_field">
-                <input type="email" class="de_borderbox de_inputbox_gray" ng-model="forgetPwd.fullname"
+                <input type="email" class="de_borderbox de_inputbox_gray" ng-model="email"
                        name="email" placeholder="邮箱"
                        ng-maxlength="32" required>
                 <span class="error" ng-show="forgetPwdForm.email.$dirty && forgetPwdForm.email.$invalid">
@@ -19,6 +19,9 @@
             </p>
             <input type="submit" class="de_button de_submit_btn" value="提交" ng-disabled="forgetPwdForm.$invalid">
         </form>
+        <div ng-show="emailUrl!=''">
+            注册成功，请进入<a ng-href="{{emailUrl}}" class="de_green_text" target="_blank">邮箱</a>进行账户激活！
+        </div>
     </article>
 <!-- 找回密码弹窗结束 -->
 </div>

@@ -10,7 +10,7 @@
 
     <ul class="de_project_toolbar de_transition"
         ng-show="currentUser.id==project.user.id||(currentUser.roles|arrayHasElements:'admin')">
-        <li><a class="de_toolbar_edit" ng-href="/artifacts/{{project.id}}/update" title="编辑">编辑</a></li>
+        <li><a class="de_toolbar_edit" ng-href="/artifacts/{{project.id}}/update" title="编辑" ng-click="editClick()">编辑</a></li>
         <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
         <li><a ng-class="{de_toolbar_invisible:!project.visible,de_toolbar_visible:project.visible}" href=""
                ng-click="toggleShowProject(project.id,!project.visible)" title="显示/隐藏">显示/隐藏</a></li>
@@ -49,11 +49,7 @@
     <!--附件-->
     <div class="main_content">
         <figure ng-repeat="at in project.assets" ng-switch="at.type">
-
-            <a ng-switch-when="1" href=""
-               ng-click="showAttachmentDetail(at.media_file,at.type)">
-                <img ng-src="{{at.profile_image}}"/>
-            </a>
+            <img ng-switch-when="1" ng-src="{{at.profile_image}}"/>
 
             <a ng-switch-when="4" ng-click="showAttachmentDetail(at.media_file,at.type)"
                class="de_has_media de_has_video" href="">
@@ -69,16 +65,14 @@
                 <img ng-src="{{at.attachmentPreviewLocation}}"/></a>-->
 
 
-            <a ng-switch-when="2" ng-click="showAttachmentDetail(at.media_file,at.type)"
+            <a ng-switch-when="2" ng-click="showAttachmentDetail(at.view_url,at.type)"
                href="" class="de_has_media de_has_ppt">
                 <img ng-src="{{at.profile_image}}"/></a>
 
-            <a ng-switch-when="128" ng-click="showAttachmentDetail(at.media_file,at.type)"
-               href="" class="de_has_media de_has_ppt">
+            <a ng-switch-when="128" ng-click="showAttachmentDetail(at.view_url,at.type)" href="" class="de_has_media de_has_pdf">
                 <img ng-src="{{at.profile_image}}"/></a>
 
-            <a ng-switch-when="32" ng-click="showAttachmentDetail(at.media_file,at.type)"
-               href="" class="de_has_media de_has_file">
+            <a ng-switch-when="32" ng-href="{{at.media_file}}" target="_blank" class="de_has_media de_has_file">
                 <img ng-src="{{at.profile_image}}"/></a>
 
             <a ng-switch-when="64" ng-click="showAttachmentDetail(at.media_file,at.type)"
@@ -109,7 +103,8 @@
                 <a ng-href="user/{{c.user.id}}" class="name">{{c.user.fullname}}</a>
                 <span class="publishtime">{{c.commented_at}}</span>
 
-                <a ng-show="c.userId==currentUser.id||(currentUser.roles|arrayHasElements:'admin')" href="" ng-click="deleteComment(c.comment.id,$index)" class="de_delete_comment">X</a>
+                <a ng-show="c.user.id==currentUser.id||(currentUser.roles|arrayHasElements:'admin')" href=""
+                   ng-click="deleteComment(c.comment.id,$index,project.id)" class="de_delete_comment">X</a>
 
                 <p class="comment">{{c.comment.content}}</p>
             </div>

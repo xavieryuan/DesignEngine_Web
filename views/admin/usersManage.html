@@ -1,20 +1,27 @@
-
 <header>
     <span class="de_manager_title">用户管理</span>
     <div class="de_manager_search">
-        <input type="text" id="de_user_search_input">
-        <select disabled id="de_user_search_type">
-            <option value="fullname">用户名</option>
+        <input type="text" ng-model="searchContent">
+        <select disabled ng-model="type" ng-options="t.value as t.name for t in types">
         </select>
-        <input type="button" value="刷选" id="de_user_search_btn">
+        <input type="button" value="刷选" ng-click="tableSearch();">
     </div>
 </header>
 
 <table template-pagination="ownPagination" class="de_manager_table" ng-table="table">
     <thead>
-    <tr class="bar"><th>用户</th><th>邮箱</th><th>上传作品</th><th>发表评论</th><th>获得奖章</th><th>状态</th><th>权限</th></tr>
+        <tr class="bar"><th>用户</th><th>邮箱</th><th>上传作品</th><th>发表评论</th><th>获得奖章</th><th>状态</th><th>权限</th></tr>
     </thead>
     <tbody>
+        <tr ng-repeat="d in $data">
+            <td>{{d.user.fullname}}</td>
+            <td>{{d.user.email}}</td>
+            <td>{{d.artifact_count}}</td>
+            <td>{{d.comment_count}}</td>
+            <td>{{d.honor_sum}}</td>
+            <td>{{d.user.active|showActive}}</td>
+            <td>{{d.user.roles}}</td>
+        </tr>
     </tbody>
 </table>
 
