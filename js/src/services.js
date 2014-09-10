@@ -85,7 +85,7 @@ services.constant("Config",{
         mp4:"4",
         zip:"32",
         swf:"64",
-        html:"256"
+        html5:"256"
     },
     mediaTitles:{
         1:"图片",
@@ -645,6 +645,17 @@ services.service("Storage",function(){
     };
 });
 
+services.factory('safeApply', ["$rootScope",function($rootScope) {
+    return function(scope, fn) {
+        fn = angular.isFunction(fn) ? fn : angular.noop;
+        scope = scope && scope.$apply ? scope : $rootScope;
+        fn();
+        if (!scope.$$phase) {
+            scope.$apply();
+        }
+    }
+}]);
+
 services.service('LocationChanger', ['$location', '$route', '$rootScope',
     function ($location, $route, $rootScope) {
 
@@ -653,13 +664,17 @@ services.service('LocationChanger', ['$location', '$route', '$rootScope',
         //阻止ngView的刷新,返回this是方便链式调用
         this.skipReload = function () {
             var lastRoute = $route.current;
+            var me=this;
 
             //这里绑定过后面会一直响应，关闭弹出层的时候要取消绑定，绑定的时候会返回取消绑定的函数
-            this.rootScopeEvent=$rootScope.$on('$locationChangeSuccess', function () {
+            me.rootScopeEvent=$rootScope.$on('$locationChangeSuccess', function () {
                 $route.current = lastRoute;
+
+                //相应过后，立即取消绑定的事件
+                me.rootScopeEvent();
             });
 
-            return this;
+            return me;
         };
 
         this.canReload=function(){

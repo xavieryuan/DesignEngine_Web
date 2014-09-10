@@ -81,6 +81,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
 
                 $scope.closeProjectDetailPanel();
 
+                LocationChanger.skipReload();
                 history.back();
             });
         };
@@ -104,11 +105,6 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
             $scope.commentObj.allComments=data.comments;
             loadMore();
         });
-
-        $scope.editClick=function(){
-            LocationChanger.canReload();
-            //$scope.closeProjectDetailPanel();
-        };
 
         $scope.loadMoreComments=function(){
             loadMore();
@@ -558,6 +554,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         $scope.createSwfUploader=function(buttonId,containerId){
             createMediaUploader(buttonId,containerId,Config.mediaTypes.swf);
         };
+        $scope.createHtml5Uploader=function(buttonId,containerId){
+            createMediaUploader(buttonId,containerId,Config.mediaTypes.html5);
+        };
         $scope.deleteMedia=function(mediaId){
             if(confirm(Config.messages.deleteConfirm)){
                 if(angular.equals($scope.currentMediaObj,$scope.project.medias[mediaId])){
@@ -597,6 +596,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         $scope.deleteBindFile=function(){
             $scope.currentMediaObj[Config.mediaObj.mediaFilename]="";
             $scope.currentMediaObj[Config.mediaObj.mediaFilePath]="";
+            $scope.currentMediaObj[Config.mediaObj.mediaType]=Config.mediaTypes.image;
         };
 
         $scope.mediaSetThumbUploader=function(buttonId,containerId){
@@ -913,7 +913,7 @@ viewControllers.controller("boxesManage",['$scope',"ngTableParams","Box","CFunct
 
     }]);
 
-viewControllers.controller("userHome",['$scope',"$routeParams","User","Storage",function($scope,$routeParams,User,Storage){
+viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User","Storage",function($scope,$routeParams,$interval,User,Storage){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     var userId=$routeParams.userId;
@@ -929,7 +929,15 @@ viewControllers.controller("userHome",['$scope',"$routeParams","User","Storage",
 
     Storage.loadedProjects=$scope.projects=[];
     User.getUserProjects(userId).$promise.then(function(data){
-        $scope.projects=$scope.projects.concat(data.artifacts);
+        var count= 0,length=data.artifacts.length;
+        var inter=$interval(function(){
+            if(count<length){
+                $scope.projects.push(data.artifacts[count]);
+                count++;
+            }else{
+                $interval.cancel(inter);
+            }
+        },200);
     });
 
 }]);

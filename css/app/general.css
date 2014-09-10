@@ -3036,7 +3036,7 @@ span.zy_tooltips{
     background: url(../../images/app/icon40_close_green.png) no-repeat center;
 }
 .de_pop_show_media .de_pop_show_media_content{
-/*    height: 100%;*/
+    height: 100%;
 	overflow-y:scroll;
 	-webkit-overflow-scrolling: touch;
     width: 100%;

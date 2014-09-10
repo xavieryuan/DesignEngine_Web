@@ -108,8 +108,8 @@ pinWall.run(["$rootScope","$q","App","AjaxErrorHandler",function($rootScope,$q,A
 
 }]);
 
-pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage","User","LocationChanger","toaster","App",
-    function($scope,$location,Config,CFunctions,Storage,User,LocationChanger,toaster,App){
+pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","Storage","User","LocationChanger","toaster","App",
+    function($scope,$location,$sce,Config,CFunctions,Storage,User,LocationChanger,toaster,App){
 
         //使用对象，子scope可以直接覆盖（对象地址）
         $scope.mainFlags={
@@ -147,6 +147,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
             $scope.hideBlackOut();
 
             if(!notGoBack){
+                LocationChanger.skipReload();
                 history.back();
             }
         };
@@ -223,12 +224,12 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
 
         //这个函数在projectDetail和projectUpdate中使用
         $scope.showAttachmentDetail=function(path,type){
-            $scope.mainFlags.playMediaPath=path;
+            $scope.mainFlags.playMediaPath=$sce.trustAsResourceUrl(path);
             $scope.showPlayMediaPanel();
         };
 
-        $scope.initPage=function(){
-            var path=$location.path();
+        $scope.initPage=function(path){
+
 
             if(path.indexOf(Config.urls.editPwd)!==-1){
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.editPwd;
@@ -259,7 +260,7 @@ pinWall.controller("super",["$scope","$location","Config","CFunctions","Storage"
             });
         };
 
-        $scope.initPage();
+        $scope.initPage($location.path());
         //初始化登陆用户
         User.resource.getCurrentUser(function(data){
             if(data.user){

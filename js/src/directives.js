@@ -43,12 +43,38 @@ directives.directive("isEmail",function(){
         link:function(scope,elem,attrs,ctrl){
             elem.bind("keyup",function(){
                 if(ctrl.$viewValue){
-                    var reg=/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$/;
+                    scope.$apply(function(){
+                        var reg=/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$/;
 
-                    ctrl.$setValidity("emailExist",reg.test(ctrl.$viewValue));
+                        ctrl.$setValidity("emailExist",reg.test(ctrl.$viewValue));
+                    });
 
                 }else{
-                    ctrl.$setValidity("emailExist",true);
+                    scope.$apply(function(){
+                        ctrl.$setValidity("emailExist",true);
+                    });
+                }
+            });
+        }
+    }
+});
+/**
+ *重写required，不然ie里面页面一展示就提示错误
+ */
+directives.directive("ownRequired",function(){
+    return {
+        require:"ngModel",
+        link:function(scope,elem,attrs,ctrl){
+            elem.bind("keyup",function(){
+                if(ctrl.$viewValue){
+                    scope.$apply(function(){
+                        ctrl.$setValidity("ownRequired",true);
+                    });
+
+                }else{
+                    scope.$apply(function(){
+                        ctrl.$setValidity("ownRequired",false);
+                    });
                 }
             });
         }
@@ -184,20 +210,22 @@ directives.directive('clickToHideModalPanel', function(){
         }
     }
 });
-directives.directive("windowStateChange",["$window","CFunctions","LocationChanger",function($window,CFunctions,LocationChanger){
+directives.directive("windowStateChange",["$window","CFunctions","LocationChanger","safeApply",
+    function($window,CFunctions,LocationChanger,safeApply){
     return {
         link:function(scope,element,attrs){
 
-            $window.onpopstate=function(event){
-                scope.initPage();
-                scope.$apply();
-                LocationChanger.canReload();
-            };
+            //$window是被element函数封装过的
+            $window.addEventListener("popstate",function(event){
+                scope.initPage(location.pathname);
+                //safeApply();
+                //LocationChanger.canReload();
+            });
         }
     }
 }]);
-directives.directive("windowScroll", ["$window","$document","$timeout","Config","Storage","Project","Box","User",
-    function ($window,$document,$timeout,Config,Storage,Project,Box,User) {
+directives.directive("windowScroll", ["$window","$document","$timeout","$interval","Config","Storage","Project","Box","User",
+    function ($window,$document,$timeout,$interval,Config,Storage,Project,Box,User) {
         return {
             link: function(scope, element, attrs) {
 
@@ -216,31 +244,72 @@ directives.directive("windowScroll", ["$window","$document","$timeout","Config",
                             switch(Storage.currentScrollScreenType){
                                 case Config.scrollScreenType.project:
                                     Project.getProjects().$promise.then(function(data){
-                                        scope.projects=scope.projects.concat(data.artifacts);
+                                        var count= 0,length=data.artifacts.length;
+                                        var inter=$interval(function(){
+                                            if(count<length){
+                                                scope.projects.push(data.artifacts[count]);
+                                                count++;
+                                            }else{
+                                                $interval.cancel(inter);
+                                            }
+                                        },200);
                                     });
 
                                     break;
                                 case Config.scrollScreenType.box:
                                     Box.getBoxes(scope.scope,scope.keyword).$promise.then(function(data){
-                                        scope.boxes=scope.boxes.concat(data.topics);
+                                        var count= 0,length=data.topics.length;
+                                        var inter=$interval(function(){
+                                            if(count<length){
+                                                scope.boxes.push(data.topics[count]);
+                                                count++;
+                                            }else{
+                                                $interval.cancel(inter);
+                                            }
+                                        },200);
+
                                     });
 
                                     break;
                                 case Config.scrollScreenType.boxDetail:
                                     Box.getBoxProjects(scope.boxId).$promise.then(function(data){
-                                        scope.projects=scope.projects.concat(data.artifacts);
+                                        var count= 0,length=data.artifacts.length;
+                                        var inter=$interval(function(){
+                                            if(count<length){
+                                                scope.projects.push(data.artifacts[count]);
+                                                count++;
+                                            }else{
+                                                $interval.cancel(inter);
+                                            }
+                                        },200);
                                     });
 
                                     break;
                                 case Config.scrollScreenType.searchResult:
                                     Project.getSearchResult(scope.searchContent).$promise.then(function(data){
-                                        scope.projects=scope.projects.concat(data.artifacts);
+                                        var count= 0,length=data.artifacts.length;
+                                        var inter=$interval(function(){
+                                            if(count<length){
+                                                scope.projects.push(data.artifacts[count]);
+                                                count++;
+                                            }else{
+                                                $interval.cancel(inter);
+                                            }
+                                        },200);
                                     });
 
                                     break;
                                 case Config.scrollScreenType.userDetail:
                                     User.getUserProjects(scope.userId).$promise.then(function(data){
-                                        scope.projects=scope.projects.concat(data.artifacts);
+                                        var count= 0,length=data.artifacts.length;
+                                        var inter=$interval(function(){
+                                            if(count<length){
+                                                scope.projects.push(data.artifacts[count]);
+                                                count++;
+                                            }else{
+                                                $interval.cancel(inter);
+                                            }
+                                        },200);
                                     });
                                     break;
                             }
