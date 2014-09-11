@@ -47,20 +47,22 @@ services.constant("Config",{
         "projectDetail":"views/projectDetail.html"
     },
     urls:{  //用到的路径，主要是用于initPage
-        "projectDetail":"/artifacts/:projectId",
-        "projectDetailReg":/\/artifacts\/\d+/,
-        "signIn":"/login",
-        "signUp":"/register",
-        "editPwd":"/change_password",
-        "editInfo":"/users/:userId/update",
+        "projectDetail":"artifacts/:projectId",
+        "projectDetailReg":/artifacts\/\d+/,
+        "signIn":"login",
+        "signUp":"register",
+        "editPwd":"change_password",
+        "editInfo":"users/:userId/update",
         "editInfoReg":/users\/[\d]+\/update/,
-        "search":"/search",
-        "searchResult":"/search/:content",
-        "searchResultReg":/\/search\/*?/,
-        "forgetPwd":"/forget_password"
+        "search":"search",
+        "searchResult":"search/:content",
+        "searchResultReg":/search\/*?/,
+        "forgetPwd":"forget_password",
+        "boxes":"topics",
+        "userHome":"users/:userId"
     },
     imageScale:{
-        ThumbSmall:"-200x200",
+        thumbSmall:"-200x200",
         previewSmall:"-400x300"
     },
     uploadSize:{
@@ -209,7 +211,6 @@ services.constant("Config",{
         projectCreate:"/api/artifacts\\/",
         projectUpdate:"/api/artifacts/:projectId",
         addProjectToBox:"/api/topics/:boxId/artifacts/append",
-        getProjectAttachments:"data/projectAttachments.json",
         getProjectComments:"/api/artifacts/:projectId/comments",
         getSimilarProjects:"data/projects.json",
         addComment:"/api/artifacts/:projectId/comments/append",
@@ -433,7 +434,14 @@ services.service("CFunctions",["$rootScope","$location","$http","$timeout","toas
 
         return false;
     };
+    this.getFilePathInfo=function(filePath){
+        var extPos=filePath.lastIndexOf(".");
 
+        return {
+            filePath:filePath.substring(0,extPos),
+            ext:filePath.substring(extPos)
+        }
+    };
     this.getRandom=function(){
         var date = new Date();
         var mo = (date.getMonth() + 1) < 10 ? ('0' + '' + (date.getMonth() + 1)) : date.getMonth() + 1;
@@ -520,11 +528,12 @@ services.service("CFunctions",["$rootScope","$location","$http","$timeout","toas
                     // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
                     // 该配置必须要在 unique_names: false , save_key: false 时才生效
                     var random=Math.floor(Math.random()*10+1)*(new Date().getTime());
-                    var key=random+"-"+file.name;
+                    var filename=file.name;
+                    var extPos=filename.lastIndexOf(".");
 
 
                     // do something with key here
-                    return key
+                    return random+filename.substring(extPos);
 
                     //return file.name;
                 }
@@ -604,6 +613,7 @@ services.service("Storage",function(){
     this.currentScrollScreenType="";
     this.searchContent="";
     this.loadedProjects=[];
+    this.loadedTopProjects=[];
 
     this.clearScrollData=function(currentScrollScreenType,searchContent){
         this.lastLoadedId=0;
@@ -611,6 +621,7 @@ services.service("Storage",function(){
         this.currentScrollScreenType=currentScrollScreenType?currentScrollScreenType:"";
         this.searchContent=searchContent?searchContent:"";
         this.loadedProjects=[];
+        this.loadedTopProjects=[];
     };
 
     this.currentUser={  //当前登录的用户信息
@@ -712,7 +723,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
     function($rootScope,$resource,Storage,CFunctions,Config){
         return {
             getProjects:function(){
-                return this.resource.query({"last_id":Storage.lastLoadedId},function(data){
+                var me= this.resource.query({"last_id":Storage.lastLoadedId},function(data){
                     //console.log(data);
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
@@ -720,9 +731,22 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                         Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                     }
                 });
+
+                //手机上使用小图片
+                me.$promise.then(function(data){
+                    if(CFunctions.checkMobile()){
+                        var length=data.artifacts.length;
+                        for(var i=0;i<length;i++){
+                            var fileInfo=CFunctions.getFilePathInfo(data.artifacts[i]["artifact"]["profile_image"]);
+                            data.artifacts[i]["artifact"]["profile_image"]=
+                                fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
+                        }
+                    }
+                });
+                return me;
             },
             getSearchResult:function(content){
-                return this.resource.getSearchResult({last_id:Storage.lastLoadedId,content:content},function(data){
+                var me= this.resource.getSearchResult({last_id:Storage.lastLoadedId,content:content},function(data){
                     //console.log("In services");
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
@@ -730,6 +754,17 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                         Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                     }
                 });
+                me.$promise.then(function(data){
+                    if(CFunctions.checkMobile()){
+                        var length=data.artifacts.length;
+                        for(var i=0;i<length;i++){
+                            var fileInfo=CFunctions.getFilePathInfo(data.artifacts[i]["artifact"]["profile_image"]);
+                            data.artifacts[i]["artifact"]["profile_image"]=
+                                fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
+                        }
+                    }
+                });
+                return me;
             },
             resource: $resource(Config.ajaxUrls.getAllProjects,{},{
                 query:{method:"get",params:{"last_id":0,"count":Config.perLoadCount}},
@@ -748,16 +783,27 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
             })
         };
 }]);
-services.factory("User",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
+services.factory("User",["$rootScope","$resource","CFunctions","Config",function($rootScope,$resource,CFunctions,Config){
     return {
         getUserProjects:function(userId){
-            return this.resource.getUserProjects({userId:userId,last_id:Storage.lastLoadedId},function(data){
+            var me= this.resource.getUserProjects({userId:userId,last_id:Storage.lastLoadedId},function(data){
                 if(data.artifacts.length<Config.perLoadCount){
                     Storage.lastLoadedId=Config.hasNoMoreFlag;
                 }else{
                     Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                 }
-            })
+            });
+            me.$promise.then(function(data){
+                if(CFunctions.checkMobile()){
+                    var length=data.artifacts.length;
+                    for(var i=0;i<length;i++){
+                        var fileInfo=CFunctions.getFilePathInfo(data.artifacts[i]["artifact"]["profile_image"]);
+                        data.artifacts[i]["artifact"]["profile_image"]=
+                            fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
+                    }
+                }
+            });
+            return me;
         },
         resource:$resource(Config.ajaxUrls.getAllUsers,{},{
             query:{method:"get",params:{"count":10}},
@@ -811,8 +857,8 @@ services.factory("User",["$rootScope","$resource","Config",function($rootScope,$
     }
 }]);
 
-services.factory("Box",["$rootScope","$resource","Config","Storage",
-    function($rootScope,$resource,Config,Storage){
+services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage",
+    function($rootScope,$resource,CFunctions,Config,Storage){
         return {
             getBoxes:function(scope,keyword){
                 return this.resource.query({scope:scope,keyword:keyword,last_id:Storage.lastLoadedId},function(data){
@@ -824,13 +870,24 @@ services.factory("Box",["$rootScope","$resource","Config","Storage",
                 });
             },
             getBoxProjects:function(boxId){
-                return this.resource.getBoxProjects({boxId:boxId,last_id:Storage.lastLoadedId},function(data){
+                var me= this.resource.getBoxProjects({boxId:boxId,last_id:Storage.lastLoadedId},function(data){
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
                         Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                     }
-                })
+                });
+                me.$promise.then(function(data){
+                    if(CFunctions.checkMobile()){
+                        var length=data.artifacts.length;
+                        for(var i=0;i<length;i++){
+                            var fileInfo=CFunctions.getFilePathInfo(data.artifacts[i]["artifact"]["profile_image"]);
+                            data.artifacts[i]["artifact"]["profile_image"]=
+                                fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
+                        }
+                    }
+                });
+                return me;
             },
             resource:$resource(Config.ajaxUrls.getAllBoxes,{},{
                 query:{method:"get",params:{last_id:0,count:Config.perLoadCount,scope:"",keyword:""}},

@@ -59,7 +59,7 @@ directives.directive("isEmail",function(){
     }
 });
 /**
- *重写required，不然ie里面页面一展示就提示错误
+ *重写required，不然ie里面页面一展示就提示错误,还是要配合required，不然submit的disable会失效
  */
 directives.directive("ownRequired",function(){
     return {
@@ -77,6 +77,7 @@ directives.directive("ownRequired",function(){
                     });
                 }
             });
+            console.log(ctrl);
         }
     }
 });

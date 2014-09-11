@@ -10,7 +10,7 @@
             <p class="de_email_field">
                 <input type="email" class="de_borderbox de_inputbox_gray" ng-model="email"
                        name="email" placeholder="邮箱"
-                       ng-maxlength="32" own-required>
+                       ng-maxlength="32" own-required required>
                 <span class="error" ng-show="forgetPwdForm.email.$dirty && forgetPwdForm.email.$invalid">
                     <label ng-show="forgetPwdForm.email.$error.ownRequired">{{validMessage.required}}</label>
                     <label ng-show="forgetPwdForm.email.$error.email">{{validMessage.email}}</label>

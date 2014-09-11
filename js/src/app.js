@@ -22,7 +22,7 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
             when("/topics",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
             when("/topics/create",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
             when("/topics/:boxId/update",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
-            when("/topics/:boxId",{templateUrl: 'views/showBoxDetail.html',controller:"boxDetail"}).
+            when("/topics/:boxId",{templateUrl: 'views/boxDetail.html',controller:"boxDetail"}).
             when("/topic/:boxId/artifact",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
             when("/search",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/search/:content",{templateUrl: 'views/searchResult.html',controller:"searchResult"}).
@@ -136,7 +136,7 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
             "minLength":Config.validError.minLength,
             "pwdEqualError":Config.validError.pwdEqualError
         };
-
+        $scope.isMobile=CFunctions.checkMobile();
         $scope.currentUser=Storage.currentUser;
         //$scope.currentUser.id=1;
 

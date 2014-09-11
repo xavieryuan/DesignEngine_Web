@@ -93,6 +93,16 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
             $scope.project.praised=data.praised;
             $scope.project.user=data.user;
             $scope.project.topic=data.topic;
+
+            //手机上使用小图片
+            if($scope.isMobile){
+                var length=$scope.project.assets.length;
+                for(var i=0;i<length;i++){
+                    var fileInfo=CFunctions.getFilePathInfo($scope.project.assets[i]["profile_image"]);
+                    $scope.project.assets[i]["profile_image"]=
+                        fileInfo["filePath"]+Config.imageScale.previewSmall+fileInfo["ext"];
+                }
+            }
         });
 
         $scope.commentObj={
@@ -155,20 +165,37 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
 
         $scope.similarProjects=[];
         Project.resource.getSimilarProjects({id:projectId},function(data){
+
             $scope.similarProjects=data.artifacts;
+
+            //这里也要处理手机上的图片
+            /*====================================================================*/
+
         });
 
         $scope.deleteProject=function(id){
             Project.resource.delete({projectId:id},function(data){
 
                 //跟新view面板的数据
-                var length=Storage.loadedProjects.length;
+                var length=Storage.loadedProjects.length,length1=Storage.loadedTopProjects.length;
                 for(var i=0;i<length;i++){
                     if(Storage.loadedProjects[i]["artifact"]["id"]==id){
                         Storage.loadedProjects.splice(i,1);
+                        break;
+                    }
+                }
+
+                //更新优秀作品数据
+                if(length1!=0){
+                    for(var j=0;j<length;j++){
+                        if(Storage.loadedTopProjects[j]["artifact"]["id"]==id){
+                            Storage.loadedTopProjects.splice(j,1);
+                            break;
+                        }
                     }
                 }
                 toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+
 
                 $scope.hideProjectDetail();
             });
@@ -270,6 +297,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 currentMedia[Config.mediaObj.mediaMemo]="";
                 currentMedia[Config.mediaObj.mediaTitle]="";
             }
+            $scope.$apply();
         }
         function fileUploadedCb(file,info){
             if($scope.currentMediaObj[Config.mediaObj.mediaFilename]){
@@ -358,9 +386,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             medias:{},
             terms:[],
             assets:[],
-            user_id:Storage.currentUser.id,
-            user_profile_image:Storage.currentUser.profile,
-            user_fullname:Storage.currentUser.name,
+            user_id:$scope.currentUser.id,
+            user_profile_image:$scope.currentUser.profile,
+            user_fullname:$scope.currentUser.name,
             name:"",
             description:""
         };
@@ -623,19 +651,21 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         $scope.uploadFormSubmit=function(){
             if($scope.project.id){
                 Project.resource.save({projectId:$scope.project.id},$scope.project,function(data){
-                    toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                    toaster.pop("success",Config.messages.successTitle,Config.messages.optSuccRedirect,null,null);
                 });
             }else{
                 if(hasBox){
                     Project.resource.addToBox({boxId:$scope.box.id},$scope.project,function(data){
-                        toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                        toaster.pop("success",Config.messages.successTitle,Config.messages.optSuccRedirect,null,null);
                     });
                 }else{
                     Project.resource.add($scope.project,function(data){
-                        toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                        toaster.pop("success",Config.messages.successTitle,Config.messages.optSuccRedirect,null,null);
                     });
                 }
             }
+
+            CFunctions.timeoutRedirect(Config.urls.userHome.replace(":userId",$scope.currentUser.id),false,true);
         }
     }]);
 
@@ -794,7 +824,7 @@ viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage",
     Box.resource.get({boxId:$scope.boxId},function(data){
         $scope.box=data.topic;
         $scope.box.user=data.user;
-        $scope.box.projects=data.artifacts;
+        Storage.loadedTopProjects=$scope.box.projects=data.artifacts;
     });
 
     Storage.loadedProjects=$scope.projects=[];
@@ -822,8 +852,6 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
                 $scope.box.status=data.topic.status;
                 $scope.box.terms=data.topic.terms;
                 $scope.box.description=data.topic.description;
-            },function(data){
-                CFunctions.ajaxErrorHandler();
             });
         }
 
@@ -849,7 +877,7 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
             if(confirm(Config.messages.deleteConfirm)){
                 Box.resource.remove({boxId:id},function(data){
                     toaster.pop("success",Config.messages.successTitle,Config.messages.optSuccRedirect,null,null);
-                    CFunctions.timeoutRedirect("topics",false,true);
+                    CFunctions.timeoutRedirect(Config.urls.boxes,false,true);
                 });
             }
         };
@@ -866,15 +894,15 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
         $scope.boxUpdateSubmit=function(){
             if($scope.box.name&&$scope.box.description&&$scope.box.terms.length!=0){
                 if($scope.boxId){
-                    Box.resource.add($scope.box,function(data){
-                        toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                    Box.resource.save({boxId:$scope.boxId},$scope.box,function(data){
+                        toaster.pop("success",Config.messages.successTitle,Config.messages.optSuccRedirect,null,null);
                     });
                 }else{
-                    Box.resource.save({boxId:$scope.boxId},$scope.box,function(data){
-                        toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                    Box.resource.add($scope.box,function(data){
+                        toaster.pop("success",Config.messages.successTitle,Config.messages.optSuccRedirect,null,null);
                     });
                 }
-
+                CFunctions.timeoutRedirect("topics",false,true);
             }else{
                 toaster.pop('error',Config.messages.errorTitle,Config.messages.boxUnComplete,null,null);
                 return false;
@@ -924,7 +952,7 @@ viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User
     $scope.user={};
     User.resource.get({userId:userId},function(data){
         $scope.user=data.user;
-        $scope.user.topProjects=data.artifacts;
+        Storage.loadedTopProjects=$scope.user.topProjects=data.artifacts;
     });
 
     Storage.loadedProjects=$scope.projects=[];

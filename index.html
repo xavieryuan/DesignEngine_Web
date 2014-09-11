@@ -70,7 +70,7 @@
                             </li>
                             <li class="de_reg_view" ng-show="currentUser.active">
                                 <a ng-href="users/{{currentUser.id}}/topics">我的投稿箱</a>
-                                <a class="de_btn_create_box de_borderbox" ng-href="topics/create">创建投稿箱</a>
+                                <a class="de_btn_create_box de_borderbox" ng-show="currentUser.roles|arrayHasElements:'vip'" ng-href="topics/create">创建投稿箱</a>
                             </li>                                                       
                             <li class="de_reg_view" ng-show="currentUser.active">
                                 <a href="" ng-click="editInfo()">修改个人信息</a>
