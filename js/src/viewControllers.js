@@ -673,8 +673,8 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         }
     }]);
 
-viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project","Config",
-    function($scope,ngTableParams,Project,Config){
+viewControllers.controller("projectsManage",['$scope',"toaster","ngTableParams","Project","Config",
+    function($scope,toaster,ngTableParams,Project,Config){
 
         $scope.mainFlags.currentMenu="";
 
@@ -687,7 +687,7 @@ viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project",
         }];
         $scope.type=$scope.types[0];
         $scope.keyword="";
-
+        $scope.projects=[];
         $scope.mainFlags.extMenuActive=false;
         $scope.tableParams= new ngTableParams({
             count:10,
@@ -708,7 +708,8 @@ viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project",
                     params.total(data.total);
 
                     // set new data
-                    $defer.resolve(data.result);
+                    $scope.projects=data.artifacts;
+                    $defer.resolve($scope.projects);
                 });
             }
         });
@@ -722,8 +723,21 @@ viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project",
             });
 
             //$scope.table.reload();//这个函数不会动态更改filter
-        }
+        };
 
+        $scope.deleteProject=function(projectId,index){
+            Project.resource.delete({projectId:projectId},function(data){
+                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                $scope.projects.splice(index,1);
+            });
+        };
+
+        $scope.toggleShowProject=function(projectId,index){
+            Project.resource.toggleShowProject({projectId:projectId},{},function(data){
+                $scope.projects[index]["artifact"]["visible"]=!$scope.projects[index]["artifact"]["visible"];
+                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+            });
+        };
 
     }]);
 

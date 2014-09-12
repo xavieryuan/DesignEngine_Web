@@ -3,10 +3,7 @@
     <span class="de_manager_title">评论管理</span>
     <div class="de_manager_search">
         <input type="text" ng-model="keyword">
-        <select ng-model="type">
-            <option value="comment_content">评论内容</option>
-            <option value="user_name">用户名</option>
-            <option value="artifact_name">作品名称</option>
+        <select ng-model="type" ng-options="t.value as t.name for t in types">
         </select>
         <input type="button" value="刷选" ng-click="tableSearch();">
     </div>
@@ -17,11 +14,11 @@
         <tr><th>评论</th><th>评论者</th><th>评论作品</th><th>评论时间</th><th>操作</th></tr>
     </thead>
     <tbody>
-        <tr ng-repeat="c in $data">
-            <td>{{c.comment.content}}</td>
-            <td>{{c.user.name}}</td>
-            <td>{{c.artifact.name}}</td>
-            <td>{{c.comment.commented_at}}</td>
+        <tr ng-repeat="d in $data">
+            <td>{{d.comment.content}}</td>
+            <td><a ng-href="users/{{d.user.id}}">{{d.user.fullname}}</a></td>
+            <td>{{d.artifact.name}}</td>
+            <td>{{d.comment.commented_at}}</td>
             <td><a href="" ng-click="deleteComment(d.comment.id,d.artifact.id,$index)">删除</a></td>
         </tr>
     </tbody>

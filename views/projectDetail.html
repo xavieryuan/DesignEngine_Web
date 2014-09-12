@@ -10,7 +10,7 @@
         <li><a class="de_toolbar_edit" ng-href="projects/{{project.id}}/update" title="编辑">编辑</a></li>
         <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
         <li><a ng-class="{de_toolbar_invisible:!project.visible,de_toolbar_visible:project.visible}" href=""
-               ng-click="toggleShowProject(project.id,!project.visible)" title="显示/隐藏">显示/隐藏</a></li>
+               ng-click="toggleShowProject(project.id)" title="显示/隐藏">显示/隐藏</a></li>
     </ul>
 
     <!--<a href="#" target="_self" ng-show="project.toHome"  class="de_btn_close_project_detail de_btn_back_to_home">关闭</a>-->
