@@ -76,14 +76,18 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
         $scope.mainFlags.showMainWrapper=false;
 
         $scope.hideProjectDetail=function(){
-            CFunctions.hideProjectDetail(function(){
+			//重置de_project_detail位置到页面顶端
+			$scope.closeProjectDetailPanel();
+			LocationChanger.skipReload();
+			history.back();
+			
+			//关闭动画
+            /*CFunctions.hideProjectDetail(function(){
                 //重置de_project_detail位置到页面顶端
-
                 $scope.closeProjectDetailPanel();
-
                 LocationChanger.skipReload();
                 history.back();
-            });
+            });*/
         };
 
         $scope.project={};
