@@ -279,6 +279,8 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
                             data.user.setting.comment_active:true
                     }
                 });
+
+                $scope.$apply();
             }
         });
 
