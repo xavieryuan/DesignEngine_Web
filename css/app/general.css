@@ -1758,7 +1758,8 @@ li {
 	position: relative;
 	display: inline-block;
 	font-size: 0;	
-	margin:8px;
+	margin:0;
+	float:right;
 }
 .de_box_toolbar .de_search_wrapper:after{
 	content: "";
