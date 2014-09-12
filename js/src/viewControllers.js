@@ -690,7 +690,8 @@ viewControllers.controller("projectsManage",['$scope',"toaster","ngTableParams",
         $scope.keyword="";
         $scope.projects=[];
         $scope.mainFlags.extMenuActive=false;
-        $scope.tableParams= new ngTableParams({
+
+        $scope.table= new ngTableParams({
             count:10,
             page:1,
             sorting: {
