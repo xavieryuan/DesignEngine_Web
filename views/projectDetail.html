@@ -148,7 +148,7 @@
             </div>
             <div class="comment_wrapper">
                 <a ng-href="user/{{c.user.id}}" class="name">{{c.user.fullname}}</a>
-                <span class="publishtime">{{c.commented_at}}</span>
+                <span class="publishtime">{{c.comment.commented_at}}</span>
 
                 <a ng-show="c.user.id==currentUser.id||(currentUser.roles|arrayHasElements:'admin')" href=""
                    ng-click="deleteComment(c.comment.id,$index,project.id)" class="de_delete_comment">X</a>
