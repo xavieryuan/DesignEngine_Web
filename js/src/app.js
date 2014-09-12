@@ -15,10 +15,10 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
         $locationProvider.html5Mode(true);
         //$locationProvider.hashPrefix("!");
         $routeProvider.when("/",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/artifacts",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/artifacts/create",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
-            when("/artifacts/:projectId/update",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
-            when("/artifacts/:projectId",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+            when("/projects",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+            when("/projects/create",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
+            when("/projects/:projectId/update",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
+            when("/projects/:projectId",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/topics",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
             when("/topics/create",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
             when("/topics/:boxId/update",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
@@ -27,7 +27,7 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
             when("/search",{templateUrl: 'views/showProjects.html',controller:"projects"}).
             when("/search/:content",{templateUrl: 'views/searchResult.html',controller:"searchResult"}).
             when("/admin/comments",{templateUrl: 'views/admin/commentsManage.html',controller:"commentsManage"}).
-            when("/admin/artifacts",{templateUrl: 'views/admin/projectsManage.html',controller:"projectsManage"}).
+            when("/admin/projects",{templateUrl: 'views/admin/projectsManage.html',controller:"projectsManage"}).
             when("/admin/users",{templateUrl: 'views/admin/usersManage.html',controller:"usersManage"}).
             when("/users/:userId/topics",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
             when("/users/:userId",{templateUrl: 'views/userHome.html',controller:"userHome"}).

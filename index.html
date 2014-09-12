@@ -66,7 +66,7 @@
                     		</li>
                            	<li class="de_reg_view " ng-show="currentUser.active">
                                 <a ng-href="users/{{currentUser.id}}">我的作品集</a>
-                                <a class="de_btn_upload de_borderbox"   ng-href="artifacts/create">上传作品</a>
+                                <a class="de_btn_upload de_borderbox"   ng-href="projects/create">上传作品</a>
                             </li>
                             <li class="de_reg_view" ng-show="currentUser.active">
                                 <a ng-href="users/{{currentUser.id}}/topics">我的投稿箱</a>
@@ -82,10 +82,7 @@
                                 <a href="admin/users">用户管理</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
-                                <a href="admin/items">作品管理</a>
-                            </li>
-                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
-                                <a href="admin/boxes">投稿箱管理</a>
+                                <a href="admin/projects">作品管理</a>
                             </li>
                             <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
                                 <a href="admin/comments">评论管理</a>
@@ -104,7 +101,7 @@
             <!-----顶部菜单----->
             <nav class="de_top_nav" id="de_top_nav" >
                 <ul>
-                    <li><a href="artifacts" ng-class="{active:mainFlags.currentMenu=='project'}" class="de_borderbox">作品酷</a></li>
+                    <li><a href="projects" ng-class="{active:mainFlags.currentMenu=='project'}" class="de_borderbox">作品酷</a></li>
                     <li><a href="topics" ng-class="{active:mainFlags.currentMenu=='box'}" class="de_borderbox">投稿箱</a></li>
                     <li class="de_btn_filter"><a href="" class="de_borderbox" ng-click="toSearch()">探索...</a></li>
                 </ul>

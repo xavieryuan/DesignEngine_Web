@@ -47,8 +47,8 @@ services.constant("Config",{
         "projectDetail":"views/projectDetail.html"
     },
     urls:{  //用到的路径，主要是用于initPage
-        "projectDetail":"artifacts/:projectId",
-        "projectDetailReg":/artifacts\/\d+/,
+        "projectDetail":"projects/:projectId",
+        "projectDetailReg":/projects\/\d+/,
         "signIn":"login",
         "signUp":"register",
         "editPwd":"change_password",
