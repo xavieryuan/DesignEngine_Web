@@ -15,6 +15,16 @@
     <tr><th>作品</th><th>上传者</th><th>上传时间</th><th>评论</th><th>赞</th><th>奖章</th><th>状态</th><th>操作</th></tr>
     </thead>
     <tbody>
+        <tr ng-repeat="d in $data">
+            <td><a ng-href="users/{{d.user.id}}">{{d.user.fullname}}</a></td>
+            <td>{{d.user.email}}</td>
+            <td>{{d.artifact_count}}</td>
+            <td>{{d.comment_count}}</td>
+            <td>{{d.honor_sum}}</td>
+            <td>{{d.user.active|showActive}}</td>
+            <td>{{d.user.roles}}</td>
+            <td><a href="" ng-click="">删除</a></td>
+        </tr>
     </tbody>
 </table>
 

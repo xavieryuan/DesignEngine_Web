@@ -44,8 +44,8 @@
     </p>
 
     <!--附件-->
-    <div class="main_content">
-        <figure ng-repeat="at in project.assets" ng-switch="at.type">
+    <div class="main_content" >
+        <figure ng-repeat="at in project.assets" ng-if="!isMobile" ng-switch="at.type">
             <img ng-switch-when="1" ng-src="{{at.profile_image}}"/>
 
             <a ng-switch-when="4" ng-click="showAttachmentDetail(at.media_file,at.type)"
@@ -79,6 +79,52 @@
             <a ng-switch-when="256" ng-click="showAttachmentDetail(at.view_url,at.type)"
                href="" class="de_has_media de_has_flash">
                 <img ng-src="{{at.profile_image}}"/></a>
+
+            <figcaption>
+                {{at.name}}
+                <span class="description">
+                    {{at.description}}
+                </span>
+            </figcaption>
+
+        </figure>
+
+        <figure ng-repeat="at in project.assets" ng-if="isMobile" ng-switch="at.type">
+            <img ng-switch-when="1" ng-src="{{at.profile_image}}"/>
+
+            <a ng-switch-when="4" ng-href="{{at.media_file}}" target="_self" class="de_has_media de_has_video">
+                <img ng-src="{{at.profile_image}}"/>
+            </a>
+
+            <!-- <a ng-switch-when="networkVideo" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
+                href="" class="de_has_media de_has_web_video">
+                 <img ng-src="{{at.attachmentPreviewLocation}}"/></a>
+
+             <a ng-switch-when="3d" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
+                href="" class="de_has_media de_has_3d">
+                 <img ng-src="{{at.attachmentPreviewLocation}}"/></a>-->
+
+
+            <a ng-switch-when="2" ng-href="{{at.view_url}}" target="_self"  class="de_has_media de_has_ppt">
+                <img ng-src="{{at.profile_image}}"/>
+            </a>
+
+            <a ng-switch-when="128" ng-href="{{at.view_url}}" target="_self" class="de_has_media de_has_pdf">
+                <img ng-src="{{at.profile_image}}"/>
+            </a>
+
+            <a ng-switch-when="32" ng-href="{{at.media_file}}" target="_self" class="de_has_media de_has_file">
+                <img ng-src="{{at.profile_image}}"/>
+            </a>
+
+            <a ng-switch-when="64" ng-href="{{at.media_file}}" target="_self"
+               class="de_has_media de_has_flash">
+                <img ng-src="{{at.profile_image}}"/>
+            </a>
+
+            <a ng-switch-when="256" ng-href="{{at.view_url}}" target="_self" class="de_has_media de_has_flash">
+                <img ng-src="{{at.profile_image}}"/>
+            </a>
 
             <figcaption>
                 {{at.name}}

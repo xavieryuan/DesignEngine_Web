@@ -13,26 +13,37 @@ angular.module("autoComplete",[]).
         return {
             selectedEvent:null,
             getResultUrl:"",
-            resultFilter:null,
+            resultFilter:null, //对后台来的数据进行组装
             autoComplete:function(param){
                 this.getResultUrl=param.url;
                 this.selectedEvent=param.selectedEvent;
                 this.resultFilter=param.filter;
             },
-            getResult:function(){
+            getResult:function(text){
                 var me=this;
                 if(me.getResultUrl){
-                    return $http.get(me.getResultUrl).then(function(res){
+                    return $http.get(me.getResultUrl,{
+                        params:{
+                            text:text
+                        },
+                        transformRequest:function(data, headersGetter){
+                            return JSON.stringify(data);
+                        },
+                        transformResponse:function(data, headersGetter){
+                            return JSON.parse(data);
+                        }
+                    }).then(function(res){
                         //console.log("1");
                         var results=[];
                         var data=res.data;
-                        if(me.resultFilter){
-                            results=me.resultFilter(data);
-                        }else{
-                            if(data.success){
-                                results=data.results;
+                        if(data.success){
+                            if(me.resultFilter){
+                                data=me.resultFilter(data);
                             }
+
+                            results=data.items;
                         }
+
                         return results;
                     });
                 }
@@ -40,6 +51,7 @@ angular.module("autoComplete",[]).
         }
     }]).
     controller("ctrl",["$scope","AutoComplete",function($scope,AutoComplete){
+        $scope.showBlackOut();
         $scope.showResult=false;
         $scope.items=[];
         $scope.content="";
@@ -48,19 +60,20 @@ angular.module("autoComplete",[]).
         $scope.setCurrent=function(index){
             $scope.currentItemIndex=index;
         };
-        $scope.selectItem=function(item){
-            $scope.content=item;
-            AutoComplete.selectedEvent($scope.content);
+        $scope.selectItem=function(content){
+            $scope.content=content;
             $scope.items=[];
+            AutoComplete.selectedEvent($scope.content);
         };
         $scope.keyDownEvent=function(event){
-            if(event.keyCode==13&&$scope.content){
+            if(event.keyCode==13&&$scope.content!=""){
+                $scope.items=[];
                 AutoComplete.selectedEvent($scope.content);
             }
         };
         $scope.keyUpEvent=function(){
-            if($scope.content.length>=2){
-                AutoComplete.getResult().then(function(data){
+            if($scope.content!=""&&$scope.content.length>=2){
+                AutoComplete.getResult($scope.content).then(function(data){
                     //console.log("2");
                     $scope.items=data;
                 });

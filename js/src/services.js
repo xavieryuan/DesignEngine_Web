@@ -199,9 +199,12 @@ services.constant("Config",{
         setBoxStatus:"/api/topics/:boxId/change_status",
         deleteBox:"/api/topics/:boxId",
         setUserActive:"/confirm",
+        setUserRole:"/api/users/:userId/role",
         getUserDetail:"/api/users/:userId",
         getUserProjects:"/api/users/:userId/artifacts",
-        getAllUsers:"/api/users\\/",
+        getManageUsers:"/api/users/manage",
+        getManageComments:"/api/",
+        getManageProjects:"/api",
         upload:"/api/qiniu/uptoken",
         getAllProjects:"/api/artifacts\\/", //获取首页作品媒体文件
         getProjectDetail:"/api/artifacts/:projectId", //获取作品（资源）详情
@@ -216,8 +219,8 @@ services.constant("Config",{
         addComment:"/api/artifacts/:projectId/comments/append",
         deleteComment:"/api/artifacts/:projectId/comments/:commentId/remove",
         getAllComments:"data/commentsManage.json",
-        getCompleteUrl:"data/autocomplete.json",
-        getSearchProjects:"data/projects.json"
+        getCompleteUrl:"/api/search/text_like",
+        getSearchProjects:"/api/search\\/"
     },
     roles:{   //角色
         admin:"admin",
@@ -321,8 +324,8 @@ services.service("AjaxErrorHandler",["toaster","Config","CFunctions",function(to
     };
 }]);
 
-services.service("CFunctions",["$rootScope","$location","$http","$timeout","toaster","Config","LocationChanger",
-    function($rootScope,$location,$http,$timeout,toaster,Config,LocationChanger){
+services.service("CFunctions",["$rootScope","$location","$http","$timeout","toaster","Config","LocationChanger","Storage",
+    function($rootScope,$location,$http,$timeout,toaster,Config,LocationChanger,Storage){
 
     var postCfg={
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
@@ -533,7 +536,7 @@ services.service("CFunctions",["$rootScope","$location","$http","$timeout","toas
 
 
                     // do something with key here
-                    return random+filename.substring(extPos);
+                    return Storage.currentUser.id+"/"+random+filename.substring(extPos);
 
                     //return file.name;
                 }
@@ -746,12 +749,12 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 return me;
             },
             getSearchResult:function(content){
-                var me= this.resource.getSearchResult({last_id:Storage.lastLoadedId,content:content},function(data){
+                var me= this.resource.getSearchResult({offset:Storage.lastLoadedId,q:content},function(data){
                     //console.log("In services");
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
+                        Storage.lastLoadedId+=Config.perLoadCount;
                     }
                 });
                 me.$promise.then(function(data){
@@ -768,6 +771,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
             },
             resource: $resource(Config.ajaxUrls.getAllProjects,{},{
                 query:{method:"get",params:{"last_id":0,"count":Config.perLoadCount}},
+                getManageProjects:{method:"get",url:Config.ajaxUrls.getManageProjects,params:{"count":10}},
                 get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{projectId:0}},
                 delete:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{projectId:0}},
                 remove:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{projectId:0}},
@@ -778,7 +782,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 praiseProject:{method:"post",url:Config.ajaxUrls.praiseProject,params:{projectId:0}},
                 getProjectDetail:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{projectId:0}},
                 getProjectAttachments:{method:"get",url:Config.ajaxUrls.getProjectAttachments,params:{id:0}},
-                getSearchResult:{method:"get",url:Config.ajaxUrls.getSearchProjects,params:{last_id:0,content:"search"}},
+                getSearchResult:{method:"get",url:Config.ajaxUrls.getSearchProjects,params:{offset:0,q:"","count":Config.perLoadCount}},
                 getSimilarProjects:{method:"get",url:Config.ajaxUrls.getSimilarProjects,params:{id:0}}
             })
         };
@@ -805,7 +809,7 @@ services.factory("User",["$rootScope","$resource","CFunctions","Config",function
             });
             return me;
         },
-        resource:$resource(Config.ajaxUrls.getAllUsers,{},{
+        resource:$resource(Config.ajaxUrls.getManageUsers,{},{
             query:{method:"get",params:{"count":10}},
             get:{method:"get",url:Config.ajaxUrls.getUserDetail,params:{userId:0}},
             getUserProjects:{method:"get",url:Config.ajaxUrls.getUserProjects,params:{userId:0,last_id:0,"count":Config.perLoadCount}},
@@ -828,6 +832,7 @@ services.factory("User",["$rootScope","$resource","CFunctions","Config",function
                 }
             },
             setUserActive:{method:"post",url:Config.ajaxUrls.setUserActive},
+            setUserRole:{method:"post",url:Config.ajaxUrls.setUserRole,params:{userId:0}},
             getCurrentUser:{method:"get",url:Config.ajaxUrls.getCurrentUser},
             forgetPwd:{method:"post",url:Config.ajaxUrls.forgetPwd,
                 transformRequest:function(data, headersGetter){
@@ -905,7 +910,7 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
         };
 }]);
 services.factory("Comment",["$rootScope","$resource","Config",function($rootScope,$resource,Config){
-    return $resource(Config.ajaxUrls.getAllComments,{},{
+    return $resource(Config.ajaxUrls.getManageComments,{},{
         query:{method:"get",params:{"count":10}},
         get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{id:0}},
         save:{method:"post",url:"#",params:{id:0}},

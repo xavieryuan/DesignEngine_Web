@@ -12,6 +12,7 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
         $scope.showBlackOut();
 
         $scope.mainFlags.extMenuActive=false;
+
         $scope.toRegPanel=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.signUp+"?dc="+new Date().getTime();
             LocationChanger.skipReload().withReplace(Config.urls.signUp,true);

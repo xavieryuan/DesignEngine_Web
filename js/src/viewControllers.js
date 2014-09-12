@@ -970,21 +970,20 @@ viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User
 
 }]);
 
-viewControllers.controller("usersManage",['$scope',"ngTableParams","User","Config",
-    function($scope,ngTableParams,User,Config){
+viewControllers.controller("usersManage",['$scope',"toaster","ngTableParams","User","Config",
+    function($scope,toaster,ngTableParams,User,Config){
 
         $scope.mainFlags.currentMenu="";
         $scope.types=[{name:Config.searchTypes.fullname,value:"fullname"}];
 
-        $scope.type=$scope.types[0];
+        $scope.type=$scope.types[0]["value"];
         $scope.keyword="";
 
         $scope.mainFlags.extMenuActive=false;
-
-
+        $scope.users=[];
 
         $scope.table= new ngTableParams({
-            count:10,
+            count:Config.perLoadCount,
             page:1,
             filter:{
                 keyword:$scope.keyword,
@@ -999,28 +998,39 @@ viewControllers.controller("usersManage",['$scope',"ngTableParams","User","Confi
                     params.total(data.total);
 
                     // set new data
-                    $defer.resolve(data.users);
+                    $scope.users=data.users;
+                    $defer.resolve($scope.users);
+                    //$defer.resolve(data.users);
                 });
             }
         });
 
         $scope.tableSearch=function(){
 
+            //如果不手动设置到第一页，那么会有两次请求
             $scope.table.page(1);
 
             $scope.table.filter({
-                type:$scope.type,
-                keyword:$scope.keyword
+                keyword:$scope.keyword,
+                type:$scope.type
             });
 
             //$scope.table.reload();//这个函数不会动态更改filter
+        };
+
+        $scope.setUserRole=function(userId,role,index){
+            User.resource.setUserRole({userId:userId},{role:role},function(data){
+                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                $scope.users[index]["user"]["roles"]=[role];
+                //$scope.table.reload();
+            });
         }
 
 
 }]);
 
-viewControllers.controller("searchResult",["$scope","$routeParams","Project","Config","Storage",
-    function($scope,$routeParams,Project,Config,Storage){
+viewControllers.controller("searchResult",["$scope","$interval","$routeParams","Project","Config","Storage",
+    function($scope,$interval,$routeParams,Project,Config,Storage){
         $scope.searchContent=$routeParams.content;
 
         $scope.mainFlags.currentMenu="";
@@ -1031,9 +1041,17 @@ viewControllers.controller("searchResult",["$scope","$routeParams","Project","Co
 
         $scope.closePop(true);
 
-        $scope.projects=[];
+        Storage.loadedProjects=$scope.projects=[];
         Project.getSearchResult($scope.searchContent).$promise.then(function(data){
-            $scope.projects=$scope.projects.concat(data.artifacts);
+            var count= 0,length=data.artifacts.length;
+            var inter=$interval(function(){
+                if(count<length){
+                    $scope.projects.push(data.artifacts[count]);
+                    count++;
+                }else{
+                    $interval.cancel(inter);
+                }
+            },200);
         });
 }]);
 

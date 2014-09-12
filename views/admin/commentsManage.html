@@ -17,8 +17,12 @@
     </thead>
     <tbody>
         <tr ng-repeat="comment in $data">
-            <td>{{comment.name}}</td>
-            <td>{{comment.age}}</td>
+            <td>{{d.user.fullname}}</td>
+            <td>{{d.user.email}}</td>
+            <td>{{d.artifact_count}}</td>
+            <td>{{d.comment_count}}</td>
+            <td>{{d.user.roles}}</td>
+            <td><a href="" ng-click="">删除</a></td>
         </tr>
     </tbody>
 </table>
