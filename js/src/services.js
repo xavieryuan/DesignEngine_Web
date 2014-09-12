@@ -100,7 +100,18 @@ services.constant("Config",{
         256:"HTML5应用"
     },
     searchTypes:{
-        fullname:"用户名"
+        names:{
+            fullName:"用户名",
+            projectTitle:"作品标题",
+            commentContent:"评论内容",
+            term:"标签"
+        },
+        values:{
+            fullName:"user_name",
+            projectTitle:"artifact_name",
+            commentContent:"comment_content",
+            term:"term"
+        }
     },
     mediaObj:{  //媒体对象
         mediaPos:"pos",
@@ -202,9 +213,9 @@ services.constant("Config",{
         setUserRole:"/api/users/:userId/role",
         getUserDetail:"/api/users/:userId",
         getUserProjects:"/api/users/:userId/artifacts",
-        getManageUsers:"/api/users/manage",
-        getManageComments:"/api/",
-        getManageProjects:"/api",
+        getManageUsers:"/api/admin/users\\/",
+        getManageComments:"/api/admin/comments\\/",
+        getManageProjects:"/api/admin/artifacts\\/",
         upload:"/api/qiniu/uptoken",
         getAllProjects:"/api/artifacts\\/", //获取首页作品媒体文件
         getProjectDetail:"/api/artifacts/:projectId", //获取作品（资源）详情

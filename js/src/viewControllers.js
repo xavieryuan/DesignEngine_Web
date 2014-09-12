@@ -167,15 +167,15 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
             });
         };
 
-        $scope.similarProjects=[];
+        /*$scope.similarProjects=[];
         Project.resource.getSimilarProjects({id:projectId},function(data){
 
             $scope.similarProjects=data.artifacts;
 
             //这里也要处理手机上的图片
-            /*====================================================================*/
+            *//*====================================================================*//*
 
-        });
+        });*/
 
         $scope.deleteProject=function(id){
             Project.resource.delete({projectId:id},function(data){
@@ -673,13 +673,19 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         }
     }]);
 
-viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project","CFunctions",
-    function($scope,ngTableParams,Project,CFunctions){
+viewControllers.controller("projectsManage",['$scope',"ngTableParams","Project","Config",
+    function($scope,ngTableParams,Project,Config){
 
         $scope.mainFlags.currentMenu="";
 
-
-        $scope.type="";
+        $scope.types=[{
+            name:Config.searchTypes.names.projectTitle,
+            value:Config.searchTypes.values.projectTitle
+        },{
+            name:Config.searchTypes.names.term,
+            value:Config.searchTypes.values.term
+        }];
+        $scope.type=$scope.types[0];
         $scope.keyword="";
 
         $scope.mainFlags.extMenuActive=false;
@@ -725,10 +731,20 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
     function($scope,toaster,ngTableParams,Comment,CFunctions,Config){
         $scope.mainFlags.currentMenu="";
 
-
-        $scope.type="";
+        $scope.types=[{
+            name:Config.searchTypes.names.commentContent,
+            value:Config.searchTypes.values.commentContent
+        },{
+            name:Config.searchTypes.names.fullName,
+            value:Config.searchTypes.values.fullName
+        },{
+            name:Config.searchTypes.names.projectTitle,
+            value:Config.searchTypes.values.projectTitle
+        }];
+        $scope.type=$scope.types[0];
         $scope.keyword="";
 
+        $scope.comments=[];
         $scope.mainFlags.extMenuActive=false;
 
         $scope.table= new ngTableParams({
@@ -750,7 +766,9 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
                         params.total(data.total);
 
                         // set new data
-                        $defer.resolve(data.result);
+                        $scope.comments=data.comments;
+                        $defer.resolve($scope.comments);
+                        //$defer.resolve(data.comments);
                     }
                 });
             }
@@ -765,7 +783,14 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
             });
 
             //$scope.table.reload();//这个函数不会动态更改filter
-        }
+        };
+
+        $scope.deleteComment=function(id,projectId,index){
+            Comment.delete({projectId:projectId,commentId:id},function(data){
+                $scope.comments.splice(index,1);
+                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+            });
+        };
 
     }]);
 
@@ -978,7 +1003,7 @@ viewControllers.controller("usersManage",['$scope',"toaster","ngTableParams","Us
     function($scope,toaster,ngTableParams,User,Config){
 
         $scope.mainFlags.currentMenu="";
-        $scope.types=[{name:Config.searchTypes.fullname,value:"fullname"}];
+        $scope.types=[{name:Config.searchTypes.names.fullName,value:Config.searchTypes.values.fullName}];
 
         $scope.type=$scope.types[0]["value"];
         $scope.keyword="";
