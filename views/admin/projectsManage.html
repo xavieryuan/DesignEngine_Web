@@ -10,22 +10,19 @@
 
 <table template-pagination="ownPagination" class="de_manager_table" ng-table="table">
     <thead>
-    <tr><th>作品</th><th>上传者</th><th>上传时间</th><th>评论</th><th>赞</th><th>奖章</th><th>状态</th><th>操作</th></tr>
+    <tr><th>作品</th><th>上传者</th><th>上传时间</th><th>评论</th><th>赞</th><th>奖章</th><th>操作</th></tr>
     </thead>
     <tbody>
         <tr ng-repeat="d in $data">
-            <td><a href="" ng-click="">{{d.artifact.name}}</a></td>
+            <td><a href="" ng-click="showProjectDetail(d.artifact.id)">{{d.artifact.name}}</a></td>
             <td><a ng-href="users/{{d.user.id}}">{{d.user.fullname}}</a></td>
             <td>{{d.artifact.created_at}}</td>
             <td>{{d.comment_count}}</td>
             <td>{{d.praise_count}}</td>
             <td>{{d.honor_count}}</td>
-            <td ng-if="d.artifact.visible">显示</td>
-            <td ng-if="!d.artifact.visible">隐藏</td>
             <td>
                 <a ng-href="projects/{{d.artifact.id}}/update">编辑</a>
-                <a href="" ng-click="toggleShowProject(d.artifact.id,$index)" ng-if="d.artifact.visible">隐藏</a>
-                <a href="" ng-click="toggleShowProject(d.artifact.id,$index)" ng-if="!d.artifact.visible">显示</a>
+                &nbsp;
                 <a href="" ng-click="deleteProject(d.artifact.id,$index)">删除</a>
             </td>
         </tr>
