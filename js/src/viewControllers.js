@@ -125,20 +125,38 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
         $scope.addComment=function(projectId,content){
 
             Comment.add({projectId:projectId},{content:content},function(data){
-                $scope.commentObj.allComments.push({
-                    comment:{
-                        id:data.id,
-                        content:content,
-                        commented_at:CFunctions.formatDate()
-                    },
-                    user:{
-                        id:$scope.currentUser.id,
-                        fullname:$scope.currentUser.name,
-                        setting:{
-                            profile_image:$scope.currentUser.profile
+                if($scope.commentObj.hasMore){
+                    $scope.commentObj.allComments.push({
+                        comment:{
+                            id:data.id,
+                            content:content,
+                            commented_at:CFunctions.formatDate()
+                        },
+                        user:{
+                            id:$scope.currentUser.id,
+                            fullname:$scope.currentUser.name,
+                            setting:{
+                                profile_image:$scope.currentUser.profile
+                            }
                         }
-                    }
-                });
+                    });
+                }else{
+                    $scope.commentObj.showComments.push({
+                        comment:{
+                            id:data.id,
+                            content:content,
+                            commented_at:CFunctions.formatDate()
+                        },
+                        user:{
+                            id:$scope.currentUser.id,
+                            fullname:$scope.currentUser.name,
+                            setting:{
+                                profile_image:$scope.currentUser.profile
+                            }
+                        }
+                    });
+
+                }
 
                 //跟新view面板的数据
                 var length=Storage.loadedProjects.length;
