@@ -47,7 +47,7 @@
         <!-- step 2-->
         <div class="de_upload_step2" ng-show="currentTab==2">
             <div class="zy_uploader_column_left" id="zy_uploader_column_left">
-                <span class="zy_section_left_header" id="uploadImage" ng-init="createImageUploader('uploadImage','uploadContainer')">添加图片</span>
+                <span class="zy_section_left_header" id="uploadImage" ng-init="createImageUploader('uploadImage','uploadContainer')">上传图片</span>
 
                 <ol class="zy_uploaded_medias_ol" drag="mediaItem">
                     <li ng-click="showSetPanel(mediaId)" data-media-id="{{mediaId}}"
@@ -79,7 +79,7 @@
                         <section id="zy_right" class="zy_column_50">
                             <section class="zy_bind_file_container">
                                 <label class="zy_section_heading">绑定媒体文件<span class="zy_tooltips">(可选)</span></label>
-                                <span class="zy_section_left_header zy_bind_file" ng-mouseenter="showMediaMenu()"
+                                <span class="de_button zy_bind_file" ng-mouseenter="showMediaMenu()"
                                       ng-mouseleave="hideMediaMenu()">添加文件</span>
                                 <!--媒体文件类型的menu-->
                                 <div id="uploadContainer" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()"

@@ -2135,6 +2135,7 @@ ol.mp_list li.mp_selectable {
 }
 .zy_bind_file_container{
     height: 120px;
+	position: relative;
 }
 .zy_section_left_header {
     width: 100%;
@@ -2150,13 +2151,6 @@ ol.mp_list li.mp_selectable {
 	background:#07af69;
 
 }
-.zy_bind_file{
-    width: 100px;
-    text-indent:35px;
-    position: absolute;
-    top:70px;
-    right:20px;
-}
 .zy_section_left_header:before{
 	content:"";
 	width:30px;
@@ -2166,8 +2160,11 @@ ol.mp_list li.mp_selectable {
 	top:4px;
 	left:30px;
 	}
-.zy_bind_file:before{
-    left:5px;
+.zy_bind_file{
+    width: 100px;
+    position: absolute;
+    top:0;
+    right:0;
 }
 .zy_bind_file_info{
     height: 40px;
