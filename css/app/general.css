@@ -2193,7 +2193,7 @@ ol.mp_list li.mp_selectable {
 
 .zy_add_media_menu {
     position: absolute;
-    top: 50px;
+    top: 0;
 	right:0;
     width: 206px;
     z-index: 3;
@@ -2201,7 +2201,6 @@ ol.mp_list li.mp_selectable {
     overflow: hidden;
     background: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    transition: height 0.5s ease-out;
 }
 .zy_add_media_menu_active{
     height: 360px;
