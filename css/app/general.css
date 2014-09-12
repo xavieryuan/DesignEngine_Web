@@ -2160,6 +2160,12 @@ ol.mp_list li.mp_selectable {
 	top:4px;
 	left:30px;
 	}
+.zy_update_thumbnail{
+	width:100px;
+	position: absolute;
+	top:0;
+	right:0;
+}
 .zy_bind_file{
     width: 100px;
     position: absolute;
