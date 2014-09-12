@@ -2806,13 +2806,13 @@ span.zy_tooltips{
 }
 
 .de_project_detail figure {
-    margin: 10px 0;
+    margin: 10px 0;	
+	padding-top:2em;
+	border-top:1px #ccc dotted;
 }
 
 .de_project_detail figure img {
     width: 100%;
-	padding-top:2em;
-	border-top:1px #ccc dotted;
 }
 
 .de_project_detail figcaption {
