@@ -1758,7 +1758,7 @@ li {
 	position: relative;
 	display: inline-block;
 	font-size: 0;	
-	margin:0;
+	margin-left:8px;
 	float:right;
 }
 .de_box_toolbar .de_search_wrapper:after{
