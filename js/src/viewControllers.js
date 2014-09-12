@@ -65,7 +65,6 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
             if($scope.commentObj.allComments.length==0){
                 $scope.commentObj.hasMore=false;
             }
-
         }
 
         var projectId=CFunctions.getPathParam();
@@ -126,7 +125,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
         $scope.addComment=function(projectId,content){
 
             Comment.add({projectId:projectId},{content:content},function(data){
-                $scope.commentObj.showComments.push({
+                $scope.commentObj.allComments.push({
                     comment:{
                         id:data.id,
                         content:content,
