@@ -366,6 +366,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 $scope.project.terms=data.artifact.terms;
                 $scope.project.name=data.artifact.name;
                 $scope.project.description=data.artifact.description;
+                $scope.project.user=data.user;
 
                 //初始化附件
                 for (var i = 0; i < length; i++) {
@@ -389,9 +390,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             medias:{},
             terms:[],
             assets:[],
-            user_id:$scope.currentUser.id,
-            user_profile_image:$scope.currentUser.profile,
-            user_fullname:$scope.currentUser.name,
+            user:$scope.currentUser,
             name:"",
             description:""
         };
