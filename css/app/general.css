@@ -2186,6 +2186,7 @@ ol.mp_list li.mp_selectable {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+	border: none;
 }
 .zy_bind_file_info .zy_delete_bind_file{
     float:right;
