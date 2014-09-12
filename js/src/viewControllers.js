@@ -366,7 +366,11 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 $scope.project.terms=data.artifact.terms;
                 $scope.project.name=data.artifact.name;
                 $scope.project.description=data.artifact.description;
-                $scope.project.user=data.user;
+                $scope.project.user={
+                    id:data.user.id,
+                    name:data.user.fullname,
+                    profile:data.user.setting.profile_image
+                };
 
                 //初始化附件
                 for (var i = 0; i < length; i++) {
