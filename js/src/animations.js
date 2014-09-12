@@ -46,7 +46,7 @@ animations.animation(".de_blackout",function(){
 		}
 	}
 });
-animations.animation(".de_screen_project_detail",function(){
+/*animations.animation(".de_screen_project_detail",function(){
 	return{
 		enter:function(element,done){
             //console.log(element.scope());
@@ -57,20 +57,9 @@ animations.animation(".de_screen_project_detail",function(){
 			TweenMax.from(element,0.4,{opacity:0,onComplete:done});
 			TweenMax.from(header,0.3,{y:-100});
 			TweenMax.from(detail,0.3,{y:100});
-		}/*,
-		leave:function(element,done){
-			var header=$(element).find(".de_project_header");
-			var detail=$(element).find(".de_project_detail");
-			TweenMax.to(header,0.3,{y:-100});
-			TweenMax.to(detail,0.3,{y:100});
-			TweenMax.to(element,0.4,{opacity:0,onComplete:function(){
-
-                done();
-			});
-
-		}*/
+		}
 	}
-});
+});*/
 animations.animation(".de_loading",function(){
 	return{
 		addClass: function(element, className, done) {
