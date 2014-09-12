@@ -17,9 +17,9 @@
             <td><a href="" ng-click="showProjectDetail(d.artifact.id)">{{d.artifact.name}}</a></td>
             <td><a ng-href="users/{{d.user.id}}">{{d.user.fullname}}</a></td>
             <td>{{d.artifact.created_at}}</td>
-            <td>{{d.comment_count}}</td>
-            <td>{{d.praise_count}}</td>
-            <td>{{d.honor_count}}</td>
+            <td>{{d.artifact.comment_count}}</td>
+            <td>{{d.artifact.praise_count}}</td>
+            <td>{{d.artifact.honor_count}}</td>
             <td>
                 <a ng-href="projects/{{d.artifact.id}}/update">编辑</a>
                 &nbsp;

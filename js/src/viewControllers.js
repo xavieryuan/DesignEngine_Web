@@ -686,7 +686,7 @@ viewControllers.controller("projectsManage",['$scope',"toaster","ngTableParams",
             name:Config.searchTypes.names.term,
             value:Config.searchTypes.values.term
         }];
-        $scope.type=$scope.types[0];
+        $scope.type=$scope.types[0]["value"];
         $scope.keyword="";
         $scope.projects=[];
         $scope.mainFlags.extMenuActive=false;
@@ -757,7 +757,7 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
             name:Config.searchTypes.names.projectTitle,
             value:Config.searchTypes.values.projectTitle
         }];
-        $scope.type=$scope.types[0];
+        $scope.type=$scope.types[0]["value"];
         $scope.keyword="";
 
         $scope.comments=[];
