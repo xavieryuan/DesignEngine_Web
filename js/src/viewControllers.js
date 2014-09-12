@@ -126,7 +126,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
         $scope.addComment=function(projectId,content){
 
             Comment.add({projectId:projectId},{content:content},function(data){
-                $scope.commentObj.showComments.unshift({
+                $scope.commentObj.showComments.push({
                     comment:{
                         id:data.id,
                         content:content,
