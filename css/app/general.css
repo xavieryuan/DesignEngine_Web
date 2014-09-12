@@ -2174,8 +2174,7 @@ ol.mp_list li.mp_selectable {
 }
 .zy_bind_file_info{
     height: 40px;
-    background: #ccc;
-    border: 1px solid #666;
+    background: #efefef;
     font-size: 14px;
     margin-top: 40px;
     line-height: 40px;
@@ -2192,6 +2191,7 @@ ol.mp_list li.mp_selectable {
     float:right;
     margin-right: 5px;
     cursor: pointer;
+	width:40px;
 }
 .zy_bind_file_info .zy_delete_bind_file:hover{
     color: #C00;
