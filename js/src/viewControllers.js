@@ -692,7 +692,7 @@ viewControllers.controller("projectsManage",['$scope',"toaster","ngTableParams",
         $scope.mainFlags.extMenuActive=false;
 
         $scope.table= new ngTableParams({
-            count:10,
+            count:Config.perLoadCount,
             page:1,
             sorting: {
                 name: 'asc'     // initial sorting
@@ -704,7 +704,7 @@ viewControllers.controller("projectsManage",['$scope',"toaster","ngTableParams",
         },{
             total:0,
             getData:function($defer,params){
-                Project.query(params.url(), function(data) {
+                Project.resource.getManageProjects(params.url(), function(data) {
 
                     // update table params
                     params.total(data.total);
