@@ -3046,7 +3046,7 @@ span.zy_tooltips{
 	top:0;
 	bottom:0;
 	position:fixed;
-    
+    border:none;
 }
 .de_pop_show_media .de_pop_show_media_content .de_pop_show_media_el,
 .de_pop_show_media .de_pop_show_media_content iframe{
