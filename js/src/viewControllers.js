@@ -382,7 +382,6 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         }
 
         var fileIdToMediaIdHash={};
-        var hasBox=false;
 
         $scope.project={
             id:0,
@@ -397,12 +396,11 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             description:""
         };
         $scope.box={
-            id:$scope.currentUser.id,
-            name:$scope.currentUser.name
+            id:0,
+            name:""
         };
 
         if($routeParams.boxId){
-            hasBox=true;
             $scope.box.id=$routeParams.boxId;
             initBoxData($scope.box.id);
         }
@@ -658,7 +656,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                     toaster.pop("success",Config.messages.successTitle,Config.messages.optSuccRedirect,null,null);
                 });
             }else{
-                if(hasBox){
+                if($scope.box.id!==0){
                     Project.resource.addToBox({boxId:$scope.box.id},$scope.project,function(data){
                         toaster.pop("success",Config.messages.successTitle,Config.messages.optSuccRedirect,null,null);
                     });

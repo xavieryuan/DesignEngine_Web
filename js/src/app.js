@@ -108,8 +108,8 @@ pinWall.run(["$rootScope","$q","App","AjaxErrorHandler",function($rootScope,$q,A
 
 }]);
 
-pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","Storage","User","LocationChanger","safeApply","toaster","App",
-    function($scope,$location,$sce,Config,CFunctions,Storage,User,LocationChanger,safeApply,toaster,App){
+pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","Storage","User","LocationChanger","toaster","App",
+    function($scope,$location,$sce,Config,CFunctions,Storage,User,LocationChanger,toaster,App){
 
         //使用对象，子scope可以直接覆盖（对象地址）
         $scope.mainFlags={
@@ -279,8 +279,6 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
                             data.user.setting.comment_active:true
                     }
                 });
-
-                safeApply();
             }
         });
 
