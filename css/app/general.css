@@ -3209,6 +3209,7 @@ span.zy_tooltips{
 	/*投稿箱列表*/
 	.de_box_toolbar .de_search_wrapper{
 		display: block;
+		margin: 8px 0 0 0;
 	}
 	.de_box_toolbar .de_search_wrapper input{
 		width:100%;
