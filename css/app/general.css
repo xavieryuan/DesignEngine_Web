@@ -3373,7 +3373,20 @@ span.zy_tooltips{
 	/*作品列表*/
 	.de_project_grid{
 		text-align: center;
+		padding: 0;
 	}
+	.de_project_grid>li{
+		width: 320px;
+		height: 440px;
+		margin: 10px auto;
+	}
+	.de_project_grid .user_info{
+		top:340px;
+	}
+	.de_project_grid .project_info h4{
+		top:360px;
+	}
+	
 	
 	/*详情展示页面*/
 	.de_screen_project_detail .de_project_detail{
