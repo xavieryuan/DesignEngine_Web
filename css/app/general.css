@@ -1605,14 +1605,14 @@ li {
 }
 .de_topic_box .topic_action{
 	position: absolute;
-	top:10px;
+	top:0;
 	right:-50px;
 	width:40px;		
 	font-size: 0;
 	z-index: 1;
 }
 .topic_action li{
-	margin-bottom:10px;
+	margin-bottom:5px;
 }
 .topic_action li a{
 	width:40px;
@@ -1620,37 +1620,12 @@ li {
 	display: inline-block;	
 	text-indent: 9999px;
 }
-.topic_action li.de_topic_action_submit,.topic_action li.de_topic_action_view{
-	position: absolute;
-	left:-90px;
-	top:-10px;
-}
 .topic_action li.de_topic_action_submit a{	
-	width:80px;
-	height:140px;
-	box-sizing: border-box;
-	background:url(../../images/app/icon40_upload_white.png) #29abe2 no-repeat center 40px;
-	font-size:18px;
-	color:#fff;
-	font-weight: bold;
-	text-align:center;
-	line-height: 140px;
-	padding-top:24px;
-	text-indent:0;
+	background:url(../../images/app/icon40_upload_white.png) no-repeat center;
 }
 
 .topic_action li.de_topic_action_view a{
-	width:80px;
-	height:140px;
-	box-sizing: border-box;
-	background:url(../../images/app/icon40_visible_white.png) #07af69 no-repeat center 40px;	
-	font-size:18px;
-	color:#fff;
-	font-weight: bold;
-	text-align:center;
-	line-height: 140px;
-	padding-top:24px;
-	text-indent:0;
+	background:url(../../images/app/icon40_visible_white.png) no-repeat center;
 }
 
 .de_topic_action_lock a{
@@ -1661,6 +1636,13 @@ li {
 }
 .de_topic_action_setting a{
 	background:url(../../images/app/icon40_setting_white.png) no-repeat center;
+}
+.topic_action li.de_topic_action_submit a:hover{	
+	background:url(../../images/app/icon40_upload_green.png) no-repeat center;
+}
+
+.topic_action li.de_topic_action_view a:hover{
+	background:url(../../images/app/icon40_visible_green.png) no-repeat center;
 }
 .de_topic_action_lock a:hover {
 	background:url(../../images/app/icon40_lock_green.png) no-repeat center;
@@ -1738,17 +1720,20 @@ li {
 	margin: 20px 70px 20px 30px;
 	text-align: right;
 	font-size: 12px;
-	line-height: 40px;
 	color:#999;
 }
 .de_box_toolbar label{
 	padding:0;
 	margin-right: 5px;
+	height: 40px;
+	line-height: 40px;
 }
 .de_box_toolbar a{
 	padding:0 15px;
 	display: inline-block;	
 	color:#666;
+	height: 40px;
+	line-height: 40px;
 }
 .de_box_toolbar a.active{
 	color:#fff;
@@ -1759,7 +1744,9 @@ li {
 	display: inline-block;
 	font-size: 0;	
 	margin-left:8px;
-	float:right;
+	vertical-align: middle;
+	height: 40px;
+	line-height: 40px;
 }
 .de_box_toolbar .de_search_wrapper:after{
 	content: "";
@@ -2235,7 +2222,7 @@ ol.mp_list li.mp_selectable {
     color: #666;
 }
 .zy_add_media_menu li>a:hover {
-    color: #666;
+    color: #09bc72;
 }
 .zy_types2, .zy_types3, .zy_types4, .zy_types5, .zy_types6, .zy_types7 {
     border-top: 1px dotted #CECFCF;
@@ -2397,7 +2384,7 @@ ol.mp_list li.mp_selectable {
     background-color: #FC0;
 }
 .zy_media_list_active {
-    background-color: #999;
+    background-color: #efefef;
 }
 .zy_media_list_error a{
 	color:#fff;
@@ -2562,7 +2549,6 @@ span.zy_tooltips{
     box-sizing:border-box;
     box-shadow:inset 0 0 10px rgba(0,0,0,0.05);
     padding:2px;
-    border-radius:3px;
 }
 #zy_right_bottom{
     margin-top: 30px;
@@ -2579,7 +2565,6 @@ span.zy_tooltips{
     -ms-box-sizing:border-box;
     box-sizing:border-box;
     box-shadow:inset 0 0 10px rgba(0,0,0,0.05);
-    border-radius:3px;
 }
 
 /*****上传第三步******/
@@ -3214,6 +3199,19 @@ span.zy_tooltips{
     .de_link_openid_login{
         display: none;
     }
+	/*作品列表*/
+	.de_project_grid{
+	text-align: center;
+	}
+	
+	/*投稿箱列表*/
+	.de_box_toolbar .de_search_wrapper{
+		display: block;
+		margin: 8px 0 0 0;
+	}
+	.de_box_toolbar .de_search_wrapper input{
+		width:100%;
+	}
 	
 	/*详情展示页面*/
 	.de_screen_project_detail{
@@ -3373,23 +3371,38 @@ span.zy_tooltips{
 	/*作品列表*/
 	.de_project_grid{
 		text-align: center;
+		padding: 0;
 	}
+	.de_project_grid>li{
+		width: 320px;
+		height: 440px;
+		margin: 10px auto;
+	}
+	.de_project_grid .user_info{
+		top:340px;
+	}
+	.de_project_grid .project_info h4{
+		top:360px;
+	}
+	
 	
 	/*详情展示页面*/
 	.de_screen_project_detail .de_project_detail{
-		padding:120px 20px 20px;
+		padding:120px 0 20px;
 	}
 	.de_project_header .de_project_toolbar{
 		display: none;
 	}
 	
 	.de_screen_project_detail h2{
-		margin: 20px 0px 10px;
+		margin: 20px 20px 10px;
 	}
 	.de_project_detail .publishtime{
-		margin: 10px 0;
+		margin: 10px 20px;
 	}
-	
+	.de_project_detail .abstract{
+		margin:20px;
+	}
 	.de_project_detail .de_stats_tags{
 		top:20px;
 	}
@@ -3405,6 +3418,21 @@ span.zy_tooltips{
 }
 
 @media screen and (max-width: 360px) {
+	/*作品列表*/
+	.de_project_grid {
+		padding: 0;
+	}
+	.de_project_grid>li{
+		width: 300px;
+		height: 420px;
+		margin: 10px auto;
+	}
+	.de_project_grid .user_info{
+		top:320px;
+	}
+	.de_project_grid .project_info h4{
+		top:340px;
+	}
 	/*详情展示页面*/
 	.de_btn_zan{
 		left:0;
