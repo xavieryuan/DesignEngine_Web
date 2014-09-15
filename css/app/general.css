@@ -1972,7 +1972,7 @@ display: block;
 }
 
 .de_screen_upload .de_form_upload {
-    padding: 20px;
+    padding: 20px 0;
     background: #fff;
     width: 950px;
     margin: auto;
@@ -1989,7 +1989,7 @@ display: block;
 .de_screen_upload  .de_upload_step1 {
     position: relative;
     min-height: 500px;
-    padding-right: 440px;
+    padding: 0 460px 0 20px;
 }
 
 .de_screen_upload .de_category_tag_box {
@@ -2040,7 +2040,7 @@ display: block;
     position: absolute;
     top: 0;
     margin: 0;
-    right: 0;
+    right: 20px;
     padding-left: 20px;
     border-left: #ccc 1px dotted;
 }
@@ -2102,6 +2102,7 @@ ol.mp_list li.mp_selectable {
 /*****上传第二步******/
 .de_upload_step2{
     position: relative;
+	padding:0 20px;
 }
 .zy_uploader_column_left, .zy_uploader_column_right {
     border: 1px solid #CECFCF;
@@ -2578,13 +2579,15 @@ span.zy_tooltips{
 
 .de_upload_step3 .de_project_detail .user_info {
     top: 40px;
-    left: 0;
+    left: 30px;
 }
-
+.de_upload_step3 .de_project_detail h2{
+	margin:20px 30px;
+}
 .de_screen_upload .de_submit_upload {
     position: absolute;
     top: -20px;
-    right: 0;
+    right: 30px;
     width: 80px;
     height: 128px;
     padding-top: 40px;
