@@ -3201,6 +3201,10 @@ span.zy_tooltips{
     .de_link_openid_login{
         display: none;
     }
+	/*投稿箱*/
+	.de_btn_topicbox{
+		display: none;
+	}
 	
 	/*作品列表*/
 	.de_project_grid{
