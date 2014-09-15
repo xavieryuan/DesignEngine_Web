@@ -2222,7 +2222,7 @@ ol.mp_list li.mp_selectable {
     color: #666;
 }
 .zy_add_media_menu li>a:hover {
-    color: #666;
+    color: #09bc72;
 }
 .zy_types2, .zy_types3, .zy_types4, .zy_types5, .zy_types6, .zy_types7 {
     border-top: 1px dotted #CECFCF;
@@ -2384,7 +2384,7 @@ ol.mp_list li.mp_selectable {
     background-color: #FC0;
 }
 .zy_media_list_active {
-    background-color: #999;
+    background-color: #efefef;
 }
 .zy_media_list_error a{
 	color:#fff;
@@ -2549,7 +2549,6 @@ span.zy_tooltips{
     box-sizing:border-box;
     box-shadow:inset 0 0 10px rgba(0,0,0,0.05);
     padding:2px;
-    border-radius:3px;
 }
 #zy_right_bottom{
     margin-top: 30px;
@@ -2566,7 +2565,6 @@ span.zy_tooltips{
     -ms-box-sizing:border-box;
     box-sizing:border-box;
     box-shadow:inset 0 0 10px rgba(0,0,0,0.05);
-    border-radius:3px;
 }
 
 /*****上传第三步******/
