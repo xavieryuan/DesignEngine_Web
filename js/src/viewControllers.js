@@ -167,6 +167,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
                 }
 
                 $scope.commentObj.newComment="";
+                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
             });
         };
         $scope.deleteComment=function(id,index,projectId){

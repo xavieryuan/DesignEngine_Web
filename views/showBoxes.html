@@ -30,9 +30,12 @@
                     <li class="uploads" title="上传">{{box.topic.artifact_count}}</li>
                 </ul>
             </div>
-            <ul class="topic_action" ng-show="currentUser.id">
+            <ul class="topic_action">
                 <!-- 根据权限控制 -->
-                <li ng-show="box.topic.status==0&&currentUser.active" class="de_topic_action_submit"><a ng-href="topic/{{box.topic.id}}/artifact/" >投稿</a></li>
+                <li ng-if="box.topic.status==0" class="de_topic_action_submit">
+                    <a ng-if="currentUser.id&&currentUser.active" ng-href="topic/{{box.topic.id}}/artifact/">投稿</a>
+                    <a ng-if="!currentUser.id" href="" ng-click="login()">投稿</a>
+                </li>
                 <li ng-show="box.topic.status!=0" class="de_topic_action_view"><a ng-href="topics/{{box.topic.id}}" >查看</a></li>
                 <li ng-show="box.user.id==currentUser.id||(currentUser.roles|arrayHasElements:'admin')"
                     ng-class="{de_topic_action_lock:box.topic.status==0,de_topic_action_unlock:box.topic.status!=0}">
