@@ -1857,6 +1857,7 @@ display: block;
 }
 .de_form_box .de_box_save_btn{
 	width:100px;
+	vertical-align: middle;
 }
 .de_form_box .de_box_current_state{
 	position: absolute;
