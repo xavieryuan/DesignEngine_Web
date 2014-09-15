@@ -3201,14 +3201,17 @@ span.zy_tooltips{
     .de_link_openid_login{
         display: none;
     }
-	/*投稿箱*/
-	.de_btn_topicbox{
-		display: none;
-	}
-	
 	/*作品列表*/
 	.de_project_grid{
 	text-align: center;
+	}
+	
+	/*投稿箱列表*/
+	.de_box_toolbar .de_search_wrapper{
+		display: block;
+	}
+	.de_box_toolbar .de_search_wrapper input{
+		width:100%;
 	}
 	
 	/*详情展示页面*/
