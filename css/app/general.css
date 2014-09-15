@@ -146,7 +146,8 @@ li {
     font-weight: bold;
     border: #c1272d 1px solid;
     padding: 0 10px;
-    background: #d32d39; 
+    background: #d32d39;
+	cursor:pointer;
 }
 .de_red_btn:hover{
 	background:#c1272d;	
