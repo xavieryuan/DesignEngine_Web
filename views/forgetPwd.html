@@ -11,10 +11,10 @@
                 <input type="email" class="de_borderbox de_inputbox_gray" ng-model="email"
                        name="email" placeholder="邮箱"
                        ng-maxlength="32" own-required required>
-                <span class="error" ng-show="forgetPwdForm.email.$dirty && forgetPwdForm.email.$invalid">
-                    <label ng-show="forgetPwdForm.email.$error.ownRequired">{{validMessage.required}}</label>
-                    <label ng-show="forgetPwdForm.email.$error.email">{{validMessage.email}}</label>
-                    <label ng-show="forgetPwdForm.email.$error.maxlength">{{validMessage.maxLength | setMaxLength:32}}</label>
+                <span class="error" ng-if="forgetPwdForm.email.$dirty && forgetPwdForm.email.$invalid">
+                    <label ng-if="forgetPwdForm.email.$error.ownRequired">{{validMessage.required}}</label>
+                    <label ng-if="forgetPwdForm.email.$error.email">{{validMessage.email}}</label>
+                    <label ng-if="forgetPwdForm.email.$error.maxlength">{{validMessage.maxLength | setMaxLength:32}}</label>
                 </span>
             </p>
             <input type="submit" class="de_button de_submit_btn" value="提交" ng-disabled="forgetPwdForm.$invalid">
