@@ -2572,7 +2572,7 @@ span.zy_tooltips{
 .de_screen_upload .de_upload_step3 {
     position: relative;
     min-height: 500px;
-    width: 780px;
+    width: 100%;
     margin: auto;
     padding-top: 100px;
 }
