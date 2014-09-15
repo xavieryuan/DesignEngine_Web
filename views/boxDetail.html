@@ -19,10 +19,10 @@
             </div>
             <ul class="topic_action">
                 <!-- 根据权限控制 -->
-                <li ng-hide="box.lock"><a ng-href="topics/{{boxId}}/artifact" class="de_topic_action_submit">投稿</a></li>
+                <li ng-hide="box.lock"><a ng-href="topics/{{boxId}}/artifact" class="de_topic_action_submit" title="投稿">投稿</a></li>
                 <li><a href="" ng-class="{de_topic_action_lock:box.status==0,de_topic_action_unlock:box.status!=0}"
-                       toggle-lock-box="{{box.id}},{{box.status}}">锁定</a></li>
-                <li><a ng-href="box/edit/{{box.id}}" class="de_topic_action_submit">设置</a></li>
+                       toggle-lock-box="{{box.id}},{{box.status}}" title="锁定">锁定</a></li>
+                <li><a ng-href="box/edit/{{box.id}}" class="de_topic_action_submit" title="设置">设置</a></li>
 
             </ul>
             <ul class="project_info">
