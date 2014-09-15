@@ -3377,19 +3377,21 @@ span.zy_tooltips{
 	
 	/*详情展示页面*/
 	.de_screen_project_detail .de_project_detail{
-		padding:120px 20px 20px;
+		padding:120px 0 20px;
 	}
 	.de_project_header .de_project_toolbar{
 		display: none;
 	}
 	
 	.de_screen_project_detail h2{
-		margin: 20px 0px 10px;
+		margin: 20px 20px 10px;
 	}
 	.de_project_detail .publishtime{
-		margin: 10px 0;
+		margin: 10px 20px;
 	}
-	
+	.de_project_detail .abstract{
+		margin:20px;
+	}
 	.de_project_detail .de_stats_tags{
 		top:20px;
 	}
@@ -3405,6 +3407,21 @@ span.zy_tooltips{
 }
 
 @media screen and (max-width: 360px) {
+	/*作品列表*/
+	.de_project_grid {
+		padding: 0;
+	}
+	.de_project_grid>li{
+		width: 300px;
+		height: 420px;
+		margin: 10px auto;
+	}
+	.de_project_grid .user_info{
+		top:320px;
+	}
+	.de_project_grid .project_info h4{
+		top:340px;
+	}
 	/*详情展示页面*/
 	.de_btn_zan{
 		left:0;
