@@ -5,7 +5,7 @@
         <a href="" ng-class="{active:scope==''}" ng-click="scope='';loadBoxes();">全部</a>
         <a href="" ng-class="{active:scope=='open'}" ng-click="scope='open';loadBoxes();">开放中</a>
         <a href="" ng-class="{active:scope=='closed'}" ng-click="scope='closed';loadBoxes();">已关闭</a>
-        <a href="" ng-class="{active:scope=='me'}" ng-show="currentUser.id" ng-click="scope='me';loadBoxes();">由我创建</a>
+        <a href="" ng-class="{active:scope=='me'}" ng-if="currentUser.id" ng-click="scope='me';loadBoxes();">由我创建</a>
         <span class="de_search_wrapper">
         <input  type="text" class="searchInput de_borderbox de_inputbox_gray" ng-keydown="keyDownSearch($event)" ng-model="keyword">
         </span>
@@ -37,11 +37,11 @@
                     <a ng-if="!currentUser.id" href="" ng-click="login()">投稿</a>
                 </li>
                 <li ng-if="box.topic.status!=0" class="de_topic_action_view"><a ng-href="topics/{{box.topic.id}}" >查看</a></li>
-                <li ng-show="box.user.id==currentUser.id||(currentUser.roles|arrayHasElements:'admin')"
+                <li ng-if="box.user.id==currentUser.id||(currentUser.roles|arrayHasElements:'admin')"
                     ng-class="{de_topic_action_lock:box.topic.status==0,de_topic_action_unlock:box.topic.status!=0}">
                     <a href="" toggle-lock-box="{{box.topic.id}},{{box.topic.status}},{{$index}}">锁定</a></li>
 
-                <li ng-show="box.user.id==currentUser.id||(currentUser.roles|arrayHasElements:'admin')" class="de_topic_action_setting">
+                <li ng-if="box.user.id==currentUser.id||(currentUser.roles|arrayHasElements:'admin')" class="de_topic_action_setting">
                     <a ng-href="topics/{{box.topic.id}}/update" >设置</a></li>
             </ul>
             <ul class="project_info">

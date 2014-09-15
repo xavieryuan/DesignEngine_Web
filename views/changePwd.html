@@ -11,7 +11,7 @@
                 <p class="de_pwd_field">
                     <input type="password" class="de_borderbox de_inputbox_gray" name="oldPassword" ng-model="user.password"
                            ng-minlength="6" ng-maxlength="20" own-required required placeholder="旧密码">
-                    <span class="error" ng-show="editPwdForm.oldPassword.$dirty && editPwdForm.oldPassword.$invalid">
+                    <span class="error" ng-if="editPwdForm.oldPassword.$dirty && editPwdForm.oldPassword.$invalid">
                         <label ng-show="editPwdForm.oldPassword.$error.ownRequired">{{validMessage.required}}</label>
                         <label ng-show="editPwdForm.oldPassword.$error.minlength">{{validMessage.minLength | setMinLength:6}}</label>
                         <label ng-show="editPwdForm.oldPassword.$error.maxlength">{{validMessage.maxLength | setMaxLength:20}}</label>

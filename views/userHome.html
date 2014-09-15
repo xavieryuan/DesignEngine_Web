@@ -19,7 +19,7 @@
                     <li class="badges" title="勋章">{{user.honor_count}}</li>
                 </ul>
             </div>
-            <ul class="topic_action" ng-show="user.active">
+            <ul class="topic_action" ng-if="user.active">
                 <!-- 根据权限控制 -->
                 <li class="de_topic_action_submit"><a ng-href="projects/create" >上传</a></li>
             </ul>

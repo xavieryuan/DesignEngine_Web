@@ -47,7 +47,7 @@
                     <input type="submit" class="de_green_btn de_submit_btn" value="注册" ng-disabled="registerForm.$invalid">
 
                 </form>
-                <div ng-show="emailUrl!=''">
+                <div ng-if="emailUrl!=''">
                     注册成功，请进入<a ng-href="{{emailUrl}}" class="de_green_text" target="_blank">邮箱</a>进行账户激活！
                 </div>
             </div>
