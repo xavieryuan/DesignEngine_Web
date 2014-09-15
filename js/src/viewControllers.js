@@ -837,11 +837,13 @@ viewControllers.controller("boxes",['$scope',"$interval","$routeParams","Config"
 
 
     $scope.boxes=[];
-    $scope.scope="";
-    $scope.keyword="";
+    $scope.filter={
+        scope:"",
+        keyword:""
+    };
 
     if($routeParams.userId){
-        $scope.scope="me";
+        $scope.filter.scope="me";
     }
 
     $scope.keyDownSearch=function(event){
@@ -853,7 +855,7 @@ viewControllers.controller("boxes",['$scope',"$interval","$routeParams","Config"
     $scope.loadBoxes=function(){
         Storage.clearScrollData(Config.scrollScreenType.box);
         $scope.boxes=[];
-        Box.getBoxes($scope.scope,$scope.keyword).$promise.then(function(data){
+        Box.getBoxes($scope.filter.scope,$scope.filter.keyword).$promise.then(function(data){
 
             //console.log("In views");
             var count= 0,length=data.topics.length;
@@ -1011,6 +1013,7 @@ viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User
 
     $scope.mainFlags.currentMenu="";
     $scope.mainFlags.extMenuActive=false;
+    $scope.closeProjectDetailPanel();
 
     $scope.user={};
     User.resource.get({userId:userId},function(data){

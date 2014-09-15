@@ -2,10 +2,10 @@
 <section class="de_topic_wrapper" >
     <div class="de_box_toolbar">
         <label>显示投稿箱:</label>
-        <a href="" ng-class="{active:scope==''}" ng-click="scope='';loadBoxes();">全部</a>
-        <a href="" ng-class="{active:scope=='open'}" ng-click="scope='open';loadBoxes();">开放中</a>
-        <a href="" ng-class="{active:scope=='closed'}" ng-click="scope='closed';loadBoxes();">已关闭</a>
-        <a href="" ng-class="{active:scope=='me'}" ng-if="currentUser.id" ng-click="scope='me';loadBoxes();">由我创建</a>
+        <a href="" ng-class="{active:filter.scope==''}" ng-click="filter.scope='';loadBoxes();">全部</a>
+        <a href="" ng-class="{active:filter.scope=='open'}" ng-click="filter.scope='open';loadBoxes();">开放中</a>
+        <a href="" ng-class="{active:filter.scope=='closed'}" ng-click="filter.scope='closed';loadBoxes();">已关闭</a>
+        <a href="" ng-class="{active:filter.scope=='me'}" ng-if="currentUser.id" ng-click="filter.scope='me';loadBoxes();">由我创建</a>
         <span class="de_search_wrapper">
         <input  type="text" class="searchInput de_borderbox de_inputbox_gray" ng-keydown="keyDownSearch($event)" ng-model="keyword">
         </span>

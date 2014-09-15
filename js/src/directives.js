@@ -77,7 +77,7 @@ directives.directive("ownRequired",function(){
                     });
                 }
             });
-            console.log(ctrl);
+            //console.log(ctrl);
         }
     }
 });
@@ -258,7 +258,7 @@ directives.directive("windowScroll", ["$window","$document","$timeout","$interva
 
                                     break;
                                 case Config.scrollScreenType.box:
-                                    Box.getBoxes(scope.scope,scope.keyword).$promise.then(function(data){
+                                    Box.getBoxes(scope.filter.scope,scope.filter.keyword).$promise.then(function(data){
                                         var count= 0,length=data.topics.length;
                                         var inter=$interval(function(){
                                             if(count<length){
