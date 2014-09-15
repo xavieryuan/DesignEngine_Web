@@ -1738,17 +1738,20 @@ li {
 	margin: 20px 70px 20px 30px;
 	text-align: right;
 	font-size: 12px;
-	line-height: 40px;
 	color:#999;
 }
 .de_box_toolbar label{
 	padding:0;
 	margin-right: 5px;
+	height: 40px;
+	line-height: 40px;
 }
 .de_box_toolbar a{
 	padding:0 15px;
 	display: inline-block;	
 	color:#666;
+	height: 40px;
+	line-height: 40px;
 }
 .de_box_toolbar a.active{
 	color:#fff;
@@ -1759,7 +1762,9 @@ li {
 	display: inline-block;
 	font-size: 0;	
 	margin-left:8px;
-	float:right;
+	vertical-align: middle;
+	height: 40px;
+	line-height: 40px;
 }
 .de_box_toolbar .de_search_wrapper:after{
 	content: "";
