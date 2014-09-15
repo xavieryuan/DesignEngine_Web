@@ -5,8 +5,8 @@
     <a href="" ng-class="{de_flag_reg_zanned:project.praised,de_flag_reg_zan:!project.praised}"
        class="de_btn_zan de_borderbox" ng-click="praiseProject(project.id)">赞</a>
 
-    <ul class="de_project_toolbar de_transition"
-        ng-if="currentUser.id==project.user.id||(currentUser.roles|arrayHasElements:'admin')">
+    <ul class="de_project_toolbar de_transition ng-hide"
+        ng-show="currentUser.id==project.user.id||(currentUser.roles|arrayHasElements:'admin')">
         <li><a class="de_toolbar_edit" ng-href="projects/{{project.id}}/update" title="编辑">编辑</a></li>
         <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
         <li ng-if="currentUser.roles|arrayHasElements:'admin'"><a g-class="{de_toolbar_invisible:!project.visible,de_toolbar_visible:project.visible}" href=""
