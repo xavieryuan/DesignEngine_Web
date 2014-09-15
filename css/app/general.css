@@ -1605,7 +1605,7 @@ li {
 }
 .de_topic_box .topic_action{
 	position: absolute;
-	top:10px;
+	top:0;
 	right:-50px;
 	width:40px;		
 	font-size: 0;
