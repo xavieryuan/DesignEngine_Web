@@ -229,7 +229,7 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
             $scope.showPlayMediaPanel();
 
             if(path==""){
-                toaster.pop(Config.messages.errorTitle,Config.messages.resourceIsInOperation);
+                toaster.pop("info",Config.messages.errorTitle,Config.messages.resourceIsInOperation);
             }
         };
 

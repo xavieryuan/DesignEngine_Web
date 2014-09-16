@@ -171,18 +171,20 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
             });
         };
         $scope.deleteComment=function(id,index,projectId){
-            Comment.delete({projectId:projectId,commentId:id},function(data){
+            if(confirm(Config.messages.deleteConfirm)){
+                Comment.delete({projectId:projectId,commentId:id},function(data){
 
-                //跟新view面板的数据
-                var length=Storage.loadedProjects.length;
-                for(var i=0;i<length;i++){
-                    if(Storage.loadedProjects[i]["artifact"]["id"]==projectId){
-                        Storage.loadedProjects[i]["artifact"]["comment_count"]--;
+                    //跟新view面板的数据
+                    var length=Storage.loadedProjects.length;
+                    for(var i=0;i<length;i++){
+                        if(Storage.loadedProjects[i]["artifact"]["id"]==projectId){
+                            Storage.loadedProjects[i]["artifact"]["comment_count"]--;
+                        }
                     }
-                }
-                $scope.commentObj.showComments.splice(index,1);
-                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
-            });
+                    $scope.commentObj.showComments.splice(index,1);
+                    toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                });
+            }
         };
 
         /*$scope.similarProjects=[];
@@ -196,31 +198,33 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
         });*/
 
         $scope.deleteProject=function(id){
-            Project.resource.delete({projectId:id},function(data){
+            if(confirm(Config.messages.deleteConfirm)){
+                Project.resource.delete({projectId:id},function(data){
 
-                //跟新view面板的数据
-                var length=Storage.loadedProjects.length,length1=Storage.loadedTopProjects.length;
-                for(var i=0;i<length;i++){
-                    if(Storage.loadedProjects[i]["artifact"]["id"]==id){
-                        Storage.loadedProjects.splice(i,1);
-                        break;
-                    }
-                }
-
-                //更新优秀作品数据
-                if(length1!=0){
-                    for(var j=0;j<length;j++){
-                        if(Storage.loadedTopProjects[j]["artifact"]["id"]==id){
-                            Storage.loadedTopProjects.splice(j,1);
+                    //跟新view面板的数据
+                    var length=Storage.loadedProjects.length,length1=Storage.loadedTopProjects.length;
+                    for(var i=0;i<length;i++){
+                        if(Storage.loadedProjects[i]["artifact"]["id"]==id){
+                            Storage.loadedProjects.splice(i,1);
                             break;
                         }
                     }
-                }
-                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+
+                    //更新优秀作品数据
+                    if(length1!=0){
+                        for(var j=0;j<length;j++){
+                            if(Storage.loadedTopProjects[j]["artifact"]["id"]==id){
+                                Storage.loadedTopProjects.splice(j,1);
+                                break;
+                            }
+                        }
+                    }
+                    toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
 
 
-                $scope.hideProjectDetail();
-            });
+                    $scope.hideProjectDetail();
+                });
+            }
         };
 
         $scope.praiseProject=function(id){
@@ -645,9 +649,11 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             $scope.currentMediaObj[Config.mediaObj.mediaMemo]=memo;
         };
         $scope.deleteBindFile=function(){
-            $scope.currentMediaObj[Config.mediaObj.mediaFilename]="";
-            $scope.currentMediaObj[Config.mediaObj.mediaFilePath]="";
-            $scope.currentMediaObj[Config.mediaObj.mediaType]=Config.mediaTypes.image;
+            if(confirm(Config.messages.deleteConfirm)){
+                $scope.currentMediaObj[Config.mediaObj.mediaFilename]="";
+                $scope.currentMediaObj[Config.mediaObj.mediaFilePath]="";
+                $scope.currentMediaObj[Config.mediaObj.mediaType]=Config.mediaTypes.image;
+            }
         };
 
         $scope.mediaSetThumbUploader=function(buttonId,containerId){
@@ -746,10 +752,12 @@ viewControllers.controller("projectsManage",['$scope',"toaster","ngTableParams",
         };
 
         $scope.deleteProject=function(projectId,index){
-            Project.resource.delete({projectId:projectId},function(data){
-                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
-                $scope.projects.splice(index,1);
-            });
+            if(confirm(Config.messages.deleteConfirm)){
+                Project.resource.delete({projectId:projectId},function(data){
+                    toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                    $scope.projects.splice(index,1);
+                });
+            }
         };
 
         $scope.toggleShowProject=function(projectId,index){
@@ -820,10 +828,13 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
         };
 
         $scope.deleteComment=function(id,projectId,index){
-            Comment.delete({projectId:projectId,commentId:id},function(data){
-                $scope.comments.splice(index,1);
-                toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
-            });
+
+            if(confirm(Config.messages.deleteConfirm)){
+                Comment.delete({projectId:projectId,commentId:id},function(data){
+                    $scope.comments.splice(index,1);
+                    toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
+                });
+            }
         };
 
     }]);
@@ -974,37 +985,6 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
             }
         };
 }]);
-
-viewControllers.controller("boxesManage",['$scope',"ngTableParams","Box","CFunctions",
-    function($scope,ngTableParams,Box,CFunctions){
-
-        $scope.tableParams= new ngTableParams({
-            count:3,
-            page:1,
-            sorting: {
-                name: 'asc'     // initial sorting
-            },
-            filter:{
-                name:"ty",
-                age:"13"
-            }
-        },{
-            total:0,
-            getData:function($defer,params){
-                Box.query(params.url(), function(data) {
-
-                    // update table params
-                    params.total(data.total);
-
-                    // set new data
-                    $defer.resolve(data.result);
-                },function(data){
-                    CFunctions.ajaxErrorHandler();
-                });
-            }
-        });
-
-    }]);
 
 viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User","Storage",function($scope,$routeParams,$interval,User,Storage){
 
