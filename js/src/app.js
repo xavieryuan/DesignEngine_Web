@@ -224,6 +224,7 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
 
         //这个函数在projectDetail和projectUpdate中使用
         $scope.showAttachmentDetail=function(path,type){
+            path=path?path:"";
             $scope.mainFlags.playMediaPath=$sce.trustAsResourceUrl(path);
             $scope.showPlayMediaPanel();
         };
