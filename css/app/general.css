@@ -1528,7 +1528,7 @@ li {
 	box-sizing: border-box;
 	background:#fff;
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-	margin:20px 70px 20px 30px;
+	margin:20px 30px;
 }
 .de_topic_box .user_info{
 	position: absolute;
@@ -1584,7 +1584,7 @@ li {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	margin:14px 0;
+	margin:0.8em 0;
 	width:240px;
 }
 .topic_info .de_stats_tags{
@@ -1606,14 +1606,17 @@ li {
 }
 .de_topic_box .topic_action{
 	position: absolute;
-	top:0;
-	right:-50px;
-	width:40px;		
+	top: 0;
+	right: 0;
+	width: 60px;
+	height: 140px;
 	font-size: 0;
 	z-index: 1;
+	text-align: center;
+	background: #ddd;
 }
 .topic_action li{
-	margin-bottom:5px;
+	margin:5px;
 }
 .topic_action li a{
 	width:40px;
@@ -1658,7 +1661,7 @@ li {
 .de_topic_box .project_info{
 	position: absolute;
 	top:0;
-	right: 0;
+	right: 60px;
 	left:330px;
 	font-size:0;
 	overflow: hidden;
@@ -1675,12 +1678,12 @@ li {
 }
 
 .de_screen_user_profile .de_topic_box{
-	margin: 20px 70px 0 30px;
+	margin-bottom:0;
 }
 
 .topic_description{
 	font-size: 12px;
-	margin:0 70px 20px 30px;
+	margin:0 30px 20px 30px;
 	padding:20px;
 	color:#666;
 	background:#dedede;
@@ -1718,7 +1721,7 @@ li {
 
 /*************投稿箱****************/
 .de_box_toolbar{
-	margin: 20px 70px 20px 30px;
+	margin:20px 30px;
 	text-align: right;
 	font-size: 12px;
 	color:#999;
@@ -3416,9 +3419,23 @@ span.zy_tooltips{
 		top:70px;
 	}
 	
-	/*筛选投稿箱*/
+	/*投稿箱*/
 	.de_box_toolbar{
 		text-align: center;
+	}
+	.de_topic_box{
+		margin: 20px 10px;
+	}
+	.topic_description{
+		margin: 0 10px 20px 10px;
+	}
+	.topic_info .topic_title{
+		font-size:14px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: normal;
+		width:auto;
+		margin: 0.5em 64px 0.5em 0;
 	}
 	
 }
