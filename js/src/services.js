@@ -192,6 +192,7 @@ services.constant("Config",{
         pptHasNotUploaded:"此资源还没有被上传到资源服务器，暂时不能查看！",
         pptUploadError:"此资源上传到资源服务器出错，无法查看！",
         systemError:"系统发生错误，请稍后重试！",
+        resourceIsInOperation:"资源正在处理，请稍后查看！",
         notFound:"资源丢失，将跳转到首页！"
     },
     ajaxUrls:{

@@ -227,6 +227,10 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
             path=path?path:"";
             $scope.mainFlags.playMediaPath=$sce.trustAsResourceUrl(path);
             $scope.showPlayMediaPanel();
+
+            if(path==""){
+                toaster.pop(Config.messages.errorTitle,Config.messages.resourceIsInOperation);
+            }
         };
 
         $scope.initPage=function(path){
