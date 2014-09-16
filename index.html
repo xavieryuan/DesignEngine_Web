@@ -131,9 +131,9 @@
     <section class="de_pop_show_media" ng-show="mainFlags.showPlayMedialPanel">
         <span class="de_pop_show_media_close" ng-click="closePlayMediaPanel()">关闭</span>
         <!--<div class="de_pop_show_media_content" ng-include="mainFlags.mediaPlayTemplate"></div>-->
-        <iframe class="de_pop_show_media_content" ng-show="mainFlags.playMediaPath!=''" ng-src="{{mainFlags.playMediaPath}}">
+        <iframe class="de_pop_show_media_content" ng-if="mainFlags.playMediaPath!=''" ng-src="{{mainFlags.playMediaPath}}">
         </iframe>
-        <div class="de_pop_show_media_content" ng-show="mainFlags.showMediaPath==''">资源正在处理，暂时不能观看</div>
+        <div class="de_pop_show_media_content" ng-if="mainFlags.playMediaPath==''">资源正在处理，暂时不能观看</div>
     </section>
 	
 	<!-----------blackout----------->
