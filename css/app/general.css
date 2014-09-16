@@ -1613,7 +1613,7 @@ li {
 	font-size: 0;
 	z-index: 1;
 	text-align: center;
-	background: #ddd;
+	background: repeating-linear-gradient( 45deg, #ddd, #ddd 10px, #eee 10px, #eee 20px);
 }
 .topic_action li{
 	margin:5px;
@@ -3422,6 +3422,7 @@ span.zy_tooltips{
 	/*投稿箱*/
 	.de_box_toolbar{
 		text-align: center;
+		margin: 20px 10px;
 	}
 	.de_topic_box{
 		margin: 20px 10px;
