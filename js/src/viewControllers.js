@@ -128,7 +128,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
                 if($scope.commentObj.hasMore){
                     $scope.commentObj.allComments.push({
                         comment:{
-                            id:data.id,
+                            id:data.commentId,
                             content:content,
                             commented_at:CFunctions.formatDate()
                         },
@@ -143,7 +143,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
                 }else{
                     $scope.commentObj.showComments.push({
                         comment:{
-                            id:data.id,
+                            id:data.commentId,
                             content:content,
                             commented_at:CFunctions.formatDate()
                         },
