@@ -724,7 +724,8 @@ li {
     /*border-top:#000 12px solid;*/
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 	background:#fff;
-
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 
@@ -1233,6 +1234,7 @@ li {
     white-space: nowrap;
     overflow: hidden;
     display: inline-block;
+	width: 160px;
 }
 
 .de_project_grid .de_stats_tags {
@@ -1258,6 +1260,8 @@ li {
     text-align: center;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	padding-right: 10px;
+	box-sizing: border-box;
 }
 
 .de_project_grid .de_stats_tags>li:first-child {
@@ -1960,6 +1964,10 @@ display: block;
     position: relative;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
     cursor: default;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 40px;
+	box-sizing: border-box;
 }
 
 .de_screen_upload .de_tab_upload li a.active {
