@@ -56,7 +56,7 @@ services.constant("Config",{
         "editInfoReg":/users\/[\d]+\/update/,
         "search":"search",
         "searchResult":"search/:content",
-        "searchResultReg":/search\/[*]+/,
+        "searchResultReg":/search\/.+/,
         "forgetPwd":"forget_password",
         "boxes":"topics",
         "userHome":"users/:userId"

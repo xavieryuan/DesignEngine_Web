@@ -124,7 +124,6 @@ popControllers.controller("search",["$scope","AutoComplete","Config","LocationCh
 
     $scope.toSearch=function(content){
         LocationChanger.withReplace(Config.urls.searchResult.replace(":content",content),true);
-
     }
 
 }]);
