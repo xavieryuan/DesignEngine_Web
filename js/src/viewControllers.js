@@ -267,8 +267,8 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
         };
 }]);
 
-viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$route","toaster","Config","Storage","Box","CFunctions","Project",
-    function($scope,$routeParams,$http,$route,toaster,Config,Storage,Box,CFunctions,Project){
+viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$route","toaster","safeApply","Config","Storage","Box","CFunctions","Project",
+    function($scope,$routeParams,$http,$route,toaster,safeApply,Config,Storage,Box,CFunctions,Project){
         var currentMediaUpload=null,currentFileObj=null;
 
         function addTag(tag){
@@ -311,7 +311,8 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         function fileProgressCb(up,file){
             if($scope.currentMediaObj[Config.mediaObj.mediaFilename]){
                 $scope.currentMediaObj[Config.mediaObj.mediaFilename]=file.percent+"%";
-                $scope.$apply();
+                //$scope.$apply();
+                safeApply();
             }
         }
         function imageUploadedCb(file,info){
