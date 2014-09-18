@@ -167,9 +167,9 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
             $scope.popFlags.popTemplateUrl=Config.templateUrls.signIn+"?dc="+new Date().getTime();
             LocationChanger.skipReload().withReplace(Config.urls.signIn,false);
         };
-        $scope.toSearch=function(){
+        $scope.toSearchPanel=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.search+"?dc="+new Date().getTime();
-            LocationChanger.skipReload().withReplace(Config.urls.search,true);
+            LocationChanger.skipReload().withReplace(Config.urls.search,false);
         };
 
         $scope.showProjectDetail=function(id,replaceUrl){

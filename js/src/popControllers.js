@@ -123,7 +123,7 @@ popControllers.controller("search",["$scope","AutoComplete","Config","LocationCh
     });
 
     $scope.toSearch=function(content){
-        LocationChanger.canReload().withReplace(Config.urls.searchResult.replace(":content",content),false);
+        LocationChanger.canReload().withReplace(Config.urls.searchResult.replace(":content",content),true);
         $scope.hideBlackOut();
         $scope.popFlags.popTemplateUrl="";
     }
