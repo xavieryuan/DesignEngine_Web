@@ -28,6 +28,7 @@ li {
 .de_green_text{
     color:#07af69;
 }
+
 /*****************通用元素******************/
 .de_borderbox {
     -moz-box-sizing: border-box;
@@ -376,6 +377,18 @@ li {
     outline: none;
     z-index: 102;
 }
+.de_top_search .autoComplete .itemlist{
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+.de_top_search .autoComplete .item{
+	height: 40px;
+	line-height: 40px;
+}
+.de_top_search .autoComplete .item.active{
+	background:#efefef;
+}
+
+
 .de_popout .de_top_directory{	
 }
 /*分类搜索*/
