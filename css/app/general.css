@@ -377,7 +377,7 @@ li {
     outline: none;
     z-index: 102;
 }
-.de_top_search .autoComplete .itemlist{
+.de_top_search .autoComplete .itemList{
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 .de_top_search .autoComplete .item{
