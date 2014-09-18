@@ -954,6 +954,7 @@ li {
     white-space: nowrap;
     font-size: 0;
 	height:100%;
+	letter-spacing: 0;
 }
 
 .de_top_nav ul li {
