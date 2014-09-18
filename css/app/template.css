@@ -13,6 +13,7 @@ body {
     font-family: "微软雅黑", "黑体", Arial, "Times New Roman", Verdana;
     text-align:left;
 }
+h1{margin:20px;}
 form{
     width:400px;
     margin:auto 20px;
@@ -29,14 +30,16 @@ form{
 .de_logo{
 	height:40px;
 	line-height: 40px;
-	text-align: center;
 	font-size: 18px;
 }
 .de_logo:before{
 	content: "";
 	width:40px;
 	height:40px;
-	background:url(../../images/app/logo_40.png) no-repeat;
+	background:url(../../images/app/logo_40.png) no-repeat;	
+	vertical-align: middle;
+	display: inline-block;
+	margin-right: 10px;
 }
 
 .de_form_row{
