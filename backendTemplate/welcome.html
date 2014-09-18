@@ -1,7 +1,5 @@
-<p>Welcome {{ user.email }}!</p>
-
 {% if security.confirmable %}
-<p>You can confirm your email through the link below:</p>
-
-<p><a href="{{ confirmation_link }}">Confirm my account</a></p>
+<p>欢迎注册“图钉墙”，请点击下面的链接激活账号：</p>
+<p><a href="{{ confirmation_link }}">激活账号</a></p>
+<p><a href="http://design.hnu.cn/pinwall">http://design.hnu.cn/pinwall</a></p>
 {% endif %}
