@@ -14,28 +14,28 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
         //默认使用的时候hash模式，如果要使用rest风格，需要设置下面这一句，注意$locationProvider需要注入
         $locationProvider.html5Mode(true);
         //$locationProvider.hashPrefix("!");
-        $routeProvider.when("/",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/projects",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+        $routeProvider.when("/",{templateUrl: 'views/projects.html',controller:"projects"}).
+            when("/projects",{templateUrl: 'views/projects.html',controller:"projects"}).
             when("/projects/create",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
             when("/projects/:projectId/update",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
-            when("/projects/:projectId",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/topics",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
+            when("/projects/:projectId",{templateUrl: 'views/projects.html',controller:"projects"}).
+            when("/topics",{templateUrl: 'views/boxes.html',controller:"boxes"}).
             when("/topics/create",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
             when("/topics/:boxId/update",{templateUrl: 'views/boxUpdate.html',controller:"boxUpdate"}).
             when("/topics/:boxId",{templateUrl: 'views/boxDetail.html',controller:"boxDetail"}).
             when("/topic/:boxId/artifact",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
-            when("/search",{templateUrl: 'views/showProjects.html',controller:"projects"}).
+            when("/search",{templateUrl: 'views/projects.html',controller:"projects"}).
             when("/search/:content",{templateUrl: 'views/searchResult.html',controller:"searchResult"}).
             when("/admin/comments",{templateUrl: 'views/admin/commentsManage.html',controller:"commentsManage"}).
             when("/admin/projects",{templateUrl: 'views/admin/projectsManage.html',controller:"projectsManage"}).
             when("/admin/users",{templateUrl: 'views/admin/usersManage.html',controller:"usersManage"}).
-            when("/users/:userId/topics",{templateUrl: 'views/showBoxes.html',controller:"boxes"}).
+            when("/users/:userId/topics",{templateUrl: 'views/boxes.html',controller:"boxes"}).
             when("/users/:userId",{templateUrl: 'views/userHome.html',controller:"userHome"}).
-            when("/login",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/register",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/users/:userId/update",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/change_password",{templateUrl: 'views/showProjects.html',controller:"projects"}).
-            when("/forget_password",{templateUrl: 'views/showProjects.html',controller:"projects"})/*.
+            when("/login",{templateUrl: 'views/projects.html',controller:"projects"}).
+            when("/register",{templateUrl: 'views/projects.html',controller:"projects"}).
+            when("/users/:userId/update",{templateUrl: 'views/projects.html',controller:"projects"}).
+            when("/change_password",{templateUrl: 'views/projects.html',controller:"projects"}).
+            when("/forget_password",{templateUrl: 'views/projects.html',controller:"projects"})/*.
             otherwise({redirectTo: '/'});*/
 
         //ajax的一些默认配置，全局启用loading

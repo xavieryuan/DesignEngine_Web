@@ -5,7 +5,7 @@
         <li class="de_topic_box">
             <!-- 选题发布者 -->
             <div class="user_info">
-                <a ng-href="user/{{box.user.id}}" class="de_borderbox">
+                <a ng-href="users/{{box.user.id}}" class="de_borderbox">
                     <img ng-src="{{box.user.setting.profile_image}}" class="photo">
                     <p class="name">{{box.user.fullname}}</p>
                 </a>
@@ -39,7 +39,7 @@
     <ul class="de_project_grid de_borderbox" >
         <li class="de_borderbox" ng-repeat="project in projects">
             <div class="user_info">
-                <a href="" ng-click="showUserHome(project.user.id)">
+                <a ng-href="users/{{project.user.id}}">
                     <img class="photo" ng-src="{{project.user.setting.profile_image}}">
                     <p class="name">{{project.user.fullname}}</p>
                 </a>

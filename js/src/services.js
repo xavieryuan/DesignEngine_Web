@@ -919,9 +919,11 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
             resource:$resource(Config.ajaxUrls.getAllBoxes,{},{
                 query:{method:"get",params:{last_id:0,count:Config.perLoadCount,scope:"",keyword:""}},
                 get:{method:"get",url:Config.ajaxUrls.getBoxDetail,params:{boxId:0}},
-                remove:{method:"delete",url:Config.ajaxUrls.deleteBox,params:{boxId:0}, transformResponse:function(data, headersGetter){
-                    return JSON.parse(data);
-                }},
+                remove:{method:"delete",url:Config.ajaxUrls.deleteBox,params:{boxId:0},
+                    transformResponse:function(data, headersGetter){
+                        return JSON.parse(data);
+                    }
+                },
                 add:{method:"put",url:Config.ajaxUrls.createBox,
                     transformResponse:function(data, headersGetter){
                         return JSON.parse(data);
