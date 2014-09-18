@@ -269,6 +269,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
 
 viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$route","toaster","Config","Storage","Box","CFunctions","Project",
     function($scope,$routeParams,$http,$route,toaster,Config,Storage,Box,CFunctions,Project){
+        var currentMediaUpload=null,currentFileObj=null;
 
         function addTag(tag){
 
@@ -293,7 +294,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             }
             $scope.$apply();
         }
-        function fileAddedCb(files,type){
+        function fileAddedCb(up,files,type){
+            currentMediaUpload=up;
+            currentFileObj=files[0];
             $scope.currentMediaObj[Config.mediaObj.mediaFilename]="0%";
             $scope.currentMediaObj[Config.mediaObj.mediaType]=type;
             $scope.mediaMenuActive=false;
@@ -368,7 +371,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 maxSize:maxSize,
                 filter:filter,
                 fileAddCb:function(up,files){
-                    fileAddedCb(files,type);
+                    fileAddedCb(up,files,type);
                 },
                 progressCb:fileProgressCb,
                 uploadedCb:function(file,info){
@@ -650,6 +653,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         };
         $scope.deleteBindFile=function(){
             if(confirm(Config.messages.deleteConfirm)){
+                currentMediaUpload.removeFile(currentFileObj);
+                currentMediaUpload.stop();
+
                 $scope.currentMediaObj[Config.mediaObj.mediaFilename]="";
                 $scope.currentMediaObj[Config.mediaObj.mediaFilePath]="";
                 $scope.currentMediaObj[Config.mediaObj.mediaType]=Config.mediaTypes.image;
@@ -1083,7 +1089,7 @@ viewControllers.controller("searchResult",["$scope","$interval","$routeParams","
 
         $scope.mainFlags.extMenuActive=false;
 
-        Storage.clearScrollData(Config.scrollScreenType.searchResult,$scope.searchContent);
+        Storage.clearScrollData(Config.scrollScreenType.searchResult);
 
         $scope.closePop(true);
 

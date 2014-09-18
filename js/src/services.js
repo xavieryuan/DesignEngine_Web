@@ -626,15 +626,13 @@ services.service("Storage",function(){
     this.lastLoadedId=0;
     this.scrollTimer=null;
     this.currentScrollScreenType="";
-    this.searchContent="";
     this.loadedProjects=[];
     this.loadedTopProjects=[];
 
-    this.clearScrollData=function(currentScrollScreenType,searchContent){
+    this.clearScrollData=function(currentScrollScreenType){
         this.lastLoadedId=0;
         this.scrollTimer=null;
         this.currentScrollScreenType=currentScrollScreenType?currentScrollScreenType:"";
-        this.searchContent=searchContent?searchContent:"";
         this.loadedProjects=[];
         this.loadedTopProjects=[];
     };
