@@ -785,9 +785,21 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{projectId:0}},
                 delete:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{projectId:0}},
                 remove:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{projectId:0}},
-                save:{method:"post",url:Config.ajaxUrls.projectUpdate},
-                add:{method:"put",url:Config.ajaxUrls.projectCreate,params:{}},
-                addToBox:{method:"put",url:Config.ajaxUrls.addProjectToBox,params:{boxId:0}},
+                save:{method:"post",url:Config.ajaxUrls.projectUpdate,
+                    transformResponse:function(data, headersGetter){
+                        return JSON.parse(data);
+                    }
+                },
+                add:{method:"put",url:Config.ajaxUrls.projectCreate,params:{},
+                    transformResponse:function(data, headersGetter){
+                        return JSON.parse(data);
+                    }
+                },
+                addToBox:{method:"put",url:Config.ajaxUrls.addProjectToBox,params:{boxId:0},
+                    transformResponse:function(data, headersGetter){
+                        return JSON.parse(data);
+                    }
+                },
                 toggleShowProject:{method:"post",url:Config.ajaxUrls.toggleShowProject,params:{projectId:0}},
                 praiseProject:{method:"post",url:Config.ajaxUrls.praiseProject,params:{projectId:0}},
                 getProjectDetail:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{projectId:0}},
@@ -910,8 +922,16 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                 remove:{method:"delete",url:Config.ajaxUrls.deleteBox,params:{boxId:0}, transformResponse:function(data, headersGetter){
                     return JSON.parse(data);
                 }},
-                add:{method:"put",url:Config.ajaxUrls.createBox},
-                save:{method:"post",url:Config.ajaxUrls.updateBox,params:{boxId:0}},
+                add:{method:"put",url:Config.ajaxUrls.createBox,
+                    transformResponse:function(data, headersGetter){
+                        return JSON.parse(data);
+                    }
+                },
+                save:{method:"post",url:Config.ajaxUrls.updateBox,params:{boxId:0},
+                    transformResponse:function(data, headersGetter){
+                        return JSON.parse(data);
+                    }
+                },
                 setBoxStatus:{method:"post",url:Config.ajaxUrls.setBoxStatus,params:{boxId:0}},
                 toggleLock:{method:"post",url:Config.ajaxUrls.getSimilarProjects,params:{id:3,lock:true}},
                 getBoxProjects:{method:"get",url:Config.ajaxUrls.getBoxProjects,
