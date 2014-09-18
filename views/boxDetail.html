@@ -19,10 +19,16 @@
             </div>
             <ul class="topic_action">
                 <!-- 根据权限控制 -->
-                <li ng-hide="box.lock"><a ng-href="topics/{{boxId}}/artifact" class="de_topic_action_submit" title="投稿">投稿</a></li>
-                <li><a href="" ng-class="{de_topic_action_lock:box.status==0,de_topic_action_unlock:box.status!=0}"
-                       toggle-lock-box="{{box.id}},{{box.status}}" title="锁定">锁定</a></li>
-                <li><a ng-href="box/edit/{{box.id}}" class="de_topic_action_submit" title="设置">设置</a></li>
+                <li ng-if="box.topic.status==0" class="de_topic_action_submit">
+                    <a ng-if="currentUser.id&&currentUser.active" ng-href="topic/{{box.topic.id}}/artifact/"  title="投稿">投稿</a>
+                    <a ng-if="!currentUser.id" href="" ng-click="login()" title="投稿">投稿</a>
+                </li>
+                <li ng-if="box.user.id==currentUser.id||(currentUser.roles|arrayHasElements:'admin')"
+                    ng-class="{de_topic_action_lock:box.topic.status==0,de_topic_action_unlock:box.topic.status!=0}">
+                    <a href="" toggle-lock-box="{{box.topic.id}},{{box.topic.status}},{{$index}}" title="锁定">锁定</a></li>
+
+                <li ng-if="box.user.id==currentUser.id||(currentUser.roles|arrayHasElements:'admin')" class="de_topic_action_setting">
+                    <a ng-href="topics/{{box.topic.id}}/update" title="设置">设置</a></li>
 
             </ul>
             <ul class="project_info">
