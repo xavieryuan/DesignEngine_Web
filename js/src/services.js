@@ -736,12 +736,12 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
     function($rootScope,$resource,Storage,CFunctions,Config){
         return {
             getProjects:function(){
-                var me= this.resource.query({"last_id":Storage.lastLoadedId},function(data){
+                var me= this.resource.query({page:Storage.lastLoadedId+1},function(data){
                     //console.log(data);
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
+                        Storage.lastLoadedId++;
                     }
                 });
 
@@ -780,7 +780,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 return me;
             },
             resource: $resource(Config.ajaxUrls.getAllProjects,{},{
-                query:{method:"get",params:{"last_id":0,"count":Config.perLoadCount}},
+                query:{method:"get",params:{"page":1,"count":Config.perLoadCount}},
                 getManageProjects:{method:"get",url:Config.ajaxUrls.getManageProjects,params:{"count":10}},
                 get:{method:"get",url:Config.ajaxUrls.getProjectDetail,params:{projectId:0}},
                 delete:{method:"delete",url:Config.ajaxUrls.deleteProject,params:{projectId:0}},
@@ -888,11 +888,11 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
     function($rootScope,$resource,CFunctions,Config,Storage){
         return {
             getBoxes:function(scope,keyword){
-                return this.resource.query({scope:scope,keyword:keyword,last_id:Storage.lastLoadedId},function(data){
+                return this.resource.query({scope:scope,keyword:keyword,page:Storage.lastLoadedId+1},function(data){
                     if(data.topics.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
-                        Storage.lastLoadedId=data.topics[Config.perLoadCount-1]["topic"]["id"];
+                        Storage.lastLoadedId++;
                     }
                 });
             },
@@ -917,7 +917,7 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                 return me;
             },
             resource:$resource(Config.ajaxUrls.getAllBoxes,{},{
-                query:{method:"get",params:{last_id:0,count:Config.perLoadCount,scope:"",keyword:""}},
+                query:{method:"get",params:{page:1,count:Config.perLoadCount,scope:"",keyword:""}},
                 get:{method:"get",url:Config.ajaxUrls.getBoxDetail,params:{boxId:0}},
                 remove:{method:"delete",url:Config.ajaxUrls.deleteBox,params:{boxId:0},
                     transformResponse:function(data, headersGetter){
