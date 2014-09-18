@@ -167,6 +167,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
                 }
 
                 $scope.commentObj.newComment="";
+                $scope.project.comment_count++;
                 toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
             });
         };
@@ -181,6 +182,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
                             Storage.loadedProjects[i]["artifact"]["comment_count"]--;
                         }
                     }
+                    $scope.project.comment_count--;
                     $scope.commentObj.showComments.splice(index,1);
                     toaster.pop('success',Config.messages.successTitle,Config.messages.operationSuccess,null,null);
                 });
@@ -239,14 +241,18 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
                             if($scope.project.praised==false){
                                 if(rolesString.match(Config.roles.vip)!==null){
                                     Storage.loadedProjects[i]["artifact"]["honor_count"]++;
+                                    $scope.project.honor_count++;
                                 }else{
                                     Storage.loadedProjects[i]["artifact"]["praise_count"]++;
+                                    $scope.project.praise_count++;
                                 }
                             }else{
                                 if(rolesString.match(Config.roles.vip)!==null){
                                     Storage.loadedProjects[i]["artifact"]["honor_count"]--;
+                                    $scope.project.honor_count--;
                                 }else{
                                     Storage.loadedProjects[i]["artifact"]["praise_count"]--;
+                                    $scope.project.praise_count--;
                                 }
                             }
 
