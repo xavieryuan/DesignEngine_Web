@@ -1005,6 +1005,8 @@ viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User
     $scope.user={};
     User.resource.get({userId:userId},function(data){
         $scope.user=data.user;
+        $scope.user.artifact_count=data.artifact_count;
+        $scope.user.honor_sum=data.honor_sum;
         Storage.loadedTopProjects=$scope.user.topProjects=data.artifacts;
     });
 
