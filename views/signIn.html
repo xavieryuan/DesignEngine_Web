@@ -31,7 +31,7 @@
                     <p class="de_forgot_pwd"><a href="" ng-click="forgetPwd()">忘记了密码？</a></p>
                 </div>
                 <input type="submit" class="de_green_btn de_submit_btn" ng-disabled="loginForm.$invalid" value="登录">
-                {{loginForm.$invalid|json}}
+                {{loginForm.$error|json}}
             </form>
         </div>
         <div class="de_borderbox de_reg_col de_right_col">
