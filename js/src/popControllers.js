@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 var popControllers=angular.module("popControllers",["services","autoComplete"]);
-popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage","User",
-    function($scope,Config,LocationChanger,Storage,User){
+popControllers.controller("signIn",["$scope","$cookies","Config","LocationChanger","Storage","User",
+    function($scope,$cookies,Config,LocationChanger,Storage,User){
         $scope.popFlags.title=Config.titles.signIn;
         $scope.showBlackOut();
 
@@ -27,10 +27,9 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
             LocationChanger.skipReload().withReplace(Config.urls.forgetPwd,true);
         };
 
-        if(document.cookie){
-            var obj=JSON.parse(decodeURIComponent(document.cookie));
-            $scope.user.email=obj.email;
-            $scope.user.password=obj.password;
+        if($cookies.email){
+            $scope.user.email=$cookies.email;
+            $scope.user.password=$cookies.password;
             $scope.user.rememberMe=true;
         }
 
@@ -39,14 +38,12 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
             if($scope.user.rememberMe){
                 var email= $scope.user.email;
                 var password=$scope.user.password;
-                var obj={
-                    "email":email,
-                    "password":password
-                };
                 var expiration = new Date((new Date()).getTime() + 7*24*60* 60000);
-                document.cookie = encodeURIComponent(JSON.stringify(obj))+"; expires="+expiration+"; path=/";
+                $cookies.email = encodeURIComponent(email)+"; expires="+expiration+"; path=/";
+                $cookies.password = encodeURIComponent(password)+"; expires="+expiration+"; path=/";
             }else{
-                document.cookie="";
+                $cookies.email="";
+                $cookies.password="";
             }
         }
         $scope.loginSubmit=function(){
