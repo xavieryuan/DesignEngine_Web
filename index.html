@@ -61,30 +61,30 @@
                     <li class="de_reg_view " ng-show="currentUser.id">
                         <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="toggleExtMenu($event)">更多</a>
                         <ul ng-class="{de_ext_nav_active:mainFlags.extMenuActive}" class="de_ext_nav" id="de_ext_nav">
-                           	<li class="de_reg_view" ng-show="!currentUser.active">
+                           	<li class="de_reg_view" ng-if="!currentUser.active">
                         		<a  href="" ng-click="activeAccount()">激活</a>
                     		</li>
-                           	<li class="de_reg_view " ng-show="currentUser.active">
+                           	<li class="de_reg_view " ng-if="currentUser.active">
                                 <a ng-href="users/{{currentUser.id}}">我的作品集</a>
                                 <a class="de_btn_upload de_borderbox"   ng-href="projects/create">上传作品</a>
                             </li>
-                            <li class="de_reg_view" ng-show="currentUser.active">
+                            <li class="de_reg_view" ng-if="currentUser.active">
                                 <a ng-href="users/{{currentUser.id}}/topics">我的投稿箱</a>
                                 <a class="de_btn_create_box de_borderbox" ng-show="currentUser.roles|arrayHasElements:'vip'" ng-href="topics/create">创建投稿箱</a>
                             </li>                                                       
-                            <li class="de_reg_view" ng-show="currentUser.active">
+                            <li class="de_reg_view" ng-if="currentUser.active">
                                 <a href="" ng-click="editInfo()">修改个人信息</a>
                             </li>
-                            <li class="de_reg_view " ng-show="currentUser.active">
+                            <li class="de_reg_view " ng-if="currentUser.active">
                                 <a href="" ng-click="editPwd()">修改密码</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
+                            <li class="de_admin_view " ng-if="currentUser.roles|arrayHasElements:'admin'">
                                 <a href="admin/users">用户管理</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
+                            <li class="de_admin_view " ng-if="currentUser.roles|arrayHasElements:'admin'">
                                 <a href="admin/projects">作品管理</a>
                             </li>
-                            <li class="de_admin_view " ng-show="currentUser.roles|arrayHasElements:'admin'">
+                            <li class="de_admin_view " ng-if="currentUser.roles|arrayHasElements:'admin'">
                                 <a href="admin/comments">评论管理</a>
                             </li>
                             <li class="de_reg_view ">
@@ -92,7 +92,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="de_guest_view" ng-show="!currentUser.id">
+                    <li class="de_guest_view" ng-if="!currentUser.id">
                         <a class="de_btn_login_reg de_borderbox" href="" ng-click="login()">登录/注册</a>
                     </li>
                 </ul>
