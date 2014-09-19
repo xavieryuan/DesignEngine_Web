@@ -44,7 +44,7 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
                     "password":password
                 };
                 var expiration = new Date((new Date()).getTime() + 7*24*60* 60000);
-                document.cookie = encodeURIComponent("userInfo="+JSON.stringify(obj))+"; expires="+expiration+"; path=/";
+                document.cookie = "userInfo="+encodeURIComponent(+JSON.stringify(obj))+"; expires="+expiration+"; path=/";
             }else{
                 document.cookie="";
             }
