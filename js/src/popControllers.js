@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 var popControllers=angular.module("popControllers",["services","autoComplete"]);
-popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage","User",
-    function($scope,Config,LocationChanger,Storage,User){
+popControllers.controller("signIn",["$scope","Config","CFunctions","LocationChanger","Storage","User",
+    function($scope,Config,CFunctions,LocationChanger,Storage,User){
         $scope.popFlags.title=Config.titles.signIn;
         $scope.showBlackOut();
 
@@ -27,8 +27,8 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
             LocationChanger.skipReload().withReplace(Config.urls.forgetPwd,true);
         };
 
-        if(document.cookie){
-            var obj=JSON.parse(decodeURIComponent(document.cookie));
+        if(CFunctions.getCookie("userInfo")){
+            var obj=JSON.parse(decodeURIComponent(CFunctions.getCookie("userInfo")));
             $scope.user.email=obj.email;
             $scope.user.password=obj.password;
             $scope.user.rememberMe=true;
@@ -43,10 +43,9 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
                     "email":email,
                     "password":password
                 };
-                var expiration = new Date((new Date()).getTime() + 7*24*60* 60000);
-                document.cookie = "userInfo="+encodeURIComponent(+JSON.stringify(obj))+"; expires="+expiration+"; path=/";
+                CFunctions.setCookie("userInfo",encodeURIComponent(JSON.stringify(obj)),7);
             }else{
-                document.cookie="";
+                CFunctions.setCookie("userInfo");
             }
         }
         $scope.loginSubmit=function(){

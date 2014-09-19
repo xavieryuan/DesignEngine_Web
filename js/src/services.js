@@ -474,7 +474,27 @@ services.service("CFunctions",["$rootScope","$location","$http","$timeout","toas
             return retValue;
         }
     };
+    this.setCookie=function(name,value,days){
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var thisCookie = name + "=" + encodeURIComponent(value) +
+            ((days) ? "; expires=" + date.toGMTString() : "");
+        document.cookie = thisCookie;
+    };
+    this.getCookie=function(name){
+        var nameSG = name + "=";
+        if (document.cookie == null || document.cookie.indexOf(nameSG) == -1)
+            return null;
 
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameSG) == 0) return decodeURIComponent(c.substring(nameSG.length,c.length));
+        }
+
+        return null;
+    };
     this.createUploader=function(param){
         var uploader = Qiniu.uploader({
             runtimes: 'html5,flash,html4',    //上传模式,依次退化
