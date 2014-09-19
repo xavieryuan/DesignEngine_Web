@@ -1,5 +1,5 @@
 /*greensock 配置*/
-//CSSPlugin.defaultTransformPerspective=1200;
+CSSPlugin.defaultTransformPerspective=1200;
 
 /*定义动效*/
 var animations=angular.module("animations",["ngAnimate"]);
