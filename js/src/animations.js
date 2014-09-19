@@ -8,12 +8,12 @@ animations.animation(".de_ext_nav",function(){
 	return{
 		addClass: function(element, className, done) {
 			if(className=="de_ext_nav_active"){
-				TweenMax.to(element,0.3,{x:-220,ease:Circ.easeOut,onComplete:done})
+				TweenMax.to(element,0.3,{x:-220,ease:Circ.easeOut,transformPerspective:0,onComplete:done})
 			}
 		},
 		removeClass: function(element, className, done) {
 			if(className=="de_ext_nav_active"){
-				TweenMax.to(element,0.3,{x:0,ease:Circ.easeOut,onComplete:done})
+				TweenMax.to(element,0.3,{x:0,ease:Circ.easeOut,transformPerspective:0,onComplete:done})
 			}
 		}
 	}
