@@ -58,6 +58,21 @@ directives.directive("isEmail",function(){
         }
     }
 });
+directives.directive('embedSrc', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var current = element;
+            scope.$watch(attrs.embedSrc, function () {
+                var clone = element
+                    .clone()
+                    .attr('src', attrs.embedSrc);
+                current.replaceWith(clone);
+                current = clone;
+            });
+        }
+    };
+});
 /**
  *重写required，不然ie里面页面一展示就提示错误,还是要配合required，不然submit的disable会失效
  */
