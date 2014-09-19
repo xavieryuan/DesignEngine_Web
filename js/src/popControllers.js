@@ -5,7 +5,7 @@
  * Time: 上午9:52
  * To change this template use File | Settings | File Templates.
  */
-var popControllers=angular.module("popControllers",["services","autoComplete"]);
+var popControllers=angular.module("popControllers",["ngCookies","services","autoComplete"]);
 popControllers.controller("signIn",["$scope","$cookies","Config","LocationChanger","Storage","User",
     function($scope,$cookies,Config,LocationChanger,Storage,User){
         $scope.popFlags.title=Config.titles.signIn;
