@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 var popControllers=angular.module("popControllers",["services","autoComplete"]);
-popControllers.controller("signIn",["$scope","$document","Config","LocationChanger","Storage","User",
-    function($scope,$document,Config,LocationChanger,Storage,User){
+popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage","User",
+    function($scope,Config,LocationChanger,Storage,User){
         $scope.popFlags.title=Config.titles.signIn;
         $scope.showBlackOut();
 
@@ -27,8 +27,8 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
             LocationChanger.skipReload().withReplace(Config.urls.forgetPwd,true);
         };
 
-        if($document[0].cookie){
-            var obj=JSON.parse(decodeURIComponent($document.cookie));
+        if(document.cookie){
+            var obj=JSON.parse(decodeURIComponent(document.cookie));
             $scope.user.email=obj.email;
             $scope.user.password=obj.password;
             $scope.user.rememberMe=true;
@@ -43,9 +43,9 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
                     "email":email,
                     "password":password
                 };
-                $document[0].cookie = encodeURIComponent(JSON.stringify(obj))+"; max-age=7*24*60*60; path=/";
+                document.cookie = encodeURIComponent(JSON.stringify(obj))+"; max-age=7*24*60*60; path=/";
             }else{
-                $document[0].cookie="";
+                document.cookie="";
             }
         }
         $scope.loginSubmit=function(){
