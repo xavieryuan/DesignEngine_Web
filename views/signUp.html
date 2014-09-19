@@ -8,14 +8,14 @@
                 <form name="registerForm" class="" ng-submit="registerSubmit()" novalidate>
                     <p class="de_username_field">
                         <input type="text" class="de_borderbox de_inputbox_gray" name="fullname"
-                               placeholder="姓名（无法修改）" ng-maxlength="32" ng-model="user.fullname" own-required required>
+                               placeholder="姓名（无法修改）" autocomplete="off" ng-maxlength="32" ng-model="user.fullname" own-required required>
                         <span class="error" ng-if="registerForm.fullname.$dirty && registerForm.fullname.$invalid">
                             <label ng-if="registerForm.fullname.$error.ownRequired">{{validMessage.required}}</label>
                             <label ng-if="registerForm.fullname.$error.maxlength">{{validMessage.maxLength | setMaxLength:32}}</label>
                         </span>
                     </p>
                     <p class="de_email_field">
-                        <input type="email" ng-model="user.email" class="de_borderbox de_inputbox_gray" name="email" placeholder="邮箱"
+                        <input type="email" ng-model="user.email" autocomplete="off" class="de_borderbox de_inputbox_gray" name="email" placeholder="邮箱"
                                ng-maxlength="32" own-required required email-exist>
                         <span class="error" ng-if="registerForm.email.$dirty && registerForm.email.$invalid">
                             <label ng-if="registerForm.email.$error.ownRequired">{{validMessage.required}}</label>
@@ -27,7 +27,7 @@
 
                     <p class="de_pwd_field">
                         <input type="password" class="de_borderbox de_inputbox_gray" name="password" placeholder="密码"
-                               ng-minlength="6" ng-model="user.password" ng-maxlength="20" own-required required>
+                               ng-minlength="6" autocomplete="off" ng-model="user.password" ng-maxlength="20" own-required required>
                         <span class="error" ng-if="registerForm.password.$dirty && registerForm.password.$invalid">
                             <label ng-if="registerForm.password.$error.ownRequired">{{validMessage.required}}</label>
                             <label ng-if="registerForm.password.$error.minlength">{{validMessage.minLength | setMinLength:6}}</label>
