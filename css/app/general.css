@@ -3064,6 +3064,13 @@ span.zy_tooltips{
 	bottom:0;
 	position:fixed;
     border:none;
+    background: #fff;
+}
+.de_pop_show_media .de_pop_show_media_content.paddingTop60{
+    padding-top: 60px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 .de_pop_show_media .de_pop_show_media_content .de_pop_show_media_el,
 .de_pop_show_media .de_pop_show_media_content iframe{
