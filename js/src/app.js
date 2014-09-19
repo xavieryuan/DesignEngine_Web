@@ -234,8 +234,6 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
         };
 
         $scope.initPage=function(path){
-
-
             if(path.indexOf(Config.urls.editPwd)!==-1){
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.editPwd;
             }else if(path.indexOf(Config.urls.signIn)!==-1){
