@@ -121,7 +121,8 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
             "showPlayMedialPanel":false,   //是否显示视频播放界面
             "showWebVideoPanel":false,   //控制显示网络视频输入界面S
             "mediaPlayTemplate":"",
-            "playMediaPath":""
+            "playMediaPath":"",
+            "playMediaType":""
         };
         $scope.popFlags={
             "title":"",
