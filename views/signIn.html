@@ -25,12 +25,12 @@
                 </p>
 
                 <div class="de_misc_field">
-                    <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="user.rememberMe" name="rememberMe">
+                    <input type="checkbox" ng-true-value="'true'" ng-false-value="'false'" ng-model="user.rememberMe" name="rememberMe">
                     <label>记住我</label>
 
                     <p class="de_forgot_pwd"><a href="" ng-click="forgetPwd()">忘记了密码？</a></p>
                 </div>
-                <input type="submit" class="de_green_btn de_submit_btn" ng-disabled="loginForm.$invalid&&loginForm." value="登录">
+                <input type="submit" class="de_green_btn de_submit_btn" ng-disabled="loginForm.$invalid" value="登录">
 
             </form>
         </div>

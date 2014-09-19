@@ -26,12 +26,12 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
             var obj=JSON.parse(decodeURIComponent($document.cookie));
             $scope.user.email=obj.email;
             $scope.user.password=obj.password;
-            $scope.user.rememberMe=true;
+            $scope.user.rememberMe="true";
         }
 
         //记住我
         function rememberMe(){
-            if($scope.user.rememberMe){
+            if($scope.user.rememberMe=="true"){
                 var email= $scope.user.email;
                 var password=$scope.user.password;
                 var obj={
