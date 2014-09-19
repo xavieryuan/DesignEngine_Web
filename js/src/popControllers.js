@@ -27,7 +27,7 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
             LocationChanger.skipReload().withReplace(Config.urls.forgetPwd,true);
         };
 
-        if($document.cookie){
+        if($document[0].cookie){
             var obj=JSON.parse(decodeURIComponent($document.cookie));
             $scope.user.email=obj.email;
             $scope.user.password=obj.password;
@@ -43,9 +43,9 @@ popControllers.controller("signIn",["$scope","$document","Config","LocationChang
                     "email":email,
                     "password":password
                 };
-                $document.cookie = encodeURIComponent(JSON.stringify(obj))+"; max-age=7*24*60*60; path=/";
+                $document[0].cookie = encodeURIComponent(JSON.stringify(obj))+"; max-age=7*24*60*60; path=/";
             }else{
-                $document.cookie="";
+                $document[0].cookie="";
             }
         }
         $scope.loginSubmit=function(){
