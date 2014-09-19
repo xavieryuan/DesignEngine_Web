@@ -79,7 +79,7 @@ directives.directive("ownRequired",function(){
             });
 
 
-            ctrl.$setValidity("ownRequired",true);
+            //ctrl.$setValidity("ownRequired",true);
 
             //console.log(ctrl);
         }
