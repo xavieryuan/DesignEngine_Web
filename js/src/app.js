@@ -215,6 +215,7 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
         $scope.closePlayMediaPanel=function(){
             $scope.mainFlags.showPlayMedialPanel=false;
             $scope.mainFlags.playMediaPath="";
+            $scope.mainFlags.playMediaType="";
             $scope.hideBlackOut();
         };
         $scope.showPlayMediaPanel=function(){
@@ -226,6 +227,7 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
         $scope.showAttachmentDetail=function(path,type){
             path=path?path:"";
             $scope.mainFlags.playMediaPath=$sce.trustAsResourceUrl(path);
+            $scope.mainFlags.playMediaType=type;
             $scope.showPlayMediaPanel();
 
             if(path==""){
