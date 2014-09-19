@@ -78,9 +78,8 @@ directives.directive("ownRequired",function(){
                 }
             });
 
-            scope.$apply(function(){
-                ctrl.$setValidity("ownRequired",true);
-            });
+
+            ctrl.$setValidity("ownRequired",true);
 
             //console.log(ctrl);
         }
