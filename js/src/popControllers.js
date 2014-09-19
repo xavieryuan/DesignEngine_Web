@@ -5,9 +5,9 @@
  * Time: 上午9:52
  * To change this template use File | Settings | File Templates.
  */
-var popControllers=angular.module("popControllers",["ngCookies","services","autoComplete"]);
-popControllers.controller("signIn",["$scope","$cookies","Config","LocationChanger","Storage","User",
-    function($scope,$cookies,Config,LocationChanger,Storage,User){
+var popControllers=angular.module("popControllers",["services","autoComplete"]);
+popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage","User",
+    function($scope,Config,LocationChanger,Storage,User){
         $scope.popFlags.title=Config.titles.signIn;
         $scope.showBlackOut();
 
@@ -27,9 +27,10 @@ popControllers.controller("signIn",["$scope","$cookies","Config","LocationChange
             LocationChanger.skipReload().withReplace(Config.urls.forgetPwd,true);
         };
 
-        if($cookies.email){
-            $scope.user.email=$cookies.email;
-            $scope.user.password=$cookies.password;
+        if(document.cookie){
+            var obj=JSON.parse(decodeURIComponent(document.cookie));
+            $scope.user.email=obj.email;
+            $scope.user.password=obj.password;
             $scope.user.rememberMe=true;
         }
 
@@ -38,12 +39,14 @@ popControllers.controller("signIn",["$scope","$cookies","Config","LocationChange
             if($scope.user.rememberMe){
                 var email= $scope.user.email;
                 var password=$scope.user.password;
+                var obj={
+                    "email":email,
+                    "password":password
+                };
                 var expiration = new Date((new Date()).getTime() + 7*24*60* 60000);
-                $cookies.email = encodeURIComponent(email)+"; expires="+expiration+"; path=/";
-                $cookies.password = encodeURIComponent(password)+"; expires="+expiration+"; path=/";
+                document.cookie = encodeURIComponent("userInfo="+JSON.stringify(obj))+"; expires="+expiration+"; path=/";
             }else{
-                $cookies.email="";
-                $cookies.password="";
+                document.cookie="";
             }
         }
         $scope.loginSubmit=function(){
