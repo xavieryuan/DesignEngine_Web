@@ -129,12 +129,16 @@
 
     <!-----------媒体详情----------->
     <section class="de_pop_show_media" ng-show="mainFlags.showPlayMedialPanel">
-        <span class="de_pop_show_media_close" ng-click="closePlayMediaPanel()">关闭</span>
         <!--<div class="de_pop_show_media_content" ng-include="mainFlags.mediaPlayTemplate"></div>-->
-        <iframe class="de_pop_show_media_content" ng-class="{paddingTop60:mainFlags.playMediaPath.indexOf('swf')!=-1||mainFlags.playMediaPath.indexOf('SWF')!=-1}"
-                ng-if="mainFlags.playMediaPath!=''" ng-src="{{mainFlags.playMediaPath}}">
+        <embed class="de_pop_show_flash" width="100%" height="100%" wmode="Opaque" ng-src="{{mainFlags.playMediaPath}}"
+               ng-if="mainFlags.playMediaPath.indexOf('swf')!=-1||mainFlags.playMediaPath.indexOf('SWF')!=-1"></embed>
+        <iframe class="de_pop_show_media_content"  ng-src="{{mainFlags.playMediaPath}}"
+                ng-if="mainFlags.playMediaPath!=''&&mainFlags.playMediaPath.indexOf('swf')==-1&&mainFlags.playMediaPath.indexOf('SWF')==-1">
         </iframe>
         <div class="de_pop_show_media_content" ng-if="mainFlags.playMediaPath==''">资源正在处理，暂时不能观看</div>
+
+        <!--放到后面才能在embed上面显示-->
+        <span class="de_pop_show_media_close" ng-click="closePlayMediaPanel()">关闭</span>
     </section>
 	
 	<!-----------blackout----------->
