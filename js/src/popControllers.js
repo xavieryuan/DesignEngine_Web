@@ -43,7 +43,7 @@ popControllers.controller("signIn",["$scope","Config","LocationChanger","Storage
                     "email":email,
                     "password":password
                 };
-                document.cookie = encodeURIComponent(JSON.stringify(obj))+"; max-age=7*24*60*60; path=/";
+                document.cookie = encodeURIComponent(JSON.stringify(obj))+"; expires="+date.getTime()+7*24*60*60*1000+"; path=/";
             }else{
                 document.cookie="";
             }
