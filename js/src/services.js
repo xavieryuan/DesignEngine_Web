@@ -653,7 +653,7 @@ services.service("Storage",function(){
     this.currentScrollScreenType="";
     this.loadedProjects=[];
     this.loadedTopProjects=[];
-    this.editUserObj={}; //用于修改的时候使用
+
 
     this.clearScrollData=function(currentScrollScreenType){
         this.lastLoadedId=0;
@@ -673,6 +673,14 @@ services.service("Storage",function(){
         active:true,
         commentActive:true
     };
+
+    //用于修改的时候使用
+    this.editUserObj={
+        profile:"",
+        profile_preview:"",
+        email:"",
+        description:""
+    };
     this.clearCurrentUser=function(){
         this.currentUser.id=0;
         this.currentUser.name="";
@@ -682,7 +690,10 @@ services.service("Storage",function(){
         this.currentUser.active=true;
         this.currentUser.commentActive=true;
 
-        this.editUserObj={};
+        this.editUserObj.profile="";
+        this.editUserObj.profile_preview="";
+        this.editUserObj.email="";
+        this.editUserObj.id=0;
     };
     this.initCurrentUser=function(data){
         this.currentUser.id=data.id?data.id:this.currentUser.id;
@@ -694,8 +705,10 @@ services.service("Storage",function(){
         this.currentUser.active=typeof data.active !=="undefined"?data.active:this.currentUser.active;
         this.currentUser.commentActive=typeof data.setting.comment_active !=="undefined"?data.setting.comment_active:this.currentUser.commentActive;
 
-        this.editUserObj=angular.copy(this.currentUser);
-        this.editUserObj.profile_preview=this.editUserObj.profile;
+        this.editUserObj.id=data.id?data.id:this.editUserObj.id;
+        this.editUserObj.profile=this.editUserObj.profile_preview=
+            data.setting.profile_image?data.setting.profile_image:this.editUserObj.profile;
+        this.editUserObj.email=data.email?data.email:this.editUserObj.email;
     };
 });
 

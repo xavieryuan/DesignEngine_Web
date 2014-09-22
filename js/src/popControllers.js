@@ -187,6 +187,8 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
                 $scope.user.profile_preview=
                     Config.qNBucketDomain+res.key+Config.qNImagePreviewSuffix.replace(":size","40x40");
 
+                $scope.apply();
+
                 //判断是否是1：1
                 /*$http.get(src+"?imageInfo",{
                     transformRequest:function(data, headersGetter){
