@@ -145,6 +145,8 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
             $scope.popFlags.title="";
             $scope.popFlags.popTemplateUrl="";
 
+            Storage.initEditUserObj();
+
             $scope.hideBlackOut();
 
             if(!notGoBack){

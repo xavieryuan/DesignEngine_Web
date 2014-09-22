@@ -167,7 +167,9 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
             });
             toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
             $scope.closePop();
-        })
+        },function(){
+            Storage.initEditUserObj();
+        });
     };
 
     $scope.createProfileUploader=function(buttonId,containerId){

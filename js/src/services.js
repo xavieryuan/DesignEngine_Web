@@ -689,12 +689,12 @@ services.service("Storage",function(){
         this.currentUser.description="";
         this.currentUser.active=true;
         this.currentUser.commentActive=true;
-
-        this.editUserObj.profile="";
-        this.editUserObj.profile_preview="";
-        this.editUserObj.email="";
-        this.currentUser.description="";
-        this.editUserObj.id=0;
+    };
+    this.initEditUserObj=function(){
+        this.editUserObj.id=this.currentUser.id;
+        this.editUserObj.profile=this.editUserObj.profile_preview=this.currentUser.profile;
+        this.editUserObj.email=this.currentUser.email;
+        this.editUserObj.description=this.currentUser.description;
     };
     this.initCurrentUser=function(data){
         this.currentUser.id=data.id?data.id:this.currentUser.id;
@@ -706,11 +706,7 @@ services.service("Storage",function(){
         this.currentUser.active=typeof data.active !=="undefined"?data.active:this.currentUser.active;
         this.currentUser.commentActive=typeof data.setting.comment_active !=="undefined"?data.setting.comment_active:this.currentUser.commentActive;
 
-        this.editUserObj.id=data.id?data.id:this.editUserObj.id;
-        this.editUserObj.profile=this.editUserObj.profile_preview=
-            data.setting.profile_image?data.setting.profile_image:this.editUserObj.profile;
-        this.editUserObj.email=data.email?data.email:this.editUserObj.email;
-        this.editUserObj.description=data.setting.description?data.setting.description:this.editUserObj.description;
+        this.initEditUserObj();
     };
 });
 
