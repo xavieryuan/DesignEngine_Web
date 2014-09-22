@@ -556,7 +556,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
 
                     $scope.project.profile_image = src;
                     $scope.project.profile_image_preview=
-                        Config.qNImagePreviewDomain+res.key+Config.qNImagePreviewSuffix.replace(":size","400x400");
+                        Config.qNBucketDomain+res.key+Config.qNImagePreviewSuffix.replace(":size","400x400");
+
+                    $scope.apply();
 
                     //判断是否是1：1
                     /*$http.get(src+"?imageInfo",{

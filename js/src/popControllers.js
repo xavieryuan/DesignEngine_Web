@@ -151,22 +151,22 @@ popControllers.controller("editPwd",["$scope","CFunctions","Config","User","toas
 popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","Storage","User","toaster",function($scope,$http,CFunctions,Config,Storage,User,toaster){
     $scope.popFlags.title=Config.titles.editInfo;
     $scope.showBlackOut();
+    $scope.user=Storage.editUserObj;
 
-    var oldUser=angular.copy($scope.currentUser);
-
-    $scope.currentUser.profile_image_preview=$scope.currentUser.profile;
     $scope.mainFlags.extMenuActive=false;
     $scope.editInfoSubmit=function(){
-        User.resource.save({userId:$scope.currentUser.id},{
-            description:$scope.currentUser.description,
-            profile_image:$scope.currentUser.profile
+        User.resource.save({userId:$scope.user.id},{
+            profile_image:$scope.user.profile,
+            description:$scope.user.description
         },function(data){
-            oldUser=null;
+            Storage.initCurrentUser({
+                setting:{
+                    profile_image:$scope.user.profile,
+                    description:$scope.user.description
+                }
+            });
             toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
             $scope.closePop();
-        },function(data){
-            //将数据回退
-            $scope.currentUser=Storage.currentUser=oldUser;
         })
     };
 
@@ -183,9 +183,9 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
                 var res = JSON.parse(info);
                 var src = Config.qNBucketDomain + res.key;
 
-                $scope.currentUser.profile=src;
-                $scope.currentUser.profile_image_preview=
-                    Config.qNImagePreviewDomain+res.key+Config.qNImagePreviewSuffix.replace(":size","40x40");
+                $scope.user.profile=src;
+                $scope.user.profile_preview=
+                    Config.qNBucketDomain+res.key+Config.qNImagePreviewSuffix.replace(":size","40x40");
 
                 //判断是否是1：1
                 /*$http.get(src+"?imageInfo",{
