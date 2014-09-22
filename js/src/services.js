@@ -693,6 +693,7 @@ services.service("Storage",function(){
         this.editUserObj.profile="";
         this.editUserObj.profile_preview="";
         this.editUserObj.email="";
+        this.currentUser.description="";
         this.editUserObj.id=0;
     };
     this.initCurrentUser=function(data){
@@ -709,6 +710,7 @@ services.service("Storage",function(){
         this.editUserObj.profile=this.editUserObj.profile_preview=
             data.setting.profile_image?data.setting.profile_image:this.editUserObj.profile;
         this.editUserObj.email=data.email?data.email:this.editUserObj.email;
+        this.editUserObj.description=data.setting.description?data.setting.description:this.editUserObj.description;
     };
 });
 
