@@ -889,7 +889,7 @@ viewControllers.controller("boxes",['$scope',"$interval","$routeParams","Config"
         $scope.boxes=[];
         Box.getBoxes($scope.filter.scope,$scope.filter.keyword).$promise.then(function(data){
 
-            $scope.loadedData=!$scope.loadedData;
+
             //console.log("In views");
             var count= 0,length=data.topics.length;
             var inter=$interval(function(){
@@ -898,6 +898,10 @@ viewControllers.controller("boxes",['$scope',"$interval","$routeParams","Config"
                     count++;
                 }else{
                     $interval.cancel(inter);
+                }
+
+                if(!$scope.loadedData){
+                    $scope.loadedData=!$scope.loadedData;
                 }
             },200);
 
