@@ -30,7 +30,7 @@
                     <li class="uploads" title="上传">{{box.topic.artifact_count}}</li>
                 </ul>
             </div>
-            <ul class="topic_action">
+            <ul class="topic_action" ng-class="{topic_open:box.topic.status==0}">
                 <!-- 根据权限控制 -->
                 <li ng-if="box.topic.status==0" class="de_topic_action_submit">
                     <a ng-if="currentUser.id&&currentUser.active" ng-href="topic/{{box.topic.id}}/artifact/"  title="投稿">投稿</a>
