@@ -1,6 +1,5 @@
 <!-----------用户首页----------->
-<section class="de_screen_user_profile " >
-    <p class="noResult" ng-if="boxes.length==0">没有搜索结果...</p>
+<section class="de_screen_user_profile " >    
     <!-- 个人作品集就是一个特殊的 topic box -->
     <ul class="de_topic_list">
         <li class="de_topic_box">
@@ -20,6 +19,7 @@
                     <li class="badges" title="勋章">{{user.honor_sum}}</li>
                 </ul>
             </div>
+            <p class="noResult" ng-if="projects.length==0">未上传任何作品。</p>
             <ul class="topic_action">
                 <!-- 根据权限控制 -->
                 <li ng-if="user.active&&user.id==currentUser.id" class="de_topic_action_submit"><a ng-href="projects/create"  title="上传">上传</a></li>
