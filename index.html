@@ -135,7 +135,7 @@
                ng-if="mainFlags.playMediaType=='64'&&mainFlags.playMediaPath!=''"></embed>-->
         <embed class="de_pop_show_flash" name="plugin" type="application/x-shockwave-flash"
                width="100%" height="100%" wmode="opaque"
-               src="http://pinwall.qiniudn.com/13/12699989729739.swf"></embed>
+               src="{{mainFlags.playMediaPath}}"></embed>
         <iframe class="de_pop_show_media_content"  ng-src="{{mainFlags.playMediaPath}}" ng-if="mainFlags.playMediaType!='64'&&mainFlags.playMediaPath!=''">
         </iframe>
         <div class="de_pop_show_media_content" ng-if="mainFlags.playMediaPath==''">资源正在处理，暂时不能观看</div>
