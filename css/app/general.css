@@ -1633,6 +1633,9 @@ li {
 	text-align: center;
 	background: repeating-linear-gradient( 45deg, #ddd, #ddd 10px, #eee 10px, #eee 20px);
 }
+.de_topic_box .topic_action.topic_closed{
+	background: repeating-linear-gradient( 45deg, #ddddb1, #ddddb1 10px, #eeeebe 10px, #eeeebe 20px);
+}
 .topic_action li{
 	margin:5px;
 }
