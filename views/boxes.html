@@ -10,6 +10,7 @@
         <input  type="text" class="searchInput de_borderbox de_inputbox_gray" ng-keydown="keyDownSearch($event)" ng-model="filter.keyword">
         </span>
     </div>
+    <p class="noResult" ng-if="boxes.length==0">没有搜索结果...</p>
     <!-- 选题列表 -->
     <ul class="de_topic_list">        
         <li class="de_topic_box" ng-repeat="box in boxes">
