@@ -151,27 +151,22 @@ popControllers.controller("editPwd",["$scope","CFunctions","Config","User","toas
 popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","Storage","User","toaster",function($scope,$http,CFunctions,Config,Storage,User,toaster){
     $scope.popFlags.title=Config.titles.editInfo;
     $scope.showBlackOut();
-    $scope.user={
-        userId:$scope.currentUser.id,
-        email:$scope.currentUser.email,
-        setting:{
-            profile_image_preview:$scope.currentUser.profile,
-            profile_image:$scope.currentUser.profile,
-            description:$scope.currentUser.description
-        }
-    };
 
+    var oldUser=angular.copy($scope.currentUser);
+
+    $scope.currentUser.profile_image_preview=$scope.currentUser.profile;
     $scope.mainFlags.extMenuActive=false;
     $scope.editInfoSubmit=function(){
-        User.resource.save({userId:$scope.user.userId},$scope.user.setting,function(data){
-            Storage.initCurrentUser({
-                setting:{
-                    profile_image:$scope.user.setting.profile_image,
-                    description:$scope.user.setting.description
-                }
-            });
+        User.resource.save({userId:$scope.currentUser.id},{
+            description:$scope.currentUser.description,
+            profile_image:$scope.currentUser.profile
+        },function(data){
+            oldUser=null;
             toaster.pop("success",Config.messages.successTitle,Config.messages.operationSuccess,null,null);
             $scope.closePop();
+        },function(data){
+            //将数据回退
+            $scope.currentUser=oldUser;
         })
     };
 
@@ -188,8 +183,8 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
                 var res = JSON.parse(info);
                 var src = Config.qNBucketDomain + res.key;
 
-                $scope.user.setting.profile_image=src;
-                $scope.user.setting.profile_image=
+                $scope.currentUser.profile=src;
+                $scope.currentUser.profile_image_preview=
                     Config.qNImagePreviewDomain+res.key+Config.qNImagePreviewSuffix.replace(":size","40x40");
 
                 //判断是否是1：1
