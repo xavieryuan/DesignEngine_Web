@@ -1117,6 +1117,7 @@ viewControllers.controller("searchResult",["$scope","$interval","$routeParams","
         $scope.closePop(true);
 
         Storage.loadedProjects=$scope.projects=[];
+        $scope.loadedData=false;
         Project.getSearchResult($scope.searchContent).$promise.then(function(data){
             var count= 0,length=data.artifacts.length;
             var inter=$interval(function(){
@@ -1125,6 +1126,9 @@ viewControllers.controller("searchResult",["$scope","$interval","$routeParams","
                     count++;
                 }else{
                     $interval.cancel(inter);
+                }
+                if(!$scope.loadedData){
+                    $scope.loadedData=!$scope.loadedData;
                 }
             },200);
         });
