@@ -423,6 +423,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         $scope.project={
             id:0,
             profile_image:Config.thumbs.defaultThumb,
+            profile_image_preview:Config.thumbs.defaultThumb,
             medias:{},
             terms:[],
             assets:[],
