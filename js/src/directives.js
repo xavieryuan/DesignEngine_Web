@@ -58,6 +58,9 @@ directives.directive("isEmail",function(){
         }
     }
 });
+/**
+ *支持embed
+ */
 directives.directive('embedSrc', ["$sce",function ($sce) {
     return {
         restrict: 'A',
