@@ -667,6 +667,7 @@ services.service("Storage",function(){
         id:0,
         name:"",
         profile:"",
+        profile_image_preview:"",
         roles:[],
         description:"",
         email:"",
@@ -676,7 +677,7 @@ services.service("Storage",function(){
     this.clearCurrentUser=function(){
         this.currentUser.id=0;
         this.currentUser.name="";
-        this.currentUser.profile="";
+        this.currentUser.profile=this.currentUser.profile_image_preview="";
         this.currentUser.roles=[];
         this.currentUser.email="";
         this.currentUser.description="";
@@ -685,7 +686,8 @@ services.service("Storage",function(){
     };
     this.initCurrentUser=function(data){
         this.currentUser.id=data.id?data.id:this.currentUser.id;
-        this.currentUser.profile=data.setting.profile_image?data.setting.profile_image:this.currentUser.profile;
+        this.currentUser.profile=this.currentUser.profile_image_preview=
+            data.setting.profile_image?data.setting.profile_image:this.currentUser.profile;
         this.currentUser.roles=data.roles?data.roles:this.currentUser.roles;
         this.currentUser.name=data.name?data.name:this.currentUser.name;
         this.currentUser.email=data.email?data.email:this.currentUser.email;
