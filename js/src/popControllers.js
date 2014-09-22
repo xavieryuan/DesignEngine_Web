@@ -166,7 +166,7 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
             $scope.closePop();
         },function(data){
             //将数据回退
-            $scope.currentUser=oldUser;
+            $scope.currentUser=Storage.currentUser=oldUser;
         })
     };
 
