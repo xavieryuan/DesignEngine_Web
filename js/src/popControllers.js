@@ -152,11 +152,12 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
     $scope.popFlags.title=Config.titles.editInfo;
     $scope.showBlackOut();
     $scope.user={
-        userId:Storage.currentUser.id,
-        email:Storage.currentUser.email,
+        userId:$scope.currentUser.id,
+        email:$scope.currentUser.email,
         setting:{
-            profile_image:Storage.currentUser.profile,
-            description:Storage.currentUser.description
+            profile_image_preview:$scope.currentUser.profile,
+            profile_image:$scope.currentUser.profile,
+            description:$scope.currentUser.description
         }
     };
 
@@ -187,8 +188,12 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
                 var res = JSON.parse(info);
                 var src = Config.qNBucketDomain + res.key;
 
+                $scope.user.setting.profile_image=src;
+                $scope.user.setting.profile_image=
+                    Config.qNImagePreviewDomain+res.key+Config.qNImagePreviewSuffix.replace(":size","40x40");
+
                 //判断是否是1：1
-                $http.get(src+"?imageInfo",{
+                /*$http.get(src+"?imageInfo",{
                     transformRequest:function(data, headersGetter){
                         return JSON.stringify(data);
                     },
@@ -203,7 +208,7 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
                     }else{
                         toaster.pop('error',Config.messages.errorTitle,Config.messages.imgSizeError,null,null);
                     }
-                });
+                });*/
 
             }
         });

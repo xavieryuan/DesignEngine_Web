@@ -20,6 +20,8 @@ services.constant("Config",{
     hasNoMoreFlag:-1,//作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
     qNUploadDomain:'http://qiniu-plupload.qiniudn.com/',
     qNBucketDomain:"http://pinwall.qiniudn.com/",
+    qNImagePreviewDomain:"http://qiniuphotos.qiniudn.com/",
+    qNImagePreviewSuffix:"?imageMogr2/gravity/Center/crop/:size",
     captcha:"captcha.jpg",
     mainMenu:{
         project:"project",
