@@ -262,7 +262,9 @@ img{
 .noResult{
 	font-size: 14px;
 	color:#999;
-	margin: 10px 30px;
+	margin: 30px;
+	text-shadow: 0 1px rgba(255,255,255,1);
+	font-weight: bold;
 }
 /*****************弹出窗口小组件(通用)******************/
 .de_popout {
