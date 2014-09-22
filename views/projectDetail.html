@@ -9,7 +9,7 @@
         ng-if="(currentUser.roles|arrayHasElements:'admin')||
         (currentUser.id==project.topic.user_id&&project.topic)||
         (currentUser.id==project.user.id&&(!project.topic||(project.topic&&project.topic.status==0)))">
-        <li><a ng-if="!project.topic||currentUser.id!=project.topic.user_id"
+        <li><a ng-if="!project.topic||(currentUser.id!=project.topic.user_id&&(!currentUser.roles|arrayHasElements:'vip'))"
                class="de_toolbar_edit" ng-href="projects/{{project.id}}/update" title="编辑">编辑</a></li>
         <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
         <li ng-if="currentUser.roles|arrayHasElements:'admin'"><a g-class="{de_toolbar_invisible:!project.visible,de_toolbar_visible:project.visible}" href=""
