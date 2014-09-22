@@ -18,8 +18,7 @@
                     <li class="uploads" title="上传">{{user.artifact_count}}</li>
                     <li class="badges" title="勋章">{{user.honor_sum}}</li>
                 </ul>
-            </div>
-            <p class="noResult" ng-if="projects.length==0">未上传任何作品。</p>
+            </div>            
             <ul class="topic_action">
                 <!-- 根据权限控制 -->
                 <li ng-if="user.active&&user.id==currentUser.id" class="de_topic_action_submit"><a ng-href="projects/create"  title="上传">上传</a></li>
@@ -34,7 +33,8 @@
         </li>
     </ul>
 	<p class="topic_description">{{user.setting.description}}</p>
-   
+   	
+   	<p class="noResult" ng-if="projects.length==0">未上传任何作品。</p>
     <!-- 个人作品列表 -->
     <ul class="de_project_grid de_borderbox" >
         <li class="de_borderbox" ng-repeat="project in projects">
