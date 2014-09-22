@@ -65,11 +65,13 @@ directives.directive('embedSrc', ["$sce",function ($sce) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-            scope.$watch(function() {
-                    return attrs.embedSrc;
-                },
-                function() {
-                    element.attr('src', attrs.embedSrc);
+            var current = element;
+            scope.$watch(function() { return attrs.embedSrc; }, function () {
+                var clone = element
+                    .clone()
+                    .attr('src', attrs.embedSrc);
+                current.replaceWith(clone);
+                current = clone;
             });
         }
     };
