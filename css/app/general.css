@@ -1631,7 +1631,7 @@ li {
 	font-size: 0;
 	z-index: 1;
 	text-align: center;
-	background: repeating-linear-gradient( 45deg, #ddddb1, #ddddb1 10px, #eeeebe 10px, #eeeebe 20px);
+	background: repeating-linear-gradient( 45deg, #b1dddd, #b1dddd 10px, #beeeee 10px, #beeeee 20px);
 
 }
 .de_topic_box .topic_action.topic_closed{
