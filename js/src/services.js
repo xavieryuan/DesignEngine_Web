@@ -193,7 +193,8 @@ services.constant("Config",{
         pptUploadError:"此资源上传到资源服务器出错，无法查看！",
         systemError:"系统发生错误，请稍后重试！",
         resourceIsInOperation:"资源正在处理，请稍后查看！",
-        notFound:"资源丢失，将跳转到首页！"
+        notFound:"资源丢失，将跳转到首页！",
+        topicClosed:"投稿箱已关闭，不能做此操作！"
     },
     ajaxUrls:{
         signIn:"/login",
@@ -323,6 +324,9 @@ services.service("AjaxErrorHandler",["toaster","Config","CFunctions",function(to
             case "NOT_FOUND":
                 message=Config.messages.notFound;
                 CFunctions.timeoutRedirect("./",true);
+                break;
+            case "TOPIC_CLOSED":
+                message=Config.messages.topicClosed;
                 break;
             default :
                 message=Config.messages.loadDataError;
