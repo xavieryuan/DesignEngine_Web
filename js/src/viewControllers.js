@@ -887,6 +887,7 @@ viewControllers.controller("boxes",['$scope',"$interval","$routeParams","Config"
     $scope.loadBoxes=function(){
         Storage.clearScrollData(Config.scrollScreenType.box);
         $scope.boxes=[];
+        $scope.loadedData=false;
         Box.getBoxes($scope.filter.scope,$scope.filter.keyword).$promise.then(function(data){
 
 
