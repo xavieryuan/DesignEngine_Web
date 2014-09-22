@@ -131,7 +131,7 @@
     <section class="de_pop_show_media" ng-if="mainFlags.showPlayMedialPanel">
         <!--<div class="de_pop_show_media_content" ng-include="mainFlags.mediaPlayTemplate"></div>-->
         <embed class="de_pop_show_flash" name="plugin" type="application/x-shockwave-flash"
-               width="100%" height="100%" wmode="opaque" embed-src="mainFlags.playMediaPath"
+               width="100%" height="100%" wmode="opaque" embed-src="{{mainFlags.playMediaPath}}"
                ng-if="mainFlags.playMediaType=='64'&&mainFlags.playMediaPath!=''"></embed>
         <iframe class="de_pop_show_media_content"  ng-src="{{mainFlags.playMediaPath}}" ng-if="mainFlags.playMediaType!='64'&&mainFlags.playMediaPath!=''">
         </iframe>
