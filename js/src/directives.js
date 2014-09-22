@@ -67,6 +67,7 @@ directives.directive('embedSrc', ["$sce",function ($sce) {
         link: function (scope, element, attrs) {
             var current = element;
             scope.$watch(attrs.embedSrc, function () {
+                console.log(attrs.embedSrc);
                 var clone = element
                     .clone()
                     .attr('src', $sce.trustAsResourceUrl(attrs.embedSrc));
