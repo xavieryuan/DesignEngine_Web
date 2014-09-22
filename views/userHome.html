@@ -34,7 +34,7 @@
     </ul>
 	<p class="topic_description">{{user.setting.description}}</p>
    	
-   	<p class="noResult" ng-if="projects.length==0">未上传任何作品。</p>
+   	<p class="noResult" ng-if="projects.length==0">{{user.fullname}}尚未上传任何作品。</p>
     <!-- 个人作品列表 -->
     <ul class="de_project_grid de_borderbox" >
         <li class="de_borderbox" ng-repeat="project in projects">
