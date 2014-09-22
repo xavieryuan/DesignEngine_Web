@@ -258,6 +258,7 @@ li {
 .noResult{
 	font-size: 1em;
 	color:#999;
+	margin: 20px;
 }
 /*****************弹出窗口小组件(通用)******************/
 .de_popout {
@@ -3407,6 +3408,10 @@ span.zy_tooltips{
         display: inline-block!important;
 		width:100%!important;
     }
+	
+	.noResult{
+		margin: 20px 8px;
+	}
 	
 	/*作品列表*/
 	.de_project_grid{
