@@ -255,6 +255,10 @@ li {
     box-sizing: border-box;
 }
 
+.noResult{
+	font-size: 1em;
+	color:#999;
+}
 /*****************弹出窗口小组件(通用)******************/
 .de_popout {
     background: #fff;
