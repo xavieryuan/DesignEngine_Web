@@ -185,14 +185,8 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
                 var res = JSON.parse(info);
                 var src = Config.qNBucketDomain + res.key;
 
-                $scope.user.profile=src;
-                $scope.user.profile_preview=
-                    Config.qNBucketDomain+res.key+Config.qNImagePreviewSuffix.replace(":size","40x40");
-
-                $scope.$apply();
-
                 //判断是否是1：1
-                /*$http.get(src+"?imageInfo",{
+                $http.get(src+"?imageInfo",{
                     transformRequest:function(data, headersGetter){
                         return JSON.stringify(data);
                     },
@@ -202,12 +196,12 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
                 }).success(function(data,status,headers,config,statusText ){
                     //console.log(data);
                     if(data.width===data.height){
-                        $scope.user.setting.profile_image=src;
+                        $scope.user.profile=src;
                         //$scope.$apply();
                     }else{
                         toaster.pop('error',Config.messages.errorTitle,Config.messages.imgSizeError,null,null);
                     }
-                });*/
+                });
 
             }
         });

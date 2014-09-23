@@ -393,7 +393,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 var length=data.artifact.assets.length;
 
                 $scope.project.id=data.artifact.id;
-                $scope.project.profile_image=$scope.project.profile_image_preview=data.artifact.profile_image;
+                $scope.project.profile_image=data.artifact.profile_image;
                 //$scope.project.assets=data.artifact.assets;
                 $scope.project.terms=data.artifact.terms;
                 $scope.project.name=data.artifact.name;
@@ -423,7 +423,6 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         $scope.project={
             id:0,
             profile_image:Config.thumbs.defaultThumb,
-            profile_image_preview:Config.thumbs.defaultThumb,
             medias:{},
             terms:[],
             assets:[],
@@ -555,14 +554,8 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                     var res = JSON.parse(info);
                     var src= Config.qNBucketDomain + res.key; //获取上传成功后的文件的Url
 
-                    $scope.project.profile_image = src;
-                    $scope.project.profile_image_preview=
-                        Config.qNBucketDomain+res.key+Config.qNImagePreviewSuffix.replace(":size","400x400");
-
-                    $scope.$apply();
-
                     //判断是否是1：1
-                    /*$http.get(src+"?imageInfo",{
+                    $http.get(src+"?imageInfo",{
                         transformRequest:function(data, headersGetter){
                             return JSON.stringify(data);
                         },
@@ -578,7 +571,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                             toaster.pop('error',Config.messages.errorTitle,Config.messages.imgSizeError,null,null);
                         }
 
-                    });*/
+                    });
                 }
             });
         };

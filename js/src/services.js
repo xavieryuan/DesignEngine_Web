@@ -677,7 +677,6 @@ services.service("Storage",function(){
     //用于修改的时候使用
     this.editUserObj={
         profile:"",
-        profile_preview:"",
         email:"",
         description:""
     };
@@ -692,7 +691,7 @@ services.service("Storage",function(){
     };
     this.initEditUserObj=function(){
         this.editUserObj.id=this.currentUser.id;
-        this.editUserObj.profile=this.editUserObj.profile_preview=this.currentUser.profile;
+        this.editUserObj.profile=this.currentUser.profile;
         this.editUserObj.email=this.currentUser.email;
         this.editUserObj.description=this.currentUser.description;
     };
