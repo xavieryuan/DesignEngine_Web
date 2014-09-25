@@ -256,6 +256,9 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
                                 }
                             }
 
+                            //跳出循环
+                            break;
+
                         }
                     }
                     $scope.project.praised=!$scope.project.praised;
