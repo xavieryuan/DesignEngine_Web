@@ -106,7 +106,7 @@ directives.directive("emailExist",function($http){
         link:function(scope,elem,attrs,ctrl){
             elem.bind("keyup",function(){
                 if(ctrl.$viewValue){
-                    $http.get("/email_exists",{
+                    $http.get("email_exists",{
                         params:{email:ctrl.$viewValue},
                         transformRequest:function(data, headersGetter){
                             return JSON.stringify(data);

@@ -262,7 +262,7 @@ viewControllers.controller("projectDetail",["$scope","$window","Storage","Config
 
                 });
             }else{
-                $scope.login();
+                $scope.login(true);
             }
         };
         $scope.toggleShowProject=function(id){

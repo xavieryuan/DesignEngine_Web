@@ -604,9 +604,15 @@ services.service("CFunctions",["$rootScope","$location","$http","$timeout","toas
         }});
     };
 
-    this.formatDate=function(format){
+    this.formatDate=function(format,dateTime){
         var string,currentDate,year,month,day, h, m, s,fMonth,fDay,fH,fM,fS;
-        currentDate =new Date();
+
+        if(typeof format ==="number"){
+            dateTime=format;
+            format=null;
+        }
+
+        currentDate =dateTime?new Date(dateTime):new Date();
         year=currentDate.getFullYear();
         fMonth=month=currentDate.getMonth()+1;
         fDay=day=currentDate.getDay();

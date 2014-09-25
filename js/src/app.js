@@ -40,12 +40,20 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
 
         //ajax的一些默认配置，全局启用loading
         $httpProvider.defaults.transformRequest.push(function (data) {
-            App.showLoading();
+            var href=location.href;
+            if(href.indexOf("register")==-1&&href.indexOf("forget_password")==-1){
+                App.showLoading();
+            }
+
             return data;
         });
 
         $httpProvider.defaults.transformResponse.push(function (data) {
-            App.hideLoading();
+            var href=location.href;
+            if(href.indexOf("register")==-1&&href.indexOf("forget_password")==-1){
+                App.hideLoading();
+            }
+
             return data;
         });
 
@@ -164,11 +172,13 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
         /**
          *点击登陆菜单
          */
-        $scope.login=function(){
+        $scope.login=function(replaceUrl){
+
+            replaceUrl=!!replaceUrl;
 
             //每次点击加一个随机数，让页面重新加载，执行controller中的代码,不然第二次点击是blackout无法显示
             $scope.popFlags.popTemplateUrl=Config.templateUrls.signIn+"?dc="+new Date().getTime();
-            LocationChanger.skipReload().withReplace(Config.urls.signIn,false);
+            LocationChanger.skipReload().withReplace(Config.urls.signIn,replaceUrl);
         };
         $scope.toSearchPanel=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.search+"?dc="+new Date().getTime();
