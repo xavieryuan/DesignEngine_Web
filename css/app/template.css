@@ -42,6 +42,14 @@ form{
 	margin-right: 10px;
 }
 
+.de_error_msg{
+	font-size: 16px;
+	color:#999;
+	margin: 30px;
+	text-shadow: 0 1px rgba(255,255,255,1);
+	font-weight: bold;
+}
+
 .de_form_row{
     margin-bottom: 25px;
     position: relative;
