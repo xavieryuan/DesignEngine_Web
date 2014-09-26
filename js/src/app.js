@@ -40,6 +40,10 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
            
 		 $httpProvider.defaults.cache=false;
 
+
+        //禁止本身的缓存
+        $httpProvider.defaults.cache=false;
+
         //ajax的一些默认配置，全局启用loading
 
         $httpProvider.defaults.transformRequest.push(function (data) {
@@ -74,6 +78,10 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
                     config.url=config.url.replace(/\\$/,"/");
 
 		if(config.method=='GET'){
+                    //console.log(config);
+
+                    //消除服务端缓存的影响
+                    if(config.method=='GET'&&config.url.indexOf("views")==-1){
                         var separator = config.url.indexOf('?') === -1 ? '?' : '&';
                         config.url = config.url+separator+'noCache=' + new Date().getTime();
                     }
@@ -185,12 +193,12 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
 
             replaceUrl=!!replaceUrl;
 
-            //每次点击加一个随机数，让页面重新加载，执行controller中的代码,不然第二次点击是blackout无法显示
-            $scope.popFlags.popTemplateUrl=Config.templateUrls.signIn+"?dc="+new Date().getTime();
+            //每次点击加一个随机数，让页面重新加载，执行controller中的代码,不然第二次点击时blackout无法显示
+            $scope.popFlags.popTemplateUrl=Config.templateUrls.signIn;
             LocationChanger.skipReload().withReplace(Config.urls.signIn,replaceUrl);
         };
         $scope.toSearchPanel=function(){
-            $scope.popFlags.popTemplateUrl=Config.templateUrls.search+"?dc="+new Date().getTime();
+            $scope.popFlags.popTemplateUrl=Config.templateUrls.search;
             LocationChanger.skipReload().withReplace(Config.urls.search,false);
         };
 
@@ -221,7 +229,7 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
          *点击修改密码菜单
          */
         $scope.editPwd=function(){
-            $scope.popFlags.popTemplateUrl=Config.templateUrls.editPwd+"?dc="+new Date().getTime();
+            $scope.popFlags.popTemplateUrl=Config.templateUrls.editPwd;
             LocationChanger.skipReload().withReplace(Config.urls.editPwd,false);
         };
 
@@ -229,7 +237,7 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
          *点击修改资料菜单
          */
         $scope.editInfo=function(){
-            $scope.popFlags.popTemplateUrl=Config.templateUrls.editInfo+"?dc="+new Date().getTime();
+            $scope.popFlags.popTemplateUrl=Config.templateUrls.editInfo;
             LocationChanger.skipReload().withReplace(Config.urls.editInfo.replace(":userId",$scope.currentUser.id),false);
         };
 

@@ -19,11 +19,11 @@ popControllers.controller("signIn",["$scope","Config","CFunctions","LocationChan
         };
 
         $scope.toRegPanel=function(){
-            $scope.popFlags.popTemplateUrl=Config.templateUrls.signUp+"?dc="+new Date().getTime();
+            $scope.popFlags.popTemplateUrl=Config.templateUrls.signUp;
             LocationChanger.skipReload().withReplace(Config.urls.signUp,true);
         };
         $scope.forgetPwd=function(){
-            $scope.popFlags.popTemplateUrl=Config.templateUrls.forgetPwd+"?dc="+new Date().getTime();
+            $scope.popFlags.popTemplateUrl=Config.templateUrls.forgetPwd;
             LocationChanger.skipReload().withReplace(Config.urls.forgetPwd,true);
         };
 
