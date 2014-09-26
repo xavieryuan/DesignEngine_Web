@@ -3569,6 +3569,7 @@ span.zy_tooltips{
 }
 .de_manager_title{
 	line-height: 40px;
+	text-shadow: 0 1px rgba(255,255,255,1);
 }
 .de_manager_search{
 	height: 40px;
