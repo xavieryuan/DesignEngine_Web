@@ -74,8 +74,10 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
                     */
                     config.url=config.url.replace(/\\$/,"/");
 
+                    //console.log(config);
+
                     //消除服务端缓存的影响
-                    if(config.method=='GET'){
+                    if(config.method=='GET'&&config.url.indexOf("views")==-1){
                         var separator = config.url.indexOf('?') === -1 ? '?' : '&';
                         config.url = config.url+separator+'noCache=' + new Date().getTime();
                     }
