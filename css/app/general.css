@@ -3570,12 +3570,14 @@ span.zy_tooltips{
 .de_manager_title{
 	line-height: 40px;
 	text-shadow: 0 1px rgba(255,255,255,1);
+	color: #666;
+	font-weight: bold;
 }
 .de_manager_search{
 	height: 40px;
 	position: absolute;
 	top: 0;
-	right: 30px;
+	right: 0;
 }
 .de_manager_search .de_inputbox_gray{
 	width: 200px;
@@ -3595,8 +3597,15 @@ span.zy_tooltips{
     width: 100px;
     height: 100px;
 }
+.de_manager_table th{
+    text-align: left;
+	padding:8px;
+	font-size: 14px;
+}
 .de_manager_table td{
     text-align: center;
+	padding:8px;
+	font-size: 14px;
 }
 .de_manager_table td.title{
     text-align: left;
@@ -3616,4 +3625,12 @@ span.zy_tooltips{
     vertical-align: top;
     line-height: 100px;
     white-space: nowrap;
+}
+
+.de_manager_table .tableInfo{
+	float:none;
+	font-size: 14px;
+}
+.de_manager_table .pagination{
+	float: none;
 }
