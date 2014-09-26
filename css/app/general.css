@@ -3576,6 +3576,17 @@ span.zy_tooltips{
 	top: 0;
 	right: 30px;
 }
+.de_manager_search .de_inputbox_gray{
+	width: 200px;
+	display: inline-block;
+}
+.de_manager_search select{
+	height: 40px;
+	padding: 0 10px;
+}
+.de_manager_search .de_button{
+	width:100px;
+}
 .de_manager_table thead{
     background: #ccc;
 }
