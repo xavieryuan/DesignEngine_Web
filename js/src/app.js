@@ -37,15 +37,12 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
             when("/change_password",{templateUrl: 'views/projects.html',controller:"projects"}).
             when("/forget_password",{templateUrl: 'views/projects.html',controller:"projects"});/*.
             otherwise({redirectTo: '/'});*/
-           
-		 $httpProvider.defaults.cache=false;
 
 
         //禁止ajax的缓存
         //$httpProvider.defaults.cache=false;
 
         //ajax的一些默认配置，全局启用loading
-
         $httpProvider.defaults.transformRequest.push(function (data) {
             var href=location.href;
             if(href.indexOf("register")==-1&&href.indexOf("forget_password")==-1){
@@ -77,15 +74,13 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
                     */
                     config.url=config.url.replace(/\\$/,"/");
 
-		
                     //console.log(config);
 
                     //消除服务端缓存的影响
-                    if(config.method=='GET'&&config.url.indexOf("views")==-1){
+                    if(config.method=='GET'&&config.url.indexOf("views")==-1&&config.url.indexOf("ownPagination")==-1){
                         var separator = config.url.indexOf('?') === -1 ? '?' : '&';
                         config.url = config.url+separator+'noCache=' + new Date().getTime();
                     }
-
 
                     return config||$q.reject(config);
                 },
@@ -133,6 +128,16 @@ pinWall.run(["$rootScope","$templateCache","App","AjaxErrorHandler",function($ro
     //禁用view和include缓存
     /*$rootScope.$on('$viewContentLoaded', function() {
         $templateCache.removeAll();
+    });*/
+
+    /*$rootScope.$on('$locationChangeSuccess', function () {
+        console.log("$locationChangeSuccess"+new Date().getTime());
+    });*/
+    /*$rootScope.$on('$routeChangeSuccess', function () {
+        console.log("$routeChangeSuccess"+new Date().getTime());
+    });*/
+    /*$rootScope.$on('$routeChangeStart', function () {
+        console.log("$routeChangeStart"+new Date().getTime());
     });*/
 
 }]);

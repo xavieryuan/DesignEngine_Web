@@ -738,11 +738,13 @@ services.service('LocationChanger', ['$location', '$route', '$rootScope',
 
             //这里绑定过后面会一直响应，关闭弹出层的时候要取消绑定，绑定的时候会返回取消绑定的函数
             me.rootScopeEvent=$rootScope.$on('$locationChangeSuccess', function () {
+
                 $route.current = lastRoute;
 
                 //相应过后，立即取消绑定的事件
                 me.rootScopeEvent();
             });
+
 
             return me;
         };
