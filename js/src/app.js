@@ -208,6 +208,9 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
 
             $scope.showBlackOut();
         };
+        $scope.logout=function(){
+            location.href="logout?noCache="+new Date().getTime();
+        };
         $scope.toSearchPanel=function(){
             $scope.popFlags.popTemplateUrl=Config.templateUrls.search+"?noCache="+new Date().getTime();
             LocationChanger.skipReload().withReplace(Config.urls.search,false);
