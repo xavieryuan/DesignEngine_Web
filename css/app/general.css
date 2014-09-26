@@ -3586,19 +3586,29 @@ span.zy_tooltips{
 .de_manager_search select{
 	height: 40px;
 	padding: 0 10px;
+	border: #ccc 1px solid;
 }
 .de_manager_search .de_button{
 	width:100px;
 }
+.de_manager_table{
+	border-spacing: 1px;
+}
 .de_manager_table thead{
     background: #ccc;
+}
+.de_manager_table a{
+	color: #07af69;
 }
 .de_manager_table img{
     width: 100px;
     height: 100px;
 }
+.de_manager_table tr:nth-child(2n){
+	background:#fff;
+}
 .de_manager_table th{
-    text-align: left;
+    text-align: center;
 	padding:8px;
 	font-size: 14px;
 }
