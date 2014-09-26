@@ -3602,13 +3602,22 @@ span.zy_tooltips{
 	padding:8px;
 	font-size: 14px;
 }
+.de_manager_table th.name_col{
+	min-width: 100px;
+}
+.de_manager_table th.time_col{
+	min-width: 100px;
+}
+.de_manager_table th.action_col{
+	min-width: 80px;
+}
 .de_manager_table td{
     text-align: center;
 	padding:8px;
 	font-size: 14px;
 }
 .de_manager_table td.title{
-    text-align: left;
+    text-align: center;
     padding-left: 20px;
 }
 .de_manager_table td.content{
