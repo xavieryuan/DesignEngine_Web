@@ -3546,7 +3546,7 @@ span.zy_tooltips{
 }
 
 /**********************管理界面***************/
-.de_screen_manager_panel{
+/*.de_screen_manager_panel{
     position: relative;
     top:10px;
 }
@@ -3560,6 +3560,21 @@ span.zy_tooltips{
 .de_screen_manager_panel .child_panel .de_manager_search{
     margin-left: auto;
     width: 300px;
+}*/
+
+.de_magager_header{
+	margin:20px 30px;
+	position: relative;
+	height:40px;
+}
+.de_manager_title{
+	line-height: 40px;
+}
+.de_manager_search{
+	height: 40px;
+	position: absolute;
+	top: 0;
+	right: 30px;
 }
 .de_manager_table thead{
     background: #ccc;

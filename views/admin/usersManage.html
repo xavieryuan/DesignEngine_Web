@@ -1,10 +1,10 @@
-<header>
+<header class="de_magager_header">
     <span class="de_manager_title">用户管理</span>
     <div class="de_manager_search">
-        <input type="text" ng-model="keyword">
+        <input type="text" ng-model="keyword" class="de_borderbox de_inputbox_gray">
         <select disabled ng-model="type" ng-options="t.value as t.name for t in types">
         </select>
-        <input type="button" value="刷选" ng-click="tableSearch();">
+        <input type="button" value="刷选" ng-click="tableSearch();" class="de_button">
     </div>
 </header>
 
