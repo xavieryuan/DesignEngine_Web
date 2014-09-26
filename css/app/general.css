@@ -3600,6 +3600,9 @@ span.zy_tooltips{
 .de_manager_table a{
 	color: #07af69;
 }
+.de_manager_table a.del{
+	color: #c1272d;
+}
 .de_manager_table img{
     width: 100px;
     height: 100px;

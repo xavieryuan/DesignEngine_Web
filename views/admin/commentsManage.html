@@ -18,7 +18,7 @@
             <td><a ng-href="users/{{d.user.id}}">{{d.user.fullname}}</a></td>
             <td><a href="" ng-click="showProjectDetail(d.artifact.id)">{{d.artifact.name}}</a></td>
             <td>{{d.comment.commented_at}}</td>
-            <td><a href="" ng-click="deleteComment(d.comment.id,d.artifact.id,$index)">删除</a></td>
+            <td><a href="" ng-click="deleteComment(d.comment.id,d.artifact.id,$index)" class="del">删除</a></td>
         </tr>
     </tbody>
 </table>
