@@ -77,7 +77,7 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
                     */
                     config.url=config.url.replace(/\\$/,"/");
 
-		if(config.method=='GET'){
+		
                     //console.log(config);
 
                     //消除服务端缓存的影响
