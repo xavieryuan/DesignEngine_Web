@@ -50,6 +50,11 @@ form{
 	font-weight: bold;
 }
 
+.de_error_msg a{
+	color: #07af69;
+	text-decoration: none;
+}
+
 .de_form_row{
     margin-bottom: 25px;
     position: relative;
