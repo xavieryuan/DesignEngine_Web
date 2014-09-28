@@ -6,7 +6,7 @@ weChatApp.constant("Config",{
         previewSmall:"-400x300"
     },
     ajaxUrls:{
-        getProjectDetail:"/api/artifacts/:projectId"
+        getProjectDetail:"../api/artifacts/:projectId"
     }
 });
 
@@ -89,6 +89,7 @@ weChatApp.directive("overwriteWeiXin",function(){
 });
 
 weChatApp.controller("projectDetail",["$scope","$http","Config","CFunctions",function($scope,$http,Config,CFunctions){
+    console.log("controller init");
     var projectId=CFunctions.getPathParam();
     $scope.project={};
     $http.get(Config.ajaxUrls.getProjectDetail.replace(":projectId",projectId)).success(function(data){
