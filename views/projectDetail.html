@@ -95,7 +95,7 @@
         <figure ng-repeat="at in project.assets" ng-if="isMobile" ng-switch="at.type">
             <img ng-switch-when="1" ng-src="{{at.profile_image}}"/>
 
-            <a ng-switch-when="4" ng-href="{{at.media_file+'#mp.weixin.qq.com'}}" target="_self" class="de_has_media de_has_video">
+            <a ng-switch-when="4" ng-href="{{at.media_file+'?mp.weixin.qq.com'}}" target="_self" class="de_has_media de_has_video">
                 <img ng-src="{{at.profile_image}}"/>
             </a>
 

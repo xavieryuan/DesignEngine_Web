@@ -171,7 +171,7 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
             "minLength":Config.validError.minLength,
             "pwdEqualError":Config.validError.pwdEqualError
         };
-        $scope.isMobile=!CFunctions.checkMobile();
+        $scope.isMobile=CFunctions.checkMobile();
         $scope.currentUser=Storage.currentUser;
         //$scope.currentUser.id=1;
 
