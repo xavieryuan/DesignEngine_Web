@@ -9,7 +9,7 @@
     <base id="de_base_url" href="http://design.hnu.edu.cn/pinwall/wechat_template/">
     <link href="css/wechat_template.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="js/lib/angular.min.js"></script>
-    <script type="text/javascript" src="js/src/weChat.js"></script>
+    <!--<script type="text/javascript" src="js/src/weChat.js"></script>-->
     <script type="text/javascript" src="js/src/app.js"></script>
 </head>
 <body>
@@ -36,7 +36,10 @@
         <figure ng-repeat="at in project.assets" ng-switch="at.type">
             <img ng-switch-when="1" ng-src="{{at.profile_image}}"/>
 
-            <a ng-switch-when="4" ng-href="{{at.media_file+'?mp.weixin.qq.com'}}" target="_self" class="de_has_media de_has_video">
+            <a ng-switch-when="4" ng-if="isAndroid" play-mp4="{{at.media_file}}" href="" class="de_has_media de_has_video">
+                <img ng-src="{{at.profile_image}}"/>
+            </a>
+            <a ng-switch-when="4" ng-if="!isAndroid" ng-href="{{at.media_file}}" target="_self" class="de_has_media de_has_video">
                 <img ng-src="{{at.profile_image}}"/>
             </a>
 
@@ -84,20 +87,23 @@
         <p>© 湖南大学设计艺术学院，design@hnu.edu.cn</p>
 </footer>
 <script>
-    /*var imgUrl = "http://design-pinwall.qiniudn.com/group1_M00_06_51_oYYBAFOYelaADQk_AAGkMW0A0TM442.png";
-    var lineLink = location.href;
-    var descContent = "fenxiangdemiaoshu";
-    var shareTitle = "hao";
-    var appid = '';
+    //一定要放在页面里，不然android无法使用
+    shareData={
+        imgUrl:"",
+        lineLink:location.href,
+        descContent:"",
+        shareTitle:"",
+        appId:""
+    };
     function shareFriend() {
         WeixinJSBridge.invoke('sendAppMessage',{
-            "appid": appid,
-            "img_url": imgUrl,
+            "appid": shareData.appId,
+            "img_url": shareData.imgUrl,
             "img_width": "200",
             "img_height": "200",
-            "link": lineLink,
-            "desc": descContent,
-            "title": shareTitle
+            "link": shareData.lineLink,
+            "desc": shareData.descContent,
+            "title": shareData.shareTitle
         }, function(res) {
 
         })
@@ -105,20 +111,20 @@
     function shareTimeline() {
         WeixinJSBridge.invoke('shareTimeline',{
             "appid":"",  //appid 设置空就好了。
-            "img_url": imgUrl,
+            "img_url": shareData.imgUrl,
             "img_width": "200",
             "img_height": "200",
-            "link": lineLink,
-            "desc": descContent,
-            "title": shareTitle
+            "link": shareData.lineLink,
+            "desc": shareData.descContent,
+            "title": shareData.shareTitle
         }, function(res) {
 
         });
     }
     function shareWeibo() {
         WeixinJSBridge.invoke('shareWeibo',{
-            "content": descContent,
-            "url": lineLink
+            "content": shareData.descContent,
+            "url": shareData.lineLink
         }, function(res) {
 
         });
@@ -138,7 +144,8 @@
         WeixinJSBridge.on('menu:share:weibo', function(argv){
             shareWeibo();
         });
-    }, false);*/
+    }, false);
+
 </script>
 </body>
 </html>

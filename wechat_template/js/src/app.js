@@ -28,6 +28,7 @@ weChatApp.service("CFunctions",["$rootScope",function($rootScope){
 
 weChatApp.controller("projectDetail",["$scope","$http","Config","CFunctions",function($scope,$http,Config,CFunctions){
     var projectId=CFunctions.getPathParam();
+    $scope.isAndroid=navigator.userAgent.toLowerCase().match(/android/i) == "android";
     $scope.project={};
     $http.get(Config.ajaxUrls.getProjectDetail.replace(":projectId",projectId)).success(function(data){
         $scope.project=data.artifact;
@@ -47,6 +48,18 @@ weChatApp.controller("projectDetail",["$scope","$http","Config","CFunctions",fun
                 fileInfo["filePath"]+Config.imageScale.previewSmall+fileInfo["ext"];
         }
     });
+}]);
+
+weChatApp.directive('playMp4', ["$sce",function ($sce) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            element.on("click",function(){
+                var src=attrs.playMp4;
+                element.replaceWith("<video src='"+src+"'></video>");
+            });
+        }
+    };
 }]);
 
 

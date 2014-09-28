@@ -1009,7 +1009,8 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
         };
 }]);
 
-viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User","Storage",function($scope,$routeParams,$interval,User,Storage){
+viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User","Storage","Config",
+    function($scope,$routeParams,$interval,User,Storage,Config){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     var userId=$routeParams.userId;
