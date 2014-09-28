@@ -65,10 +65,12 @@ weChatApp.directive("overwriteWeiXin",function(){
                             "desc": descContent,
                             "title": shareTitle
                         }, function(res) {
+
                         })
                     }
                     function shareTimeline() {
                         WeixinJSBridge.invoke('shareTimeline',{
+                            "appid":"",  //appid 设置空就好了。
                             "img_url": imgUrl,
                             "img_width": "200",
                             "img_height": "200",
@@ -76,6 +78,7 @@ weChatApp.directive("overwriteWeiXin",function(){
                             "desc": descContent,
                             "title": shareTitle
                         }, function(res) {
+                            _report('timeline', res.err_msg
                         });
                     }
                     function shareWeibo() {
