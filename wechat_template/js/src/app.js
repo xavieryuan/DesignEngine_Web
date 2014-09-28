@@ -78,7 +78,7 @@ weChatApp.directive("overwriteWeiXin",function(){
                             "desc": descContent,
                             "title": shareTitle
                         }, function(res) {
-                            _report('timeline', res.err_msg
+
                         });
                     }
                     function shareWeibo() {
