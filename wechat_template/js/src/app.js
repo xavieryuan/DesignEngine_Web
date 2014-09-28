@@ -32,7 +32,6 @@ wechat.directive("overwriteWeiXin",function(){
             var shareTitle = scope.project.name;
             var appid = '';
             function shareFriend() {
-                alert(imgUrl);
                 WeixinJSBridge.invoke('sendAppMessage',{
                     "appid": appid,
                     "img_url": imgUrl,
@@ -68,14 +67,17 @@ wechat.directive("overwriteWeiXin",function(){
             document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
                 // 发送给好友
                 WeixinJSBridge.on('menu:share:appmessage', function(argv){
+                    alert(imgUrl);
                     shareFriend();
                 });
                 // 分享到朋友圈
                 WeixinJSBridge.on('menu:share:timeline', function(argv){
+                    alert(imgUrl);
                     shareTimeline();
                 });
                 // 分享到微博
                 WeixinJSBridge.on('menu:share:weibo', function(argv){
+                    alert(imgUrl);
                     shareWeibo();
                 });
             }, false);
