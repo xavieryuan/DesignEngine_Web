@@ -1,6 +1,6 @@
-var wechat=angular.module("wechat",[]);
+var weChatApp=angular.module("weChatApp",[]);
 
-wechat.constant("Config",{
+weChatApp.constant("Config",{
     imageScale:{
         thumbSmall:"-200x200",
         previewSmall:"-400x300"
@@ -10,7 +10,7 @@ wechat.constant("Config",{
     }
 });
 
-wechat.service("CFunctions",["$rootScope","$location",function($rootScope,$location){
+weChatApp.service("CFunctions",["$rootScope","$location",function($rootScope,$location){
     this.getFilePathInfo=function(filePath){
         var extPos=filePath.lastIndexOf(".");
 
@@ -26,7 +26,7 @@ wechat.service("CFunctions",["$rootScope","$location",function($rootScope,$locat
     };
 }]);
 
-wechat.directive("overwriteWeiXin",function(){
+weChatApp.directive("overwriteWeiXin",function(){
     return {
         link: function (scope, element, attrs, ctrl) {
             var imgUrl = scope.project.profile_image;
@@ -88,7 +88,7 @@ wechat.directive("overwriteWeiXin",function(){
     }
 });
 
-wechat.controller("projectDetail",["$scope","$http","Config","CFunctions",function($scope,$http,Config,CFunctions){
+weChatApp.controller("projectDetail",["$scope","$http","Config","CFunctions",function($scope,$http,Config,CFunctions){
     var projectId=CFunctions.getPathParam();
     $scope.project={};
     $http.get(Config.ajaxUrls.getProjectDetail.replace(":projectId",projectId)).success(function(data){
