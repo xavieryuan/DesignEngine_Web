@@ -1,7 +1,10 @@
-var wechat=angular.module("angular",[]);
+var wechat=angular.module("wechat",[]);
 
 wechat.constant("Config",{
-    previewImgSuffix:"-400x300",
+    imageScale:{
+        thumbSmall:"-200x200",
+        previewSmall:"-400x300"
+    },
     ajaxUrls:{
         getProjectDetail:"/api/artifacts/:projectId"
     }
