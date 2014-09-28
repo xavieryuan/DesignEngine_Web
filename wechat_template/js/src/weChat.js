@@ -1,17 +1,19 @@
-var imgUrl = "http://design-pinwall.qiniudn.com/group1_M00_06_51_oYYBAFOYelaADQk_AAGkMW0A0TM442.png";
-var lineLink = location.href;
-var descContent = "fenxiangdemiaoshu";
-var shareTitle = "haoneibu";
-var appid = '';
+var shareData={
+    imgUrl:"",
+    lineLink:location.href,
+    descContent:"",
+    shareTitle:"",
+    appId:""
+};
 function shareFriend() {
     WeixinJSBridge.invoke('sendAppMessage',{
-        "appid": appid,
-        "img_url": imgUrl,
+        "appid": shareData.appId,
+        "img_url": shareData.imgUrl,
         "img_width": "200",
         "img_height": "200",
-        "link": lineLink,
-        "desc": descContent,
-        "title": shareTitle
+        "link": shareData.lineLink,
+        "desc": shareData.descContent,
+        "title": shareData.shareTitle
     }, function(res) {
 
     })
@@ -19,20 +21,20 @@ function shareFriend() {
 function shareTimeline() {
     WeixinJSBridge.invoke('shareTimeline',{
         "appid":"",  //appid 设置空就好了。
-        "img_url": imgUrl,
+        "img_url": shareData.imgUrl,
         "img_width": "200",
         "img_height": "200",
-        "link": lineLink,
-        "desc": descContent,
-        "title": shareTitle
+        "link": shareData.lineLink,
+        "desc": shareData.descContent,
+        "title": shareData.shareTitle
     }, function(res) {
 
     });
 }
 function shareWeibo() {
     WeixinJSBridge.invoke('shareWeibo',{
-        "content": descContent,
-        "url": lineLink
+        "content": shareData.descContent,
+        "url": shareData.lineLink
     }, function(res) {
 
     });
