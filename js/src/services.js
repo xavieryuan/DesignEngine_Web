@@ -583,7 +583,7 @@ services.service("CFunctions",["$rootScope","$location","$http","$timeout","toas
         return uploader;
     };
     this.getPathParam=function(){
-        var path=$location.path();
+        var path=location.href;
         var pos=path.lastIndexOf("/");
         return path.substring(pos+1);
     };
