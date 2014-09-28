@@ -32,6 +32,7 @@ wechat.directive("overwriteWeiXin",function(){
             var shareTitle = scope.project.name;
             var appid = '';
             function shareFriend() {
+                alert(imgUrl);
                 WeixinJSBridge.invoke('sendAppMessage',{
                     "appid": appid,
                     "img_url": imgUrl,
