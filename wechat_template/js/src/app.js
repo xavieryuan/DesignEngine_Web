@@ -23,6 +23,14 @@ wechat.service("CFunctions",["$rootScope","$location",function($rootScope,$locat
     };
 }]);
 
+wechat.directive("overwriteWeiXin",function(){
+    return {
+        link: function (scope, element, attrs, ctrl) {
+
+        }
+    }
+});
+
 wechat.controller("projectDetail",["$scope","$http","Config","CFunctions",function($scope,$http,Config,CFunctions){
     var projectId=CFunctions.getPathParam();
     $scope.project={};
