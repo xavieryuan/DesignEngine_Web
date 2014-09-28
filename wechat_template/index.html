@@ -69,11 +69,11 @@
                 <img ng-src="{{at.profile_image}}"/>
             </a>
 
-            <figcaption>
+            <figcaption ng-if="at.name||at.description">
                 {{at.name}}
-            <span class="description">
-                {{at.description}}
-            </span>
+                <span class="description">
+                    {{at.description}}
+                </span>
             </figcaption>
 
         </figure>

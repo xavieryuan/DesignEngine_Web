@@ -83,7 +83,7 @@
                href="" class="de_has_media de_has_flash">
                 <img ng-src="{{at.profile_image}}"/></a>
 
-            <figcaption>
+            <figcaption ng-if="at.name||at.description">
                 {{at.name}}
                 <span class="description">
                     {{at.description}}
@@ -129,7 +129,7 @@
                 <img ng-src="{{at.profile_image}}"/>
             </a>
 
-            <figcaption>
+            <figcaption ng-if="at.name||at.description">
                 {{at.name}}
                 <span class="description">
                     {{at.description}}
