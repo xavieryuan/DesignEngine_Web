@@ -56,7 +56,7 @@ weChatApp.directive('playMp4', ["$sce",function ($sce) {
         link: function (scope, element, attrs) {
             element.on("click",function(){
                 var src=attrs.playMp4;
-                element.replaceWith("<video src='"+src+"'></video>");
+                element.replaceWith("<video src='"+src+"' controls autoplay></video>");
             });
         }
     };
