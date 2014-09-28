@@ -50,10 +50,10 @@ weChatApp.directive("overwriteWeiXin",function(){
         link: function (scope, element, attrs, ctrl) {
             scope.$watch("project",function(newValue){
                 if(!angular.equals({},newValue)){
-                    var imgUrl = scope.project.profile_image;
+                    var imgUrl = newValue.profile_image;
                     var lineLink = location.href;
-                    var descContent = scope.project.description;
-                    var shareTitle = scope.project.name;
+                    var descContent = newValue.description;
+                    var shareTitle = newValue.name;
                     var appid = '';
                     function shareFriend() {
                         WeixinJSBridge.invoke('sendAppMessage',{
