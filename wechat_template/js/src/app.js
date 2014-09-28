@@ -53,7 +53,7 @@ weChatApp.directive("overwriteWeiXin",function(){
                     var imgUrl = "http://design-pinwall.qiniudn.com/group1_M00_06_51_oYYBAFOYelaADQk_AAGkMW0A0TM442.png";
                     var lineLink = location.href;
                     var descContent = "fenxiangdemiaoshu";
-                    var shareTitle = "hao";
+                    var shareTitle = "haoliddd";
                     var appid = '';
                     function shareFriend() {
                         WeixinJSBridge.invoke('sendAppMessage',{
