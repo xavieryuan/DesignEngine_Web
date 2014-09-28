@@ -1018,6 +1018,8 @@ viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User
     $scope.mainFlags.extMenuActive=false;
     $scope.closeProjectDetailPanel();
 
+    Storage.clearScrollData(Config.scrollScreenType.userDetail);
+
     $scope.user={};
     User.resource.get({userId:userId},function(data){
         $scope.user=data.user;
