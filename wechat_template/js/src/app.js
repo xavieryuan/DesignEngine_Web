@@ -10,7 +10,7 @@ weChatApp.constant("Config",{
     }
 });
 
-weChatApp.service("CFunctions",["$rootScope","$location",function($rootScope,$location){
+weChatApp.service("CFunctions",["$rootScope",function($rootScope){
     this.getFilePathInfo=function(filePath){
         var extPos=filePath.lastIndexOf(".");
 
@@ -20,14 +20,13 @@ weChatApp.service("CFunctions",["$rootScope","$location",function($rootScope,$lo
         }
     };
     this.getPathParam=function(){
-        var path=$location.path();
+        var path=location.href;
         var pos=path.lastIndexOf("/");
         return path.substring(pos+1);
     };
 }]);
 
 weChatApp.controller("projectDetail",["$scope","$http","Config","CFunctions",function($scope,$http,Config,CFunctions){
-    console.log("controller init");
     var projectId=CFunctions.getPathParam();
     $scope.project={};
     $http.get(Config.ajaxUrls.getProjectDetail.replace(":projectId",projectId)).success(function(data){
