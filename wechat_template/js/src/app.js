@@ -45,7 +45,7 @@ weChatApp.controller("projectDetail",["$scope","$http","Config","CFunctions",fun
     });
 }]);
 
-weChatApp.directive("overwriteWeiXin",function(){
+weChatApp.directive("overWeiXin",function(){
     return {
         link: function (scope, element, attrs, ctrl) {
             scope.$watch("project",function(newValue){
