@@ -3035,10 +3035,13 @@ span.zy_tooltips{
 .de_has_file:before{
     background: url(../../images/app/icon50_interactive_content.png) no-repeat;
 }
-.de_has_web_video:before{
+.de_has_pdf:before{
     background: url(../../images/app/icon50_interactive_content.png) no-repeat;
 }
 .de_has_flash:before{
+    background: url(../../images/app/icon50_interactive_content.png) no-repeat;
+}
+.de_has_html5:before{
     background: url(../../images/app/icon50_interactive_content.png) no-repeat;
 }
 

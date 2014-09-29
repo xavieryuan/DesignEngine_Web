@@ -1,0 +1,27 @@
+html{
+    width: 100%;
+    height:100%;
+}
+body{
+    margin:0px;
+    padding:0px;
+    width:100%;
+    height: 100%;
+}
+.presentation,.main {
+    width: 100%;
+    height: 100%;
+}
+.presentation .crocodoc-viewport {
+    overflow: visible;
+}
+
+.controls-container {
+    position: absolute;
+    bottom: 10px;
+    width: 0;
+    left: 50%;
+    overflow: visible;
+    height: 26px;
+    z-index: 1;
+}
