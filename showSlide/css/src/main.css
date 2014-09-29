@@ -34,7 +34,7 @@ body{
 	width:40px;
 	vertical-align: middle;
 	border:none;
-	background:#ccc;
+	background:#efefef;
 }
 .controls-container span{
 	display:inline-block;
@@ -44,4 +44,5 @@ body{
 	padding:0 10px;
 	margin:0 2px;
 	font-size:12px;
+	background:#efefef;
 }
