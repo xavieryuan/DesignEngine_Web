@@ -39,6 +39,7 @@ body{
 	border:none;
 	background:#666;
 	color: #fff;
+	font-size: 12px;
 }
 .controls-container span{
 	display:inline-block;
