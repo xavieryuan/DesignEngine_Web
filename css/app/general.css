@@ -867,6 +867,7 @@ img{
 	margin-right:5px;
 	background: url(../../images/app/icon14_vip_tag.png) no-repeat;
 	vertical-align: middle;
+	display: inline-block;
 }
 
 .de_btn_user_profile .photo {
