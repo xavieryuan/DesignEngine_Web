@@ -663,8 +663,10 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         };
         $scope.deleteBindFile=function(){
             if(confirm(Config.messages.deleteConfirm)){
-                currentMediaUpload.removeFile(currentFileObj);
-                currentMediaUpload.stop();
+                if(currentMediaUpload){
+                    currentMediaUpload.removeFile(currentFileObj);
+                    currentMediaUpload.stop();
+                }
 
                 $scope.currentMediaObj[Config.mediaObj.mediaFilename]="";
                 $scope.currentMediaObj[Config.mediaObj.mediaFilePath]="";
