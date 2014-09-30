@@ -2919,14 +2919,24 @@ span.zy_tooltips{
 .de_comment_box .name {
     text-decoration: none;
     color: #09bc72;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
+	vertical-align: middle;
 }
-
+.de_comment_box .name.vip_user:before{
+	content: "";
+	width: 14px;
+	height: 14px;
+	margin-right: 5px;
+	background: url(../../images/app/icon14_vip_tag.png) no-repeat;
+	vertical-align: middle;
+	display: inline-block;
+}
 .de_comment_box .publishtime {
     font-size: 12px;
     color: #999;
     margin-left: 10px;
+	vertical-align: middle;
 }
 .de_comment_box .de_delete_comment {
     font-size: 0;
