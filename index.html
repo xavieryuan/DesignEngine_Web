@@ -69,9 +69,9 @@
                                 <a ng-href="users/{{currentUser.id}}">我的作品集</a>
                                 <a class="de_btn_upload de_borderbox"   ng-href="projects/create">上传作品</a>
                             </li>
-                            <li class="de_reg_view" ng-if="currentUser.active">
+                            <li class="de_reg_view" ng-if="currentUser.active&&currentUser.roles|arrayHasElements:'vip'">
                                 <a ng-href="users/{{currentUser.id}}/topics">我的投稿箱</a>
-                                <a class="de_btn_create_box de_borderbox" ng-show="currentUser.roles|arrayHasElements:'vip'" ng-href="topics/create">创建投稿箱</a>
+                                <a class="de_btn_create_box de_borderbox" ng-href="topics/create">创建投稿箱</a>
                             </li>                                                       
                             <li class="de_reg_view" ng-if="currentUser.active">
                                 <a href="" ng-click="editInfo()">修改个人信息</a>
