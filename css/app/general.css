@@ -2218,6 +2218,7 @@ ol.mp_list li.mp_selectable {
     font-size: 14px;
     margin-top: 40px;
     line-height: 40px;
+	position: relative;
 }
 .zy_bind_file_info .zy_bind_file_name{
     text-indent: 40px;
@@ -2229,13 +2230,17 @@ ol.mp_list li.mp_selectable {
 	border: none;
 }
 .zy_bind_file_info .zy_delete_bind_file{
-    float:right;
-    margin-right: 5px;
-    cursor: pointer;
-	width:40px;
+    position:absolute;
+	top: 0;
+	right: 0;
+	padding: 0 8px;
+	cursor: pointer;
+	width: 40px;
+	text-align: center;
 }
 .zy_bind_file_info .zy_delete_bind_file:hover{
-    color: #C00;
+    color: #fff;
+	background:#C00;
 }
 
 .zy_add_media_menu {
