@@ -321,7 +321,7 @@ directives.directive("windowScroll", ["$window","$document","$timeout","$interva
 
                                     break;
                                 case Config.scrollScreenType.userDetail:
-                                    User.getUserProjects(scope.userId).$promise.then(function(data){
+                                    User.getUserProjects(scope.user.id).$promise.then(function(data){
                                         var count= 0,length=data.artifacts.length;
                                         var inter=$interval(function(){
                                             if(count<length){

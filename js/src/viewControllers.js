@@ -1024,6 +1024,7 @@ viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User
     Storage.clearScrollData(Config.scrollScreenType.userDetail);
 
     $scope.user={};
+    $scope.user.id=userId;
     User.resource.get({userId:userId},function(data){
         $scope.user=data.user;
         $scope.user.artifact_count=data.artifact_count;

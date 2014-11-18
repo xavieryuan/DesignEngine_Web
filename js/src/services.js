@@ -615,7 +615,7 @@ services.service("CFunctions",["$rootScope","$location","$http","$timeout","toas
         currentDate =dateTime?new Date(dateTime):new Date();
         year=currentDate.getFullYear();
         fMonth=month=currentDate.getMonth()+1;
-        fDay=day=currentDate.getDay();
+        fDay=day=currentDate.getDate();
         fH=h=currentDate.getHours();
         fM=m=currentDate.getMinutes();
         fS=s=currentDate.getSeconds();
@@ -857,7 +857,7 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
             })
         };
 }]);
-services.factory("User",["$rootScope","$resource","CFunctions","Config",function($rootScope,$resource,CFunctions,Config){
+services.factory("User",["$rootScope","$resource","CFunctions","Storage","Config",function($rootScope,$resource,CFunctions,Storage,Config){
     return {
         getUserProjects:function(userId){
             var me= this.resource.getUserProjects({userId:userId,last_id:Storage.lastLoadedId},function(data){
