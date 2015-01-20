@@ -497,12 +497,15 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 if(angular.equals({},$scope.project.medias)){
                     noMedia=true;
                 }else{
+                    //文件名中是可以使用%的,要配合判断是否带后缀才能判断是否完成了上传
                     if(!angular.equals({},$scope.currentMediaObj)&&
-                        $scope.currentMediaObj[Config.mediaObj.mediaFilename].match("%")!==null){
+                        $scope.currentMediaObj[Config.mediaObj.mediaFilename].match("%")!==null&&
+                        $scope.currentMediaObj[Config.mediaObj.mediaFilename].indexOf(".")==-1){
                         hasUnCompleteUpload=true;
                     }else{
                         for(var obj in $scope.project.medias){
-                            if($scope.project.medias[obj][Config.mediaObj.mediaThumbFilename].match("%")!==null){
+                            if($scope.project.medias[obj][Config.mediaObj.mediaThumbFilename].match("%")!==null&&
+                                $scope.project.medias[obj][Config.mediaObj.mediaThumbFilename].indexOf(".")==-1){
                                 hasUnCompleteUpload=true;
                                 break;
                             }

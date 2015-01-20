@@ -79,8 +79,8 @@
                href="" class="de_has_media de_has_flash">
                 <img ng-src="{{at.profile_image}}"/></a>
 
-            <a ng-switch-when="256" ng-click="showAttachmentDetail(at.view_url,at.type)"
-               href="" class="de_has_media de_has_html5">
+            <a ng-switch-when="256" target="_blank"
+                 ng-href="{{at.view_url}}" class="de_has_media de_has_html5">
                 <img ng-src="{{at.profile_image}}"/></a>
 
             <figcaption ng-if="at.name||at.description">
