@@ -889,9 +889,11 @@ viewControllers.controller("boxes",['$scope',"$interval","$routeParams","Config"
         Storage.clearScrollData(Config.scrollScreenType.box);
         $scope.boxes=[];
         $scope.loadedData=false;
+
+        console.log($scope.boxes);
         Box.getBoxes($scope.filter.scope,$scope.filter.keyword).$promise.then(function(data){
 
-
+            console.log(data.topics);
             //console.log("In views");
             var count= 0,length=data.topics.length;
             var inter=$interval(function(){
