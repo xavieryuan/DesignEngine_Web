@@ -913,7 +913,8 @@ viewControllers.controller("boxes",['$scope',"$interval","$routeParams","Config"
 
 }]);
 
-viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage","Config",function($scope,$routeParams,Box,Storage,Config){
+viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage","Config","CFunctions",
+    function($scope,$routeParams,Box,Storage,Config,CFunctions){
 
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
@@ -929,6 +930,21 @@ viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage",
         $scope.box=data.topic;
         $scope.box.user=data.user;
         Storage.loadedTopProjects=$scope.box.projects=data.artifacts;
+        var length=$scope.box.projects.length;
+        if(CFunctions.checkMobile()){
+            for(var j= 0,len=length;j<len;j++){
+                var fileInfo=CFunctions.getFilePathInfo($scope.box.projects[j]["artifact"]["profile_image"]);
+                $scope.box.projects[j]["artifact"]["profile_image"]=
+                    fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
+            }
+
+        }else{
+            for(var j= 0,len=data.topics[i]["artifacts"].length;j<len;j++){
+                var fileInfo=CFunctions.getFilePathInfo($scope.box.projects[j]["artifact"]["profile_image"]);
+                $scope.box.projects[j]["artifact"]["profile_image"]=
+                    fileInfo["filePath"]+Config.imageScale.thumbMedium+fileInfo["ext"];
+            }
+        }
     });
 
     Storage.loadedProjects=$scope.projects=[];
@@ -1014,8 +1030,8 @@ viewControllers.controller("boxUpdate",["$scope","$routeParams","toaster","CFunc
         };
 }]);
 
-viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User","Storage","Config",
-    function($scope,$routeParams,$interval,User,Storage,Config){
+viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User","Storage","Config","CFunctions",
+    function($scope,$routeParams,$interval,User,Storage,Config,CFunctions){
 
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     var userId=$routeParams.userId;
@@ -1033,6 +1049,22 @@ viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User
         $scope.user.artifact_count=data.artifact_count;
         $scope.user.honor_sum=data.honor_sum;
         Storage.loadedTopProjects=$scope.user.topProjects=data.artifacts;
+
+        var length=$scope.user.topProjects.length;
+        if(CFunctions.checkMobile()){
+            for(var j= 0,len=length;j<len;j++){
+                var fileInfo=CFunctions.getFilePathInfo($scope.user.topProjects[j]["artifact"]["profile_image"]);
+                $scope.user.topProjects[j]["artifact"]["profile_image"]=
+                    fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
+            }
+
+        }else{
+            for(var j= 0,len=data.topics[i]["artifacts"].length;j<len;j++){
+                var fileInfo=CFunctions.getFilePathInfo($scope.user.topProjects[j]["artifact"]["profile_image"]);
+                $scope.user.topProjects[j]["artifact"]["profile_image"]=
+                    fileInfo["filePath"]+Config.imageScale.thumbMedium+fileInfo["ext"];
+            }
+        }
     });
 
     Storage.loadedProjects=$scope.projects=[];

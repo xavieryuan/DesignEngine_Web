@@ -341,8 +341,8 @@ directives.directive("watchHeight",["$window","$document","$interval","Config","
             link:function(scope,element,attrs){
                 var watch=scope.$watch(function(){return element[0].scrollHeight;},function(newValue,oldValue){
 
-                    //防止第一屏不出现滚动条,60是css设置的padding-top值
-                    if(newValue>60&&$document[0].body.scrollHeight<=$window.innerHeight){
+                    //防止第一屏不出现滚动条
+                    if(newValue>450&&$document[0].body.scrollHeight<=$window.innerHeight){
                         switch(Storage.currentScrollScreenType){
                             case Config.scrollScreenType.project:
                                 Project.getProjects().$promise.then(function(data){
