@@ -862,6 +862,7 @@ viewControllers.controller("commentsManage",['$scope',"toaster","ngTableParams",
 
 viewControllers.controller("boxes",['$scope',"$interval","$routeParams","Config","Storage","Box",function($scope,$interval,$routeParams,Config,Storage,Box){
 
+    var inter=null;
     //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
     $scope.mainFlags.currentMenu=Config.mainMenu.box;
     $scope.mainFlags.extMenuActive=false;
@@ -887,20 +888,19 @@ viewControllers.controller("boxes",['$scope',"$interval","$routeParams","Config"
 
     $scope.loadBoxes=function(){
         Storage.clearScrollData(Config.scrollScreenType.box);
+        $interval.cancel(inter);//清除一下，因为这个面板不重新加载
         $scope.boxes=[];
         $scope.loadedData=false;
-
-        console.log($scope.boxes);
         Box.getBoxes($scope.filter.scope,$scope.filter.keyword).$promise.then(function(data){
 
-            console.log(data.topics);
             //console.log("In views");
             var count= 0,length=data.topics.length;
-            var inter=$interval(function(){
+            inter=$interval(function(){
                 if(count<length){
                     $scope.boxes.push(data.topics[count]);
                     count++;
                 }else{
+                    //如果没有数据了，清除掉interval
                     $interval.cancel(inter);
                 }
 

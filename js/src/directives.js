@@ -359,7 +359,6 @@ directives.directive("watchHeight",["$window","$document","$interval","Config","
 
                                 break;
                             case Config.scrollScreenType.box:
-                                console.log("heightLoad");
                                 Box.getBoxes(scope.filter.scope,scope.filter.keyword).$promise.then(function(data){
                                     var count= 0,length=data.topics.length;
                                     var inter=$interval(function(){
