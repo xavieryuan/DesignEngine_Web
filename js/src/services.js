@@ -971,16 +971,16 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                     if(CFunctions.checkMobile()){
                         for(var i=0;i<length;i++){
                             for(var j= 0,len=data.topics[i]["artifacts"].length;j<len;j++){
-                                var fileInfo=CFunctions.getFilePathInfo(data.topics[i]["artifacts"][i]["artifact"]["profile_image"]);
-                                data.topics[i]["artifacts"][i]["artifact"]["profile_image"]=
+                                var fileInfo=CFunctions.getFilePathInfo(data.topics[i]["artifacts"][j]["artifact"]["profile_image"]);
+                                data.topics[i]["artifacts"][j]["artifact"]["profile_image"]=
                                     fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
                             }
                         }
                     }else{
                         for(var i=0;i<length;i++){
                             for(var j= 0,len=data.topics[i]["artifacts"].length;j<len;j++){
-                                var fileInfo=CFunctions.getFilePathInfo(data.topics[i]["artifacts"][i]["artifact"]["profile_image"]);
-                                data.topics[i]["artifacts"][i]["artifact"]["profile_image"]=
+                                var fileInfo=CFunctions.getFilePathInfo(data.topics[i]["artifacts"][j]["artifact"]["profile_image"]);
+                                data.topics[i]["artifacts"][j]["artifact"]["profile_image"]=
                                     fileInfo["filePath"]+Config.imageScale.thumbMedium+fileInfo["ext"];
                             }
                         }
