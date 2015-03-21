@@ -932,14 +932,14 @@ viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage",
         Storage.loadedTopProjects=$scope.box.projects=data.artifacts;
         var length=$scope.box.projects.length;
         if(CFunctions.checkMobile()){
-            for(var j= 0,len=length;j<len;j++){
+            for(var j= 0;j<length;j++){
                 var fileInfo=CFunctions.getFilePathInfo($scope.box.projects[j]["artifact"]["profile_image"]);
                 $scope.box.projects[j]["artifact"]["profile_image"]=
                     fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
             }
 
         }else{
-            for(var j= 0,len=data.topics[i]["artifacts"].length;j<len;j++){
+            for(var j= 0;j<length;j++){
                 var fileInfo=CFunctions.getFilePathInfo($scope.box.projects[j]["artifact"]["profile_image"]);
                 $scope.box.projects[j]["artifact"]["profile_image"]=
                     fileInfo["filePath"]+Config.imageScale.thumbMedium+fileInfo["ext"];
@@ -1052,14 +1052,14 @@ viewControllers.controller("userHome",['$scope',"$routeParams","$interval","User
 
         var length=$scope.user.topProjects.length;
         if(CFunctions.checkMobile()){
-            for(var j= 0,len=length;j<len;j++){
+            for(var j= 0;j<length;j++){
                 var fileInfo=CFunctions.getFilePathInfo($scope.user.topProjects[j]["artifact"]["profile_image"]);
                 $scope.user.topProjects[j]["artifact"]["profile_image"]=
                     fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
             }
 
         }else{
-            for(var j= 0,len=data.topics[i]["artifacts"].length;j<len;j++){
+            for(var j= 0;j<length;j++){
                 var fileInfo=CFunctions.getFilePathInfo($scope.user.topProjects[j]["artifact"]["profile_image"]);
                 $scope.user.topProjects[j]["artifact"]["profile_image"]=
                     fileInfo["filePath"]+Config.imageScale.thumbMedium+fileInfo["ext"];
