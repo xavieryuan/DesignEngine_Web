@@ -970,7 +970,7 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                     var length=data.topics.length;
                     if(CFunctions.checkMobile()){
                         for(var i=0;i<length;i++){
-                            for(var j= 0,len=data.topics[i].length;j<len;j++){
+                            for(var j= 0,len=data.topics[i]["artifact"].length;j<len;j++){
                                 var fileInfo=CFunctions.getFilePathInfo(data.topics[i]["artifacts"][i]["artifact"]["profile_image"]);
                                 data.topics[i]["artifacts"][i]["artifact"]["profile_image"]=
                                     fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
@@ -978,7 +978,7 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                         }
                     }else{
                         for(var i=0;i<length;i++){
-                            for(var j= 0,len=data.topics[i].length;j<len;j++){
+                            for(var j= 0,len=data.topics[i]["artifact"].length;j<len;j++){
                                 var fileInfo=CFunctions.getFilePathInfo(data.topics[i]["artifacts"][i]["artifact"]["profile_image"]);
                                 data.topics[i]["artifacts"][i]["artifact"]["profile_image"]=
                                     fileInfo["filePath"]+Config.imageScale.thumbMedium+fileInfo["ext"];
