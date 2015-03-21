@@ -958,13 +958,35 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
     function($rootScope,$resource,CFunctions,Config,Storage){
         return {
             getBoxes:function(scope,keyword){
-                return this.resource.query({scope:scope,keyword:keyword,page:Storage.lastLoadedId+1},function(data){
+                var me=this.resource.query({scope:scope,keyword:keyword,page:Storage.lastLoadedId+1},function(data){
                     if(data.topics.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
                         Storage.lastLoadedId++;
                     }
                 });
+
+                me.$promise.then(function(data){
+                    var length=data.topics.length;
+                    if(CFunctions.checkMobile()){
+                        for(var i=0;i<length;i++){
+                            for(var j= 0,len=data.topics[i].length;j<len;j++){
+                                var fileInfo=CFunctions.getFilePathInfo(data.topics[i]["artifacts"][i]["artifact"]["profile_image"]);
+                                data.topics[i]["artifacts"][i]["artifact"]["profile_image"]=
+                                    fileInfo["filePath"]+Config.imageScale.thumbSmall+fileInfo["ext"];
+                            }
+                        }
+                    }else{
+                        for(var i=0;i<length;i++){
+                            for(var j= 0,len=data.topics[i].length;j<len;j++){
+                                var fileInfo=CFunctions.getFilePathInfo(data.topics[i]["artifacts"][i]["artifact"]["profile_image"]);
+                                data.topics[i]["artifacts"][i]["artifact"]["profile_image"]=
+                                    fileInfo["filePath"]+Config.imageScale.thumbMedium+fileInfo["ext"];
+                            }
+                        }
+                    }
+                });
+                return me;
             },
             getBoxProjects:function(boxId){
                 var me= this.resource.getBoxProjects({boxId:boxId,last_id:Storage.lastLoadedId},function(data){
