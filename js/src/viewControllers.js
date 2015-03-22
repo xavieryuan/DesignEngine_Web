@@ -570,7 +570,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                         }
                     }).success(function(data,status,headers,config,statusText ){
                         //console.log(data);
-                        if(data.width===data.height){
+                        if(data.width===data.height&&data.width<=800&&data.width>=500){
                             $scope.project.profile_image = src;
                             //$scope.$apply();
                         }else{

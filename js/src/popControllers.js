@@ -195,11 +195,11 @@ popControllers.controller("editInfo",["$scope","$http","CFunctions","Config","St
                     }
                 }).success(function(data,status,headers,config,statusText ){
                     //console.log(data);
-                    if(data.width===data.height){
+                    if(data.width===data.height&&data.width<=500&&data.width>=200){
                         $scope.user.profile=src;
                         //$scope.$apply();
                     }else{
-                        toaster.pop('error',Config.messages.errorTitle,Config.messages.imgSizeError,null,null);
+                        toaster.pop('error',Config.messages.errorTitle,Config.messages.peopleImgSizeError,null,null);
                     }
                 });
 
