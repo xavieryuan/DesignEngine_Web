@@ -424,7 +424,7 @@ directives.directive("watchHeight",["$window","$document","$interval","Config","
                         }
                     }else{
                         //执行一次，取消watch
-                        if(newValue>450){
+                        if(newValue>400){
                             watch();
                         }
                     }
