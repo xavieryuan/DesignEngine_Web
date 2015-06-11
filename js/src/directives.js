@@ -349,7 +349,7 @@ directives.directive("watchHeight",["$window","$document","$interval","Config","
                 var watch=scope.$watch(function(){return element[0].scrollHeight;},function(newValue,oldValue){
 
                     //防止第一屏不出现滚动条
-                    if(newValue!=oldValue&&$document[0].body.scrollHeight<=$window.innerHeight){
+                    if(newValue!==oldValue&&newValue>450&&$document[0].body.scrollHeight<=$window.innerHeight){
                         switch(Storage.currentScrollScreenType){
                             case Config.scrollScreenType.project:
                                 Project.getProjects().$promise.then(function(data){
@@ -424,7 +424,7 @@ directives.directive("watchHeight",["$window","$document","$interval","Config","
                         }
                     }else{
                         //执行一次，取消watch
-                        if(newValue>400){
+                        if(newValue>450){
                             watch();
                         }
                     }
