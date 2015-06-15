@@ -249,8 +249,8 @@ directives.directive("windowScroll",["$window","$document","$timeout","$interval
         return {
             link: function(scope, element, attrs) {
 
-                //由于在多个view里面有绑定，所以每次绑定前解除，不然会重复绑定
-                angular.element($window).unbind("scroll");
+                //由于在多个view里面有绑定，所以每次绑定前解除，不然会重复绑定,在scope销毁的时候解除
+                //angular.element($window).unbind("scroll");
                 angular.element($window).bind("scroll", function() {
 
                     if(Storage.scrollTimer){
@@ -335,8 +335,15 @@ directives.directive("windowScroll",["$window","$document","$timeout","$interval
                                     break;
                             }
                         }
-                    });
+                    },200);
 
+                });
+
+                //释放内存
+                scope.$on("$destroy",function( event ) {
+                    $timeout.cancel( Storage.scrollTimer);
+                    Storage.scrollTimer=null;
+                    angular.element($window).unbind("scroll");
                 });
             }
         }
