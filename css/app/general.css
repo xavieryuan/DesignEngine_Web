@@ -1615,14 +1615,15 @@ img{
 	color:#ccc;
 }
 .topic_info .topic_title{
-	font-size:16px;
+	font-size:12px;
 	font-weight: bold;
 	color:#07af69;
 	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	/*text-overflow: ellipsis;
+	white-space: nowrap;*/
 	margin:0.8em 0;
-	width:240px;
+	width: 240px;
+	height: 3em;
 }
 .topic_info .de_stats_tags{
 	position:absolute;
