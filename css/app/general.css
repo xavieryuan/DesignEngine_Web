@@ -751,7 +751,7 @@ img{
     height:100%;
 	line-height:60px;
     width: 140px;
-    /*background: url(../../images/app/logo_40_white.png) no-repeat 8px center;*/
+    background: url(../../images/app/logo_40_white.png) no-repeat 8px center;
     text-indent: 60px;
 	font-size:18px;
 	font-weight:bold;
@@ -761,7 +761,7 @@ img{
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 1);
     position: relative;    
 }
-.de_logo>a>.de_logoimg{
+.de_logo>a>.de_logoplaceholder{
     width:60px;
     height:60px;
     -webkit-perspective: 75px;
@@ -770,15 +770,16 @@ img{
     position: absolute;
     top:0;
     left: 0;
+    background: #333;
 }
-.de_logo>a>.de_logoimg:before{
+.de_logo>a>.de_logoplaceholder:before{
     content:"";
     width:60px;
 	height:60px;
 	position:absolute;
 	top:0;
 	left:0;
-    background:url(../../images/app/loading_spinner.png) no-repeat center #333;
+    background:url(../../images/app/loading_spinner.png) no-repeat center;
     -webkit-transform:rotateY(30deg);
     -moz-transform:rotateY(30deg);
     transform:rotateY(30deg);
