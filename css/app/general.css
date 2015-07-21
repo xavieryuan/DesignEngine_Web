@@ -1288,10 +1288,10 @@ img{
     font-size: 14px;
     text-align: left;
     position: absolute;
-    left: 175px;
-    top: 55px;
+    left: 190px;
+    top: 60px;
     right: 10px;
-    bottom: 45px;
+    bottom: 40px;
     overflow: hidden;
 	color:#09bc72;
 	margin:0;
@@ -1305,7 +1305,7 @@ img{
 .de_project_grid .user_info {
     position: absolute;
     top: 10px;
-    left:175px;
+    left:190px;
     right:10px;
 }
 
@@ -1319,22 +1319,22 @@ img{
 
 .de_project_grid .user_info .name {
 	position: absolute;
-    top: 0;
-    left: 55px;
+    top: 4px;
+    left: 50px;
+    right: 0;
     margin: auto;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 12px;
     font-weight: bold;
-    width: 200px;
     text-align: left;
     color: #666;
 }
 .de_project_grid .user_info .date{
     position: absolute;
-	top: 20px;
-	left: 55px;
+	top: 24px;
+	left: 50px;
     right:0;
 	text-align: left;
     margin: 0;
@@ -1349,7 +1349,7 @@ img{
 .de_project_grid .de_stats_tags {    
     position: absolute;
     bottom: 0;
-    left: 170px;
+    left: 190px;
     right:10px;    
 }
 
@@ -3551,17 +3551,6 @@ span.zy_tooltips{
 	.de_project_grid{
 		text-align: center;
 		padding: 0;
-	}
-	.de_project_grid>li{
-		width: 320px;
-		height: 440px;
-		margin: 10px auto;
-	}
-	.de_project_grid .user_info{
-		top:340px;
-	}
-	.de_project_grid .project_info h4{
-		top:360px;
 	}
 	
 	
