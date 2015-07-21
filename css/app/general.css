@@ -1163,9 +1163,8 @@ img{
     text-align: center;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	padding-right: 4px;
 	box-sizing: border-box;
-    margin-right: 10px;
+    margin-right: 6px;
 }
 
 .de_stats_tags>li:before {
@@ -1173,7 +1172,8 @@ img{
     width: 20px;
     height: 20px;
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: text-bottom;
+    margin-right:2px;
 }
 
 .de_stats_tags>.likes:before {    
@@ -1816,6 +1816,7 @@ img{
 	overflow: hidden;
 	white-space: nowrap;
 	text-align: right;
+    border-right: #ccc 1px dotted;
 }
 .project_info li{
 	display: inline-block;	
