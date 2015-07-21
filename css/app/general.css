@@ -759,18 +759,26 @@ img{
 	color:#fff;
     display: inline-block;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 1);
-    position: relative;
-    -webkit-perspective: 75px;
-	perspective: 75px;
+    position: relative;    
 }
-.de_logo>a:before{
+.de_logo>a>.de_logoimg{
+    width:60px;
+    height:60px;
+    -webkit-perspective: 75px;
+    -moz-perspective: 75px;
+	perspective: 75px;
+    position: absolute;
+    top:0;
+    left: 0;
+}
+.de_logo>a>.de_logoimg:before{
     content:"";
     width:60px;
 	height:60px;
 	position:absolute;
 	top:0;
 	left:0;
-    background:url(../../images/app/loading_spinner.png) no-repeat center;
+    background:url(../../images/app/loading_spinner.png) no-repeat center #333;
     -webkit-transform:rotateY(30deg);
     -moz-transform:rotateY(30deg);
     transform:rotateY(30deg);
