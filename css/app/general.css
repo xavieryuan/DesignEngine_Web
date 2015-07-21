@@ -761,6 +761,18 @@ img{
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 1);
     position: relative;
 }
+.de_logo>a:before{
+    content:"";
+    width:60px;
+	height:60px;
+	position:absolute;
+	top:0;
+	left:0;
+    background:url(../../images/app/loading_spinner.png) no-repeat center;
+    -webkit-transform:rotateY(30deg);
+    -moz-transform:rotateY(30deg);
+    transform:rotateY(30deg);
+}
 
 /********用户菜单**********/
 .de_user_nav {
@@ -3131,6 +3143,9 @@ span.zy_tooltips{
 	margin-top:-20px;
     margin-left:-20px;
     background:url(../../images/app/loading_spinner.png) no-repeat;
+    -webkit-transform:rotateY(30deg);
+    -moz-transform:rotateY(30deg);
+    transform:rotateY(30deg);
     -webkit-animation: spin 1s infinite ease-in-out;
     -moz-animation: spin 1s infinite ease-in-out;
     animation: spin 1s infinite ease-in-out;
@@ -3607,17 +3622,7 @@ span.zy_tooltips{
 	.de_project_grid {
 		padding: 0;
 	}
-	.de_project_grid>li{
-		width: 300px;
-		height: 420px;
-		margin: 10px auto;
-	}
-	.de_project_grid .user_info{
-		top:320px;
-	}
-	.de_project_grid .project_info h4{
-		top:340px;
-	}
+    
 	/*详情展示页面*/
 	.de_btn_zan{
 		left:0;
