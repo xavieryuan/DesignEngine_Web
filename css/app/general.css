@@ -732,7 +732,7 @@ img{
     height: 60px;
     width: 100%;
     z-index: 99;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    /*box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);*/
 	background:#333;
 	text-overflow: ellipsis;
 }
@@ -759,6 +759,7 @@ img{
 	color:#fff;
     display: inline-block;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 1);
+    position: relative;
 }
 
 /********用户菜单**********/
