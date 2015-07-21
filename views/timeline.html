@@ -1,0 +1,53 @@
+<head>
+    <link rel="stylesheet" href="../css/app/general.css">
+</head>
+
+<section class="de_screen_project">
+
+    <ul class="de_project_timeline de_borderbox">
+        <li class="de_borderbox" ng-repeat="project in projects">
+            <div class="user_info">
+                <a ng-href="users/{{project.user.id}}">
+                    <img class="photo" src="../images/app/default_user_photo.png">
+                    <p class="name">{{project.user.fullname}}</p>
+                    <p class="date">{{project.artifact.created_at}}</p>
+                </a>
+            </div>
+            <div class="project_info">
+                <a href="" ng-click="showProjectDetail(project.artifact.id)">
+                    <img class="thumb" src="../images/app/default_thumb_500.png">
+                    <h4>项目标题项目标题项目标题项目标题项目标题项目标题项目标题项目标题项目标题项目标题项目标题项目标题项目标题项目标题项目标题项目标题</h4>
+                    <p class="abstract ng-binding">
+        针对APP的调研，主要分为前期用户测试、数据分析与整理和后期的相关修改方案。组员：赵航行、戴宇鑫、孟凡泽、李铮、黎子晴,针对APP的调研，主要分为前期用户测试、数据分析与整理和后期的相关修改方案。组员：赵航行、戴宇鑫、孟凡泽、李铮、黎子晴
+    </p>                  
+                </a>
+            </div>
+            <p class="topic_title"><a href="#">来自：所属投稿箱名称</a></p>            
+            <ul class="de_stats_tags">
+                <li class="badges" title="勋章">1</li>
+                <li class="likes" title="赞">11</li>
+                <li class="comments" title="评价">111</li>
+            </ul>
+        </li>
+        <!--<li class="de_borderbox" ng-repeat="project in projects">
+            <div class="user_info">
+                <a ng-href="users/{{project.user.id}}">
+                    <img class="photo" ng-src="{{project.user.setting.profile_image}}">
+                    <p class="name">{{project.user.fullname}}</p>
+                    <p class="date">{{project.artifact.created_at}}</p>
+                </a>
+            </div>
+            <div class="project_info">
+                <a href="" ng-click="showProjectDetail(project.artifact.id)">
+                    <img class="thumb" ng-src="{{project.artifact.profile_image}}">
+                    <h4>{{project.artifact.name}}</h4>                    
+                </a>
+            </div>            
+            <ul class="de_stats_tags">
+                <li class="badges" title="勋章">{{project.artifact.honor_count}}</li>
+                <li class="likes" title="赞">{{project.artifact.praise_count}}</li>
+                <li class="comments" title="评价">{{project.artifact.comment_count}}</li>
+            </ul>
+        </li>-->
+    </ul>
+</section>

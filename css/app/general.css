@@ -1147,6 +1147,82 @@ img{
 }
 
 
+/*************统计标签****************/
+.de_stats_tags{
+    font-size: 0;
+    white-space: nowrap;
+    text-align: left;
+    height: 40px;
+}
+.de_stats_tags>li{
+    color: #999;
+    display: inline-block;
+    height: 40px;
+    font-size: 12px;
+    line-height: 40px;
+    text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-right: 4px;
+	box-sizing: border-box;
+    margin-right: 10px;
+}
+
+.de_stats_tags>li:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.de_stats_tags>.likes:before {    
+    background: url(../../images/app/icon20_ding_gray.png) no-repeat;    
+}
+
+.de_stats_tags>.comments:before {
+    background: url(../../images/app/icon20_comments_gray.png) no-repeat;
+}
+
+.de_stats_tags>.badges:before {
+    background: url(../../images/app/icon20_badge_gray.png) no-repeat;
+}
+
+.de_stats_tags>.uploads:before {
+    background: url(../../images/app/icon20_upload_gray.png) no-repeat;
+}
+/*************媒体标签****************/
+.de_media_tags>li {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    font-size: 0;
+    text-indent: -9999px;
+    margin: 5px;
+}
+
+.de_media_tags>li.tag_ppt {
+    background: url(../../images/app/zy_media_ppt.png) no-repeat;
+}
+
+.de_media_tags>li.tag_web_video {
+    background: url(../../images/app/zy_media_network_video.png) no-repeat;
+}
+
+.de_media_tags>li.tag_local_video {
+    background: url(../../images/app/zy_media_local_video.png) no-repeat;
+}
+
+.de_media_tags>li.tag_3d {
+    background: url(../../images/app/zy_media_3d.png) no-repeat;
+}
+
+.de_media_tags>li.tag_file {
+    background: url(../../images/app/zy_media_file.png) no-repeat;
+}
+.de_media_tags>li.tag_flash {
+    background: url(../../images/app/zy_media_flash.png) no-repeat;
+}
 
 /*************作品网格****************/
 .de_project_grid {
@@ -1157,8 +1233,8 @@ img{
 }
 
 .de_project_grid>li {    
-    width: 220px;
-    height: 330px;
+    width: 320px;
+    height: 180px;
     background: #fff;
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     margin: 10px;
@@ -1200,7 +1276,7 @@ img{
 }
 
 .de_project_grid .project_info {
-
+    width:180px;
 }
 
 .de_project_grid .project_info .thumb {
@@ -1209,17 +1285,17 @@ img{
 }
 
 .de_project_grid .project_info h4 {
+    font-size: 14px;
     text-align: left;
     position: absolute;
-    left: 50px;
-    top: 250px;
-    right:10px;
-    white-space: nowrap;
-	text-overflow:ellipsis;
+    left: 175px;
+    top: 55px;
+    right: 10px;
+    bottom: 45px;
     overflow: hidden;
 	color:#09bc72;
 	margin:0;
-	line-height: 30px;
+	line-height: 20px;
 }
 
 .de_project_grid .project_info .date {
@@ -1228,15 +1304,14 @@ img{
 
 .de_project_grid .user_info {
     position: absolute;
-    top: 230px;
-	padding:0 10px;
-    /*left: 10px;*/
-	/*right:10px;*/
+    top: 10px;
+    left:175px;
+    right:10px;
 }
 
 .de_project_grid .user_info .photo {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     overflow: hidden;
     border-radius: 60px;
     display: block;
@@ -1244,69 +1319,40 @@ img{
 
 .de_project_grid .user_info .name {
 	position: absolute;
-	top: 0;
-	left: 52px;
+    top: 0;
+    left: 55px;
+    margin: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: bold;
+    width: 200px;
+    text-align: left;
+    color: #666;
+}
+.de_project_grid .user_info .date{
+    position: absolute;
+	top: 20px;
+	left: 55px;
+    right:0;
 	text-align: left;
     margin: 0;
     font-size: 12px;
-    letter-spacing: 2px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     display: inline-block;
-	width: 160px;
+    color: #ccc;
 }
 
-.de_project_grid .de_stats_tags {
-    width: 100%;
-    height: 40px;
+.de_project_grid .de_stats_tags {    
     position: absolute;
     bottom: 0;
-    left: 0;
-    background: #f8f8f8;
-    font-size: 0;
-    white-space: nowrap;
+    left: 170px;
+    right:10px;    
 }
 
-.de_project_grid .de_stats_tags>li {
-    color: #999;
-    display: inline-block;
-    height: 40px;
-    width: 33.33%;
-    font-size: 12px;
-    border-top: #eee 1px solid;
-    border-left: #eee 1px solid;
-    line-height: 40px;
-    text-align: center;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding-right: 10px;
-	box-sizing: border-box;
-}
-
-.de_project_grid .de_stats_tags>li:first-child {
-    border-left: none;
-}
-
-.de_stats_tags>.likes:before {
-    content: "";
-    width: 20px;
-    height: 20px;
-    background: url(../../images/app/icon20_ding_gray.png) no-repeat;
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0 5px;
-}
-
-.de_stats_tags>.comments:before {
-    content: "";
-    width: 20px;
-    height: 20px;
-    background: url(../../images/app/icon20_comments_gray.png) no-repeat;
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0 5px;
-}
 
 .de_project_grid .de_category_tags {
     font-size: 12px;
@@ -1329,56 +1375,145 @@ img{
     height: 50px;
 }
 
-.de_project_grid .de_media_tags>li {
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    font-size: 0;
-    text-indent: -9999px;
-    margin: 5px;
-}
 
-.de_media_tags>li.tag_ppt {
-    background: url(../../images/app/zy_media_ppt.png) no-repeat;
-}
-
-.de_media_tags>li.tag_web_video {
-    background: url(../../images/app/zy_media_network_video.png) no-repeat;
-}
-
-.de_media_tags>li.tag_local_video {
-    background: url(../../images/app/zy_media_local_video.png) no-repeat;
-}
-
-.de_media_tags>li.tag_3d {
-    background: url(../../images/app/zy_media_3d.png) no-repeat;
-}
-
-.de_media_tags>li.tag_file {
-    background: url(../../images/app/zy_media_file.png) no-repeat;
-}
-.de_media_tags>li.tag_flash {
-    background: url(../../images/app/zy_media_flash.png) no-repeat;
-}
-
-
-
-/**作品卡片工具栏**/
-.de_project_grid .de_project_toolbar {
-    font-size: 0;
-    background: #333;
-    z-index: 20;
-    position: absolute;
-    top: -60px;
-    left: 0;
+/*************作品Timeline****************/
+.de_project_timeline{
     width: 100%;
-    text-align: center;
-    height: 60px;
+    height:440px;
+    margin: 0 20px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+} 
+.de_project_timeline>li{
+    width:700px;
+    height:400px;
+    position: relative;
+    background: #fff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    margin: 10px 10px 10px 40px;
 }
 
-.de_project_grid>li:hover>.de_project_toolbar {
-    top: 0;
+.de_project_timeline .user_info {
+    position: absolute;
+    top: 40px;
+    left:420px;
+    right:20px;
 }
+
+.de_project_timeline .user_info .photo {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 60px;
+    display: block;
+}
+
+.de_project_timeline .user_info .name {
+	position: absolute;
+    top: 0;
+    left: 55px;
+    margin: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: bold;
+    width: 200px;
+    text-align: left;
+    color: #666;
+}
+.de_project_timeline .user_info .date{
+    position: absolute;
+	top: 16px;
+	left: 55px;
+    right:0;
+	text-align: left;
+    margin: 0;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    color: #ccc;
+}
+
+
+.de_project_timeline .project_info {
+    width:400px;
+}
+
+.de_project_timeline .project_info .thumb {
+    width: 100%;
+   /* height: 100%;*/
+}
+
+.de_project_timeline .project_info h4 {
+    font-size: 16px;
+    text-align: left;
+    position: absolute;
+    left: 420px;
+    top: 100px;
+    right: 10px;
+    height:70px;
+    overflow: hidden;
+	color:#09bc72;
+	margin:0;
+	line-height: 1.5em;
+}
+
+.de_project_timeline .project_info .abstract{
+    font-size: 14px;
+    text-align: left;
+    color: #999;
+    position: absolute;
+    left: 420px;
+    top: 200px;
+    right: 10px;
+    height:85px;
+    overflow: hidden;
+	margin:0;
+	line-height: 1.5em;
+}
+
+.de_project_timeline .topic_title{
+    position: absolute;
+    bottom:10px;
+    left:-30px;       
+}
+.de_project_timeline .topic_title>a{
+    display: block;
+    height:60px;
+    line-height: 60px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    background:#34B38B;
+    width:330px; 
+    box-sizing: border-box;
+    padding:0 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.de_project_timeline .topic_title:before{
+    content: "";
+    width: 30px;
+    height: 10px;
+    background: url("../../images/app/timeline_corner_gray.png") no-repeat;
+    position: absolute;
+    bottom:-10px;
+    left:0;
+}
+
+.de_project_timeline .de_stats_tags{
+    left: 420px;
+    bottom: 20px;
+    position: absolute;
+}
+
+
+
+/**********作品卡片工具栏************/
 
 .de_project_toolbar>li {
     display: inline-block;
@@ -1432,6 +1567,8 @@ img{
 .de_toolbar_invisible:hover {
     background: url(../../images/app/icon40_invisible_green.png) no-repeat;
 }
+
+
 
 /*************用户信息卡****************/
 .de_designer_list {
@@ -1523,34 +1660,11 @@ img{
     font-size: 14px;
 }
 
-.de_user_info_card .de_stats_tags li {
-    display: inline-block;
-    margin: 0 0 0 10px;
-    color: #999;
-    font-size: 12px;
-    line-height: 20px;
-    height: 20px;
+.de_user_info_card .de_stats_tags>li {
+       
 }
 
-.de_stats_tags li.badges:before {
-    content: "";
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin: 0 5px;
-    vertical-align: middle;
-    background: url(../../images/app/icon20_badge_gray.png) no-repeat;
-}
 
-.de_stats_tags li.uploads:before {
-    content: "";
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin: 0 5px;
-    vertical-align: middle;
-    background: url(../../images/app/icon20_upload_gray.png) no-repeat;
-}
 
 /*****************选题列表******************/
 .de_topic_wrapper{
@@ -1631,16 +1745,8 @@ img{
 	bottom:0;
 	white-space:nowrap;
 }
-.topic_info .de_stats_tags li{
-	display: inline-block;
-	width:70px;
-	height: 40px;
-	vertical-align: middle;
-	line-height: 40px;
-	font-size:12px;
-	color:#999;
-	overflow: hidden;
-	text-overflow: ellipsis;
+.topic_info .de_stats_tags>li{
+	
 }
 .de_topic_box .topic_action{
 	position: absolute;
@@ -2833,13 +2939,8 @@ span.zy_tooltips{
     right: 20px;
 }
 
-.de_project_detail .de_stats_tags>li {
-    font-size: 12px;
-    height: 20px;
-    display: inline-block;
+.de_project_detail .de_stats_tags>li {    
     margin: 5px;
-    text-align: left;
-	color:#999;
 }
 
 .de_project_detail .publishtime {
