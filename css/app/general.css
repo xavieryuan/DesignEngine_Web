@@ -733,7 +733,7 @@ img{
     width: 100%;
     z-index: 99;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-	background:#fff;
+	background:#333;
 	text-overflow: ellipsis;
 }
 
@@ -751,14 +751,14 @@ img{
     height:100%;
 	line-height:60px;
     width: 140px;
-    background: url(../../images/app/logo_40.png) no-repeat 8px center;
+    background: url(../../images/app/logo_40_white.png) no-repeat 8px center;
     text-indent: 60px;
 	font-size:18px;
 	font-weight:bold;
 	text-decoration:none;
-	color:#333;
+	color:#fff;
     display: inline-block;
-	text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 1);
 }
 
 /********用户菜单**********/
@@ -788,12 +788,12 @@ img{
     text-decoration: none;
     text-align: center;
     font-size: 12px;
-    color: #333;
+    color: #fff;
     line-height: 60px;
     position: relative;
     display: block;
     letter-spacing: 2px;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
 }
 .de_user_nav .de_btn_login{
 	padding-top: 30px;
@@ -833,7 +833,7 @@ img{
     padding: 0;
     text-indent: -9999px;
     margin: 0;
-	border-left:#ccc 1px dotted;
+	border-left:#666 1px dotted;
 	height:60px;
 }
 
@@ -842,7 +842,7 @@ img{
     width: 30px;
     height: 30px;
     display: inline-block;
-    background: url(../../images/app/icon30_hotdogmenu_gray.png) no-repeat;
+    background: url(../../images/app/icon30_hotdogmenu_white.png) no-repeat;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -990,9 +990,9 @@ img{
     height:100%;
     line-height: 60px;
     padding: 0 5px;
-    color: #333;
+    color: #ccc;
     text-decoration: none;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+    text-shadow: 0 1px 1px rgba(1, 1, 1, 1);
     font-weight: bold;
     letter-spacing: 1px;
     font-size: 12px;
@@ -1003,7 +1003,7 @@ img{
 }
 
 .de_top_nav ul li a.active {
-    background: #eee;
+    background: #222;    
 }
 
 /*.de_btn_project:before{
