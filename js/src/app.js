@@ -117,15 +117,13 @@ pinWall.run(["$rootScope","$templateCache","App","AjaxErrorHandler",function($ro
     };
     App.showLoading=function(){
         App.showBlackOut();
-        TweenMax.killTweensOf(".de_loading_spinner")
-        TweenMax.fromTo(".de_loading_spinner", 1, {rotationY:"30"},{rotationY:"206",  repeat:-1});
-        //$rootScope.rootFlags.showLoading=true;
+        
+        $rootScope.rootFlags.showLoading=true;
     };
     App.hideLoading=function(){
         App.hideBlackOut();
-        TweenMax.killTweensOf(".de_loading_spinner");
-        TweenMax.to(".de_loading_spinner", 1, {rotationY:"30", repeat:-1});
-        //$rootScope.rootFlags.showLoading=false;
+        
+        $rootScope.rootFlags.showLoading=false;
     };
 
 
