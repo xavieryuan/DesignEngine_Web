@@ -813,7 +813,7 @@ img{
     bottom: 25px;
     left: 50%;
     margin-left: -15px;
-    background: url(../../images/app/icon30_login_gray.png) no-repeat center;
+    background: url(../../images/app/icon30_login_white.png) no-repeat center;
 
 }
 
@@ -3117,7 +3117,7 @@ span.zy_tooltips{
     text-align: center;
     line-height: 100%;
     color:#ccc;
-	background:#fff;
+	background:#333;
 	-webkit-perspective: 75px;
 	perspective: 75px;
 }
