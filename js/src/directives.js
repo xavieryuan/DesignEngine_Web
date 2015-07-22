@@ -247,17 +247,18 @@ directives.directive("windowStateChange",["$window","CFunctions","LocationChange
 directives.directive("panOnMouseWheel",["$window","$document","$timeout","$interval","Project",
     function($window,$document,$timeout,$interval,Project){
     return {
-        link:function(scope,element,attrs){            
+        link:function(scope,element,attrs){
+            var targetElement=element.context;
             var mousewheelEvt= document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll";
             var mousewheelHandler=function (evt) {
                 var left=0;
                 evt = window.event || evt;
                 if(evt.wheelDelta <0 || evt.detail>0){
-                    left=element.scrollLeft+500;
+                    left=targetElement.scrollLeft+500;
                 }else{
-                    left=element.scrollLeft-500;
+                    left=targetElement.scrollLeft-500;
                 }
-                TweenMax.to(element, 0.5, {scrollTo:{x:left}});
+                TweenMax.to(targetElement, 0.5, {scrollTo:{x:left}});
 
                 //兼容ie
                 if(evt.preventDefault){
@@ -270,7 +271,8 @@ directives.directive("panOnMouseWheel",["$window","$document","$timeout","$inter
                 //evt.preventDefault();
 
             };
-            element.addEventListener(mousewheelEvt, mousewheelHandler);          
+            console.log(targetElement)
+            targetElement.addEventListener(mousewheelEvt, mousewheelHandler);          
             
         }
     }
