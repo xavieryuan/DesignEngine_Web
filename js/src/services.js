@@ -790,14 +790,14 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 Storage.isLoadingData=true;
                 var me= this.resource.query({page:Storage.lastLoadedId+1},function(data){
 
-                    Storage.isLoadingData=false;
-
                     //console.log(data);
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
                         Storage.lastLoadedId++;
                     }
+
+                    Storage.isLoadingData=false;
                 });
 
                 //手机上使用小图片
@@ -823,14 +823,14 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
             getSearchResult:function(content){
                 Storage.isLoadingData=true;
                 var me= this.resource.getSearchResult({offset:Storage.lastLoadedId,q:content},function(data){
-
-                    Storage.isLoadingData=false;
                     //console.log("In services");
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
                         Storage.lastLoadedId+=Config.perLoadCount;
                     }
+
+                    Storage.isLoadingData=false;
                 });
                 me.$promise.then(function(data){
 
@@ -887,12 +887,13 @@ services.factory("User",["$rootScope","$resource","CFunctions","Storage","Config
             Storage.isLoadingData=true;
             var me= this.resource.getUserProjects({userId:userId,last_id:Storage.lastLoadedId},function(data){
 
-                Storage.isLoadingData=false;
                 if(data.artifacts.length<Config.perLoadCount){
                     Storage.lastLoadedId=Config.hasNoMoreFlag;
                 }else{
                     Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                 }
+
+                Storage.isLoadingData=false;
             });
             me.$promise.then(function(data){
 
@@ -973,12 +974,13 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                 Storage.isLoadingData=true;
                 var me=this.resource.query({scope:scope,keyword:keyword,page:Storage.lastLoadedId+1},function(data){
 
-                    Storage.isLoadingData=false;
                     if(data.topics.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
                         Storage.lastLoadedId++;
                     }
+
+                    Storage.isLoadingData=false;
                 });
 
                 me.$promise.then(function(data){
@@ -1007,12 +1009,13 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                 Storage.isLoadingData=true;
                 var me= this.resource.getBoxProjects({boxId:boxId,last_id:Storage.lastLoadedId},function(data){
 
-                    Storage.isLoadingData=false;
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
                         Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                     }
+
+                    Storage.isLoadingData=false;
                 });
                 me.$promise.then(function(data){
                     var length=data.artifacts.length;
