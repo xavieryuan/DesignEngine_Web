@@ -252,14 +252,15 @@ directives.directive("panOnMouseWheel",["$window","$document","$timeout","$inter
             var mousewheelEvt= document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll";
             var mousewheelHandler=function (evt) {
                 console.log("scroll")
+                
                 var left=0;
                 evt = window.event || evt;
                 if(evt.wheelDelta <0 || evt.detail>0){
-                    left=targetElement.scrollLeft+500;
+                    left=evt.target.scrollLeft+500;
                 }else{
-                    left=targetElement.scrollLeft-500;
+                    left=evt.target.scrollLeft-500;
                 }
-                TweenMax.to(targetElement, 0.5, {scrollTo:{x:left}});
+                TweenMax.to(evt.target, 0.5, {scrollTo:{x:left}});
 
                 //兼容ie
                 if(evt.preventDefault){
