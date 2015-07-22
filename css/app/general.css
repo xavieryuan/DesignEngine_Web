@@ -262,7 +262,7 @@ img{
 .searchResult{
 	font-size: 14px;
 	color:#999;
-	margin: 30px;
+	margin: 20px 30px;
 	text-shadow: 0 1px rgba(255,255,255,1);
 	font-weight: bold;
 }
@@ -3580,6 +3580,7 @@ span.zy_tooltips{
 	
 	.searchResult{
 		margin: 10px;
+        text-align: center;
 	}
 	
 	/*作品列表*/
