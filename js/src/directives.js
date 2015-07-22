@@ -292,7 +292,7 @@ directives.directive("windowScroll",["$window","$document","$timeout","$interval
                     Storage.scrollTimer=$timeout(function(){
                         if(Storage.currentScrollScreenType&&$document[0].body.scrollHeight-$window.innerHeight<=$window.scrollY&&
                             Storage.lastLoadedId!=Config.hasNoMoreFlag&&Storage.lastLoadedId!=0&&scope.mainFlags.showMainWrapper&&
-                            scope.popFlags.popTemplateUrl===""){
+                            scope.popFlags.popTemplateUrl===""&&Storage.isLoadingData==false){
 
                             switch(Storage.currentScrollScreenType){
                                 case Config.scrollScreenType.project:

@@ -661,6 +661,7 @@ services.service("Storage",function(){
     this.currentScrollScreenType="";
     this.loadedProjects=[];
     this.loadedTopProjects=[];
+    this.isLoadingData=false;
 
 
     this.clearScrollData=function(currentScrollScreenType){
@@ -786,7 +787,11 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
     function($rootScope,$resource,Storage,CFunctions,Config){
         return {
             getProjects:function(){
+                Storage.isLoadingData=true;
                 var me= this.resource.query({page:Storage.lastLoadedId+1},function(data){
+
+                    Storage.isLoadingData=false;
+
                     //console.log(data);
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
@@ -816,7 +821,10 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 return me;
             },
             getSearchResult:function(content){
+                Storage.isLoadingData=true;
                 var me= this.resource.getSearchResult({offset:Storage.lastLoadedId,q:content},function(data){
+
+                    Storage.isLoadingData=false;
                     //console.log("In services");
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
@@ -876,7 +884,10 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
 services.factory("User",["$rootScope","$resource","CFunctions","Storage","Config",function($rootScope,$resource,CFunctions,Storage,Config){
     return {
         getUserProjects:function(userId){
+            Storage.isLoadingData=true;
             var me= this.resource.getUserProjects({userId:userId,last_id:Storage.lastLoadedId},function(data){
+
+                Storage.isLoadingData=false;
                 if(data.artifacts.length<Config.perLoadCount){
                     Storage.lastLoadedId=Config.hasNoMoreFlag;
                 }else{
@@ -959,7 +970,10 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
     function($rootScope,$resource,CFunctions,Config,Storage){
         return {
             getBoxes:function(scope,keyword){
+                Storage.isLoadingData=true;
                 var me=this.resource.query({scope:scope,keyword:keyword,page:Storage.lastLoadedId+1},function(data){
+
+                    Storage.isLoadingData=false;
                     if(data.topics.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
@@ -990,7 +1004,10 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                 return me;
             },
             getBoxProjects:function(boxId){
+                Storage.isLoadingData=true;
                 var me= this.resource.getBoxProjects({boxId:boxId,last_id:Storage.lastLoadedId},function(data){
+
+                    Storage.isLoadingData=false;
                     if(data.artifacts.length<Config.perLoadCount){
                         Storage.lastLoadedId=Config.hasNoMoreFlag;
                     }else{
