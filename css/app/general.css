@@ -259,7 +259,7 @@ img{
     box-sizing: border-box;
 }
 
-.noResult{
+.searchResult{
 	font-size: 14px;
 	color:#999;
 	margin: 30px;
@@ -3578,7 +3578,7 @@ span.zy_tooltips{
 		width:100%!important;
     }
 	
-	.noResult{
+	.searchResult{
 		margin: 10px;
 	}
 	
