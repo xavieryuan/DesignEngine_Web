@@ -257,7 +257,7 @@ directives.directive("panOnMouseWheel",["$window","$document","$timeout","$inter
                 }else{
                     left=element.scrollLeft-500;
                 }
-                TweenLite.to(target, 0.5, {scrollTo:{x:left}});
+                TweenMax.to(target, 0.5, {scrollTo:{x:left}});
 
                 //兼容ie
                 if(evt.preventDefault){
