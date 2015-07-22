@@ -661,7 +661,6 @@ services.service("Storage",function(){
     this.currentScrollScreenType="";
     this.loadedProjects=[];
     this.loadedTopProjects=[];
-    this.isLoadingData=false;
 
 
     this.clearScrollData=function(currentScrollScreenType){
@@ -787,7 +786,6 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
     function($rootScope,$resource,Storage,CFunctions,Config){
         return {
             getProjects:function(){
-                Storage.isLoadingData=true;
                 var me= this.resource.query({page:Storage.lastLoadedId+1},function(data){
 
                     //console.log(data);
@@ -797,7 +795,6 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                         Storage.lastLoadedId++;
                     }
 
-                    Storage.isLoadingData=false;
                 });
 
                 //手机上使用小图片
@@ -821,7 +818,6 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                 return me;
             },
             getSearchResult:function(content){
-                Storage.isLoadingData=true;
                 var me= this.resource.getSearchResult({offset:Storage.lastLoadedId,q:content},function(data){
                     //console.log("In services");
                     if(data.artifacts.length<Config.perLoadCount){
@@ -830,7 +826,6 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
                         Storage.lastLoadedId+=Config.perLoadCount;
                     }
 
-                    Storage.isLoadingData=false;
                 });
                 me.$promise.then(function(data){
 
@@ -884,7 +879,6 @@ services.factory("Project",["$rootScope","$resource","Storage","CFunctions","Con
 services.factory("User",["$rootScope","$resource","CFunctions","Storage","Config",function($rootScope,$resource,CFunctions,Storage,Config){
     return {
         getUserProjects:function(userId){
-            Storage.isLoadingData=true;
             var me= this.resource.getUserProjects({userId:userId,last_id:Storage.lastLoadedId},function(data){
 
                 if(data.artifacts.length<Config.perLoadCount){
@@ -893,7 +887,6 @@ services.factory("User",["$rootScope","$resource","CFunctions","Storage","Config
                     Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                 }
 
-                Storage.isLoadingData=false;
             });
             me.$promise.then(function(data){
 
@@ -971,7 +964,7 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
     function($rootScope,$resource,CFunctions,Config,Storage){
         return {
             getBoxes:function(scope,keyword){
-                Storage.isLoadingData=true;
+                console.log(Storage.lastLoadedId);
                 var me=this.resource.query({scope:scope,keyword:keyword,page:Storage.lastLoadedId+1},function(data){
 
                     if(data.topics.length<Config.perLoadCount){
@@ -980,7 +973,6 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                         Storage.lastLoadedId++;
                     }
 
-                    Storage.isLoadingData=false;
                 });
 
                 me.$promise.then(function(data){
@@ -1006,7 +998,6 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                 return me;
             },
             getBoxProjects:function(boxId){
-                Storage.isLoadingData=true;
                 var me= this.resource.getBoxProjects({boxId:boxId,last_id:Storage.lastLoadedId},function(data){
 
                     if(data.artifacts.length<Config.perLoadCount){
@@ -1015,7 +1006,6 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
                         Storage.lastLoadedId=data.artifacts[Config.perLoadCount-1]["artifact"]["id"];
                     }
 
-                    Storage.isLoadingData=false;
                 });
                 me.$promise.then(function(data){
                     var length=data.artifacts.length;
