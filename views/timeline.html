@@ -19,7 +19,7 @@
             </div>
             <p class="topic_title">
             <a ng-if="project.topic" ng-href="topics/{{project.topic.id}}">来自：{{project.topic.name}}</a>
-            <a ng-if="!project.topic" ng-href="users/{{project.user.id}}">来自：{{project.user.name}}的作品集</a>
+            <a ng-if="!project.topic" ng-href="users/{{project.user.id}}">来自：{{project.user.fullname}}的作品集</a>
             </p>            
             <ul class="de_stats_tags">
                 <li class="badges" title="勋章">{{project.artifact.honor_count}}</li>
