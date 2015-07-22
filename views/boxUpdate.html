@@ -1,5 +1,5 @@
 <section class="de_screen_box">
-	<h4 class="de_box_title">新建或设置投稿箱</h4>
+	<h4 class="de_box_title">新建或设置作业荚</h4>
 	<form class="de_form_box de_form_box_create de_borderbox de_boxshadow" prevent-enter-submit name="boxUpdateForm" novalidate ng-submit="boxUpdateSubmit()">
     <div class="de_left_col de_borderbox">
         <p class="de_field_project_title">
@@ -29,7 +29,7 @@
     <div class="de_borderbox de_right_col">
         <div ng-if="boxId">
             <div class="de_form_field">
-                <h5>投稿箱状态</h5>
+                <h5>作业荚状态</h5>
                 <p>
                     <span class="de_box_current_state" ng-if="box.status==0">开放</span>
                     <span class="de_box_current_state" ng-if="box.status!=0">关闭</span>
@@ -37,17 +37,17 @@
                     <a href="" ng-if="box.status!=0" toggle-lock-box="{{boxId}},{{box.status}}" class="de_box_change_state_btn">设为开放</a>
                     <!--<a class="de_box_change_state_btn">设为开放</a>-->
                 </p>
-                <p class="de_form_tip">投稿箱关闭后，用户将无法修改或删除已上传到投稿箱的作品，也不能上传其他新的作品到投稿箱。</p>
+                <p class="de_form_tip">作业荚关闭后，用户将无法修改或删除已上传到作业荚的作品，也不能上传其他新的作品到作业荚。</p>
             </div>
             <div class="de_form_field">
-                <h5>投稿作品</h5>
+                <h5>作业荚中的作品</h5>
                 <p>
                     <span class="de_box_entry_num">{{box.artifact_count}}</span>
                     <a class="de_box_view_entry_btn" ng-href="topics/{{boxId}}">查看</a>
                 </p>
             </div>
             <div class="de_form_field">
-                <a class="de_box_destroy_btn de_red_btn" ng-click="deleteBox(boxId)">删除投稿箱及其中的所有作品 (无法恢复，谨慎操作)</a>
+                <a class="de_box_destroy_btn de_red_btn" ng-click="deleteBox(boxId)">删除作业荚及其中的所有作品 (无法恢复，谨慎操作)</a>
             </div>
         </div>
 
