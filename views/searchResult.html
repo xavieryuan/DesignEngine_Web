@@ -1,7 +1,7 @@
 <!-----------搜索结果----------->
 <section class="de_screen_search_result">
     <p ng-if="projects.length==0&&loadedData" class="searchResult">哎呀，没找到相关作品。</p>
-    <p ng-if="projects.length!=0&&loadedData" class="searchResult">{{searchContent}}相关作品:</p>
+    <p ng-if="projects.length!=0&&loadedData" class="searchResult">“{{searchContent}}”相关作品:</p>
     <!-- 作品列表 -->
     <ul class="de_project_grid de_borderbox" >
         <li class="de_borderbox" ng-repeat="project in projects">
