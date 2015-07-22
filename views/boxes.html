@@ -1,7 +1,7 @@
 <!-----------显示选题----------->
 <section class="de_topic_wrapper" >
     <div class="de_box_toolbar">
-        <label>显示投稿箱:</label>
+        <label>显示作业荚:</label>
         <a href="" ng-class="{active:filter.scope==''}" ng-click="filter.scope='';loadBoxes();">全部</a>
         <a href="" ng-class="{active:filter.scope=='open'}" ng-click="filter.scope='open';loadBoxes();">开放中</a>
         <a href="" ng-class="{active:filter.scope=='closed'}" ng-click="filter.scope='closed';loadBoxes();">已关闭</a>
@@ -10,7 +10,7 @@
         <input  type="text" class="searchInput de_borderbox de_inputbox_gray" ng-keydown="keyDownSearch($event)" ng-model="filter.keyword">
         </span>
     </div>
-    <p class="noResult" ng-if="boxes.length==0&&loadedData">哎呀，没找到相关投稿箱。</p>
+    <p class="noResult" ng-if="boxes.length==0&&loadedData">哎呀，没找到相关作业荚。</p>
     <!-- 选题列表 -->
     <ul class="de_topic_list">        
         <li class="de_topic_box" ng-repeat="box in boxes">
