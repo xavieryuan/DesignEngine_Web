@@ -2231,9 +2231,8 @@ display: block;
 .de_screen_upload .de_field_project_thumb .de_form_tip{
 	position: absolute;
 	right: 0;
-	top: 26px;
+	top: 0;
 	width: 250px;
-	text-align: right;
 }
 
 .de_screen_upload .de_project_thumb {
