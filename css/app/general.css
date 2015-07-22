@@ -1472,6 +1472,7 @@ img{
 
 .de_project_timeline .project_info .thumb {
     width: 100%;
+    border-right: #ccc 1px dotted;
    /* height: 100%;*/
 }
 
