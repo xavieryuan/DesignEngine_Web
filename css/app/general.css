@@ -1407,7 +1407,8 @@ img{
     height:440px;
     margin: 20px 0;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: hidden;    
+    white-space: nowrap;
 } 
 .de_project_timeline>li{
     width:700px;
@@ -1417,7 +1418,6 @@ img{
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     margin: 10px 10px 10px 60px;
     display: inline-block;
-    white-space: nowrap;
 }
 
 .de_project_timeline .user_info {
