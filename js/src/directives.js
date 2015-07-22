@@ -251,7 +251,7 @@ directives.directive("panOnMouseWheel",["$window","$document","$timeout","$inter
             var targetElement=element[0];
             var mousewheelEvt= document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll";
             var mousewheelHandler=function (evt) {
-                console.log("scroll")
+                console.log(evt)
                 
                 var left=0;
                 evt = window.event || evt;
