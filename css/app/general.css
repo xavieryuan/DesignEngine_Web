@@ -1438,8 +1438,8 @@ img{
 
 .de_project_timeline .user_info .name {
 	position: absolute;
-    top: 5px;
-    left: 55px;
+    top: 0.5em;
+    left: 50px;
     right:0;
     margin: auto;
     overflow: hidden;
@@ -1452,8 +1452,8 @@ img{
 }
 .de_project_timeline .user_info .date{
     position: absolute;
-	top: 20px;
-	left: 55px;
+	top: 2em;
+	left: 50px;
     right:0;
 	text-align: left;
     margin: 0;

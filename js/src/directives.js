@@ -244,6 +244,37 @@ directives.directive("windowStateChange",["$window","CFunctions","LocationChange
         }
     }
 }]);
+directives.directive("panOnMouseWheel",["$window","$document","$timeout","$interval","Project",
+    function($window,$document,$timeout,$interval,Project){
+    return {
+        link:function(scope,element,attrs){            
+            var mousewheelEvt= document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll";
+            var mousewheelHandler=function (evt) {
+                var left=0;
+                evt = window.event || evt;
+                if(evt.wheelDelta <0 || evt.detail>0){
+                    left=element.scrollLeft+500;
+                }else{
+                    left=element.scrollLeft-500;
+                }
+                TweenLite.to(target, 0.5, {scrollTo:{x:left}});
+
+                //兼容ie
+                if(evt.preventDefault){
+                    evt.preventDefault();
+                    evt.stopPropagation(); 
+                }else{
+                    evt.returnValue=false;
+                    evt.cancelBubble = false;
+                }
+                //evt.preventDefault();
+
+            };
+            element.addEventListener(mousewheelEvt, mousewheelHandler);          
+            
+        }
+    }
+}]);
 directives.directive("windowScroll",["$window","$document","$timeout","$interval","Config","Storage","Project","Box","User",
     function ($window,$document,$timeout,$interval,Config,Storage,Project,Box,User) {
         return {
