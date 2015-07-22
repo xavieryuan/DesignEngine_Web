@@ -1418,6 +1418,7 @@ img{
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     margin: 10px 10px 10px 60px;
     display: inline-block;
+    white-space: normal;
 }
 
 .de_project_timeline .user_info {
