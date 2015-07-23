@@ -84,18 +84,18 @@
                 <img ng-src="{{at.profile_image}}"/></a>
             -->
 
-            <a ng-switch-when="4" ng-href="{{at.media_file}}" target="_self" class="de_has_media de_has_video">
+            <a ng-switch-when="4" ng-href="{{at.media_file}}" target="_blank" class="de_has_media de_has_video">
                 <img ng-src="{{at.profile_image}}"/>
             </a>
-            <a ng-switch-when="2" ng-href="{{at.view_url}}" target="_self"  class="de_has_media de_has_ppt">
-                <img ng-src="{{at.profile_image}}"/>
-            </a>
-
-            <a ng-switch-when="128" ng-href="{{at.view_url}}" target="_self" class="de_has_media de_has_pdf">
+            <a ng-switch-when="2" ng-href="{{at.view_url}}" target="_blank"  class="de_has_media de_has_ppt">
                 <img ng-src="{{at.profile_image}}"/>
             </a>
 
-            <a ng-switch-when="32" ng-href="{{at.media_file}}" target="_self" class="de_has_media de_has_file">
+            <a ng-switch-when="128" ng-href="{{at.view_url}}" target="_blank" class="de_has_media de_has_pdf">
+                <img ng-src="{{at.profile_image}}"/>
+            </a>
+
+            <a ng-switch-when="32" ng-href="{{at.media_file}}" target="_blank" class="de_has_media de_has_file">
                 <img ng-src="{{at.profile_image}}"/>
             </a>
 
@@ -103,7 +103,7 @@
                href="" class="de_has_media de_has_flash">
                 <img ng-src="{{at.profile_image}}"/></a>
 
-            <a ng-switch-when="256" ng-href="{{at.view_url}}" target="_self" class="de_has_media de_has_html5">
+            <a ng-switch-when="256" ng-href="{{at.view_url}}" target="_blank" class="de_has_media de_has_html5">
                 <img ng-src="{{at.profile_image}}"/>
             </a>
 
