@@ -3661,7 +3661,10 @@ span.zy_tooltips{
         margin:0;
         padding:0;        
         bottom:0;
-        height:30px;
+        height:20px;
+    }
+    .de_footer p{
+        margin:0;
     }
     
 	/*详情展示页面*/
