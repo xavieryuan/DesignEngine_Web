@@ -3606,16 +3606,20 @@ span.zy_tooltips{
         height:100%;
     }
     .de_project_timeline .user_info {
-        top: 320px;
+        top: inherit;
+        bottom:120px;
         left: 20px;
         right: 20px;
     }
     .de_project_timeline .project_info {
         width: 100%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
     }
     .de_project_timeline .project_info h4{
         left: 20px;
-        top: 370px;
+        bottom: 50px;
         right: 20px;
         height: 50px;
     }
@@ -3623,15 +3627,11 @@ span.zy_tooltips{
         display: none;
     }
     .de_project_timeline .topic_title{
-        bottom:0;
-    }
-    .de_project_timeline .topic_title>a {
-        height: 40px;
-        line-height: 40px;
+        display: none;
     }
     .de_project_timeline .de_stats_tags {
         left: 20px;
-        bottom: 55px;
+        bottom: 0;
         top: inherit;
     }
     
