@@ -3619,6 +3619,7 @@ span.zy_tooltips{
     }
     .de_project_timeline .project_info h4{
         left: 20px;
+        top:inherit;
         bottom: 50px;
         right: 20px;
         height: 50px;
