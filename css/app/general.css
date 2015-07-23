@@ -3615,14 +3615,22 @@ span.zy_tooltips{
     }
     .de_project_timeline .project_info h4{
         left: 20px;
-        top: 380px;
+        top: 370px;
         right: 20px;
         height: 50px;
     }
     .de_project_timeline .project_info .abstract{
         display: none;
     }
-    
+    .de_project_timeline .topic_title>a {
+        height: 40px;
+        line-height: 40px;
+    }
+    .de_project_timeline .de_stats_tags {
+        left: 20px;
+        bottom: 55px;
+        top: inherit;
+    }
 	/*详情展示页面*/
 	.de_screen_project_detail .de_project_detail{
 		padding:120px 0 20px;
