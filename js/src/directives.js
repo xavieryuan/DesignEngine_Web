@@ -314,13 +314,19 @@ directives.directive("windowScroll",["$window","$document","$timeout","$interval
                 //由于在多个view里面有绑定，所以每次绑定前解除，不然会重复绑定,在scope销毁的时候解除
                 //angular.element($window).unbind("scroll");
                 angular.element($window).bind("scroll", function() {
-
                     if(Storage.scrollTimer){
                         $timeout.cancel(Storage.scrollTimer);
                         Storage.scrollTimer=null;
                     }
                     Storage.scrollTimer=$timeout(function(){
-                        if(Storage.currentScrollScreenType&&$document[0].body.scrollHeight-$window.innerHeight<=$window.scrollY&&
+                        var offsetTop=0;
+                        if($window.scrollY){
+                            offsetTop=$window.scrollY;
+                        }else{
+                            offsetTop=document.documentElement.scrollTop;
+                        }
+                        if(Storage.currentScrollScreenType&&
+                            $document[0].body.scrollHeight-$window.innerHeight<=offsetTop&&
                             Storage.lastLoadedId!=Config.hasNoMoreFlag&&Storage.lastLoadedId!=0&&scope.mainFlags.showMainWrapper&&
                             scope.popFlags.popTemplateUrl===""){
 
