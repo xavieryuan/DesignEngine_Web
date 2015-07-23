@@ -268,11 +268,13 @@ directives.directive("panOnMouseWheel",["$window","$document","$timeout","$inter
                     evt.returnValue=false;
                     evt.cancelBubble = false;
                 }
-                //evt.preventDefault();
-
+                //evt.preventDefault(); 
+            };
+            
+            var scrollHandler=function(evt){
                 if(Storage.scrollTimer){
-                    $timeout.cancel(Storage.scrollTimer);
-                    Storage.scrollTimer=null;
+                        $timeout.cancel(Storage.scrollTimer);
+                        Storage.scrollTimer=null;
                 }
 
                 Storage.scrollTimer=$timeout(function(){
@@ -291,10 +293,11 @@ directives.directive("panOnMouseWheel",["$window","$document","$timeout","$inter
                         });
                     }
                 },200);
-
-            };
+            
+            }
+            
             targetElement.addEventListener(mousewheelEvt, mousewheelHandler);
-
+            targetElement.addEventListener("scroll", scrollHandler);
 
             //释放内存
             scope.$on("$destroy",function( event ) {
