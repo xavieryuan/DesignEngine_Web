@@ -2810,7 +2810,7 @@ span.zy_tooltips{
     color: #999;
 	text-shadow: 0 1px rgba(255,255,255,1);
     font-size: 12px;
-    height: 40px;
+    height: 50px;
     width: 100%;
     overflow: hidden;
     text-align: center;
@@ -3631,6 +3631,15 @@ span.zy_tooltips{
         bottom: 55px;
         top: inherit;
     }
+    
+    /*footer*/
+    .de_footer{
+        margin:0;
+        padding:0;
+        position: absolute;
+        bottom:0;
+    }
+    
 	/*详情展示页面*/
 	.de_screen_project_detail .de_project_detail{
 		padding:120px 0 20px;
