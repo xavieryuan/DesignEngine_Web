@@ -3397,7 +3397,17 @@ span.zy_tooltips{
     color: #545454;
 }
 
-
+@media screen and (max-width: 1024px){
+    .de_topic_box{
+        margin: 20px 10px;
+    }
+    .topic_description{
+        margin:0 10px 20px 10px;
+    }
+    .de_project_grid{
+        padding:0;
+    }
+}
 
 @media screen and (max-width: 768px) {
 	/*顶部导航*/
