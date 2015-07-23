@@ -3604,12 +3604,24 @@ span.zy_tooltips{
         width:80%;
         margin: 0 10%;
         height:100%;
+        overflow:hidden;
     }
     .de_project_timeline .user_info {
         top: inherit;
         bottom:120px;
-        left: 20px;
-        right: 20px;
+        left: 0;
+        right: 0;
+        padding: 10px 20px;
+        z-index: 1;
+        background: #fff;
+    }
+    .de_project_timeline .user_info .name{
+        top: 1em;
+        left: 70px;
+    }
+    .de_project_timeline .user_info .date{
+        top: 2.5em;
+        left: 70px;
     }
     .de_project_timeline .project_info {
         width: 100%;
@@ -3618,11 +3630,13 @@ span.zy_tooltips{
         bottom: 0;
     }
     .de_project_timeline .project_info h4{
-        left: 20px;
+        left: 0;
         top:inherit;
-        bottom: 50px;
-        right: 20px;
+        bottom: 40px;
+        right: 0;
+        padding:20px;
         height: 50px;
+        background: #fff;
     }
     .de_project_timeline .project_info .abstract{
         display: none;
@@ -3631,9 +3645,12 @@ span.zy_tooltips{
         display: none;
     }
     .de_project_timeline .de_stats_tags {
-        left: 20px;
+        left: 0;
+        right:0;
         bottom: 0;
         top: inherit;
+        padding:0 20px;
+        background: #fff;
     }
     
     /*footer*/
