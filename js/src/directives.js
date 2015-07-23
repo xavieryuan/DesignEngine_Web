@@ -322,19 +322,16 @@ directives.directive("windowScroll",["$window","$document","$timeout","$interval
                         Storage.scrollTimer=null;
                     }
                     Storage.scrollTimer=$timeout(function(){
-<<<<<<< HEAD
-                        var offsetTop=0;
+                        var scrollTop=0;
                         if($window.scrollY){
-                            offsetTop=$window.scrollY;
+                            scrollTop=$window.scrollY;
                         }else{
-                            offsetTop=document.documentElement.scrollTop;
+                            scrollTop=document.documentElement.scrollTop;
                         }
-                        if(Storage.currentScrollScreenType&&
-                            $document[0].body.scrollHeight-$window.innerHeight<=offsetTop&&
-=======
-                        console.log($window)
-                        if(Storage.currentScrollScreenType && $document[0].body.scrollHeight-$window.innerHeight<=$window.scrollY &&
->>>>>>> origin/pinwall3.0
+
+                        if(Storage.currentScrollScreenType &&
+                            $document[0].body.scrollHeight-$window.innerHeight<=scrollTop &&
+
                             Storage.lastLoadedId!=Config.hasNoMoreFlag&&Storage.lastLoadedId!=0&&scope.mainFlags.showMainWrapper&&
                             scope.popFlags.popTemplateUrl===""){
 
