@@ -3589,7 +3589,40 @@ span.zy_tooltips{
 		padding: 0;
 	}
 	
-	
+	/*timeline*/
+    .de_screen_project_timeline{
+        height:auto;
+        margin:0;
+        position: absolute;
+        top:80px;
+        bottom: 40px;
+    }
+    .de_project_timeline{
+        height: 95%;
+    }
+    .de_project_timeline>li{
+        width:80%;
+        margin: 0 10%;
+        height:100%;
+    }
+    .de_project_timeline .user_info {
+        top: 320px;
+        left: 20px;
+        right: 20px;
+    }
+    .de_project_timeline .project_info {
+        width: 100%;
+    }
+    .de_project_timeline .project_info h4{
+        left: 20px;
+        top: 380px;
+        right: 20px;
+        height: 50px;
+    }
+    .de_project_timeline .project_info .abstract{
+        display: none;
+    }
+    
 	/*详情展示页面*/
 	.de_screen_project_detail .de_project_detail{
 		padding:120px 0 20px;
