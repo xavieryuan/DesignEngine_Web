@@ -3659,6 +3659,9 @@ span.zy_tooltips{
     .de_project_timeline .project_info a::before{
         width:100%;
     }
+    .de_project_timeline .project_info a:hover::before{    
+        box-shadow: none;
+    }
     .de_project_timeline .project_info .abstract{
         display: none;
     }
