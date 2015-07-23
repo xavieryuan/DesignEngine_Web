@@ -964,7 +964,7 @@ services.factory("Box",["$rootScope","$resource","CFunctions","Config","Storage"
     function($rootScope,$resource,CFunctions,Config,Storage){
         return {
             getBoxes:function(scope,keyword){
-                console.log(Storage.lastLoadedId);
+
                 var me=this.resource.query({scope:scope,keyword:keyword,page:Storage.lastLoadedId+1},function(data){
 
                     if(data.topics.length<Config.perLoadCount){

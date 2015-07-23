@@ -244,8 +244,8 @@ directives.directive("windowStateChange",["$window","CFunctions","LocationChange
         }
     }
 }]);
-directives.directive("panOnMouseWheel",["$window","$document","$timeout","$interval","Project",
-    function($window,$document,$timeout,$interval,Project){
+directives.directive("panOnMouseWheel",["$window","$document","$timeout","$interval","Config","Project",
+    function($window,$document,$timeout,$interval,Config,Project){
     return {
         link:function(scope,element,attrs){
             var targetElement=element[0];
@@ -270,8 +270,38 @@ directives.directive("panOnMouseWheel",["$window","$document","$timeout","$inter
                 }
                 //evt.preventDefault();
 
+                if(Storage.scrollTimer){
+                    $timeout.cancel(Storage.scrollTimer);
+                    Storage.scrollTimer=null;
+                }
+
+                Storage.scrollTimer=$timeout(function(){
+                    if($document[0].body.scrollWidth-$window.innerWidth<=$window.scrollX&&
+                        Storage.lastLoadedId!=Config.hasNoMoreFlag&&Storage.lastLoadedId!=0){
+                        Project.getProjects().$promise.then(function(data){
+                            var count= 0,length=data.artifacts.length;
+                            var inter=$interval(function(){
+                                if(count<length){
+                                    scope.projects.push(data.artifacts[count]);
+                                    count++;
+                                }else{
+                                    $interval.cancel(inter);
+                                }
+                            },200);
+                        });
+                    }
+                },200);
+
             };
-            targetElement.addEventListener(mousewheelEvt, mousewheelHandler);          
+            targetElement.addEventListener(mousewheelEvt, mousewheelHandler);
+
+
+            //释放内存
+            scope.$on("$destroy",function( event ) {
+                $timeout.cancel( Storage.scrollTimer);
+                Storage.scrollTimer=null;
+                angular.element($window).unbind("scroll");
+            });
             
         }
     }
