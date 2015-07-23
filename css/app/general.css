@@ -1481,8 +1481,11 @@ img{
     width:100%;
     height:100%;
     transition: all 0.5s ease-out;
+    position: absolute;
+    top:0;
+    left: 0;
 }
-.de_project_timeline .project_info a:before:hover{    
+.de_project_timeline .project_info a:hover:before{    
     box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
 }
 .de_project_timeline .project_info .thumb {
