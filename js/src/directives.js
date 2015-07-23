@@ -276,7 +276,7 @@ directives.directive("panOnMouseWheel",["$window","$document","$timeout","$inter
                 }
 
                 Storage.scrollTimer=$timeout(function(){
-                    if($document[0].body.scrollWidth-$window.innerWidth<=$window.scrollX&&
+                    if(targetElement.scrollWidth-$window.innerWidth<=targetElement.scrollLeft&&
                         Storage.lastLoadedId!=Config.hasNoMoreFlag&&Storage.lastLoadedId!=0){
                         Project.getProjects().$promise.then(function(data){
                             var count= 0,length=data.artifacts.length;
