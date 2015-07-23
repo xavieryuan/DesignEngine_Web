@@ -1407,7 +1407,8 @@ img{
     height:440px;
     margin: 20px 0;
     overflow-x: auto;
-    overflow-y: hidden;          
+    overflow-y: hidden;  
+    -webkit-overflow-scrolling: touch;
 }
 .de_project_timeline{      
     white-space: nowrap;
