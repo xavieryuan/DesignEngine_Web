@@ -3657,10 +3657,11 @@ span.zy_tooltips{
     
     /*footer*/
     .de_footer{
+        position: fixed;
         margin:0;
-        padding:0;
-        position: absolute;
+        padding:0;        
         bottom:0;
+        height:30px;
     }
     
 	/*详情展示页面*/
