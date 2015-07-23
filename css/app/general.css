@@ -1481,7 +1481,7 @@ img{
     content:"";
     width:400px;
     height:100%;
-    transition: all 0.5s ease-out;
+    transition: all 0.3s ease-out;
     position: absolute;
     top:0;
     left: 0;
