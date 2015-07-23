@@ -244,8 +244,8 @@ directives.directive("windowStateChange",["$window","CFunctions","LocationChange
         }
     }
 }]);
-directives.directive("panOnMouseWheel",["$window","$document","$timeout","$interval","Config","Project",
-    function($window,$document,$timeout,$interval,Config,Project){
+directives.directive("panOnMouseWheel",["$window","$document","$timeout","$interval","Config","Storage","Project",
+    function($window,$document,$timeout,$interval,Config,Storage,Project){
     return {
         link:function(scope,element,attrs){
             var targetElement=element[0];
