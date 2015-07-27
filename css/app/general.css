@@ -990,7 +990,7 @@ img{
 	text-indent: 9999px;
 	padding: 0;
 }
-.de_ext_nav>li>a.de_btn_upload:hover{
+.de_ext_nav>li>a.de_btn_new_upload:hover{
 	background: url(../../images/app/icon40_plus_dark.png) #eee no-repeat center;
 }
 .de_ext_nav .de_btn_new_box{
