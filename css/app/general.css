@@ -3455,10 +3455,10 @@ span.zy_tooltips{
     .de_btn_user_profile{
         display:none !important;
     }
-	.de_btn_upload{
+	.de_btn_new_upload{
         display:none !important;
     }
-	.de_btn_create_box{
+	.de_btn_new_box{
         display:none !important;
     }
     .de_link_openid_login{
