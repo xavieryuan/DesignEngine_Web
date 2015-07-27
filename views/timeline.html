@@ -10,7 +10,7 @@
             </div>
             <div class="project_info">
                 <a href="" ng-click="showProjectDetail(project.artifact.id)">
-                    <img class="thumb" ng-src="{{project.artifact.profile_image}}">
+                    <span class="thumb_wrapper"><img class="thumb" ng-src="{{project.artifact.profile_image}}"></span>
                     <h4>{{project.artifact.name}}</h4>
                     <p class="abstract">
                         {{project.artifact.description}}

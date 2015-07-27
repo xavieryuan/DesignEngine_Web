@@ -1503,12 +1503,14 @@ img{
 .de_project_timeline .project_info a{
     width:100%;
     height:100%;
-    display: inline-block;
-    overflow: hidden;
-    perspective: 1000px;
+    display: inline-block;    
     font-size: 0;
 }
-
+.de_project_timeline .project_info .thumb_wrapper{
+    display: inline-block;
+    perspective: 1000px;
+    overflow: hidden;
+}
 .de_project_timeline .project_info .thumb {
     width: 100%;
     border-right: #ccc 1px dotted;
