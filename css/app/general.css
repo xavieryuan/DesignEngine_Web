@@ -929,7 +929,7 @@ img{
     width: 100%;
     height: 60px;
     line-height: 60px;
-    padding: 0 20px 0 80px;
+    padding: 0 20px 0 60px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -985,13 +985,13 @@ img{
 	position: absolute;
 	top:0;
 	right:0;
-	border-right:#ccc 1px dotted;
+	border-left:#ccc 1px dotted;
 	font-size: 0;
 	text-indent: 9999px;
 	padding: 0;
 }
 .de_ext_nav>li>a.de_btn_upload:hover{
-	background-color: #eee;
+	background: url(../../images/app/icon40_plus_dark.png) #eee no-repeat center;
 }
 .de_ext_nav .de_btn_new_box{
 	width:60px;
@@ -1000,13 +1000,13 @@ img{
 	position: absolute;
 	top:0;
 	right:0;
-	border-right:#ccc 1px dotted;
+	border-left:#ccc 1px dotted;
 	font-size: 0;
 	text-indent: 9999px;
 	padding: 0;
 }
 .de_ext_nav>li>a.de_btn_new_box:hover{
-	background-color: #eee;
+	background: url(../../images/app/icon40_plus_dark.png) #eee no-repeat center;
 }
 /****顶部菜单****/
 .de_top_nav {
