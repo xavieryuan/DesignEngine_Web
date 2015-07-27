@@ -1506,13 +1506,14 @@ img{
     display: inline-block;
     overflow: hidden;
     perspective: 1000px;
+    font-size: 0;
 }
 
 .de_project_timeline .project_info .thumb {
     width: 100%;
     border-right: #ccc 1px dotted;
-    transition: all 0.5 ease-out;
-     transform: translateZ(0);
+    transition: all 0.5s ease-out;
+    transform: translateZ(0);
    /* height: 100%;*/
 }
 .de_project_timeline .project_info .thumb:hover{
