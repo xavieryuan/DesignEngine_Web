@@ -947,38 +947,66 @@ img{
 	background: #eee;
 }
 
-.de_ext_nav>li:last-child>a {
+.de_ext_nav>li::last-child>a {
     border-bottom: none;
 }
-.de_ext_nav .de_btn_upload{
+
+.de_ext_nav>li>a::before{
+    content:"";
+    width:60px;
+    height:60px;
+    position: absolute;
+    top:0;
+    left:0;
+}
+.de_ext_nav>li>a.de_btn_activate::before{
+    background: url(../../images/app/icon40_warning_dark.png) no-repeat center
+}
+.de_ext_nav>li>a.de_btn_uploads::before{
+    background: url(../../images/app/icon40_upload_dark.png) no-repeat center
+}
+.de_ext_nav>li>a.de_btn_boxes::before{
+    background: url(../../images/app/icon40_warning_dark.png) no-repeat center
+}
+.de_ext_nav>li>a.de_btn_edit_profile::before{
+    background: url(../../images/app/icon40_namecard_dark.png) no-repeat center
+}
+.de_ext_nav>li>a.de_btn_pwd::before{
+    background: url(../../images/app/icon40_key_dark.png) no-repeat center
+}
+.de_ext_nav>li>a.de_btn_exit::before{
+    background: url(../../images/app/icon40_exit_dark.png) no-repeat center
+}
+
+.de_ext_nav .de_btn_new_upload{
 	width:60px;
 	height:60px;
-	background: url(../../images/app/icon40_upload_white.png) #fff no-repeat center;
+	background: url(../../images/app/icon40_plus_dark.png) #fff no-repeat center;
 	position: absolute;
 	top:0;
-	left:0;
+	right:0;
 	border-right:#ccc 1px dotted;
 	font-size: 0;
 	text-indent: 9999px;
 	padding: 0;
 }
 .de_ext_nav>li>a.de_btn_upload:hover{
-	background: url(../../images/app/icon40_upload_white.png) #eee no-repeat center;
+	background-color: #eee;
 }
-.de_ext_nav .de_btn_create_box{
+.de_ext_nav .de_btn_new_box{
 	width:60px;
 	height:60px;
-	background: url(../../images/app/icon40_box_white.png) #fff no-repeat center;
+	background: url(../../images/app/icon40_plus_dark.png) #fff no-repeat center;
 	position: absolute;
 	top:0;
-	left:0;
+	right:0;
 	border-right:#ccc 1px dotted;
 	font-size: 0;
 	text-indent: 9999px;
 	padding: 0;
 }
-.de_ext_nav>li>a.de_btn_create_box:hover{
-	background: url(../../images/app/icon40_box_white.png) #eee no-repeat center;
+.de_ext_nav>li>a.de_btn_new_box:hover{
+	background-color: #eee;
 }
 /****顶部菜单****/
 .de_top_nav {
