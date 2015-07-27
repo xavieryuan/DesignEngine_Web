@@ -1510,6 +1510,8 @@ img{
     display: inline-block;
     perspective: 1000px;
     overflow: hidden;
+    width:100%;
+    height:100%;
 }
 .de_project_timeline .project_info .thumb {
     width: 100%;
