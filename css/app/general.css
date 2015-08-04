@@ -1591,7 +1591,7 @@ img{
 }
 
 /*timeline的滑条样式*/
-.de_project_timeline{
+.de_screen_project_timeline{
     scrollbar-arrow-color: #ddd;
     scrollbar-3dlight-color: #efefef;
     scrollbar-highlight-color: #efefef;
@@ -1600,13 +1600,13 @@ img{
     scrollbar-face-color: #ddd;
     scrollbar-track-color: #efefef;
 }
-.de_project_timeline::-webkit-scrollbar-track {
+.de_screen_project_timeline::-webkit-scrollbar-track {
     background: #efefef;
 }
-.de_project_timeline::-webkit-scrollbar {
+.de_screen_project_timeline::-webkit-scrollbar {
     height: 8px;
 }
-.de_project_timeline::-webkit-scrollbar-thumb {
+.de_screen_project_timeline::-webkit-scrollbar-thumb {
     background: #ddd;
 }
 
