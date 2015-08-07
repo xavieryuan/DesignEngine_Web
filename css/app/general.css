@@ -1338,7 +1338,7 @@ img{
 }
 
 .de_project_grid .project_info h4 {
-    font-size: 14px;
+    font-size: 12px;
     text-align: left;
     position: absolute;
     left: 190px;
@@ -1348,7 +1348,7 @@ img{
     overflow: hidden;
 	color:#09bc72;
 	margin:0;
-	line-height: 20px;
+	line-height: 1.5em;
 }
 
 .de_project_grid .project_info .date {
