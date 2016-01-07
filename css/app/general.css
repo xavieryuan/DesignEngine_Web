@@ -1527,8 +1527,8 @@ img{
     transform: translateZ(0);
    /* height: 100%;*/
 }
-.de_project_timeline .project_info .thumb:hover{
-    transform: translateZ(200px);
+.de_project_timeline .project_info:hover .thumb{
+    transform: translateZ(100px);
 }
 .de_project_timeline .project_info h4 {
     font-size: 16px;
