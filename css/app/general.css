@@ -1336,11 +1336,14 @@ img{
 
 .de_project_grid .project_info {
     width:180px;
+    height:180px;
+    padding:10px;
+    box-sizing: border-box;
 }
 
 .de_project_grid .project_info .thumb {
     width: 100%;
-    border-right: #ccc 1px dotted;
+/*    border-right: #ccc 1px dotted;*/
    /* height: 100%;*/
 }
 
@@ -1920,12 +1923,12 @@ img{
 	font-size:0;
 	overflow: hidden;
 	white-space: nowrap;
-    border-left: #ccc 1px dotted;
+/*    border-left: #ccc 1px dotted;*/
 }
 .project_info li{
 	display: inline-block;	
 	padding:10px;
-    margin-left:-10px;
+    margin-right:-10px;
 }
 .project_info li img{
 	height:120px;
