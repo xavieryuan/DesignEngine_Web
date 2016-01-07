@@ -1562,7 +1562,7 @@ img{
     position: absolute;
     bottom:10px;
     left:-30px;
-    z-index: 1;
+    z-index: 999;
 }
 .de_project_timeline .topic_title>a{
     display: block;
