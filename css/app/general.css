@@ -1527,7 +1527,7 @@ img{
     transform: translateZ(0);
    
 }
-.de_project_timeline .project_info:hover .thumb{
+.de_project_timeline>li:hover .project_info .thumb{
     transform: translateZ(100px);
 }
 .de_project_timeline .project_info h4 {
