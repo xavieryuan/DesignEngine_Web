@@ -1525,7 +1525,7 @@ img{
     border-right: #ccc 1px dotted;
     transition: all 0.2s ease-out;
     transform: translateZ(0);
-   /* height: 100%;*/
+   
 }
 .de_project_timeline .project_info:hover .thumb{
     transform: translateZ(100px);
