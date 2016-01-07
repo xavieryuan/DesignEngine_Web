@@ -16,7 +16,7 @@ services.constant("Config",{
         smallThumb:"images/app/default_small_thumb.png",
         defaultUserProfile:"images/app/default_user_photo.png"
     },
-    perLoadCount:10,//作品、评论、资源等每次加载的个数
+    perLoadCount:12,//作品、评论、资源等每次加载的个数
     hasNoMoreFlag:-1,//作品、评论、资源等没有更多的标志,当没有更多的时候将其的loadId设置为-1
     qNUploadDomain:'http://qiniu-plupload.qiniudn.com/',
     qNBucketDomain:"http://design-pinwall.qiniudn.com/",
