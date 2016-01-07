@@ -1562,7 +1562,6 @@ img{
     position: absolute;
     bottom:10px;
     left:-30px;
-    z-index: 999;
 }
 .de_project_timeline .topic_title>a{
     display: block;
@@ -1921,16 +1920,16 @@ img{
 	font-size:0;
 	overflow: hidden;
 	white-space: nowrap;
-	text-align: right;
     border-left: #ccc 1px dotted;
 }
 .project_info li{
 	display: inline-block;	
-	
+	padding:10px;
+    margin-left:-10px;
 }
 .project_info li img{
-	height:140px;
-	width:140px;
+	height:120px;
+	width:120px;
 }
 
 .de_screen_user_profile .de_topic_box{
