@@ -104,12 +104,14 @@ services.constant("Config",{
     searchTypes:{
         names:{
             fullName:"用户名",
+            email:"注册邮箱",
             projectTitle:"作品标题",
             commentContent:"评论内容",
             term:"标签"
         },
         values:{
             fullName:"user_name",
+            email:"email",
             projectTitle:"artifact_name",
             commentContent:"comment_content",
             term:"term"
