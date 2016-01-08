@@ -1123,7 +1123,10 @@ viewControllers.controller("usersManage",['$scope',"toaster","ngTableParams","Us
     function($scope,toaster,ngTableParams,User,Config){
 
         $scope.mainFlags.currentMenu="";
-        $scope.types=[{name:Config.searchTypes.names.fullName,value:Config.searchTypes.values.fullName}];
+        $scope.types=[
+            {name:Config.searchTypes.names.fullName,value:Config.searchTypes.values.fullName},
+            {name:Config.searchTypes.names.email,value:Config.searchTypes.values.email}
+        ];
 
         $scope.type=$scope.types[0]["value"];
         $scope.keyword="";
