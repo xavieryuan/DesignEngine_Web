@@ -531,7 +531,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 for (var mediaID in $scope.project.medias){
                     if (mediaID){
                         $scope.showSetPanel(mediaID);
-                        return
+                        break;
                     }
                 }
             }
