@@ -526,11 +526,11 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             }
             
             
-            /*if(index==2){
+            if((index==2)&&(!angular.equals({},$scope.currentMediaObj)){
                 //TODO:切换到第2页，如果有数据，默认加载第1张图的设置页面
-                var defaultMediaId = $scope.project.medias[0].mediaId;
-                $scope.showSetPanel(defaultMediaId);
-            }*/
+                $scope.currentMediaObj = $scope.project.assets[0];
+                $scope.currentMediaObj["active"]=true;
+            }
 
             if(index==3){
                 var hasUnCompleteUpload=false,noMedia=false;
@@ -647,6 +647,11 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 progressCb:imageProgressCb,
                 uploadedCb:function(file,info){
                     imageUploadedCb(file,info);
+                    //上传完成后，默认设置hash中的第一张图片
+                     if(angular.equals({},$scope.currentMediaObj)){
+                        $scope.currentMediaObj = $scope.project.medias[fileIdToMediaIdHash[file.id]];
+                        $scope.currentMediaObj["active"]=true;
+                    }
                 }
             });
         };
