@@ -527,10 +527,13 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
             
             
             if((index==2)&&(angular.equals({},$scope.currentMediaObj))){
-                //TODO:切换到第2页，如果当前没有选中的图片数据，默认加载第1张图的设置页面
-                //$scope.currentMediaObj = $scope.project.medias[0];
-                //$scope.currentMediaObj["active"]=true;
-                console.log($scope.project.medias.length)
+                //切换到第2页，如果当前没有选中的图片数据，默认加载第1张图的设置页面
+                for (var mediaID in $scope.project.medias){
+                    if (mediaID){
+                        $scope.showSetPanel(mediaID);
+                        return
+                    }
+                }
             }
 
             if(index==3){
