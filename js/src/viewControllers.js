@@ -530,7 +530,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 //TODO:切换到第2页，如果当前没有选中的图片数据，默认加载第1张图的设置页面
                 //$scope.currentMediaObj = $scope.project.medias[0];
                 //$scope.currentMediaObj["active"]=true;
-                console.log($scope.project.medias[0])
+                console.log($scope.project.medias.length)
             }
 
             if(index==3){
@@ -649,10 +649,11 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 uploadedCb:function(file,info){
                     imageUploadedCb(file,info);
                     //上传完成后，默认设置hash中的第一张图片
-                     if(angular.equals({},$scope.currentMediaObj)){
+                    $scope.showSetPanel(fileIdToMediaIdHash[file.id]);
+                     /*if(angular.equals({},$scope.currentMediaObj)){
                         $scope.currentMediaObj = $scope.project.medias[fileIdToMediaIdHash[file.id]];
                         $scope.currentMediaObj["active"]=true;
-                    }
+                    }*/
                 }
             });
         };
