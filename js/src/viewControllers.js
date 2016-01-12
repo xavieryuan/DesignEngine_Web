@@ -524,6 +524,13 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                     return false;
                 }
             }
+            
+            
+            /*if(index==2){
+                //TODO:切换到第2页，如果有数据，默认加载第1张图的设置页面
+                var defaultMediaId = $scope.project.medias[0].mediaId;
+                $scope.showSetPanel(defaultMediaId);
+            }*/
 
             if(index==3){
                 var hasUnCompleteUpload=false,noMedia=false;
@@ -556,17 +563,19 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                     return false;
                 }
             }
-
+            
+            
             //在点击的时候需要去掉媒体文件的active状态
-            if(!angular.equals({},$scope.currentMediaObj)&&index!=2){
+            /*if(!angular.equals({},$scope.currentMediaObj)&&index!=2){
                 $scope.currentMediaObj.active=undefined;
                 delete $scope.currentMediaObj.active;
                 $scope.currentMediaObj={};
-            }
+            }*/
 
             //设置状态
             $scope.currentTab=index;
-
+            
+            
         };
 
         $scope.deleteTag=function(index){
