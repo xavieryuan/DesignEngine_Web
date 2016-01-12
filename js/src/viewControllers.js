@@ -649,11 +649,11 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 uploadedCb:function(file,info){
                     imageUploadedCb(file,info);
                     //上传完成后，默认设置hash中的第一张图片
-                    $scope.showSetPanel(fileIdToMediaIdHash[file.id]);
-                     /*if(angular.equals({},$scope.currentMediaObj)){
-                        $scope.currentMediaObj = $scope.project.medias[fileIdToMediaIdHash[file.id]];
-                        $scope.currentMediaObj["active"]=true;
-                    }*/
+                     if(angular.equals({},$scope.currentMediaObj)){
+                        $scope.showSetPanel(fileIdToMediaIdHash[file.id]);
+                        /*$scope.currentMediaObj = $scope.project.medias[fileIdToMediaIdHash[file.id]];
+                        $scope.currentMediaObj["active"]=true;*/
+                    }
                 }
             });
         };
