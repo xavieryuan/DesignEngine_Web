@@ -447,6 +447,10 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 for (var i = 0; i < length; i++) {
                     random=CFunctions.getRandom(i+"_");
                     $scope.project.medias[random]=data.artifact.assets[i];
+
+                    if(i==0){
+                        $scope.showSetPanel(random);
+                    }
                 }
             });
         }
@@ -525,17 +529,9 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                     return false;
                 }
             }
+
             
-            
-            if((index==2)&&(angular.equals({},$scope.currentMediaObj))){
-                //切换到第2页，如果当前没有选中的图片数据，默认加载第1张图的设置页面
-                for (var mediaID in $scope.project.medias){
-                    if (mediaID){
-                        $scope.showSetPanel(mediaID);
-                        break;
-                    }
-                }
-            }
+
 
             if(index==3){
                 var hasUnCompleteUpload=false,noMedia=false;
