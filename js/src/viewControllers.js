@@ -371,6 +371,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                 currentMedia[Config.mediaObj.mediaMemo]="";
                 currentMedia[Config.mediaObj.mediaTitle]="";
             }
+
             $scope.$apply();
         }
         function fileUploadedCb(file,info){
