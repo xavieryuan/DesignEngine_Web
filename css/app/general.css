@@ -918,7 +918,7 @@ img{
 }
 
 .de_user_nav>ul>li>.de_btn_user_profile .vip_user.ico-vip::before{
-	content:"\e903";
+	content:"\e924";
 	width:14px;
 	height:14px;
 	margin-right:5px;
@@ -1027,7 +1027,7 @@ img{
 	padding: 0;
 }
 .de_ext_nav .de_btn_new_upload.ico-add::before{
-    content:"\e908";
+    content:"\e924";
     color:#666;
     font-size: 20px;
     text-align: center;
@@ -1054,9 +1054,9 @@ img{
 	padding: 0;
 }
 .de_ext_nav .de_btn_new_box.ico-add::before{
-    content:"\e908";
+    content:"\e924";
     color:#666;
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     text-indent: 0;
     line-height: 60px;
@@ -2132,7 +2132,7 @@ img{
     display: inline;
 }
 
-.de_form_box .de_category_tag_box li a {
+.de_form_box .de_category_tag_box li a{
     font-size: 12px;
     padding: 0 10px 0 30px;
     line-height: 30px;
@@ -2151,7 +2151,7 @@ img{
     height: 20px;
     text-align: center;
     line-height: 20px;
-    font-size: 18px;
+    font-size: 14px;
     display: inline-block;
     position: absolute;
     top: 5px;
@@ -2358,19 +2358,22 @@ display: block;
     margin: 0 10px 10px 0;
 }
 
-.de_screen_upload .de_category_tag_box li a:before {
-    content: "";
+.de_screen_upload .de_category_tag_box li a.ico-tag::before {
+    content: "\e928";
     width: 20px;
     height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 14px;
     display: inline-block;
     position: absolute;
     top: 5px;
     left: 5px;
-    background: url(../../images/app/icon20_tag_white.png) no-repeat;
 }
 
-.de_screen_upload .de_category_tag_box li a:hover:before {
-    background: url(../../images/app/icon20_delete_white.png) no-repeat #C00;
+.de_screen_upload .de_category_tag_box li a.ico-tag:hover::before {
+    content: "\e90a";
+    background: #C00;
     border-radius: 10px;
 }
 
