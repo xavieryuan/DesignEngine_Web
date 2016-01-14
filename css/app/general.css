@@ -1706,11 +1706,13 @@ img{
     height:36px;
     border-radius: 18px;
     box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+    display: inline-block;
+    position: relative;
 }
 .de_project_toolbar>li>a::before{
     width:36px;
     height:36px;
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
     line-height: 36px;
     text-indent: 0;
@@ -1737,6 +1739,7 @@ img{
 
 .de_project_toolbar>li>a:hover{
     background: #07af69;
+    color: #fff;
 }
 
 
