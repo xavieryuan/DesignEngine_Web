@@ -1027,7 +1027,7 @@ img{
 	padding: 0;
 }
 .de_ext_nav .de_btn_new_upload.ico-add::before{
-    content:"\e924";
+    content:"\e903";
     color:#666;
     font-size: 20px;
     text-align: center;
@@ -1054,7 +1054,7 @@ img{
 	padding: 0;
 }
 .de_ext_nav .de_btn_new_box.ico-add::before{
-    content:"\e924";
+    content:"\e903";
     color:#666;
     font-size: 20px;
     text-align: center;
