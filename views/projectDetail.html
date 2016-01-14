@@ -174,7 +174,7 @@
                 </a>
             </div>
             <div class="comment_wrapper">
-                <a ng-href="user/{{c.user.id}}" class="name" ng-class="{ico-vip-user:(c.user.roles|arrayHasElements:'vip')}">
+                <a ng-href="user/{{c.user.id}}" class="name" ng-class="{'ico-vip-user':(c.user.roles|arrayHasElements:'vip')}">
                     {{c.user.fullname}}</a>
                 <span class="publishtime">{{c.comment.commented_at}}</span>
 
@@ -196,7 +196,7 @@
             </a>
         </div>
         <div class="comment_wrapper">
-            <a ng-href="user/{{currentUser.userId}}" class="name" ng-class="{vip_user:(currentUser.roles|arrayHasElements:'vip')}">
+            <a ng-href="user/{{currentUser.userId}}" class="name" ng-class="{'ico-vip-user':(currentUser.roles|arrayHasElements:'vip')}">
                 {{currentUser.name}}</a>
             <textarea ng-model="commentObj.newComment" maxlength="200" class="comment de_borderbox de_inputbox_gray"
                       placeholder="你的评论..."></textarea>
