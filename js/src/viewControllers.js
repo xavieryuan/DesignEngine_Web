@@ -651,7 +651,7 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
                     //上传完成后，默认设置hash中的第一张图片
                      if(angular.equals({},$scope.currentMediaObj)){
                         $scope.showSetPanel(fileIdToMediaIdHash[file.id]);
-                        $scope.apply();
+                        $scope.$apply();
                         /*$scope.currentMediaObj = $scope.project.medias[fileIdToMediaIdHash[file.id]];
                         $scope.currentMediaObj["active"]=true;*/
                     }
