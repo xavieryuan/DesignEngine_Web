@@ -1952,6 +1952,17 @@ img{
     box-shadow: 0 6px 10px rgba(0,0,0,0.1);
     position: relative;
 }
+.topic_action li a::before{
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 40px;
+    text-indent: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 .topic_action li.de_topic_action_submit a.ico-upload::before{	
 	content:"\e923";
 }
@@ -2973,9 +2984,10 @@ span.zy_tooltips{
     border-radius: 18px;
     box-shadow: 0 6px 10px rgba(0,0,0,0.1);
     background: #fff;
+    color: #666;
 }
 .de_btn_close_project_detail.ico-cross::before,.de_btn_back_to_home.ico-cross::before{
-    content: "e90a";
+    content: "\e90a";
     width:40px;
     height:40px;
     font-size: 20px;
