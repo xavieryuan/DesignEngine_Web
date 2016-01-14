@@ -55,31 +55,31 @@
                     <li class="de_reg_view" ng-show="currentUser.id">
                         <a class="de_btn_user_profile de_borderbox" ng-href="users/{{currentUser.id}}">
                             <img class="photo" ng-src="{{currentUser.profile}}" title="{{currentUser.name}}">
-                            <span ng-class="{vip_user:(currentUser.roles|arrayHasElements:'vip')}">{{currentUser.name}}</span>
+                            <span ng-class="{vip_user ico-vip:(currentUser.roles|arrayHasElements:'vip')}">{{currentUser.name}}</span>
                         </a>
                     </li>
                     <!--<li class="de_reg_view" ng-show="currentUser.id">
                         <a class="de_btn_upload de_borderbox" href="upload">上传</a>
                     </li>-->
                     <li class="de_reg_view " ng-show="currentUser.id">
-                        <a class="de_btn_hotdogmenu de_borderbox" href="" ng-click="toggleExtMenu($event)" title="菜单">更多</a>
+                        <a class="de_btn_hotdogmenu de_borderbox ico-hotdog" href="" ng-click="toggleExtMenu($event)" title="菜单">更多</a>
                         <ul ng-class="{de_ext_nav_active:mainFlags.extMenuActive}" class="de_ext_nav" id="de_ext_nav">
                            	<li class="de_reg_view" ng-if="!currentUser.active">
-                        		<a  href="" ng-click="activeAccount()" class="de_btn_activate" title="您的账号未激活，点击“激活”将重新发送确认邮件到注册邮箱。">激活</a>
+                        		<a  href="" ng-click="activeAccount()" class="de_btn_activate ico-attention" title="您的账号未激活，点击“激活”将重新发送确认邮件到注册邮箱。">激活</a>
                     		</li>
                            	<li class="de_reg_view " ng-if="currentUser.active">
-                                <a ng-href="users/{{currentUser.id}}" class="de_btn_uploads" title="我的作品集">我的作品集</a>
-                                <a class="de_btn_new_upload de_borderbox"   ng-href="projects/create" title="上传作品">上传作品</a>
+                                <a ng-href="users/{{currentUser.id}}" class="de_btn_uploads ico-upload" title="我的作品集">我的作品集</a>
+                                <a class="de_btn_new_upload de_borderbox ico-add"   ng-href="projects/create" title="上传作品">上传作品</a>
                             </li>
                             <li class="de_reg_view" ng-if="currentUser.active&&currentUser.roles|arrayHasElements:'vip'">
-                                <a ng-href="users/{{currentUser.id}}/topics" class="de_btn_boxes" title="我的作业荚">我的作业荚</a>
-                                <a class="de_btn_new_box de_borderbox" ng-href="topics/create" title="创建作业荚">创建作业荚</a>
+                                <a ng-href="users/{{currentUser.id}}/topics" class="de_btn_boxes ico-bean" title="我的作业荚">我的作业荚</a>
+                                <a class="de_btn_new_box de_borderbox ico-add" ng-href="topics/create" title="创建作业荚">创建作业荚</a>
                             </li>                                                       
                             <li class="de_reg_view" ng-if="currentUser.active">
-                                <a href="" ng-click="editInfo()" class="de_btn_edit_profile" title="修改个人信息">修改个人信息</a>
+                                <a href="" ng-click="editInfo()" class="de_btn_edit_profile ico-namecard" title="修改个人信息">修改个人信息</a>
                             </li>
                             <li class="de_reg_view " ng-if="currentUser.active">
-                                <a href="" ng-click="editPwd()" class="de_btn_pwd">修改密码</a>
+                                <a href="" ng-click="editPwd()" class="de_btn_pwd ico-key">修改密码</a>
                             </li>
                             <li class="de_admin_view " ng-if="currentUser.roles|arrayHasElements:'admin'">
                                 <a href="admin/users" title="用户管理">用户管理</a>
@@ -91,7 +91,7 @@
                                 <a href="admin/comments" title="评论管理">评论管理</a>
                             </li>
                             <li class="de_reg_view ">
-                                <a href="" ng-click="logout()" class="de_btn_exit" title="退出登录">退出登录</a>
+                                <a href="" ng-click="logout()" class="de_btn_exit ico-exit" title="退出登录">退出登录</a>
                             </li>
                         </ul>
                     </li>
