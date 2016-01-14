@@ -1719,19 +1719,19 @@ img{
     left: 0;
     
 }
-.de_toolbar_edit.ico-pencil {
+.de_toolbar_edit.ico-pencil::before {
     content: "\e916";
 }
 
-.de_toolbar_delete.ico-cross {
+.de_toolbar_delete.ico-cross::before {
     content: "\e90a";
 }
 
-.de_toolbar_visible.ico-eyesee {
+.de_toolbar_visible.ico-eyesee::before {
     content: "\e90e";
 }
 
-.de_toolbar_invisible.ico-eyeblind {
+.de_toolbar_invisible.ico-eyeblind::before {
     content: "\e90e";
 }
 
