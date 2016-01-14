@@ -3001,6 +3001,7 @@ span.zy_tooltips{
 
 .de_btn_close_project_detail:hover, .de_btn_back_to_home:hover{
     background:#07af69;
+    color: #fff;
 }
 
 .de_screen_project_detail .de_project_header {
