@@ -22,9 +22,9 @@
             <a ng-if="!project.topic" ng-href="users/{{project.user.id}}">来自：{{project.user.fullname}}的作品集</a>
             </p>            
             <ul class="de_stats_tags">
-                <li class="badges" title="勋章">{{project.artifact.honor_count}}</li>
-                <li class="likes" title="赞">{{project.artifact.praise_count}}</li>
-                <li class="comments" title="评价">{{project.artifact.comment_count}}</li>
+                <li class="badges ico-medal" title="勋章">{{project.artifact.honor_count}}</li>
+                <li class="likes ico-thumb" title="赞">{{project.artifact.praise_count}}</li>
+                <li class="comments ico-textbubble" title="评价">{{project.artifact.comment_count}}</li>
             </ul>
         </li>        
     </ul>

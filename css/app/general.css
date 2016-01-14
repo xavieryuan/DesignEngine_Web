@@ -1282,29 +1282,31 @@ img{
     margin-right: 6px;
 }
 
-.de_stats_tags>li:before {
-    content: "";
+.de_stats_tags>li::before {
+    
     width: 20px;
     height: 20px;
     display: inline-block;
     vertical-align: text-bottom;
     margin-right:2px;
+    color:#999;
+    text-shadow: 0 1px 0 rgba(255,255,255,0)
 }
 
-.de_stats_tags>.likes:before {    
-    background: url(../../images/app/icon20_ding_gray.png) no-repeat;    
+.de_stats_tags>.likes.ico-thumb::before { 
+    content: "\e914"; 
 }
 
-.de_stats_tags>.comments:before {
-    background: url(../../images/app/icon20_comments_gray.png) no-repeat;
+.de_stats_tags>.comments.ico-textbubble::before {
+    content: "\e919"; 
 }
 
-.de_stats_tags>.badges:before {
-    background: url(../../images/app/icon20_badge_gray.png) no-repeat;
+.de_stats_tags>.badges.ico-medal::before {
+    content: "\e90f";
 }
 
-.de_stats_tags>.uploads:before {
-    background: url(../../images/app/icon20_upload_gray.png) no-repeat;
+.de_stats_tags>.uploads.ico-upload:before {
+    content: "\e907";
 }
 /*************媒体标签****************/
 .de_media_tags>li {
