@@ -330,13 +330,24 @@ img{
 .de_popout_x_btn{
 	width:60px;
 	height:60px;
-	background:url(../../images/app/icon60_close_transparent_bg.png) no-repeat;	
 	position:absolute;
 	top:0;
 	right:10px;
     font-size: 0px;
 	opacity:0.5;
 	}
+.de_popout_x_btn.ico-cross::before{
+    content:"\e90a";
+    color: #666;
+    width:60px;
+    height:60px;
+    font-size: 40px;
+    text-align: center;
+    line-height: 60px;
+    position:absolute;
+	top:0;
+	right:0;
+}
 .de_popout_x_btn:hover{
 	opacity:1;
 	}
