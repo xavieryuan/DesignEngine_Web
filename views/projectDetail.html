@@ -10,9 +10,9 @@
         (currentUser.id==project.topic.user_id&&project.topic)||
         (currentUser.id==project.user.id&&(!project.topic||(project.topic&&project.topic.status==0)))">
         <li><a ng-if="currentUser.id==project.user.id||(currentUser.roles|arrayHasElements:'admin')"
-               class="de_toolbar_edit" ng-href="projects/{{project.id}}/update" title="编辑">编辑</a></li>
-        <li><a class="de_toolbar_delete"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
-        <li ng-if="currentUser.roles|arrayHasElements:'admin'"><a g-class="{de_toolbar_invisible:!project.visible,de_toolbar_visible:project.visible}" href=""
+               class="de_toolbar_edit ico-pencil" ng-href="projects/{{project.id}}/update" title="编辑">编辑</a></li>
+        <li><a class="de_toolbar_delete ico-cross"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
+        <li ng-if="currentUser.roles|arrayHasElements:'admin'"><a g-class="{'de_toolbar_invisible ico-eyeblind':!project.visible,'de_toolbar_visible ico-eyesee':project.visible}" href=""
                ng-click="toggleShowProject(project.id)" title="显示/隐藏">显示/隐藏</a></li>
     </ul>
 
