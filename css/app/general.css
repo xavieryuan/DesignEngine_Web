@@ -3343,13 +3343,18 @@ span.zy_tooltips{
     font-size: 20px;
     text-align: center;
     line-height: 40px;
-    border:solid 2px #fff;
-    color: #fff;
+    color: #666;
+    background: #fff;
     background: #07af69;
     box-shadow: 0 6px 10px rgba(0,0,0,0.1);
     position: absolute;
     left: 10px;
     top:10px;
+    border-radius: 18px;
+}
+.de_has_media:hover::before{
+    background:#07af69;
+    color: #fff;
 }
 .de_has_ppt:before{
     
