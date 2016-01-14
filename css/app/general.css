@@ -899,6 +899,7 @@ img{
     width: 60px;
     height: 60px;
     text-align: center;
+    text-indent: 0;
     line-height: 60px;;
     font-size: 30px;
     display: inline-block;
@@ -1032,6 +1033,7 @@ img{
     color:#666;
     font-size: 30px;
     text-align: center;
+    text-indent: 0;
     line-height: 60px;
     width:60px;
 	height:60px;
@@ -1058,6 +1060,7 @@ img{
     color:#666;
     font-size: 30px;
     text-align: center;
+    text-indent: 0;
     line-height: 60px;
     width:60px;
 	height:60px;
