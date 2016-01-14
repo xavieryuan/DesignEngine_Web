@@ -2145,19 +2145,22 @@ img{
     margin: 0 10px 10px 0;
 }
 
-.de_form_box .de_category_tag_box li a:before {
-    content: "";
+.de_form_box .de_category_tag_box li a.ico-tag::before {
+    content: "\e928";
     width: 20px;
     height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 18px;
     display: inline-block;
     position: absolute;
     top: 5px;
     left: 5px;
-    background: url(../../images/app/icon20_tag_white.png) no-repeat;
 }
 
-.de_form_box .de_category_tag_box li a:hover:before {
-    background: url(../../images/app/icon20_delete_white.png) no-repeat #C00;
+.de_form_box .de_category_tag_box li a.ico-tag:hover::before {
+    content: "\e90a";
+    background:#C00;
     border-radius: 10px;
 }
 .de_form_box .de_right_col{
