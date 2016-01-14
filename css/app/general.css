@@ -1702,19 +1702,19 @@ img{
     text-indent: -9999px;
     background: #fff;
     color: #666;
-    width:36px;
-    height:36px;
+    width:40px;
+    height:40px;
     border-radius: 18px;
     box-shadow: 0 6px 10px rgba(0,0,0,0.1);
     display: inline-block;
     position: relative;
 }
 .de_project_toolbar>li>a::before{
-    width:36px;
-    height:36px;
+    width:40px;
+    height:40px;
     font-size: 20px;
     text-align: center;
-    line-height: 36px;
+    line-height: 40px;
     text-indent: 0;
     position: absolute;
     top:0;
@@ -1725,8 +1725,8 @@ img{
     content: "\e916";
 }
 
-.de_toolbar_delete.ico-cross::before {
-    content: "\e90a";
+.de_toolbar_delete.ico-trash::before {
+    content: "\e921";
 }
 
 .de_toolbar_visible.ico-eyesee::before {
@@ -1943,41 +1943,35 @@ img{
 .topic_action li a{
 	width:40px;
 	height:40px;
+    background:#fff;
+    color: #666;
+    font-size: 0;
 	display: inline-block;	
 	text-indent: 9999px;
+    border-radius: 18px;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+    position: relative;
 }
-.topic_action li.de_topic_action_submit a{	
-	background:url(../../images/app/icon40_upload_white.png) no-repeat center;
-}
-
-.topic_action li.de_topic_action_view a{
-	background:url(../../images/app/icon40_visible_white.png) no-repeat center;
-}
-
-.de_topic_action_lock a{
-	background:url(../../images/app/icon40_lock_white.png) no-repeat center;
-}
-.de_topic_action_unlock a{
-	background:url(../../images/app/icon40_unlock_white.png) no-repeat center;
-}
-.de_topic_action_setting a{
-	background:url(../../images/app/icon40_setting_white.png) no-repeat center;
-}
-.topic_action li.de_topic_action_submit a:hover{	
-	background:url(../../images/app/icon40_upload_green.png) no-repeat center;
+.topic_action li.de_topic_action_submit a.ico-upload::before{	
+	content:"\e923";
 }
 
-.topic_action li.de_topic_action_view a:hover{
-	background:url(../../images/app/icon40_visible_green.png) no-repeat center;
+.topic_action li.de_topic_action_view a.ico-eyesee::before{
+	content:"\e90e";
 }
-.de_topic_action_lock a:hover {
-	background:url(../../images/app/icon40_lock_green.png) no-repeat center;
+
+.de_topic_action_lock a.ico-lock::before{
+	content:"\e913";
 }
-.de_topic_action_unlock a:hover{
-	background:url(../../images/app/icon40_unlock_green.png) no-repeat center;
+.de_topic_action_unlock a.ico-unlock::before{
+	content:"\e922";
 }
-.de_topic_action_setting a:hover{
-	background:url(../../images/app/icon40_setting_green.png) no-repeat center;
+.de_topic_action_setting a.ico-setting::before{
+	content:"\e91d";
+}
+.topic_action li a:hover{	
+	background:#07af69;
+    color: #fff;
 }
 
 .de_topic_box .project_info{
@@ -2966,30 +2960,40 @@ span.zy_tooltips{
 	padding:80px 0 40px;
 }
 
-.de_btn_close_project_detail {
+.de_btn_close_project_detail,.de_btn_back_to_home {
     position: absolute;
     top: 0;
     right: 10px;
     font-size: 0;
     display: inline-block;
-    width: 60px;
-    height: 60px;
-    background: url(../../images/app/icon40_close_white.png) no-repeat center;
+    width: 40px;
+    height: 40px;
+    margin: 10px;
 	z-index: 9999;
+    border-radius: 18px;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+    background: #fff;
+}
+.de_btn_close_project_detail.ico-cross::before,.de_btn_back_to_home.ico-cross::before{
+    content: "e90a";
+    width:40px;
+    height:40px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 40px;
+    text-indent: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
-.de_btn_close_project_detail:hover {
-    background: url(../../images/app/icon40_close_green.png) no-repeat center;
+.de_btn_close_project_detail:hover, .de_btn_back_to_home:hover{
+    background:#07af69;
 }
-.de_btn_back_to_home{
-    background: url(../../images/app/icon40_close_white.png) no-repeat center;
-	}
-.de_btn_back_to_home:hover{
-	background: url(../../images/app/icon40_close_green.png) no-repeat center;
-	}
+
 .de_screen_project_detail .de_project_header {
     position:fixed;	
-	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
     top: 0;
     left: 0;
     width: 100%;
