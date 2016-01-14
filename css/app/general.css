@@ -928,7 +928,7 @@ img{
     text-align: left;
 }
 
-.de_user_nav>ul>li>.de_btn_user_profile .vip_user.ico-vip::before{
+.de_user_nav>ul>li>.de_btn_user_profile .ico-vip-user::before{
 	content:"\e924";
 	width:14px;
 	height:14px;
@@ -3239,14 +3239,14 @@ span.zy_tooltips{
     font-weight: bold;
 	vertical-align: middle;
 }
-.de_comment_box .name.vip_user:before{
-	content: "";
-	width: 14px;
-	height: 14px;
-	margin-right: 5px;
-	background: url(../../images/app/icon14_vip_tag.png) no-repeat;
+.de_comment_box .name.ico-vip-user::before{
+    content:"\e924";
+	width:14px;
+	height:14px;
+	margin-right:5px;
 	vertical-align: middle;
 	display: inline-block;
+    color: deepskyblue;
 }
 .de_comment_box .publishtime {
     font-size: 12px;
