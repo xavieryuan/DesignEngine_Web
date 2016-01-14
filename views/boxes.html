@@ -6,7 +6,7 @@
         <a href="" ng-class="{active:filter.scope=='open'}" ng-click="filter.scope='open';loadBoxes();">开放中</a>
         <a href="" ng-class="{active:filter.scope=='closed'}" ng-click="filter.scope='closed';loadBoxes();">已关闭</a>
         <a href="" ng-class="{active:filter.scope=='me'}" ng-if="currentUser.id" ng-click="filter.scope='me';loadBoxes();">由我创建</a>
-        <span class="de_search_wrapper">
+        <span class="de_search_wrapper ico-search">
         <input  type="text" class="searchInput de_borderbox de_inputbox_gray" ng-keydown="keyDownSearch($event)" ng-model="filter.keyword">
         </span>
     </div>
