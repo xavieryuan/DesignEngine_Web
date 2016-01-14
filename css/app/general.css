@@ -3,11 +3,11 @@
 /*iconfont*/
 @font-face{
     font-family: 'hnudesignico';
-    src:url('../fonts/hnudesignico.eot?r106nr');
-    src:url('../fonts/hnudesignico.eot?r106nr#iefix') format('embedded-opentype'),
-        url('../fonts/hnudesignico.ttf?r106nr') format('truetype'),
-        url('../fonts/hnudesignico.woff?r106nr') format('woff'),
-        url('../fonts/hnudesignico.svg?r106nr#hnudesignico') format('svg');
+    src:url('../../fonts/hnudesignico.eot?r106nr');
+    src:url('../../fonts/hnudesignico.eot?r106nr#iefix') format('embedded-opentype'),
+        url('../../fonts/hnudesignico.ttf?r106nr') format('truetype'),
+        url('../../fonts/hnudesignico.woff?r106nr') format('woff'),
+        url('../../fonts/hnudesignico.svg?r106nr#hnudesignico') format('svg');
     font-weight: normal;
     font-style: normal;
 }
