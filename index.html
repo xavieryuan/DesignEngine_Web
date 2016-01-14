@@ -55,7 +55,7 @@
                     <li class="de_reg_view" ng-show="currentUser.id">
                         <a class="de_btn_user_profile de_borderbox" ng-href="users/{{currentUser.id}}">
                             <img class="photo" ng-src="{{currentUser.profile}}" title="{{currentUser.name}}">
-                            <span ng-class="{'ico-vip-user':(currentUser.roles|arrayHasElements:'vip')}">{{currentUser.name}}</span>
+                            <span ng-class="{ico-vip-user:(currentUser.roles|arrayHasElements:'vip')}">{{currentUser.name}}</span>
                         </a>
                     </li>
                     <!--<li class="de_reg_view" ng-show="currentUser.id">
