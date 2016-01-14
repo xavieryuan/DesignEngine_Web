@@ -863,7 +863,7 @@ img{
 	line-height: 30px;
 	width: 80px;
 }
-.de_user_nav .de_btn_login_reg.ico-portait:before {
+.de_user_nav .de_btn_login_reg.ico-portait::before {
     content: "\e91a";
     font-size: 30px;
     width: 30px;
@@ -875,7 +875,7 @@ img{
 
 }
 
-.de_user_nav .de_btn_register.ico-portraitplus:before {
+.de_user_nav .de_btn_register.ico-portraitplus::before {
     content: "\e91b";
     width: 30px;
     height: 30px;
@@ -894,15 +894,17 @@ img{
 	height:60px;
 }
 
-.de_user_nav>ul>li>.de_btn_hotdogmenu.ico-hotdog:before {
+.de_user_nav>ul>li>.de_btn_hotdogmenu.ico-hotdog::before {
     content: "\e90e";
-    width: 30px;
-    height: 30px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;;
+    font-size: 30px;
     display: inline-block;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -15px 0 0 -15px;
+    top: 0;
+    left: 0;
 }
 
 .de_user_nav>ul>li>.de_btn_user_profile {
@@ -916,7 +918,7 @@ img{
     text-align: left;
 }
 
-.de_user_nav>ul>li>.de_btn_user_profile .vip_user.ico-vip:before{
+.de_user_nav>ul>li>.de_btn_user_profile .vip_user.ico-vip::before{
 	content:"\e91c";
 	width:14px;
 	height:14px;
@@ -989,7 +991,10 @@ img{
     position: absolute;
     top:0;
     left:0;
-    color:#333;
+    color:#666;
+    font-size: 30px;
+    text-align: center;
+    line-height: 60px;
 }
 .de_ext_nav>li>a.de_btn_activate.ico-attention::before{
     content: "\e901";
@@ -1004,7 +1009,7 @@ img{
     content: "\e903";
 }
 .de_ext_nav>li>a.de_btn_pwd.ico-key::before{
-    content: "\e903";
+    content: "\e905";
 }
 .de_ext_nav>li>a.de_btn_exit.ico-exit::before{
     content: "\e902";
@@ -1024,8 +1029,10 @@ img{
 }
 .de_ext_nav .de_btn_new_upload.ico-add::before{
     content:"\e908";
-    color:#333;
-    font-size: 60px;
+    color:#666;
+    font-size: 30px;
+    text-align: center;
+    line-height: 60px;
     width:60px;
 	height:60px;
     position: absolute;
@@ -1048,8 +1055,10 @@ img{
 }
 .de_ext_nav .de_btn_new_box.ico-add::before{
     content:"\e908";
-    color:#333;
-    font-size: 60px;
+    color:#666;
+    font-size: 30px;
+    text-align: center;
+    line-height: 60px;
     width:60px;
 	height:60px;
     position: absolute;
