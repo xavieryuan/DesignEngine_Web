@@ -2494,12 +2494,13 @@ ol.mp_list li.mp_selectable {
 	position:relative;
 	text-shadow:0 1px 1px rgba(0, 0, 0, 0.5);
 	background:#07af69;
+    text-align: center;
 
 }
 .zy_section_left_header.ico-addcircle::before{
 	content:"\e904";
     text-align: center;
-    margin-right:10px;
+    margin-right:6px;
 	}
 .zy_update_thumbnail{
 	width:100px;
