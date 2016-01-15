@@ -3003,14 +3003,8 @@ span.zy_tooltips{
     width: 80px;
     height: 128px;
     padding-top: 40px;
-    border: none;
     background: url(../../images/app/flag_green.png) no-repeat;
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-    vertical-align: top;
-    font-family: "微软雅黑";
-    cursor: pointer;
+    
 }
 .de_screen_upload .de_submit_upload.ico-check::before{
     content: "\e929";
@@ -3035,6 +3029,12 @@ span.zy_tooltips{
     top: 0;
     left: 0;
     box-sizing: border-box;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    vertical-align: top;
+    font-family: "微软雅黑";
+    cursor: pointer;
 }
 .main_content a{
     position: relative;
