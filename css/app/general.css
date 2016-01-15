@@ -3916,10 +3916,10 @@ span.zy_tooltips{
         position: absolute;
         left: 0;
         top:inherit;
-        bottom: 60px;
+        bottom: 0;
         height:60px;
         right: 0;
-        padding:0 20px;
+        padding:10px 20px;
         background: #fff;
         box-sizing: border-box;
     }
