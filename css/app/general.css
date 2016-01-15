@@ -1630,6 +1630,7 @@ img{
     color: #999;
 	margin:0;
 	line-height: 1.5em;
+    max-height: 200px;
 }
 
 .de_project_timeline .topic_title{
