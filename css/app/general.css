@@ -3916,7 +3916,7 @@ span.zy_tooltips{
         position: absolute;
         left: 0;
         top:inherit;
-        bottom: 0;
+        bottom: 60px;
         height:60px;
         right: 0;
         padding:10px 20px;
