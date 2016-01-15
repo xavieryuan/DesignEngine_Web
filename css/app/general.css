@@ -1631,6 +1631,7 @@ img{
 	margin:0;
 	line-height: 1.5em;
     max-height: 200px;
+    overflow: hidden;
 }
 
 .de_project_timeline .topic_title{
