@@ -47,7 +47,7 @@
         <!-- step 2-->
         <div class="de_upload_step2" ng-show="currentTab==2">
             <div class="zy_uploader_column_left" id="zy_uploader_column_left">
-                <span class="zy_section_left_header" id="uploadImage" ng-init="createImageUploader('uploadImage','zy_uploader_column_left')">上传图片</span>
+                <span class="zy_section_left_header" id="uploadImage" ng-init="createImageUploader('uploadImage','zy_uploader_column_left')" class="ico-addcircle">上传图片</span>
 
                 <ol class="zy_uploaded_medias_ol" drag="mediaItem">
                     <li ng-click="showSetPanel(mediaId)" data-media-id="{{mediaId}}"
@@ -85,17 +85,17 @@
                                 <div id="uploadContainer" ng-mouseenter="showMediaMenu()" ng-mouseleave="hideMediaMenu()"
                                      ng-class="{zy_add_media_menu_active:uploadMediaMenuActive}" class="zy_add_media_menu">
                                     <ul>
-                                        <li><a id="uploadMp4" class="zy_types2"
+                                        <li><a id="uploadMp4" class="zy_types2 ico-playbtn"
                                                ng-init="createMp4Uploader('uploadMp4','uploadContainer')">视频（MP4）</a></li>
-                                        <li><a id="uploadPpt" class="zy_types3"
+                                        <li><a id="uploadPpt" class="zy_types3 ico-ppt"
                                                ng-init="createPptUploader('uploadPpt','uploadContainer')">幻灯片（PPTX）</a></li>
-                                        <li><a id="uploadPdf" class="zy_types4"
+                                        <li><a id="uploadPdf" class="zy_types4 ico-book2"
                                                ng-init="createPdfUploader('uploadPdf','uploadContainer')" >文档（PDF）</a></li>
-                                        <li><a id="uploadSwf" class="zy_types5"
+                                        <li><a id="uploadSwf" class="zy_types5 ico-flash"
                                                ng-init="createSwfUploader('uploadSwf','uploadContainer')">FLASH动画（SWF）</a></li>
-                                        <li><a id="uploadZip" class="zy_types6"
+                                        <li><a id="uploadZip" class="zy_types6 ico-zip"
                                                ng-init="createZipUploader('uploadZip','uploadContainer')">压缩包（ZIP）</a></li>
-                                        <li><a id="uploadHtml5" class="zy_types7"
+                                        <li><a id="uploadHtml5" class="zy_types7 ico-h5"
                                                ng-init="createHtml5Uploader('uploadHtml5','uploadContainer')">HTML5应用（ZIP）</a></li>
                                         <!--<li><a id="upload3d" class="zy_types7"
                                               ng-init="createFileUploader('uploadFile','uploadContainer')">3D文件</a></li>-->

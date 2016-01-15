@@ -2497,11 +2497,12 @@ ol.mp_list li.mp_selectable {
 	background:#07af69;
 
 }
-.zy_section_left_header:before{
-	content:"";
+.zy_section_left_header.ico-addcircle::before{
+	content:"\e904";
 	width:30px;
 	height:30px;
-	background:url(../../images/app/zy_media_add_white.png) no-repeat;
+    text-align: center;
+    line-height: 30px;
 	position:absolute;
 	top:4px;
 	left:30px;
@@ -2578,15 +2579,52 @@ ol.mp_list li.mp_selectable {
     padding: 0 0 0 65px;
     font-size: 12px;
     line-height: 60px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
     box-sizing: border-box;
     color: #666;
+    border-bottom: 1px dotted #CECFCF;
+    position: relative;
+}
+.zy_add_media_menu li:last-child>a{
+    border-bottom:none;
 }
 .zy_add_media_menu li>a:hover {
     color: #09bc72;
 }
+.zy_add_media_menu li>a::before{
+    width:65px;
+    height:60px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 14px;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.zy_add_media_menu li>a.ico-photo::before{
+    content: "\e917";
+}
+.zy_add_media_menu li>a.ico-playbtn::before{
+    content: "\e918";
+}
+.zy_add_media_menu li>a.ico-ppt::before{
+    content: "\e902";
+}
+.zy_add_media_menu li>a.ico-book2::before{
+    content: "\e908";
+}
+.zy_add_media_menu li>a.ico-flash::before{
+    content: "\e900";
+}
+.zy_add_media_menu li>a.ico-zip::before{
+    content: "\e925";
+}
+.zy_add_media_menu li>a.ico-cube::before{
+    content: "\e90b";
+}
+.zy_add_media_menu li>a.ico-h5::before{
+    content: "\e927";
+}
+/*
 .zy_types2, .zy_types3, .zy_types4, .zy_types5, .zy_types6, .zy_types7 {
     border-top: 1px dotted #CECFCF;
 }
@@ -2610,7 +2648,7 @@ ol.mp_list li.mp_selectable {
 }
 .zy_types7 {
     background: url(../../images/app/zy_media_3d.png) no-repeat 10px center;
-}
+}*/
 .zy_section_right_header {
     height: 39px;
     width: 100%;
@@ -3070,7 +3108,7 @@ span.zy_tooltips{
 }
 .de_btn_zan.ico-thumb::before{
     content:"\e920";
-    font-size: 48px;
+    font-size: 28px;
     position: absolute;
     top: 0;
     left: 0;
