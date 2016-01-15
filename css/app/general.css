@@ -2488,7 +2488,6 @@ ol.mp_list li.mp_selectable {
     height: 39px;
 	line-height:39px;
 	color:#fff;
-	text-indent:70px;
     font-size: 14px;
     display: block;
     cursor: pointer;
@@ -2499,13 +2498,8 @@ ol.mp_list li.mp_selectable {
 }
 .zy_section_left_header.ico-addcircle::before{
 	content:"\e904";
-	width:30px;
-	height:30px;
     text-align: center;
-    line-height: 30px;
-	position:absolute;
-	top:4px;
-	left:30px;
+    margin-right:10px;
 	}
 .zy_update_thumbnail{
 	width:100px;
