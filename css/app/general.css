@@ -3023,6 +3023,19 @@ span.zy_tooltips{
     text-align: center;
     line-height: 80px;
 }
+.de_screen_upload .de_submit_upload input{
+    background: none;
+    border: none;
+    padding:0;
+    padding-top: 40px;
+    margin: 0;
+    width: 80px;
+    height: 128px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+}
 .main_content a{
     position: relative;
     display: inline-block;
