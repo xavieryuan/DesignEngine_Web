@@ -4,8 +4,8 @@
     <h4 class="de_upload_title" ng-if="box.id===0">上传至“{{currentUser.name}}的作品集”</h4>
     <nav class="de_tab_upload">
         <ol>
-            <li><a href="" ng-class="{current:currentTab==1}" class="de_tab_step1 active" ng-click="setTabActive(1)">1. 填写基本信息</a></li>
-            <li><a href="" ng-class="{current:currentTab==2}" class="de_tab_step2 active" ng-click="setTabActive(2)">2. 上传</a></li>
+            <li><a href="" ng-class="{current:currentTab==1}" class="de_tab_step1 active ico-rightarrow" ng-click="setTabActive(1)">1. 填写基本信息</a></li>
+            <li><a href="" ng-class="{current:currentTab==2}" class="de_tab_step2 active ico-rightarrow" ng-click="setTabActive(2)">2. 上传</a></li>
             <li><a href="" ng-class="{current:currentTab==3}" class="de_tab_step3 active"
                    ng-click="setTabActive(3);getPreviewMedias('mediaItem','data-media-id')">3. 预览并提交</a></li>
         </ol>

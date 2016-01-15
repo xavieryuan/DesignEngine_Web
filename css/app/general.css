@@ -2319,12 +2319,15 @@ display: block;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-.de_screen_upload .de_tab_step1:after, .de_screen_upload .de_tab_step2:after {
-    content: "";
+.de_screen_upload .de_tab_step1.ico-rightarrow::after,
+.de_screen_upload .de_tab_step2.ico-rightarrow::after {
+    content: "\e91b";
     display: inline-block;
-    width: 8px;
-    height: 13px;
-    background: url(../../images/app/triangle_right.png) no-repeat;
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    line-height: 14px;
+    text-align: center;
     position: absolute;
     top: 50%;
     right: 30px;
@@ -2910,11 +2913,6 @@ span.zy_tooltips{
     border: #bbb 1px solid;
     padding: 0 10px;
     background: #efefef;
-    background: -moz-linear-gradient(top, #efefef 0%, #cccccc 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #efefef), color-stop(100%, #cccccc));
-    background: -webkit-linear-gradient(top, #efefef 0%, #cccccc 100%);
-    background: -o-linear-gradient(top, #efefef 0%, #cccccc 100%);
-    background: -ms-linear-gradient(top, #efefef 0%, #cccccc 100%);
     background: linear-gradient(to bottom, #efefef 0%, #cccccc 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#efefef', endColorstr='#cccccc', GradientType=0);
 
