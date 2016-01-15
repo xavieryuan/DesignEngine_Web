@@ -3060,10 +3060,27 @@ span.zy_tooltips{
     text-decoration: none;
     padding-top: 70px;
 	z-index:10000;
+    color: #fff;
+}
+.de_btn_zan.de-greenflag{
+    background: url(../../images/app/flag_green.png) no-repeat;
+}
+.de_btn_zan.de-grayflag{
+    background: url(../../images/app/flag_gray.png) no-repeat;
+}
+.de_btn_zan.ico-thumb::before{
+    content:"\e920";
+    font-size: 48px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:80px;
+    height:80px;
+    text-align: center;
+    line-height: 80px;
 }
 
-
-.de_flag_reg_zanned {
+/*.de_flag_reg_zanned {
     background: url(../../images/app/flag_reg_zan_green.png) no-repeat;
     color: #fff;
 }
@@ -3081,7 +3098,7 @@ span.zy_tooltips{
 .de_flag_vip_zan {
     background: url(../../images/app/flag_vip_zan_white.png) no-repeat;
     color: #fff;
-}
+}*/
 
 .de_screen_project_detail .de_project_detail {
     margin:auto;

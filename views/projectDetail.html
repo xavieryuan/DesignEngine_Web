@@ -2,8 +2,8 @@
 <div ng-controller="projectDetail">
 <!--工具栏-->
 <div class="de_project_header de_borderbox">
-    <a href="" ng-class="{de_flag_reg_zanned:project.praised,de_flag_reg_zan:!project.praised}"
-       class="de_btn_zan de_borderbox" ng-click="praiseProject(project.id)">赞</a>
+    <a href="" ng-class="{'de-greenflag':project.praised,'de-grayflag':!project.praised}"
+       class="de_btn_zan de_borderbox ico-thumb" ng-click="praiseProject(project.id)">赞</a>
 
     <ul class="de_project_toolbar de_transition"
         ng-if="(currentUser.roles|arrayHasElements:'admin')||
