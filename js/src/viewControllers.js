@@ -751,6 +751,13 @@ viewControllers.controller("projectUpdate",["$scope","$routeParams","$http","$ro
         };
 
         $scope.uploadFormSubmit=function(){
+            //TODO:上传提交前，清除掉assets的active属性
+            if(!angular.equals({},$scope.currentMediaObj)){
+                $scope.currentMediaObj.active=undefined;
+                delete $scope.currentMediaObj.active;
+                $scope.currentMediaObj={};
+            }
+            
             if($scope.project.id){
                 Project.resource.save({projectId:$scope.project.id},$scope.project,function(data){
                     toaster.pop("success",Config.messages.successTitle,Config.messages.optSuccRedirect,null,null);
