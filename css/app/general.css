@@ -1588,20 +1588,22 @@ img{
 
 
 .de_project_timeline .project_info {
-    width:400px;
+    margin-left:400px;
 }
 .de_project_timeline .project_info a{
-    width:100%;
-    height:100%;
+    margin-top:90px;
     display: inline-block;    
     font-size: 0;
+    padding: 10px 20px 0 20px;
 }
 .de_project_timeline .project_info .thumb_wrapper{
     display: inline-block;
     perspective: 1000px;
     overflow: hidden;
-    width:100%;
-    height:100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400px;
 }
 .de_project_timeline .project_info .thumb {
     width: 100%;
@@ -1616,14 +1618,9 @@ img{
 .de_project_timeline .project_info h4 {
     font-size: 16px;
     text-align: left;
-    position: absolute;
-    left: 420px;
-    top: 100px;
-    right: 10px;
-    height:70px;
-    overflow: hidden;
 	color:#09bc72;
 	margin:0;
+    margin-bottom:10px;
 	line-height: 1.5em;
 }
 
@@ -1631,12 +1628,6 @@ img{
     font-size: 14px;
     text-align: left;
     color: #999;
-    position: absolute;
-    left: 420px;
-    top: 200px;
-    right: 10px;
-    bottom:70px;
-    overflow: hidden;
 	margin:0;
 	line-height: 1.5em;
 }
@@ -1672,9 +1663,21 @@ img{
 }
 
 .de_project_timeline .de_stats_tags{
-    left: 420px;
-    bottom: 20px;
+    left: 400px;
+    right: 0;
+    bottom: 0;
     position: absolute;
+    padding: 10px 20px 30px;
+    background:#fff;
+}
+.de_project_timeline .de_stats_tags:before{
+    content: "";
+    width:200px;
+    height:60px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+    position: absolute;
+    left: 0;
+    top:-60px;
 }
 .de_project_timeline .de_stats_tags>li{
     margin-right:15px;
@@ -2999,13 +3002,24 @@ span.zy_tooltips{
     height: 128px;
     padding-top: 40px;
     border: none;
-    background: url(../../images/app/flag_reg_upload_green.png) no-repeat;
+    background: url(../../images/app/flag_green.png) no-repeat;
     color: #fff;
     font-size: 20px;
     font-weight: bold;
     vertical-align: top;
     font-family: "微软雅黑";
     cursor: pointer;
+}
+.de_screen_upload .de_submit_upload.ico-check::before{
+    content: "\e929";
+    font-size: 28px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    line-height: 80px;
 }
 .main_content a{
     position: relative;
@@ -3893,14 +3907,18 @@ span.zy_tooltips{
         top: 0;
         bottom: 0;
         overflow: hidden;
+        margin:0;
+    }
+    .de_project_timeline .project_info .thumb_wrapper{
+         width:100%;
     }
     .de_project_timeline .project_info h4{
+        position: absolute;
         left: 0;
         top:inherit;
-        bottom: 40px;
+        bottom: 0;
         right: 0;
-        padding:20px;
-        height: 50px;
+        padding:0 20px;
         background: #fff;
     }
     .de_project_timeline .project_info a::before{
@@ -3920,8 +3938,15 @@ span.zy_tooltips{
         right:0;
         bottom: 0;
         top: inherit;
-        padding:0 20px;
+        padding:10px 20px;
         background: #fff;
+    }
+    .de_project_timeline .de_stats_tags:before{
+        width:100%;
+        height:20px;
+        position: absolute;
+        left: 0;
+        top:-60px;
     }
     
     /*footer*/
