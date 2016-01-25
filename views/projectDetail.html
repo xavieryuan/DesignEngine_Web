@@ -1,11 +1,11 @@
 <!--作品详情展示-->
 <div ng-controller="projectDetail">
 
-<div ng-if="!project.visible&&!currentUser.roles|arrayHasElements:'admin'&&
+<div ng-if="!project.visible&&(!currentUser.roles|arrayHasElements:'admin')&&
     currentUser.id!=project.user.id&&(currentUser.id!=project.topic.user_id&&project.topic)">没有权限查看的文本说明</div>
 
 
-<div ng-if="project.visible||currentUser.roles|arrayHasElements:'admin'
+<div ng-if="project.visible||(currentUser.roles|arrayHasElements:'admin')
     ||currentUser.id==project.user.id||(currentUser.id==project.topic.user_id&&project.topic)">
 <!--工具栏-->
 <div class="de_project_header de_borderbox">
