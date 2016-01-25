@@ -1750,7 +1750,7 @@ img{
 }
 
 .de_toolbar_invisible.ico-eyeblind::before {
-    content: "\e90e";
+    content: "\e90d";
 }
 
 .de_project_toolbar>li>a:hover{
