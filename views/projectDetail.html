@@ -1,8 +1,8 @@
 <!--作品详情展示-->
 <div ng-controller="projectDetail">
 
-<div ng-if="!project.visible&&!currentUser.roles|arrayHasElements:'admin'&&
-    currentUser.id!=project.user.id&&(currentUser.id!=project.topic.user_id&&project.topic)">没有权限查看的文本说明</div>
+<div class="noResult" ng-if="!project.visible&&!currentUser.roles|arrayHasElements:'admin'&&
+    currentUser.id!=project.user.id&&(currentUser.id!=project.topic.user_id&&project.topic)">OOOPS！这个作品已经被管理员隐藏了，如有疑问请联系design@hnu.edu.cn</div>
 
 
 <div ng-if="project.visible||currentUser.roles|arrayHasElements:'admin'
@@ -59,39 +59,6 @@
         <figure ng-repeat="at in project.assets" ng-if="!isMobile" ng-switch="at.type">
             <img ng-switch-when="1" ng-src="{{at.profile_image}}"/>
 
-            <!--<a ng-switch-when="4" ng-click="showAttachmentDetail(at.media_file,at.type)"
-               class="de_has_media de_has_video" href="">
-                <img ng-src="{{at.profile_image}}"/>
-            </a>
-
-            <a ng-switch-when="networkVideo" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
-               href="" class="de_has_media de_has_web_video">
-                <img ng-src="{{at.attachmentPreviewLocation}}"/></a>
-
-            <a ng-switch-when="3d" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
-               href="" class="de_has_media de_has_3d">
-                <img ng-src="{{at.attachmentPreviewLocation}}"/></a>
-
-
-            <a ng-switch-when="2" ng-click="showAttachmentDetail(at.view_url,at.type)"
-               href="" class="de_has_media de_has_ppt">
-                <img ng-src="{{at.profile_image}}"/></a>
-
-            <a ng-switch-when="128" ng-click="showAttachmentDetail(at.view_url,at.type)" href="" class="de_has_media de_has_pdf">
-                <img ng-src="{{at.profile_image}}"/></a>
-
-            <a ng-switch-when="32" ng-href="{{at.media_file}}" target="_blank" class="de_has_media de_has_file">
-                <img ng-src="{{at.profile_image}}"/></a>
-
-            <a ng-switch-when="64" ng-click="showAttachmentDetail(at.media_file,at.type)"
-               href="" class="de_has_media de_has_flash">
-                <img ng-src="{{at.profile_image}}"/></a>
-
-            <a ng-switch-when="256" target="_blank"
-                 ng-href="{{at.view_url}}" class="de_has_media de_has_html5">
-                <img ng-src="{{at.profile_image}}"/></a>
-            -->
-
             <a ng-switch-when="4" ng-href="{{at.media_file}}" target="_blank" class="de_has_media de_has_video ico-click">
                 <img ng-src="{{at.profile_image}}"/>
             </a>
@@ -130,14 +97,6 @@
             <a ng-switch-when="4" ng-href="{{at.media_file}}" target="_self" class="de_has_media de_has_video">
                 <img ng-src="{{at.profile_image}}"/>
             </a>
-
-            <!-- <a ng-switch-when="networkVideo" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
-                href="" class="de_has_media de_has_web_video">
-                 <img ng-src="{{at.attachmentPreviewLocation}}"/></a>
-
-             <a ng-switch-when="3d" ng-click="showAttachmentDetail(at.attachmentMediaLocation,at.type,at.attachmentId)"
-                href="" class="de_has_media de_has_3d">
-                 <img ng-src="{{at.attachmentPreviewLocation}}"/></a>-->
 
 
             <a ng-switch-when="2" ng-href="{{at.view_url}}" target="_self"  class="de_has_media de_has_ppt ico-click">
@@ -217,34 +176,6 @@
         <a href="" ng-click="login()" class="de_button de_borderbox de_btn_login_reg">发表评论前请先登录</a>
     </div>
 </div>
-
-<!--相关作品-->
-<!--<h4>其他相关作品</h4>
-<ul class="de_project_grid">
-    <li class="de_borderbox" ng-repeat="sp in similarProjects">
-        <div class="user_info">
-            <a ng-href="user/{{sp.user.id}}">
-                <img class="photo" ng-src="{{sp.user.setting.profile_image}}"/>
-
-                <p class="name">{{sp.user.fullname}}</p>
-            </a>
-        </div>
-        <div class="project_info">
-            <a href="" ng-click="showProjectDetail(sp.artifact.id,true)">
-                <img class="thumb" ng-src="{{sp.artifact.profile_image}}">
-                <h4>{{sp.artifact.name}}</h4>
-
-                <p class="date">{{sp.artifact.created_at}}</p>
-            </a>
-        </div>
-        <ul class="de_stats_tags">
-            &lt;!&ndash; badges是荣誉勋章的数量 &ndash;&gt;
-            <li class="badges" title="勋章">{{sp.artifact.honor_count}}</li>
-            <li class="likes" title="赞">{{sp.artifact.praise_count}}</li>
-            <li class="comments" title="评价">{{sp.artifact.comment_count}}</li>
-        </ul>
-    </li>
-</ul>-->
 
 </div>
 
