@@ -1,5 +1,12 @@
 <!--作品详情展示-->
 <div ng-controller="projectDetail">
+
+<div ng-if="!project.visible&&!currentUser.roles|arrayHasElements:'admin'&&
+    currentUser.id!=project.user.id&&(currentUser.id!=project.topic.user_id&&project.topic)">没有权限查看的文本说明</div>
+
+
+<div ng-if="project.visible||currentUser.roles|arrayHasElements:'admin'
+    ||currentUser.id==project.user.id||(currentUser.id==project.topic.user_id&&project.topic)">
 <!--工具栏-->
 <div class="de_project_header de_borderbox">
     <a href="" ng-class="{'de-greenflag':project.praised,'de-grayflag':!project.praised}"
@@ -12,7 +19,8 @@
         <li><a ng-if="currentUser.id==project.user.id||(currentUser.roles|arrayHasElements:'admin')"
                class="de_toolbar_edit ico-pencil" ng-href="projects/{{project.id}}/update" title="编辑">编辑</a></li>
         <li><a class="de_toolbar_delete ico-trash"  href="" ng-click="deleteProject(project.id)" title="删除">删除</a></li>
-        <li ng-if="currentUser.roles|arrayHasElements:'admin'"><a ng-class="{'de_toolbar_invisible ico-eyeblind':!project.visible,'de_toolbar_visible ico-eyesee':project.visible}" href=""
+        <li ng-if="currentUser.roles|arrayHasElements:'admin'">
+            <a ng-class="{'de_toolbar_invisible ico-eyeblind':!project.visible,'de_toolbar_visible ico-eyesee':project.visible}" href=""
                ng-click="toggleShowProject(project.id)" title="显示/隐藏">显示/隐藏</a></li>
     </ul>
 
@@ -237,5 +245,7 @@
         </ul>
     </li>
 </ul>-->
+
+</div>
 
 </div>
