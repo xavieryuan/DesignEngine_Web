@@ -38,6 +38,9 @@ filters.filter("showRoles", function(){
 });
 filters.filter("arrayHasElements",function(){
     return function(array,element){
+        if(!angular.isArray(array)){
+            return false;
+        }
         var result=false;
         var elements=element.split(",");
         var arrayLength=array.length,elementsLength=elements.length;
