@@ -3185,6 +3185,7 @@ span.zy_tooltips{
 }
 .de_screen_project_detail .de_project_detail.de_hidden_project{
     padding: 20px;
+    color: #999;
 }
 
 .de_screen_project_detail h2 {
@@ -3728,7 +3729,6 @@ span.zy_tooltips{
     }
     .de_screen_project_detail .de_project_detail.de_hidden_project{
         padding:20px;
-        color: #999;
     }
     .de_screen_project_detail .de_comment_box {
         width: auto;
