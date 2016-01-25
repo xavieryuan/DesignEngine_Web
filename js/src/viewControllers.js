@@ -1011,7 +1011,7 @@ viewControllers.controller("boxDetail",['$scope',"$routeParams","Box","Storage",
 
     Storage.loadedProjects=$scope.projects=[];
     Box.getBoxProjects($scope.boxId).$promise.then(function(data){
-        $scope.projects=$scope.projects.concat(data.artifacts);
+        Storage.loadedProjects=$scope.projects=$scope.projects.concat(data.artifacts);
     });
 }]);
 
