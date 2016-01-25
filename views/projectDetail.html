@@ -23,7 +23,7 @@
 </div>
 
 
-<div class="noResult" ng-if="!project.visible&&(!currentUser.roles|arrayHasElements:'admin')&&
+<div ng-if="!project.visible&&(!currentUser.roles|arrayHasElements:'admin')&&
     currentUser.id!=project.user.id&&(currentUser.id!=project.topic.user_id&&project.topic)">
     <article  class="de_project_detail de_borderbox de_boxshadow">
         OOOPS！这个作品已经被管理员隐藏了，如有疑问请联系design@hnu.edu.cn
