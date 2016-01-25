@@ -8,7 +8,7 @@
 
     <ul class="de_project_toolbar de_transition"
         ng-if="(currentUser.roles|arrayHasElements:'admin')||
-        (currentUser.id==project.topic.user_id&&project.topic)||
+        (project.topic&&currentUser.id==project.topic.user_id)||
         (currentUser.id==project.user.id&&(!project.topic||(project.topic&&project.topic.status==0)))">
         <li><a ng-if="currentUser.id==project.user.id||(currentUser.roles|arrayHasElements:'admin')"
                class="de_toolbar_edit ico-pencil" ng-href="projects/{{project.id}}/update" title="编辑">编辑</a></li>
@@ -23,8 +23,8 @@
 </div>
 
 
-<div ng-if="!project.visible&&(!currentUser.roles|arrayHasElements:'admin')&&
-    currentUser.id!=project.user.id&&(currentUser.id!=project.topic.user_id&&project.topic)">
+<div ng-if="!project.visible&&!(currentUser.roles|arrayHasElements:'admin')&&
+    currentUser.id!=project.user.id&&(project.topic&&currentUser.id!=project.topic.user_id)">
     <article  class="de_project_detail de_borderbox de_boxshadow">
         OOOPS！这个作品已经被管理员隐藏了，如有疑问请联系design@hnu.edu.cn
     </article>
