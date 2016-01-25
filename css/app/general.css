@@ -3183,6 +3183,9 @@ span.zy_tooltips{
     width: 80%;
 	overflow-x: hidden;
 }
+.de_screen_project_detail .de_project_detail.de_hidden_project{
+    padding: 20px;
+}
 
 .de_screen_project_detail h2 {
     font-size: 1.5em;
@@ -3723,6 +3726,10 @@ span.zy_tooltips{
         margin: 0 10px;
 		padding: 160px 20px 20px;
     }
+    .de_screen_project_detail .de_project_detail.de_hidden_project{
+        padding:20px;
+        color: #999;
+    }
     .de_screen_project_detail .de_comment_box {
         width: auto;
         margin: 40px 10px;
@@ -3980,6 +3987,9 @@ span.zy_tooltips{
 	/*详情展示页面*/
 	.de_screen_project_detail .de_project_detail{
 		padding:120px 0 20px;
+	}
+    .de_screen_project_detail .de_project_detail.de_hidden_project{
+		padding:20px;
 	}
 	.de_project_header .de_project_toolbar{
 		display: none;

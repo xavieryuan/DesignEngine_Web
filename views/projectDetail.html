@@ -25,7 +25,7 @@
 
 <div ng-if="!project.visible&&!(currentUser.roles|arrayHasElements:'admin')&&
     currentUser.id!=project.user.id&&(project.topic&&currentUser.id!=project.topic.user_id)">
-    <article  class="de_project_detail de_borderbox de_boxshadow">
+    <article  class="de_project_detail de_borderbox de_boxshadow de_hidden_project">
         OOOPS！这个作品已经被管理员隐藏了，如有疑问请联系design@hnu.edu.cn
     </article>
 </div>
