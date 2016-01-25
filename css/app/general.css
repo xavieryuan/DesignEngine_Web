@@ -3887,6 +3887,7 @@ span.zy_tooltips{
 		text-align: center;
 		padding: 0;
 	}
+    
 	
 	/*timeline*/
     .de_screen_project_timeline{
@@ -3995,6 +3996,10 @@ span.zy_tooltips{
 	.de_project_header .de_project_toolbar{
 		display: none;
 	}
+    
+	.de_btn_zan{
+		left:0;
+	}
 	
 	.de_screen_project_detail h2{
 		margin: 20px 20px 10px;
@@ -4040,10 +4045,6 @@ span.zy_tooltips{
 		padding: 0;
 	}
     
-	/*详情展示页面*/
-	.de_btn_zan{
-		left:0;
-	}
 	
 	/*弹窗*/
 	.de_form_edit_profile {
