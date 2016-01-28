@@ -175,6 +175,15 @@ li {
     margin-top: 40px;
 }
 
+.de_project_detail .notice {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+    padding:40px 20px;
+    margin:0;
+}
+
 .de_project_detail .user_info {
 	margin:10px 20px;
 	position: relative;
