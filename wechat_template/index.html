@@ -13,7 +13,19 @@
     <script type="text/javascript" src="js/src/app.js"></script>
 </head>
 <body>
-<article ng-controller="projectDetail" class="de_project_detail de_borderbox">
+
+<div ng-if="!project.visible">
+    
+    <article  class="de_project_detail de_borderbox de_boxshadow de_hidden_project">
+        OOOPS！这个作品已经被管理员隐藏了，如有疑问请联系design@hnu.edu.cn
+    </article>
+    
+</div>
+
+
+<div ng-if="project.visible">
+  
+   <article ng-controller="projectDetail" class="de_project_detail de_borderbox">
     <h1 class="logo"><img src="images/app/logo_40.png" /></h1>
     <h2>{{project.name}}</h2>
     <div class="user_info">
@@ -82,7 +94,9 @@
 
         </figure>
     </div>
-</article>
+</article> 
+
+</div>
 <footer class="de_footer">
         <p>© 湖南大学设计艺术学院，design@hnu.edu.cn</p>
 </footer>
