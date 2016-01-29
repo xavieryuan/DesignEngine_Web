@@ -36,7 +36,7 @@ weChatApp.controller("projectDetail",["$scope","$http","Config","CFunctions",fun
         $scope.project.praised=data.praised;
         $scope.project.user=data.user;
         $scope.project.topic=data.topic;
-        $scope.project.visible=data.visible;
+        $scope.project.visible=data.artifact.visible;
 
         shareData.imgUrl=$scope.project.profile_image;
         shareData.descContent=$scope.project.description;
