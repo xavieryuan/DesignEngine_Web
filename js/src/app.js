@@ -158,7 +158,8 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
             "showWebVideoPanel":false,   //控制显示网络视频输入界面S
             "mediaPlayTemplate":"",
             "playMediaPath":"",
-            "playMediaType":""
+            "playMediaType":"",
+            "goHome":false
         };
         $scope.popFlags={
             "title":"",
@@ -281,7 +282,7 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
             }
         };
 
-        $scope.initPage=function(path){
+        $scope.initPage=function(path,checkGoHome){
             if(path.indexOf(Config.urls.editPwd)!==-1){
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.editPwd;
             }else if(path.indexOf(Config.urls.signIn)!==-1){
@@ -294,6 +295,9 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.editInfo;
             }else if(path.match(Config.urls.projectDetailReg)!==null){
                 $scope.mainFlags.projectDetailTemplate=Config.templateUrls.projectDetail;
+                if(checkGoHome){
+                    $scope.mainFlags.goHome=true;
+                }
             }else if(path.indexOf(Config.urls.search)!==-1&&path.match(Config.urls.searchResultReg)==null){
                 $scope.popFlags.popTemplateUrl=Config.templateUrls.search;
             }else{
@@ -311,7 +315,8 @@ pinWall.controller("super",["$scope","$location","$sce","Config","CFunctions","S
             });
         };
 
-        $scope.initPage($location.path());
+        $scope.initPage($location.path(),true);
+
         //初始化登陆用户
         User.resource.getCurrentUser(function(data){
             if(data.user){
