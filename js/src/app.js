@@ -39,11 +39,8 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
             otherwise({redirectTo: '/'});*/
 
 
-        //禁止ajax的缓存
-        //$httpProvider.defaults.cache=false;
-
         //ajax的一些默认配置，全局启用loading
-        $httpProvider.defaults.transformRequest.push(function (data) {
+        $httpProvider.defaults.transformRequest.push(function (data,headers) {
             var href=location.href;
             if(href.indexOf("register")==-1&&href.indexOf("forget_password")==-1){
                 App.showLoading();
@@ -70,14 +67,17 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
                     如果是完全使用rest风格比如data/projects\\/:projectId这种则需要判断一下是不是在最后，
                     如果是在最后则替换成“/”，如果不是则替换成空。
                     这些处理的前提都是基于后台使用带"/"结尾的地址，而angular会自动去掉结尾的"/"，
-                    高版本的有配置项可以设置不去掉结尾"/"
+                    高版本的有配置项可以设置不去掉结尾"/"，
+                     $resourceProvider.defaults.stripTrailingSlashes = false;
                     */
                     config.url=config.url.replace(/\\$/,"/");
 
                     //console.log(config);
 
-                    //消除服务端缓存的影响
-                    if(config.method=='GET'&&config.url.indexOf("views")==-1&&config.url.indexOf("ownPagination")==-1){
+                    /*消除服务端缓存的影响，还可以考虑直接设置$httpProvider.defaults.common/get,
+                    但是那样可能所有的get请求都不会缓存（包括load页面的，这是不友好的），具体参考api*/
+                    if(config.method=='GET'&&config.url.indexOf("views")==-1&&
+                        config.url.indexOf("ownPagination")==-1){
                         var separator = config.url.indexOf('?') === -1 ? '?' : '&';
                         config.url = config.url+separator+'noCache=' + new Date().getTime();
                     }
