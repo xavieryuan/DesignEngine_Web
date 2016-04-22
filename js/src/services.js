@@ -350,7 +350,7 @@ services.service("CFunctions",["$rootScope","$location","$http","$timeout","toas
 
     var postCfg={
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-        transformRequest:this.transform
+        transformRequest:transform
     };
 
     /**
