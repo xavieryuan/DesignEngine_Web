@@ -7,7 +7,7 @@
                 <p class="de_email_field">
                     <input type="email" class="de_borderbox de_inputbox_gray" own-required required ng-model="user.email"
                         ng-maxlength="32" autocomplete="off" name="email"  placeholder="邮箱">
-                    <span class="error" ng-if="loginForm.email.$dirty && loginForm.email.$invalid">
+                    <span class="error" ng-if="loginForm.email.$dirty && loginForm.email.$touched">
                         <label ng-if="loginForm.email.$error.ownRequired">{{validMessage.required}}</label>
                         <label ng-if="loginForm.email.$error.email">{{validMessage.email}}</label>
                         <label ng-if="loginForm.email.$error.maxlength">{{validMessage.maxLength | setMaxLength:32}}</label>
@@ -17,7 +17,7 @@
                 <p class="de_pwd_field">
                     <input type="password" class="de_borderbox de_inputbox_gray" own-required required ng-model="user.password"
                         ng-minlength="6" autocomplete="off" ng-maxlength="20" name="password" placeholder="密码">
-                    <span class="error" ng-if="loginForm.password.$dirty && loginForm.password.$invalid" >
+                    <span class="error" ng-if="loginForm.password.$dirty && loginForm.password.$touched" >
                         <label ng-if="loginForm.password.$error.ownRequired">{{validMessage.required}}</label>
                         <label ng-if="loginForm.password.$error.minlength">{{validMessage.minLength | setMinLength:6}}</label>
                         <label ng-if="loginForm.password.$error.maxlength">{{validMessage.maxLength | setMaxLength:20}}</label>
