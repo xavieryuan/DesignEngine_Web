@@ -3678,7 +3678,7 @@ span.zy_tooltips{
         padding:0;
     }
     .de_project_grid .de_card_m{
-        width: 48%;
+        width: 46%;
         margin: 10px 2%;
     }
 }
@@ -3899,7 +3899,7 @@ span.zy_tooltips{
 		padding: 0;
 	}
     .de_project_grid .de_card_m{
-        width: 100%;
+        width: auto;
         margin: 10px;
     }
 	
