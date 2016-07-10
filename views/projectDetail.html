@@ -37,8 +37,8 @@
         <h2>{{project.name}}</h2>
 
         <p class="publishtime">{{project.created_at}}，收录于
-            <a ng-if="project.topic" ng-href="topics/{{project.topic.id}}">{{project.topic.name}}</a>
-            <a ng-if="!project.topic" ng-href="users/{{project.user.id}}">{{project.user.fullname}}的作品集</a>
+            <a ng-if="project.topic" ng-href="topics/{{project.topic.id}}" ng-click="hideProjectDetail()">{{project.topic.name}}</a>
+            <a ng-if="!project.topic" ng-href="users/{{project.user.id}}" ng-click="hideProjectDetail()">{{project.user.fullname}}的作品集</a>
         </p>
 
         <div class="user_info">
