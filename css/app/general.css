@@ -1371,12 +1371,7 @@ img{
 	padding:0 20px;
 }
 
-.de_project_grid>li {    
-    width: 320px;
-    height: 180px;
-    background: #fff;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 10px;
+.de_project_grid>li {
 	display: inline-block;
 	position: relative;
     list-style: none;    
@@ -1414,24 +1409,34 @@ img{
     color: #333;
 }
 
-.de_project_grid .project_info {
-    width:180px;
-    height:180px;
+/*m型卡片*/
+.de_project_grid .de_card_m{
+    background: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width:31.33%;
+    margin:10px 1%;
+    display: inline-block;
+	position: relative;
+    list-style: none;    
+    overflow: hidden;
+}
+.de_card_m .project_info {
+    width:50%;
     padding:10px;
     box-sizing: border-box;
 }
 
-.de_project_grid .project_info .thumb {
+.de_card_m .project_info .thumb {
     width: 100%;
 /*    border-right: #ccc 1px dotted;*/
    /* height: 100%;*/
 }
 
-.de_project_grid .project_info h4 {
+.de_card_m .project_info h4 {
     font-size: 12px;
     text-align: left;
     position: absolute;
-    left: 190px;
+    left: 51%;
     top: 60px;
     right: 10px;
     bottom: 40px;
@@ -1441,18 +1446,18 @@ img{
 	line-height: 1.5em;
 }
 
-.de_project_grid .project_info .date {
+.de_card_m .project_info .date {
     display: none;
 }
 
-.de_project_grid .user_info {
+.de_card_m .user_info {
     position: absolute;
     top: 10px;
-    left:190px;
+    left:51%;
     right:10px;
 }
 
-.de_project_grid .user_info .photo {
+.de_card_m .user_info .photo {
     width: 40px;
     height: 40px;
     overflow: hidden;
@@ -1460,7 +1465,7 @@ img{
     display: block;
 }
 
-.de_project_grid .user_info .name {
+.de_card_m .user_info .name {
 	position: absolute;
     top: 4px;
     left: 50px;
@@ -1474,7 +1479,7 @@ img{
     text-align: left;
     color: #666;
 }
-.de_project_grid .user_info .date{
+.de_card_m .user_info .date{
     position: absolute;
 	top: 24px;
 	left: 50px;
@@ -1489,10 +1494,10 @@ img{
     color: #ccc;
 }
 
-.de_project_grid .de_stats_tags {    
+.de_card_m .de_stats_tags {    
     position: absolute;
     bottom: 0;
-    left: 190px;
+    left: 51%;
     right:10px;    
 }
 
