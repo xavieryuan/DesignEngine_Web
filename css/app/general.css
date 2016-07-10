@@ -3254,8 +3254,12 @@ span.zy_tooltips{
 .de_project_detail .publishtime {
     font-size: 12px;
 	margin-left:30px;
+    line-height: 1.5em;
 }
-
+.de_project_detail .publishtime a{
+    color: #07af69;
+    font-weight: bold;
+}
 .de_project_detail .abstract {
     font-size: 14px;
     line-height: 2em;
