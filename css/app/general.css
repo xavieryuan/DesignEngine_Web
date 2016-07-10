@@ -1425,6 +1425,7 @@ img{
     width:50%;
     padding:10px;
     box-sizing: border-box;
+    font-size: 0;
 }
 
 .de_card_m .project_info .thumb {
