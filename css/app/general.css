@@ -1688,9 +1688,6 @@ img{
     left: 0;
     top:-60px;
 }
-.de_project_timeline .de_stats_tags>li{
-    margin-right:15px;
-}
 
 /*timeline的滑条样式*/
 .de_screen_project_timeline{
@@ -3250,11 +3247,9 @@ span.zy_tooltips{
     position: absolute;
     top: 40px;
     right: 20px;
+    width:180px;
 }
 
-.de_project_detail .de_stats_tags>li {    
-    margin: 5px;
-}
 
 .de_project_detail .publishtime {
     font-size: 12px;
