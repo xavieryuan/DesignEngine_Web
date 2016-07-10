@@ -1282,13 +1282,14 @@ img{
     color: #999;
     display: inline-block;
     height: 40px;
+    width:32.33%;
     font-size: 12px;
     line-height: 40px;
     text-align: center;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	box-sizing: border-box;
-    margin-right: 6px;
+    margin-right: 1%;
 }
 
 .de_stats_tags>li::before {
@@ -1433,10 +1434,10 @@ img{
 }
 
 .de_card_m .project_info h4 {
-    font-size: 12px;
+    font-size: 14px;
     text-align: left;
     position: absolute;
-    left: 51%;
+    left: 55%;
     top: 60px;
     right: 10px;
     bottom: 40px;
@@ -1453,7 +1454,7 @@ img{
 .de_card_m .user_info {
     position: absolute;
     top: 10px;
-    left:51%;
+    left:55%;
     right:10px;
 }
 
@@ -1497,7 +1498,7 @@ img{
 .de_card_m .de_stats_tags {    
     position: absolute;
     bottom: 0;
-    left: 51%;
+    left: 55%;
     right:10px;    
 }
 
