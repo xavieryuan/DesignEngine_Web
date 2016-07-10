@@ -36,7 +36,10 @@
     <article class="de_project_detail de_borderbox de_boxshadow">
         <h2>{{project.name}}</h2>
 
-        <p class="publishtime">{{project.created_at}}</p>
+        <p class="publishtime">{{project.created_at}}，收录于
+            <a ng-if="project.topic" ng-href="topics/{{project.topic.id}}">来自：{{project.topic.name}}</a>
+            <a ng-if="!project.topic" ng-href="users/{{project.user.id}}">来自：{{project.user.fullname}}的作品集</a>
+        </p>
 
         <div class="user_info">
             <a ng-href="users/{{project.user.id}}">
