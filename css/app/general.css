@@ -1425,19 +1425,14 @@ img{
     width:50%;
     padding:10px;
     box-sizing: border-box;
-    perspective: 1000px;
 }
 
 .de_card_m .project_info .thumb {
     width: 100%;
-    transform:translateZ(0);
-    transition: all 0.3s ease-out;
 /*    border-right: #ccc 1px dotted;*/
    /* height: 100%;*/
 }
-.de_card_m:hover .project_info .thumb{
-    transform:translateZ(100px);
-}
+
 .de_card_m .project_info h4 {
     font-size: 14px;
     text-align: left;
@@ -3682,6 +3677,10 @@ span.zy_tooltips{
     .de_project_grid{
         padding:0;
     }
+    .de_card_m{
+        width: 48%;
+        margin: 10px 2%;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -3899,7 +3898,10 @@ span.zy_tooltips{
 		text-align: center;
 		padding: 0;
 	}
-    
+    .de_card_m{
+        width: 100%;
+        margin: 10px;
+    }
 	
 	/*timeline*/
     .de_screen_project_timeline{
