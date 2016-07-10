@@ -1285,7 +1285,7 @@ img{
     width:32.33%;
     font-size: 12px;
     line-height: 40px;
-    text-align: center;
+    text-align: left;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	box-sizing: border-box;
@@ -1425,14 +1425,19 @@ img{
     width:50%;
     padding:10px;
     box-sizing: border-box;
+    perspective: 1000px;
 }
 
 .de_card_m .project_info .thumb {
     width: 100%;
+    transform:translateZ(0);
+    transition: all 0.3s ease-out;
 /*    border-right: #ccc 1px dotted;*/
    /* height: 100%;*/
 }
-
+.de_card_m:hover .project_info .thumb{
+    transform:translateZ(100px);
+}
 .de_card_m .project_info h4 {
     font-size: 14px;
     text-align: left;
@@ -1503,7 +1508,7 @@ img{
 }
 
 
-.de_project_grid .de_category_tags {
+/*.de_project_grid .de_category_tags {
     font-size: 12px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1522,7 +1527,7 @@ img{
     bottom: 0;
     white-space: nowrap;
     height: 50px;
-}
+}*/
 
 
 /*************作品Timeline****************/
@@ -1939,6 +1944,7 @@ img{
 	position:absolute;
 	left:20px;
 	bottom:0;
+    right:0;
 	white-space:nowrap;
 }
 .topic_info .de_stats_tags>li{
