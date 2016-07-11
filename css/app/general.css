@@ -1729,6 +1729,10 @@ img{
     display: inline-block;
     white-space: normal;
 }
+.de_project_photowall .thumb-wrapper .thumb{
+    width:100%;
+    height: 100%;
+}
 .de_project_photowall .info-wrapper{
     width:100%;
     height: 100%;
