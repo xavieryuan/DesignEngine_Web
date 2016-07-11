@@ -84,6 +84,41 @@ viewControllers.controller("timeline",['$scope',"$interval","$location","Config"
     });
 }]);
 
+viewControllers.controller("photowall",['$scope',"$interval","$location","Config","Storage","Project",
+    function($scope,$interval,$location,Config,Storage,Project){
+
+    //覆盖了super里面的，一定要分开写，不然无法覆盖（这样可以覆盖的原理是因为对象是地址类型）
+    $scope.mainFlags.currentMenu=Config.mainMenu.project;
+    $scope.mainFlags.extMenuActive=false;
+
+    Storage.clearScrollData(Config.scrollScreenType.project);
+
+
+    Storage.loadedProjects=$scope.projects=[];
+    Project.getProjects().$promise.then(function(data){
+        //console.log("In views");
+        var count= 0,length=data.artifacts.length;
+        var inter=$interval(function(){
+            if(count<length){
+                $scope.projects.push(data.artifacts[count]);
+                count++;
+            }else{
+                $interval.cancel(inter);
+            }
+        },200);
+
+        //弹出层页面初始进来都是加载作品数据
+        var path=$location.path();
+
+        if(path.indexOf(Config.urls.editPwd)!==-1||path.indexOf(Config.urls.signIn)!==-1||
+            path.indexOf(Config.urls.signUp)!==-1||path.match(Config.urls.editInfoReg)!==null||
+            path.indexOf(Config.urls.forgetPwd)!==-1||
+            (path.indexOf(Config.urls.search)!==-1&&path.match(Config.urls.searchResultReg)==null)){
+            $scope.showBlackOut();
+        }
+    });
+}]);
+
 viewControllers.controller("projectDetail",["$scope","$window","Storage","Config","CFunctions","Project","Comment","toaster","LocationChanger",
     function($scope,$window,Storage,Config,CFunctions,Project,Comment,toaster,LocationChanger){
 

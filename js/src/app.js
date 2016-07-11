@@ -14,7 +14,7 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
         //默认使用的时候hash模式，如果要使用rest风格，需要设置下面这一句，注意$locationProvider需要注入
         $locationProvider.html5Mode(true);
         //$locationProvider.hashPrefix("!");
-        $routeProvider.when("/",{templateUrl: 'views/timeline.html',controller:"timeline"}).
+        $routeProvider.when("/",{templateUrl: 'views/photowall.html',controller:"photowall"}).
             when("/projects",{templateUrl: 'views/timeline.html',controller:"timeline"}).
             when("/projects/create",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
             when("/projects/:projectId/update",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
