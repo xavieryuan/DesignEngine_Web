@@ -1780,7 +1780,72 @@ img{
     display: inline-block;
     color: #ccc;
 }
+.de_project_photowall .project_info {
+    margin-left:400px;
+}
+.de_project_photowall .project_info a{
+    margin-top:90px;
+    display: inline-block;    
+    font-size: 0;
+    padding: 10px 20px 0 20px;
+}
+.de_project_photowall .project_info h4 {
+    font-size: 16px;
+    text-align: left;
+	color:#09bc72;
+	margin:0;
+    margin-bottom:10px;
+	line-height: 1.5em;
+}
 
+.de_project_photowall .project_info .abstract{
+    font-size: 14px;
+    text-align: left;
+    color: #999;
+	margin:0;
+	line-height: 1.5em;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.de_project_photowall .topic_title{
+    position: absolute;
+    bottom:10px;
+    left:-30px;
+}
+.de_project_photowall .topic_title>a{
+    display: block;
+    height:60px;
+    line-height: 60px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    background:#34B38B;
+    width:330px; 
+    box-sizing: border-box;
+    padding:0 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.de_project_photowall .de_stats_tags{
+    left: 400px;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    padding: 10px 20px 30px;
+    background:#fff;
+}
+.de_project_photowall .de_stats_tags:before{
+    content: "";
+    width:200px;
+    height:60px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+    position: absolute;
+    left: 0;
+    top:-60px;
+}
 /**********作品卡片工具栏************/
 
 .de_project_toolbar>li {
