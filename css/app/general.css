@@ -1820,8 +1820,18 @@ img{
 }
 
 .de_project_photowall .de_stats_tags{
-    padding: 10px 20px 30px;
-    background:#fff;
+    padding: 10px 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.de_project_photowall .de_stats_tags>li{
+    width: auto;
+    color: #fff
+}
+.de_project_photowall .de_stats_tags>li::before{
+    color:#fff;
 }
 /**********作品卡片工具栏************/
 
