@@ -1723,13 +1723,15 @@ img{
     width:400px;
     height:400px;
     position: relative;
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
     margin: 10px 10px 10px 60px;
     display: inline-block;
     white-space: normal;
-    overflow: hidden;
     perspective: 1000px;
+}
+.de_project_photowall .thumb_wrapper{
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .de_project_photowall .thumb_wrapper .thumb{
     width:100%;
@@ -1744,6 +1746,8 @@ img{
     background: #07af69; 
     padding: 20px;
     box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .de_project_photowall .user_info {
     position: relative;
@@ -1842,19 +1846,19 @@ img{
 
 .de_project_photowall .side_A{
     transition: all 0.3s ease-out;
-    transform: rotateY(0deg);
+    transform: rotateX(0deg);
     backface-visibility: hidden;
 }
 .de_project_photowall .side_B{
     transition: all 0.3s ease-out;
-    transform: rotateY(-180deg);
+    transform: rotateX(-180deg);
     backface-visibility: hidden;
 }
 .de_project_photowall>li:hover .side_A{
-    transform: rotateY(180deg);
+    transform: rotateX(180deg);
 }
 .de_project_photowall>li:hover .side_B{
-    transform: rotateY(0deg);
+    transform: rotateX(0deg);
 }
 /**********作品卡片工具栏************/
 
