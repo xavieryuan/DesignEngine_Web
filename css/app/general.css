@@ -1736,12 +1736,12 @@ img{
     top:0;
     left: 0;
     background: #07af69; 
+    padding: 20px;
+    box-sizing: border-box;
 }
 .de_project_photowall .user_info {
-    position: absolute;
-    top: 40px;
-    left:20px;
-    right:20px;
+    position: relative;
+    height: 40px;
 }
 
 .de_project_photowall .user_info .photo {
@@ -1780,22 +1780,23 @@ img{
     display: inline-block;
     color: #ccc;
 }
-.de_project_photowall .project_info {
-    margin-left:400px;
+.de_project_photowall .project_info{
+    margin: 20px 0;
 }
 .de_project_photowall .project_info a{
-    margin-top:90px;
     display: inline-block;    
     font-size: 0;
-    padding: 10px 20px 0 20px;
 }
 .de_project_photowall .project_info h4 {
     font-size: 16px;
     text-align: left;
-	color:#09bc72;
+	color:#fff;
 	margin:0;
     margin-bottom:10px;
 	line-height: 1.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .de_project_photowall .project_info .abstract{
@@ -1804,26 +1805,21 @@ img{
     color: #999;
 	margin:0;
 	line-height: 1.5em;
-    max-height: 200px;
+    max-height: 4em;
     overflow: hidden;
 }
 
 .de_project_photowall .topic_title{
     position: absolute;
     bottom:10px;
-    left:-30px;
+    font-size: 14px;
+    color: #999;
 }
 .de_project_photowall .topic_title>a{
-    display: block;
     height:60px;
     line-height: 60px;
-    font-size: 14px;
-    color: #fff;
+    color: #333;
     text-decoration: none;
-    background:#34B38B;
-    width:330px; 
-    box-sizing: border-box;
-    padding:0 20px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
