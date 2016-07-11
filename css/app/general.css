@@ -1709,7 +1709,69 @@ img{
     background: #ddd;
 }
 
+ /*photowall*/
+.de_screen_project_photowall{
+    width: 100%;
+    height:50px;
+    margin:0;
+}
+.de_project_photowall{
+    height: 100%;
+}
+.de_project_photowall>li{
+    width:400px;
+    height:400px;
+    position: relative;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px 10px 10px 60px;
+    display: inline-block;
+    white-space: normal;
+}
 
+.de_project_photowall .user_info {
+    position: absolute;
+    top: 40px;
+    left:420px;
+    right:20px;
+}
+
+.de_project_photowall .user_info .photo {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 18px;
+    display: block;
+}
+
+.de_project_photowall .user_info .name {
+	position: absolute;
+    top: 0.5em;
+    left: 50px;
+    right:0;
+    margin: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+    color: #666;
+}
+.de_project_photowall .user_info .date{
+    position: absolute;
+	top: 2em;
+	left: 50px;
+    right:0;
+	text-align: left;
+    margin: 0;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    color: #ccc;
+}
 
 /**********作品卡片工具栏************/
 
@@ -3986,6 +4048,8 @@ span.zy_tooltips{
         left: 0;
         top:-20px;
     }
+    
+   
     
     /*footer*/
     .de_footer{
