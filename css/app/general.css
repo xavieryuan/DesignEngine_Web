@@ -1728,6 +1728,8 @@ img{
     margin: 10px 10px 10px 60px;
     display: inline-block;
     white-space: normal;
+    overflow: hidden;
+    perspective: 1000px;
 }
 .de_project_photowall .thumb_wrapper .thumb{
     width:100%;
@@ -1836,6 +1838,23 @@ img{
 }
 .de_project_photowall .de_stats_tags>li::before{
     color:#fff;
+}
+
+.de_project_photowall .side_A{
+    transition: all 0.3s ease-out;
+    transform: rotateY(0deg);
+    backface-visibility: hidden;
+}
+.de_project_photowall .side_B{
+    transition: all 0.3s ease-out;
+    transform: rotateY(-180deg);
+    backface-visibility: hidden;
+}
+.de_project_photowall>li:hover .side_A{
+    transform: rotateY(180deg);
+}
+.de_project_photowall>li:hover .side_B{
+    transform: rotateY(0deg);
 }
 /**********作品卡片工具栏************/
 
