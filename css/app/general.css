@@ -4157,12 +4157,6 @@ span.zy_tooltips{
 	}
 
 }
-@media screen and (max-width:640px){
-    .de_project_grid .de_card_m{
-        width: auto;
-        margin: 10px;
-    }
-}
 @media screen and (max-width: 480px) {
 	/*顶部导航*/
 	
@@ -4209,7 +4203,11 @@ span.zy_tooltips{
 		text-align: center;
 		padding: 0;
 	}
-    
+    .de_project_grid .de_card_m{
+        width: auto;
+        margin: 10px;
+        display: block;
+    }
 	
 	/*timeline*/
     .de_screen_project_timeline{
