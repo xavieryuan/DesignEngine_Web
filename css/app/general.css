@@ -1815,12 +1815,14 @@ img{
 	line-height: 1.5em;
     max-height: 4em;
     overflow: hidden;
+    display: none;
 }
 
 .de_project_photowall .topic_title{
     font-size: 14px;
     color: #333;
     line-height: 1.5em;
+    display: none;
 }
 .de_project_photowall .topic_title>a{
     color: #fff;
@@ -1869,6 +1871,12 @@ img{
     height:300px;
     z-index: 99;
 }
+.de_project_photowall>li.item-0 .project_info .abstract{
+    display: block;
+}
+.de_project_photowall>li.item-0 .topic_title{
+    display: block;
+}
 .de_project_photowall>li.item-1{
     width:200px;
     height:200px;
@@ -1883,25 +1891,23 @@ img{
     z-index: 98;
     position: absolute;
     bottom:0;
-    left: -220px;
+    left: -210px;
 }
 .de_project_photowall>li.item-3{
-    width:200px;
-    height:200px;
+    width:100px;
+    height:100px;
     z-index: 97;
     position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    right:-210px;
+    top:210px;
 }
 .de_project_photowall>li.item-4{
-    width:300px;
-    height:300px;
+    width:100px;
+    height:100px;
     z-index: 96;
     position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    bottom:210px;
+    left: -210px;
 }
 .de_project_photowall>li.item-5{
     width:300px;
