@@ -1388,14 +1388,14 @@ img{
 .de_project_grid>li.ng-enter,
 .de_project_grid>li.ng-leave,
 .de_project_grid>li.ng-move {
-    -webkit-transition:0.3s linear all;
-    transition:0.3s linear all;
+    -webkit-transition:0.3s ease-out all;
+    transition:0.3s ease-out all;
 }
 .de_project_grid>li.ng-leave.ng-leave-active,
 .de_project_grid>li.ng-enter,
 .de_project_grid>li.ng-move {
-    -webkit-transition:0.3s linear all;
-    transition:0.3s linear all;
+    -webkit-transition:0.3s ease-out all;
+    transition:0.3s ease-out all;
     opacity:0;
     transform:translateY(10px);
 }
@@ -1730,6 +1730,7 @@ img{
     display: inline-block;
     white-space: normal;
     perspective: 600px;
+    cursor: pointer;
 }
 .de_project_photowall .thumb_wrapper{
     overflow: hidden;
@@ -1844,7 +1845,8 @@ img{
 }
 .de_project_photowall .de_stats_tags>li{
     width: auto;
-    color: #fff
+    color: #fff;
+    margin-right:5px;
 }
 .de_project_photowall .de_stats_tags>li::before{
     color:#fff;
@@ -2016,6 +2018,32 @@ img{
 .de_project_photowall>li:hover{
     z-index: 100!important;
 }
+/*动效*/
+/*作品网格ng动效*/
+.de_project_photowall>li.ng-enter-stagger,
+.de_project_photowall>li.ng-leave-stagger,
+.de_project_photowall>li.ng-move-stagger {
+    -webkit-transition-delay:0.2s;
+    transition-delay:0.2s;
+}
+.de_project_photowall>li.ng-enter,
+.de_project_photowall>li.ng-leave,
+.de_project_photowall>li.ng-move {
+    -webkit-transition:0.3s ease-out all;
+    transition:0.3s ease-out all;
+}
+.de_project_photowall>li.ng-leave.ng-leave-active,
+.de_project_photowall>li.ng-enter,
+.de_project_photowall>li.ng-move {
+    -webkit-transition:0.3s ease-out all;
+    transition:0.3s ease-out all;
+    opacity:0;
+}
+.de_project_photowall>li.ng-move.ng-move-active,
+.de_project_photowall>li.ng-enter.ng-enter-active {
+    opacity:1;
+}
+
 /**********作品卡片工具栏************/
 
 .de_project_toolbar>li {
