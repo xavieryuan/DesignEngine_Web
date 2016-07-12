@@ -1727,8 +1727,6 @@ img{
     width:400px;
     height:400px;
     position: relative;
-    
-    margin: 10px 10px 10px 60px;
     display: inline-block;
     white-space: normal;
     perspective: 1000px;
@@ -1876,18 +1874,16 @@ img{
     height:200px;
     z-index: 99;
     position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    top:0;
+    right: -210px;
 }
 .de_project_photowall>li.item-2{
     width:200px;
     height:200px;
     z-index: 98;
     position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    bottom:0;
+    left: -220px;
 }
 .de_project_photowall>li.item-3{
     width:200px;
