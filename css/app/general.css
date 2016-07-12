@@ -1909,7 +1909,7 @@ img{
     height:90px;
     z-index: 97;
     position: absolute;
-    right:-110px;
+    right:-100px;
     top:210px;
 }
 .de_project_photowall>li.item-4{
@@ -1918,7 +1918,7 @@ img{
     z-index: 96;
     position: absolute;
     bottom:210px;
-    left: -110px;
+    left: -100px;
 }
 .de_project_photowall>li.item-5{
     width:80px;
