@@ -15,7 +15,7 @@ pinWall.config(["$routeProvider","$locationProvider","$httpProvider","App",
         $locationProvider.html5Mode(true);
         //$locationProvider.hashPrefix("!");
         $routeProvider.when("/",{templateUrl: 'views/photowall.html',controller:"photowall"}).
-            when("/projects",{templateUrl: 'views/timeline.html',controller:"timeline"}).
+            when("/projects",{templateUrl: 'views/photowall.html',controller:"photowall"}).
             when("/projects/create",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
             when("/projects/:projectId/update",{templateUrl: 'views/projectUpdate.html',controller:"projectUpdate"}).
             when("/projects/:projectId",{templateUrl: 'views/projects.html',controller:"projects"}).
