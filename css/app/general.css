@@ -1729,7 +1729,7 @@ img{
     position: relative;
     display: inline-block;
     white-space: normal;
-    perspective: 1000px;
+    perspective: 600px;
 }
 .de_project_photowall .thumb_wrapper{
     overflow: hidden;
