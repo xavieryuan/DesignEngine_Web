@@ -139,6 +139,7 @@ services.constant("Config",{
     },
     scrollScreenType:{ //当前在哪个页面滚动
         project:"project",
+        wall:"wall",
         box:"box",
         searchResult:"searchResult",
         boxDetail:"boxDetail",

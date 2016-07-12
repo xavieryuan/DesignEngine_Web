@@ -91,8 +91,8 @@ viewControllers.controller("photowall",['$scope',"$interval","$location","Config
     $scope.mainFlags.currentMenu=Config.mainMenu.project;
     $scope.mainFlags.extMenuActive=false;
 
-    Storage.clearScrollData(Config.scrollScreenType.project);
-
+    //Storage.clearScrollData(Config.scrollScreenType.project);
+    Storage.clearScrollData(Config.scrollScreenType.wall);
 
     Storage.loadedProjects=$scope.projects=[];
     Project.getProjects().$promise.then(function(data){
