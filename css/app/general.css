@@ -4296,11 +4296,17 @@ span.zy_tooltips{
 /*    photowall*/
     .de_screen_project_photowall{
         overflow-x: auto;
+        -webkit-overflow-scrolling : touch;
     }
     .de_project_photowall{
         margin:0 360px;
     }
-    
+    .de_project_photowall>li:hover .side_A{
+        transform: rotateX(0deg);
+    }
+    .de_project_photowall>li:hover .side_B{
+        transform: rotateX(-180deg);
+    }
     /*footer*/
     .de_footer{
         position: fixed;
