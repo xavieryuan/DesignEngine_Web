@@ -1,8 +1,8 @@
 <section class="de_screen_project_photowall">
     <ul class="de_project_photowall de_borderbox">
-        <li class="de_borderbox {{'item-'+$index}}" ng-repeat="project in projects">
+        <li class="de_borderbox {{'item-'+$index}}" ng-repeat="project in projects" ng-click="showProjectDetail(project.artifact.id)">
             <div class="thumb_wrapper side_A">
-                <a href="" ng-click="showProjectDetail(project.artifact.id)">
+                <a href="">
                     <img class="thumb" ng-src="{{project.artifact.profile_image}}">
                 </a>
             </div>
@@ -15,7 +15,7 @@
                 </a>
             </div>
             <div class="project_info">
-                <a href="" ng-click="showProjectDetail(project.artifact.id)">
+                <a href="">
                     <h4>{{project.artifact.name}}</h4>
                     <p class="abstract">
                         {{project.artifact.description}}
