@@ -1905,16 +1905,16 @@ img{
     display: block;
 }
 .de_project_photowall>li.item-3{
-    width:100px;
-    height:100px;
+    width:90px;
+    height:90px;
     z-index: 97;
     position: absolute;
     right:-110px;
     top:210px;
 }
 .de_project_photowall>li.item-4{
-    width:100px;
-    height:100px;
+    width:90px;
+    height:90px;
     z-index: 96;
     position: absolute;
     bottom:210px;
