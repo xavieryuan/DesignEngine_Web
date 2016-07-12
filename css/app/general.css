@@ -1984,8 +1984,18 @@ img{
 .de_project_photowall>li.item-10 .project_info,
 .de_project_photowall>li.item-11 .project_info{
     margin: 0;
+}
+.de_project_photowall>li.item-5 .project_info h4,
+.de_project_photowall>li.item-6 .project_info h4,
+.de_project_photowall>li.item-7 .project_info h4,
+.de_project_photowall>li.item-8 .project_info h4,
+.de_project_photowall>li.item-9 .project_info h4,
+.de_project_photowall>li.item-10 .project_info h4,
+.de_project_photowall>li.item-11 .project_info h4{
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
     white-space: normal;
-    line-height: 1.5em;
 }
 /**********作品卡片工具栏************/
 
