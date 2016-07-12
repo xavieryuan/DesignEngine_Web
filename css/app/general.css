@@ -1718,7 +1718,10 @@ img{
     position: relative;
 }
 .de_project_photowall{
-    height: 100%;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 .de_project_photowall>li{
     width:400px;
@@ -1854,6 +1857,9 @@ img{
     transform: rotateX(-180deg);
     backface-visibility: hidden;
 }
+.de_project_photowall>li:hover{
+    z-index: 100;
+}
 .de_project_photowall>li:hover .side_A{
     transform: rotateX(180deg);
 }
@@ -1864,6 +1870,101 @@ img{
     width:300px;
     height:300px;
     z-index: 99;
+}
+.de_project_photowall>li.item-1{
+    width:200px;
+    height:200px;
+    z-index: 99;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.de_project_photowall>li.item-2{
+    width:200px;
+    height:200px;
+    z-index: 98;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.de_project_photowall>li.item-3{
+    width:200px;
+    height:200px;
+    z-index: 97;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.de_project_photowall>li.item-4{
+    width:300px;
+    height:300px;
+    z-index: 96;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.de_project_photowall>li.item-5{
+    width:300px;
+    height:300px;
+    z-index: 95;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.de_project_photowall>li.item-6{
+    width:300px;
+    height:300px;
+    z-index: 94;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.de_project_photowall>li.item-7{
+    width:300px;
+    height:300px;
+    z-index: 93;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.de_project_photowall>li.item-8{
+    width:300px;
+    height:300px;
+    z-index: 92;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.de_project_photowall>li.item-9{
+    width:300px;
+    height:300px;
+    z-index: 91;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.de_project_photowall>li.item-10{
+    width:300px;
+    height:300px;
+    z-index: 90;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.de_project_photowall>li.item-11{
+    width:300px;
+    height:300px;
+    z-index: 89;
     position: absolute;
     top:50%;
     left: 50%;
