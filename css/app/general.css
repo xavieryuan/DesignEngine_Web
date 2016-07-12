@@ -1924,12 +1924,16 @@ img{
     height:80px;
     z-index: 95;
     position: absolute;
+    top:0;
+    right:-220px;
 }
 .de_project_photowall>li.item-6{
     width:80px;
     height:80px;
     z-index: 94;
     position: absolute;
+    top:100px;
+    left: -220px;
 }
 .de_project_photowall>li.item-7{
     width:80px;
