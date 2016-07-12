@@ -1953,16 +1953,20 @@ img{
     left: 0;
 }
 .de_project_photowall>li.item-9{
-    width:80px;
-    height:80px;
+    width: 150px;
+    height: 150px;
     z-index: 91;
     position: absolute;
+    right: -370px;
+    top: 90px;
 }
 .de_project_photowall>li.item-10{
-    width:80px;
-    height:80px;
-    z-index: 90;
+    width: 150px;
+    height: 150px;
+    z-index: 91;
     position: absolute;
+    left: -370px;
+    bottom: 0;
 }
 .de_project_photowall>li.item-11{
     width:80px;
