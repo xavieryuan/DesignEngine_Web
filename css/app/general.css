@@ -1966,13 +1966,15 @@ img{
     z-index: 91;
     position: absolute;
     left: -370px;
-    bottom: 0;
+    top: 190px;
 }
 .de_project_photowall>li.item-11{
     width:80px;
     height:80px;
     z-index: 89;
     position: absolute;
+    bottom: -90px;
+    left: 90px;
 }
 /**********作品卡片工具栏************/
 
