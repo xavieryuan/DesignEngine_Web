@@ -1861,10 +1861,13 @@ img{
     transform: rotateX(0deg);
 }
 .de_project_photowall>li.item-0{
+    width:300px;
+    height:300px;
+    z-index: 99;
     position: absolute;
     top:50%;
     left: 50%;
-    transform: translate(-25%,-25%);
+    transform: translate(-50%,-50%);
 }
 /**********作品卡片工具栏************/
 
