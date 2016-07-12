@@ -1963,7 +1963,7 @@ img{
 .de_project_photowall>li.item-10{
     width: 150px;
     height: 150px;
-    z-index: 91;
+    z-index: 90;
     position: absolute;
     left: -370px;
     top: 190px;
