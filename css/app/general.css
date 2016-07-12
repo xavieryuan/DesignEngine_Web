@@ -1860,9 +1860,7 @@ img{
     transform: rotateX(-180deg);
     backface-visibility: hidden;
 }
-.de_project_photowall>li:hover{
-    z-index: 100;
-}
+
 .de_project_photowall>li:hover .side_A{
     transform: rotateX(180deg);
 }
@@ -2015,7 +2013,9 @@ img{
     padding: 0;
     white-space: normal;
 }
-
+.de_project_photowall>li:hover{
+    z-index: 100!important;
+}
 /**********作品卡片工具栏************/
 
 .de_project_toolbar>li {
