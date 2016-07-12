@@ -1839,6 +1839,7 @@ img{
     bottom: 0;
     left: 0;
     right: 0;
+    display: none;
 }
 .de_project_photowall .de_stats_tags>li{
     width: auto;
@@ -1874,7 +1875,8 @@ img{
 }
 .de_project_photowall>li.item-0 .project_info .abstract,
 .de_project_photowall>li.item-0 .topic_title,
-.de_project_photowall>li.item-0 .user_info{
+.de_project_photowall>li.item-0 .user_info,
+.de_project_photowall>li.item-0 .de_stats_tags{
     display: block;
 }
 .de_project_photowall>li.item-1{
@@ -1885,7 +1887,8 @@ img{
     top:0;
     right: -210px;
 }
-.de_project_photowall>li.item-1 .user_info{
+.de_project_photowall>li.item-1 .user_info,
+.de_project_photowall>li.item-1 .de_stats_tags{
     display: block;
 }
 .de_project_photowall>li.item-2{
@@ -1896,7 +1899,8 @@ img{
     bottom:0;
     left: -210px;
 }
-.de_project_photowall>li.item-2 .user_info{
+.de_project_photowall>li.item-2 .user_info,
+.de_project_photowall>li.item-2 .de_stats_tags{
     display: block;
 }
 .de_project_photowall>li.item-3{
