@@ -4292,6 +4292,10 @@ span.zy_tooltips{
         top:-20px;
     }
     
+/*    photowall*/
+    .de_screen_project_photowall{
+        overflow-x: auto;
+    }
    
     
     /*footer*/
