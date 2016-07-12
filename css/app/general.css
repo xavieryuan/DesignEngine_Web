@@ -1976,23 +1976,32 @@ img{
     bottom: -90px;
     left: 90px;
 }
-.de_project_photowall>li.item-5 .project_info,
-.de_project_photowall>li.item-6 .project_info,
-.de_project_photowall>li.item-7 .project_info,
-.de_project_photowall>li.item-8 .project_info,
-.de_project_photowall>li.item-9 .project_info,
-.de_project_photowall>li.item-10 .project_info,
-.de_project_photowall>li.item-11 .project_info{
+.de_project_photowall .item-5 .info_wrapper,
+.de_project_photowall .item-6 .info_wrapper,
+.de_project_photowall .item-7 .info_wrapper,
+.de_project_photowall .item-8 .info_wrapper,
+.de_project_photowall .item-9 .info_wrapper,
+.de_project_photowall .item-10 .info_wrapper,
+.de_project_photowall .item-11 .info_wrapper{
+    padding: 10px;
+}
+.de_project_photowall .item-5 .project_info,
+.de_project_photowall .item-6 .project_info,
+.de_project_photowall .item-7 .project_info,
+.de_project_photowall .item-8 .project_info,
+.de_project_photowall .item-9 .project_info,
+.de_project_photowall .item-10 .project_info,
+.de_project_photowall .item-11 .project_info{
     margin: 0;
 }
 
-.de_project_photowall>li.item-5 .project_info h4,
-.de_project_photowall>li.item-6 .project_info h4,
-.de_project_photowall>li.item-7 .project_info h4,
-.de_project_photowall>li.item-8 .project_info h4,
-.de_project_photowall>li.item-9 .project_info h4,
-.de_project_photowall>li.item-10 .project_info h4,
-.de_project_photowall>li.item-11 .project_info h4{
+.de_project_photowall .item-5 .project_info h4,
+.de_project_photowall .item-6 .project_info h4,
+.de_project_photowall .item-7 .project_info h4,
+.de_project_photowall .item-8 .project_info h4,
+.de_project_photowall .item-9 .project_info h4,
+.de_project_photowall .item-10 .project_info h4,
+.de_project_photowall .item-11 .project_info h4{
     font-size: 12px;
     margin: 0;
     padding: 0;
