@@ -4295,6 +4295,7 @@ span.zy_tooltips{
 /*    photowall*/
     .de_screen_project_photowall{
         overflow-x: auto;
+        margin:0 450px;
     }
    
     
