@@ -1856,11 +1856,13 @@ img{
     transition: all 0.5s ease-out;
     transform: rotateX(0deg);
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 .de_project_photowall .side_B{
     transition: all 0.5s ease-out;
     transform: rotateX(-180deg);
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .de_project_photowall>li:hover .side_A{
